@@ -12,7 +12,7 @@ BoardGame->BoardGame: activatePlayers(): void
 BoardGame -> BoardGame: makeMove(Piece piece, Position newCoords): void
 ' Should check throughout all the rules, asserts context
 BoardGame->GameRule: isValidRule(): boolean
-alt isValidRule() == true
+alt isValidRule(Board context) == true
     GameRule->GameRule: return true
     GameRule->BoardGame: end
     BoardGame -> Board: makeMove(Piece piece, Position newCoords): void
@@ -33,11 +33,11 @@ alt isValidRule() == true
     Board->Board: getActivePieces(): List<Piece>
     Piece->Board: isActive(): boolean
     ' Should check win condition piece/s
-    alt isActive() == true
+    alt isActive(Board context) == true
         Piece->Board: return true
         Board->BoardGame: return
         BoardGame->BoardGame: continue
-    else isActive() == false
+    else isActive(Board context) == false
         Piece->Board: return false
         Board->BoardGame: return true
         BoardGame->BoardGame: endGame(): void
@@ -45,7 +45,7 @@ alt isValidRule() == true
         BoardGame->BoardGame: end
         BoardGame->User: end
     end
-else isValidRule() == false
+else isValidRule(Board context) == false
     GameRule->GameRule: return false
     GameRule->BoardGame: end
     BoardGame->User: "The move is not valid. Please try another"

@@ -31,7 +31,7 @@ class WinRule implements GameRule{
 }
 
 class TurnRule implements GameRule{
-+isValidRule(Board (Board context): boolean
++isValidRule(Board context): boolean
 +isMyTurn(Board context): boolean
 }
 
@@ -39,7 +39,7 @@ class TurnRule implements GameRule{
 class ChessGameRule implements GameRule{
 -ruleWrapper: GameRule
 +baseGameRule(GameRule gameRule): void
-+isValidRule(): boolean
++isValidRule(Board context): boolean
 }
 
 class Piece{
@@ -54,7 +54,7 @@ class Piece{
 ' Extra classes
 interface PieceMovementRule implements GameRule{
 +isValidMove(Position oldPos, Position newPos): boolean
-+isValidRule(): boolean
++isValidRule(Board context): boolean
 }
 
 class DiagonalMovementRule implements PieceMovementRule{
@@ -88,7 +88,7 @@ class Position{
 ' Usages and else
 BoardGame *-- Board
 BoardGame *- GameRule
-Piece *--- PieceMovementRule
+Piece *-- PieceMovementRule
 Piece *- Position
 Board *- Piece
 PieceMovementRule *-- Position
