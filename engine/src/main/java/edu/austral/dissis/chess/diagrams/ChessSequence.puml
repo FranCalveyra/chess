@@ -1,0 +1,54 @@
+@startuml
+' Game
+' Board
+' GameRule
+' PieceMovementRule
+' Player
+' Piece
+' Position
+User -> BoardGame: Play Request
+BoardGame -> BoardGame: startGame(): void
+BoardGame->BoardGame: activatePlayers(): void
+BoardGame -> BoardGame: makeMove(Piece piece, Position newCoords): void
+' Should check throughout all the rules, asserts context
+BoardGame->GameRule: isValidRule(): boolean
+alt isValidRule() == true
+    GameRule->GameRule: return true
+    GameRule->BoardGame: end
+    BoardGame -> Board: makeMove(Piece piece, Position newCoords): void
+    Board -> PieceMovementRule: updatePiecePosition(Piece piece, Position newCoords): void
+    PieceMovementRule->PieceMovementRule: isValidMove(Position oldPos, Position newPos): boolean
+    alt isValidMove(Position oldPos, Position newPos) == true
+        PieceMovementRule -> Piece: return true
+        Piece->Board: "notify valid move"
+        Board->Board: "change piece position"
+        Board->Board: end
+    else
+        PieceMovementRule->Piece: return false
+        Piece->Board: end
+        Board->Board: "do nothing"
+    end
+
+    BoardGame->Board: checkGameEnd(): boolean
+    Board->Board: getActivePieces(): List<Piece>
+    Piece->Board: isActive(): boolean
+    ' Should check win condition piece/s
+    alt isActive() == true
+        Piece->Board: return true
+        Board->BoardGame: return
+        BoardGame->BoardGame: continue
+    else isActive() == false
+        Piece->Board: return false
+        Board->BoardGame: return true
+        BoardGame->BoardGame: endGame(): void
+        BoardGame->BoardGame: deactivatePlayers(): void
+        BoardGame->BoardGame: end
+        BoardGame->User: end
+    end
+else isValidRule() == false
+    GameRule->GameRule: return false
+    GameRule->BoardGame: end
+    BoardGame->User: "The move is not valid. Please try another"
+    'This should make the execution cyclic
+end
+@enduml

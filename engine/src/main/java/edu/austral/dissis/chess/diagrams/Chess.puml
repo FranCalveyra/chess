@@ -1,0 +1,99 @@
+@startuml
+class BoardGame{
++board: Board
++rules: List<Rule>
++players: List<Player>
+-isEnded: boolean
++startGame(): void
++endGame(): void
++makeMove(Piece piece, Position newPos): void
+-activatePlayers(): void
+-deactivatePlayers(): void
+}
+
+class Board {
++pieces: Map<Position, Piece>
++columns: int
++rows: int
++getActivePiecesAndPositions(): Map<Position, Piece>
++removePieceFromGame(Piece piece): void
++addPieceToGame(Piece piece): void
++updatePiecePosition(Piece piece, Position newCoords): void
+}
+
+interface GameRule{
++isValidRule(Board context): boolean
+}
+
+class WinRule implements GameRule{
++isValidRule(Board context): boolean
++isAccomplished(Board context): boolean
+}
+
+class TurnRule implements GameRule{
++isValidRule(Board (Board context): boolean
++isMyTurn(Board context): boolean
+}
+
+' Decorator Pattern
+class ChessGameRule implements GameRule{
+-ruleWrapper: GameRule
++baseGameRule(GameRule gameRule): void
++isValidRule(): boolean
+}
+
+class Piece{
+-movementRules: List<PieceMovementRule>
+-pieceColour: int
+-name: String
+-isActiveInBoard: boolean
++isActive(): boolean
++changePieceActivity(): void
+}
+
+' Extra classes
+interface PieceMovementRule implements GameRule{
++isValidMove(Position oldPos, Position newPos): boolean
++isValidRule(): boolean
+}
+
+class DiagonalMovementRule implements PieceMovementRule{
++isValidMove(Position oldPos, Position newPos): boolean
++isValidRule(Board context): boolean
+}
+
+class KnightMovementRule implements PieceMovementRule{
++isValidMove(Position oldPos, Position newPos): boolean
++isValidRule(Board context): boolean
+}
+
+class QueenMovementRule implements PieceMovementRule{
++isValidMove(Position oldPos, Position newPos): boolean
++isValidRule(Board context): boolean
+}
+
+class KingMovementRule implements PieceMovementRule{
++isValidMove(Position oldPos, Position newPos): boolean
++isValidRule(Board context): boolean
+}
+
+
+class Position{
+-int column
+-int row
++getColumn(): int
++getRow(): int
+}
+
+' Usages and else
+BoardGame *-- Board
+BoardGame *- GameRule
+Piece *--- PieceMovementRule
+Piece *- Position
+Board *- Piece
+PieceMovementRule *-- Position
+GameRule *- Board
+
+' Hacer diagrama de secuencia también
+
+@enduml
