@@ -1,20 +1,18 @@
 @startuml
 class BoardGame{
-+board: Board
-+rules: List<Rule>
-+players: List<Player>
+-board: Board
+-rules: List<GameRule>
 -isEnded: boolean
 +startGame(): void
 +endGame(): void
 +makeMove(Piece piece, Position newPos): void
 -activatePlayers(): void
--deactivatePlayers(): void
 }
 
 class Board {
-+pieces: Map<Position, Piece>
-+columns: int
-+rows: int
+-pieces: Map<Position, Piece>
+-columns: int
+-rows: int
 +getActivePiecesAndPositions(): Map<Position, Piece>
 +removePieceFromGame(Piece piece): void
 +addPieceToGame(Piece piece): void
@@ -27,12 +25,11 @@ interface GameRule{
 
 class WinRule implements GameRule{
 +isValidRule(Board context): boolean
-+isAccomplished(Board context): boolean
 }
 
 class TurnRule implements GameRule{
 +isValidRule(Board (Board context): boolean
-+isMyTurn(Board context): boolean
++getCurrentTurn(Board context): int
 }
 
 ' Decorator Pattern
@@ -54,7 +51,7 @@ class Piece{
 ' Extra classes
 interface PieceMovementRule implements GameRule{
 +isValidMove(Position oldPos, Position newPos): boolean
-+isValidRule(): boolean
++isValidRule(Board context): boolean
 }
 
 class DiagonalMovementRule implements PieceMovementRule{
