@@ -7,5 +7,6 @@ import edu.austral.dissis.chess.utils.Position;
 public interface PieceMovementRule extends GameRule {
   @Override
   boolean isValidRule(Board context);
+
   boolean isValidMove(Position oldPos, Position newPos);
 }

@@ -3,7 +3,7 @@ package edu.austral.dissis.chess.rule.movement;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.Position;
 
-public class PawnMovementRule implements PieceMovementRule{
+public class PawnMovementRule implements PieceMovementRule {
   @Override
   public boolean isValidRule(Board context) {
     return false;
