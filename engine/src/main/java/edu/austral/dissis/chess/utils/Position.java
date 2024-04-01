@@ -1,6 +1,9 @@
 package edu.austral.dissis.chess.utils;
 
 public class Position {
+  /**
+   * X,Y coordinates encapsulation
+   */
   private final int column, row;
 
   public Position(int row, int column) {

@@ -4,6 +4,7 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
 import java.awt.*;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class Board {
   private final Map<Position, Piece> pieces;
@@ -39,8 +40,8 @@ public class Board {
   }
 
   public void updatePiecePosition(Position position, Piece piece) {
-    //Game should have previously checked rules
-    //Should check if moved piece is from current turn team
+    //TODO: Game should have previously checked rules
+    //TODO: Should check if moved piece is from current turn team
     Position oldPosition = getPieceCurrentPosition(piece);
     if(piece.checkValidMove(oldPosition, position)){
       //TODO
@@ -50,7 +51,10 @@ public class Board {
   }
 
   private Position getPieceCurrentPosition(Piece piece) {
-    //TODO
-    return null;
+    //O(N)
+    for(Map.Entry<Position,Piece> entry: pieces.entrySet()){
+      if(entry.getValue() == piece) return entry.getKey();
+    }
+    throw new NoSuchElementException("Piece does not exist");
   }
 }

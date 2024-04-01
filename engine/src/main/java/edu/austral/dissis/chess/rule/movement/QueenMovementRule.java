@@ -6,11 +6,13 @@ import edu.austral.dissis.chess.utils.Position;
 public class QueenMovementRule implements PieceMovementRule {
   @Override
   public boolean isValidRule(Board context) {
+    //TODO
     return false;
   }
 
   @Override
   public boolean isValidMove(Position oldPos, Position newPos) {
+    //TODO
     return false;
   }
 }

@@ -7,6 +7,7 @@ public class TurnRule implements GameRule {
 
   @Override
   public boolean isValidRule(Board context) {
+    //TODO
     return false;
   }
 

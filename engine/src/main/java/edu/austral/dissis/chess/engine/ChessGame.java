@@ -2,13 +2,18 @@ package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.rule.GameRule;
+import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.WinConditionValidator;
+
 import java.awt.*;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class ChessGame {
+  /**
+   * Simulates a real Chess Game
+   */
   private final Board board;
   private final List<GameRule> rules;
   private boolean isEnded;
@@ -24,9 +29,15 @@ public class ChessGame {
     setTurn(board, whites);
   }
 
-  private void setTurn(Board board, Map<Position, Piece> whites) {}
+  private void setTurn(Board board, Map<Position, Piece> whites) {
+    //TODO
+  }
 
-  public void endGame() {}
+  public void endGame() {
+    //TODO
+//    WinConditionValidator validator = new WinConditionValidator();
+//    if (validator.isGameWon(board)) return;
+  }
 
   public void makeMove(Piece piece, Position newPos, Color currentPlayer) {
     if (piece.getPieceColour() != currentPlayer) return;
