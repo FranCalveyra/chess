@@ -30,11 +30,13 @@ public class Board {
   }
 
   public void removePieceAt(Position position, Piece piece) {
+    piece.changePieceActivity();
     pieces.remove(position, piece);
     board[position.getRow()][position.getColumn()] = null;
   }
 
   public void addPieceAt(Position position, Piece piece) {
+    piece.changePieceActivity();
     pieces.put(position, piece);
     board[position.getRow()][position.getColumn()] = piece;
   }

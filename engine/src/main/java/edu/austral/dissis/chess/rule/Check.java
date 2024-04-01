@@ -8,19 +8,21 @@ import edu.austral.dissis.chess.utils.Position;
 
 import java.awt.*;
 import java.util.Map;
+import java.util.Map.Entry;
 
-public class CheckMate implements WinCondition {
+public class Check implements GameRule{
   @Override
   public boolean isValidRule(Board context) {
-    return checkmate(context, Color.WHITE) || checkmate(context, Color.BLACK);
+  return check(context, Color.WHITE) || check(context, Color.BLACK);
   }
 
-  private boolean checkmate(Board context, Color team) {
+  private boolean check(Board context, Color team){
     CheckValidator validator = new CheckValidator();
-    for(Map.Entry<Position, Piece> entry: context.getActivePiecesAndPositions().entrySet()){
-      if(!validator.kingInCheck(context, team, entry)) return false;
+    for(Entry<Position, Piece> entry: context.getActivePiecesAndPositions().entrySet()){
+      if(validator.kingInCheck(context, team, entry)) return true;
     }
-    return true;
+    return false;
   }
+
 
 }
