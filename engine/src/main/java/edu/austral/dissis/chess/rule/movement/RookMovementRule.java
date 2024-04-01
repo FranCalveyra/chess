@@ -1,18 +1,13 @@
 package edu.austral.dissis.chess.rule.movement;
 
-import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.Position;
 
 public class RookMovementRule implements PieceMovementRule {
-  @Override
-  public boolean isValidRule(Board context) {
-    //TODO
-    return false;
-  }
 
   @Override
   public boolean isValidMove(Position oldPos, Position newPos) {
-    //TODO
-    return false;
+    boolean xMove = oldPos.getColumn() != newPos.getColumn() && oldPos.getRow() == newPos.getRow();
+    boolean yMove = oldPos.getColumn() == newPos.getColumn() && oldPos.getRow() != newPos.getRow();
+    return xMove || yMove;
   }
 }

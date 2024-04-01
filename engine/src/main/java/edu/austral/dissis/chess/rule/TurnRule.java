@@ -10,8 +10,4 @@ public class TurnRule implements GameRule {
     //TODO
     return false;
   }
-
-  public Color getCurrentTurn(Board context) {
-    return Color.BLACK;
-  }
 }

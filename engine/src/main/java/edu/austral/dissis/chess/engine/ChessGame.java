@@ -3,6 +3,7 @@ package edu.austral.dissis.chess.engine;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.rule.GameRule;
 import edu.austral.dissis.chess.rule.WinCondition;
+import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.WinConditionValidator;
 
@@ -39,8 +40,9 @@ public class ChessGame {
 //    if (validator.isGameWon(board)) return;
   }
 
-  public void makeMove(Piece piece, Position newPos, Color currentPlayer) {
-    if (piece.getPieceColour() != currentPlayer) return;
+  public void makeMove(Piece piece, Position newPos) {
+    if (piece.getPieceColour() != board.getCurrentTurn()) return;
+    //TODO
   }
 
   // Private
@@ -58,21 +60,4 @@ public class ChessGame {
     return team;
   }
 
-  private class Pair<T> {
-    private final T first;
-    private final T second;
-
-    Pair(T first, T second) {
-      this.first = first;
-      this.second = second;
-    }
-
-    public T getFirst() {
-      return first;
-    }
-
-    public T getSecond() {
-      return second;
-    }
-  }
 }

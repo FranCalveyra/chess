@@ -4,9 +4,8 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.rule.GameRule;
 import edu.austral.dissis.chess.utils.Position;
 
-public interface PieceMovementRule extends GameRule {
-  @Override
-  boolean isValidRule(Board context);
+public interface PieceMovementRule {
+  //If I make a PieceMovementRule dependent on the context, O(ruleCheck) can be enormous. Deficient.
 
   boolean isValidMove(Position oldPos, Position newPos);
 }

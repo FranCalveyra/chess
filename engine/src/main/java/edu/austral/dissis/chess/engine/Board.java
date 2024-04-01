@@ -40,7 +40,8 @@ public class Board {
   }
 
   public void updatePiecePosition(Position position, Piece piece) {
-    //TODO: Game should have previously checked rules
+    //First, ChessGame checks if the wanted piece to move is from its team
+    //TODO: ChessGame should have previously checked rules
     //TODO: Should check if moved piece is from current turn team
     Position oldPosition = getPieceCurrentPosition(piece);
     if(piece.checkValidMove(oldPosition, position)){
@@ -49,7 +50,9 @@ public class Board {
       // Change position in matrix
     }
   }
-
+  public Color getCurrentTurn(){
+    return currentTurn;
+  }
   private Position getPieceCurrentPosition(Piece piece) {
     //O(N)
     for(Map.Entry<Position,Piece> entry: pieces.entrySet()){
