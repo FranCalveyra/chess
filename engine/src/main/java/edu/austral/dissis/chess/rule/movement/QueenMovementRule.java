@@ -9,7 +9,7 @@ public class QueenMovementRule implements PieceMovementRule {
     int newX = newPos.getColumn(), newY = newPos.getRow();
     boolean verticalMove = oldX == newX & oldY != newY;
     boolean horizontalMove = oldX != newX & oldY == newY;
-    boolean diagonalMove = Math.abs(newX-oldX) == Math.abs(newY-oldY);
+    boolean diagonalMove = Math.abs(newX - oldX) == Math.abs(newY - oldY);
     return verticalMove || horizontalMove || diagonalMove;
   }
 }

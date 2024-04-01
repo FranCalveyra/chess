@@ -6,14 +6,16 @@ import edu.austral.dissis.chess.utils.Position;
 
 public class PawnTakingRule implements PieceMovementRule {
   private final Board context;
-  public PawnTakingRule(Board context){
+
+  public PawnTakingRule(Board context) {
     this.context = context;
   }
+
   @Override
   public boolean isValidMove(Position oldPos, Position newPos) {
     int oldX = oldPos.getColumn(), oldY = oldPos.getRow();
     int newX = newPos.getColumn(), newY = newPos.getRow();
-    boolean diagonalPositiveMove = (newY-oldY)>0 && (newX-oldX)>0;
+    boolean diagonalPositiveMove = (newY - oldY) > 0 && (newX - oldX) > 0;
     if (!diagonalPositiveMove) return false;
     Piece pieceAtNewPos = context.getActivePiecesAndPositions().get(newPos);
     return pieceAtNewPos != null;

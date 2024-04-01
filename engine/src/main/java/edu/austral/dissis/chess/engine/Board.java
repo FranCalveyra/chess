@@ -18,8 +18,9 @@ public class Board {
     this.columns = columns;
     this.board = new Piece[rows][columns];
   }
-  //Default constructor for Chess Board
-  public Board(Map<Position, Piece> pieces){
+
+  // Default constructor for Chess Board
+  public Board(Map<Position, Piece> pieces) {
     this.pieces = pieces;
     this.rows = this.columns = 8;
     this.board = new Piece[8][8];
@@ -42,23 +43,29 @@ public class Board {
   }
 
   public void updatePiecePosition(Position position, Piece piece) {
-    //First, ChessGame checks if the wanted piece to move is from its team
-    //TODO: ChessGame should have previously checked rules
-    //TODO: Should check if moved piece is from current turn team
+    // First, ChessGame checks if the wanted piece to move is from its team
+    // TODO: ChessGame should have previously checked rules
+    // TODO: Should check if moved piece is from current turn team
     Position oldPosition = getPieceCurrentPosition(piece);
-    if(piece.checkValidMove(oldPosition, position)){
-      //TODO
+    if (piece.checkValidMove(oldPosition, position)) {
+      // TODO
       // Update map
       // Change position in matrix
     }
   }
-  public Color getCurrentTurn(){
+
+  public Color getCurrentTurn() {
     return currentTurn;
   }
+
+  public void changeTurn(Color turn) {
+    currentTurn = turn;
+  }
+
   private Position getPieceCurrentPosition(Piece piece) {
-    //O(N)
-    for(Map.Entry<Position,Piece> entry: pieces.entrySet()){
-      if(entry.getValue() == piece) return entry.getKey();
+    // O(N)
+    for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
+      if (entry.getValue() == piece) return entry.getKey();
     }
     throw new NoSuchElementException("Piece does not exist");
   }
