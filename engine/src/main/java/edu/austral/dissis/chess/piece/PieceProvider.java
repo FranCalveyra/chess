@@ -13,15 +13,22 @@ public class PieceProvider {
   }
 
   public Piece get(Color pieceColour, PieceType type) {
-    return switch (type) {
-      case KING -> new Piece(List.of(new KingMovementRule()), pieceColour, type);
-      case ROOK -> new Piece(List.of(new RookMovementRule()), pieceColour, type);
-      case QUEEN -> new Piece(List.of(new QueenMovementRule()), pieceColour, type);
-      case PAWN ->
-          new Piece(
-              List.of(new PawnMovementRule(), new PawnTakingRule(context)), pieceColour, type);
-      case BISHOP -> new Piece(List.of(new DiagonalMovementRule()), pieceColour, type);
-      case KNIGHT -> new Piece(List.of(new KnightMovementRule()), pieceColour, type);
-    };
+    switch (type) {
+      case KING:
+        return new Piece(List.of(new KingMovementRule()), pieceColour, type);
+      case ROOK:
+        return new Piece(List.of(new RookMovementRule()), pieceColour, type);
+      case QUEEN:
+        return new Piece(List.of(new QueenMovementRule()), pieceColour, type);
+      case PAWN:
+        return new Piece(
+            List.of(new PawnMovementRule(), new PawnTakingRule(context)), pieceColour, type);
+      case BISHOP:
+        return new Piece(List.of(new DiagonalMovementRule()), pieceColour, type);
+      case KNIGHT:
+        return new Piece(List.of(new KnightMovementRule()), pieceColour, type);
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 }
