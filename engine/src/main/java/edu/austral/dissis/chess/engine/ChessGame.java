@@ -14,50 +14,55 @@ public class ChessGame {
 
   private final List<GameRule> rules;
   private final Set<WinCondition> winConditions;
+  private final RuleValidator ruleValidator;
+  private final WinConditionValidator winConditionValidator;
 
   public ChessGame(Board board, List<GameRule> rules) {
     this.board = board;
     this.rules = rules;
     this.winConditions = filterWinConditions(rules);
+    this.ruleValidator = new RuleValidator(rules);
+    this.winConditionValidator = new WinConditionValidator(winConditions);
   }
 
   public void startGame() {
-    Pair<Map<Position, Piece>> teams = activatePlayers();
-    Map<Position, Piece> whites = teams.getFirst(), blacks = teams.getSecond();
+    // As per base Chess, we'll be working with BLACKS and WHITES.
+    // Whites always make the first move.
     setTurn(board, Color.WHITE);
   }
 
-  public void endGame() {
-    // TODO
-    WinConditionValidator validator = new WinConditionValidator(winConditions);
-    if (validator.isGameWon(board))
-      System.out.println("Game has been won by: " + board.getCurrentTurn());
+  public void verifyEndGame() {
+    Color winner = board.getCurrentTurn() == Color.BLACK ? Color.WHITE : Color.BLACK;
+    if (winConditionValidator.isGameWon(board))
+      System.out.println("Game has been won by: " + winner);
   }
 
   public void makeMove(Piece piece, Position newPos) {
-    RuleValidator validator = new RuleValidator(rules);
-    if (validator.isAnyNotValid(board)) return;
+    if (ruleValidator.isAnyNotValid(board)) return;
     if (piece.getPieceColour() == board.getCurrentTurn())
-      return; // Player who has just moved a piece cannot move another (unless
+      return; // Player who has just moved a piece cannot move another (unless Castling)
     if (piece.getPieceColour() == Color.BLACK)
-      setTurn(board, Color.WHITE); // As per base Chess, we'll be working with BLACK and WHITE
+      setTurn(board, Color.WHITE); // If blacks just moved a piece, whites may make the next move
     setTurn(board, Color.BLACK);
     board.updatePiecePosition(newPos, piece);
   }
 
   // Private methods
-  private Pair<Map<Position, Piece>> activatePlayers() {
-    Map<Position, Piece> blacks = getTeam(Color.BLACK, board), whites = getTeam(Color.WHITE, board);
-    return new Pair<>(whites, blacks);
-  }
-
-  private Map<Position, Piece> getTeam(Color color, Board board) {
-    Map<Position, Piece> team = new HashMap<>();
-    for (Map.Entry<Position, Piece> entry : board.getActivePiecesAndPositions().entrySet()) {
-      if (entry.getValue().getPieceColour() == color) team.put(entry.getKey(), entry.getValue());
-    }
-    return team;
-  }
+  //  private Pair<Map<Position, Piece>> activatePlayers() {
+  //    Map<Position, Piece> blacks = getTeam(Color.BLACK, board), whites = getTeam(Color.WHITE,
+  // board);
+  //    return new Pair<>(whites, blacks);
+  //  }
+  //
+  //  private Map<Position, Piece> getTeam(Color color, Board board) {
+  //    Map<Position, Piece> team = new HashMap<>();
+  //    for (Map.Entry<Position, Piece> entry : board.getActivePiecesAndPositions().entrySet()) {
+  //      if (entry.getValue().getPieceColour() == color) team.put(entry.getKey(),
+  // entry.getValue());
+  //    }
+  //    return team;
+  //  }
+  // Can't find a usage for these methods yet, might as well delete it
 
   private Set<WinCondition> filterWinConditions(List<GameRule> rules) {
     Set<WinCondition> conditions = new HashSet<>();

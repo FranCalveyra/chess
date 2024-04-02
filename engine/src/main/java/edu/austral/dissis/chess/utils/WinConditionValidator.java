@@ -2,7 +2,6 @@ package edu.austral.dissis.chess.utils;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.rule.WinCondition;
-import java.awt.*;
 import java.util.Set;
 
 public class WinConditionValidator {
@@ -19,9 +18,4 @@ public class WinConditionValidator {
     }
     return false;
   }
-  //  TODO
-  //  public Color getWinner(Board context){
-  //    if (isGameWon(context)) return Color.BLACK;
-  //    return Color.WHITE;
-  //  }
 }

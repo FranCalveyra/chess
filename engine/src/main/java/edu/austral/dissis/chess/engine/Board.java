@@ -24,34 +24,41 @@ public class Board {
     this.pieces = pieces;
     this.rows = this.columns = 8;
     this.board = new Piece[8][8];
+    setup();
   }
 
   public Map<Position, Piece> getActivePiecesAndPositions() {
     return pieces;
   }
 
-  public void removePieceAt(Position position, Piece piece) {
-    piece.changePieceActivity();
-    pieces.remove(position, piece);
-    board[position.getRow()][position.getColumn()] = null;
-  }
+  //  public void removePieceAt(Position position, Piece piece) {
+  //    piece.changePieceActivity();
+  //    pieces.remove(position, piece);
+  //    board[position.getRow()][position.getColumn()] = null;
+  //  }
+  //
+  //  public void addPieceAt(Position position, Piece piece) {
+  //    piece.changePieceActivity();
+  //    pieces.put(position, piece);
+  //    board[position.getRow()][position.getColumn()] = piece;
+  //  }
 
-  public void addPieceAt(Position position, Piece piece) {
-    piece.changePieceActivity();
-    pieces.put(position, piece);
-    board[position.getRow()][position.getColumn()] = piece;
-  }
-
-  public void updatePiecePosition(Position position, Piece piece) {
+  public void updatePiecePosition(Position newPos, Piece piece) {
     // First, ChessGame checks if the wanted piece to move is from its team
-    // TODO: ChessGame should have previously checked rules
-    // TODO: Should check if moved piece is from current turn team
-    Position oldPosition = getPieceCurrentPosition(piece);
-    if (piece.checkValidMove(oldPosition, position)) {
-      // TODO
-      // Update map
-      // Change position in matrix
+    int i = newPos.getRow(), j = newPos.getColumn();
+    // Do all needed checks
+    if (i > rows || j > columns) return; // Check out of bounds
+    if (!piece.isActiveInBoard()) return; // Check piece activity
+    Position oldPos = getPieceCurrentPosition(piece); // Fetches piece position before moving
+    if (!piece.checkValidMove(oldPos, newPos)) return; // Check move validity
+    // Now, move the piece. Take piece in newPos whether exists
+    Piece pieceToTake = board[i][j];
+    if (pieceToTake != null) {
+      pieces.replace(newPos, piece);
+      pieces.remove(oldPos);
     }
+    board[i][j] = piece;
+    // This should work, check later
   }
 
   public Color getCurrentTurn() {
@@ -62,11 +69,19 @@ public class Board {
     currentTurn = turn;
   }
 
+  // Private methods
   private Position getPieceCurrentPosition(Piece piece) {
     // O(N)
     for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
       if (entry.getValue() == piece) return entry.getKey();
     }
     throw new NoSuchElementException("Piece does not exist");
+  }
+
+  private void setup() {
+    for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
+      int i = entry.getKey().getRow(), j = entry.getKey().getColumn();
+      board[i][j] = entry.getValue();
+    }
   }
 }

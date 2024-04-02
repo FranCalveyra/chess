@@ -7,6 +7,7 @@ import edu.austral.dissis.chess.rule.movement.PieceMovementRule;
 import edu.austral.dissis.chess.utils.Position;
 
 public class Castling implements PieceMovementRule {
+  // Only valid whenever king and rooks haven't been moved
   private final Board context;
 
   public Castling(Board context) {
