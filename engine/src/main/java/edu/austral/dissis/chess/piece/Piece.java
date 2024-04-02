@@ -2,7 +2,7 @@ package edu.austral.dissis.chess.piece;
 
 import edu.austral.dissis.chess.rule.movement.PieceMovementRule;
 import edu.austral.dissis.chess.utils.Position;
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 public class Piece {
@@ -19,7 +19,9 @@ public class Piece {
 
   public boolean checkValidMove(Position oldPos, Position newPos) {
     for (PieceMovementRule rule : movementRules) {
-      if (!rule.isValidMove(oldPos, newPos)) return false;
+      if (!rule.isValidMove(oldPos, newPos)) {
+        return false;
+      }
     }
     return true;
   }

@@ -14,7 +14,9 @@ public class RuleValidator {
   public boolean isAnyNotValid(Board context) {
     // O(N)
     for (GameRule rule : rules) {
-      if (!rule.isValidRule(context)) return true;
+      if (!rule.isValidRule(context)) {
+        return true;
+      }
     }
     return false;
   }

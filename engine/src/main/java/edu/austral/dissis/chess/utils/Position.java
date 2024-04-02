@@ -1,8 +1,10 @@
 package edu.austral.dissis.chess.utils;
 
 public class Position {
-  /** X,Y coordinates encapsulation */
-  private final int column, row;
+  /** X,Y coordinates encapsulation. */
+  private final int column;
+
+  private final int row;
 
   public Position(int row, int column) {
     this.row = row;

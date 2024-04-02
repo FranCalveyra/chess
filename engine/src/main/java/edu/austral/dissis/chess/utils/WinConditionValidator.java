@@ -14,7 +14,9 @@ public class WinConditionValidator {
 
   public boolean isGameWon(Board context) {
     for (WinCondition condition : winConditions) {
-      if (condition.isValidRule(context)) return true;
+      if (condition.isValidRule(context)) {
+        return true;
+      }
     }
     return false;
   }

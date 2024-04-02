@@ -2,13 +2,14 @@ package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
-import java.awt.*;
+import java.awt.Color;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 public class Board {
   private final Map<Position, Piece> pieces;
-  private final int rows, columns;
+  private final int rows;
+  private final int columns;
   private Color currentTurn;
   private final Piece[][] board;
 
@@ -45,12 +46,19 @@ public class Board {
 
   public void updatePiecePosition(Position newPos, Piece piece) {
     // First, ChessGame checks if the wanted piece to move is from its team
-    int i = newPos.getRow(), j = newPos.getColumn();
+    int i = newPos.getRow();
+    int j = newPos.getColumn();
     // Do all needed checks
-    if (i > rows || j > columns) return; // Check out of bounds
-    if (!piece.isActiveInBoard()) return; // Check piece activity
+    if (i > rows || j > columns) {
+      return; // Check out of bounds
+    }
+    if (!piece.isActiveInBoard()) {
+      return; // Check piece activity
+    }
     Position oldPos = getPieceCurrentPosition(piece); // Fetches piece position before moving
-    if (!piece.checkValidMove(oldPos, newPos)) return; // Check move validity
+    if (!piece.checkValidMove(oldPos, newPos)) {
+      return; // Check move validity
+    }
     // Now, move the piece. Take piece in newPos whether exists
     Piece pieceToTake = board[i][j];
     if (pieceToTake != null) {
@@ -73,14 +81,17 @@ public class Board {
   private Position getPieceCurrentPosition(Piece piece) {
     // O(N)
     for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
-      if (entry.getValue() == piece) return entry.getKey();
+      if (entry.getValue() == piece) {
+        return entry.getKey();
+      }
     }
     throw new NoSuchElementException("Piece does not exist");
   }
 
   private void setup() {
     for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
-      int i = entry.getKey().getRow(), j = entry.getKey().getColumn();
+      int i = entry.getKey().getRow();
+      int j = entry.getKey().getColumn();
       board[i][j] = entry.getValue();
     }
   }

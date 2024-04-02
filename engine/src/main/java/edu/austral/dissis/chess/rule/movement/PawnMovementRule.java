@@ -8,8 +8,10 @@ public class PawnMovementRule implements PieceMovementRule {
   public boolean isValidMove(Position oldPos, Position newPos) {
     // Need to handle piece taking
     // Solution: create a new rule
-    int oldX = oldPos.getColumn(), oldY = oldPos.getRow();
-    int newX = newPos.getColumn(), newY = newPos.getRow();
+    int oldX = oldPos.getColumn();
+    int oldY = oldPos.getRow();
+    int newX = newPos.getColumn();
+    int newY = newPos.getRow();
     return oldX == newX && newY > oldY;
   }
 }

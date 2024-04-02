@@ -4,7 +4,7 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.CheckValidator;
 import edu.austral.dissis.chess.utils.Position;
-import java.awt.*;
+import java.awt.Color;
 import java.util.Map.Entry;
 
 public class Check implements GameRule {
@@ -16,7 +16,9 @@ public class Check implements GameRule {
   private boolean check(Board context, Color team) {
     CheckValidator validator = new CheckValidator();
     for (Entry<Position, Piece> entry : context.getActivePiecesAndPositions().entrySet()) {
-      if (validator.kingInCheck(context, team, entry)) return true;
+      if (validator.kingInCheck(context, team, entry)) {
+        return true;
+      }
     }
     return false;
   }

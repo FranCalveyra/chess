@@ -4,7 +4,7 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.CheckValidator;
 import edu.austral.dissis.chess.utils.Position;
-import java.awt.*;
+import java.awt.Color;
 import java.util.Map;
 
 public class CheckMate implements WinCondition {
@@ -16,7 +16,9 @@ public class CheckMate implements WinCondition {
   private boolean checkmate(Board context, Color team) {
     CheckValidator validator = new CheckValidator();
     for (Map.Entry<Position, Piece> entry : context.getActivePiecesAndPositions().entrySet()) {
-      if (!validator.kingInCheck(context, team, entry)) return false;
+      if (!validator.kingInCheck(context, team, entry)) {
+        return false;
+      }
     }
     return true;
   }

@@ -3,13 +3,16 @@ package edu.austral.dissis.chess.engine;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.rule.GameRule;
 import edu.austral.dissis.chess.rule.WinCondition;
-import edu.austral.dissis.chess.utils.*;
-import java.awt.*;
-import java.util.*;
+import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.RuleValidator;
+import edu.austral.dissis.chess.utils.WinConditionValidator;
+import java.awt.Color;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ChessGame {
-  /** Simulates a real Chess Game */
+  /** Simulates a real Chess Game. */
   private final Board board;
 
   private final List<GameRule> rules;
@@ -33,16 +36,21 @@ public class ChessGame {
 
   public void verifyEndGame() {
     Color winner = board.getCurrentTurn() == Color.BLACK ? Color.WHITE : Color.BLACK;
-    if (winConditionValidator.isGameWon(board))
+    if (winConditionValidator.isGameWon(board)) {
       System.out.println("Game has been won by: " + winner);
+    }
   }
 
   public void makeMove(Piece piece, Position newPos) {
-    if (ruleValidator.isAnyNotValid(board)) return;
-    if (piece.getPieceColour() == board.getCurrentTurn())
+    if (ruleValidator.isAnyNotValid(board)) {
+      return;
+    }
+    if (piece.getPieceColour() == board.getCurrentTurn()) {
       return; // Player who has just moved a piece cannot move another (unless Castling)
-    if (piece.getPieceColour() == Color.BLACK)
+    }
+    if (piece.getPieceColour() == Color.BLACK) {
       setTurn(board, Color.WHITE); // If blacks just moved a piece, whites may make the next move
+    }
     setTurn(board, Color.BLACK);
     board.updatePiecePosition(newPos, piece);
   }
