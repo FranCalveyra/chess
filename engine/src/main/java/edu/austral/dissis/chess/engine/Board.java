@@ -62,8 +62,12 @@ public class Board {
     // Now, move the piece. Take piece in newPos whether exists
     Piece pieceToTake = board[i][j];
     if (pieceToTake != null) {
-      pieces.replace(newPos, piece);
-      pieces.remove(oldPos);
+      if (pieceToTake.getPieceColour() != piece.getPieceColour()) {
+        // Taking a piece
+        pieces.replace(newPos, piece);
+        pieces.remove(oldPos);
+      }
+      return;
     }
     board[i][j] = piece;
     // This should work, check later

@@ -12,6 +12,6 @@ public class PawnMovementRule implements PieceMovementRule {
     int oldY = oldPos.getRow();
     int newX = newPos.getColumn();
     int newY = newPos.getRow();
-    return oldX == newX && newY > oldY;
+    return oldX == newX && (newY - oldY == 1 || newY - oldY == 2);
   }
 }
