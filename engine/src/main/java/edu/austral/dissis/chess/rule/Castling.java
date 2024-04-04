@@ -8,14 +8,9 @@ import edu.austral.dissis.chess.utils.Position;
 
 public class Castling implements PieceMovementRule {
   // Only valid whenever king and rooks haven't been moved
-  private final Board context;
-
-  public Castling(Board context) {
-    this.context = context;
-  }
 
   @Override
-  public boolean isValidMove(Position oldPos, Position newPos) {
+  public boolean isValidMove(Position oldPos, Position newPos, Board context) {
     Piece firstPiece = context.getActivePiecesAndPositions().get(oldPos);
     Piece secondPiece = context.getActivePiecesAndPositions().get(newPos);
     boolean colorCheck = firstPiece.getPieceColour() == secondPiece.getPieceColour();

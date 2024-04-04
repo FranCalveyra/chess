@@ -34,11 +34,13 @@ public class ChessGame {
     setTurn(board, Color.WHITE);
   }
 
-  public void verifyEndGame() {
+  public boolean verifyEndGame() {
     Color winner = board.getCurrentTurn() == Color.BLACK ? Color.WHITE : Color.BLACK;
     if (winConditionValidator.isGameWon(board)) {
       System.out.println("Game has been won by: " + winner);
+      return true;
     }
+    return false;
   }
 
   public void makeMove(Piece piece, Position newPos) {

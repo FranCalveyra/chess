@@ -19,7 +19,7 @@ public class Piece {
 
   public boolean checkValidMove(Position oldPos, Position newPos) {
     for (PieceMovementRule rule : movementRules) {
-      if (!rule.isValidMove(oldPos, newPos)) {
+      if (!rule.isValidMove(oldPos, newPos, )) {
         return false;
       }
     }

@@ -5,14 +5,9 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
 
 public class PawnTakingRule implements PieceMovementRule {
-  private final Board context;
-
-  public PawnTakingRule(Board context) {
-    this.context = context;
-  }
 
   @Override
-  public boolean isValidMove(Position oldPos, Position newPos) {
+  public boolean isValidMove(Position oldPos, Position newPos, Board context) {
     int oldX = oldPos.getColumn();
     int oldY = oldPos.getRow();
     int newX = newPos.getColumn();

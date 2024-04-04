@@ -32,24 +32,12 @@ public class Board {
     return pieces;
   }
 
-  //  public void removePieceAt(Position position, Piece piece) {
-  //    piece.changePieceActivity();
-  //    pieces.remove(position, piece);
-  //    board[position.getRow()][position.getColumn()] = null;
-  //  }
-  //
-  //  public void addPieceAt(Position position, Piece piece) {
-  //    piece.changePieceActivity();
-  //    pieces.put(position, piece);
-  //    board[position.getRow()][position.getColumn()] = piece;
-  //  }
-
   public void updatePiecePosition(Position newPos, Piece piece) {
     // First, ChessGame checks if the wanted piece to move is from its team
     int i = newPos.getRow();
     int j = newPos.getColumn();
     // Do all needed checks
-    if (i > rows || j > columns) {
+    if (i > rows || j > columns || i<0 || j<0) {
       return; // Check out of bounds
     }
     if (!piece.isActiveInBoard()) {
