@@ -46,10 +46,12 @@ public class ChessGame {
     if (piece.getPieceColour() != board.getCurrentTurn()) {
       return; // Player who has just moved a piece cannot move another (unless Castling)
     }
-    if (piece.getPieceColour() == Color.BLACK) {
-      setTurn(board, Color.WHITE); // If blacks just moved a piece, whites may make the next move
+    if(piece.getPieceColour() == Color.BLACK) {
+      setTurn(board, Color.WHITE);
     }
-    setTurn(board, Color.BLACK);
+    else {
+      setTurn(board, Color.BLACK); // If blacks just moved a piece, whites may make the next move
+    }
     board.updatePiecePosition(newPos, piece);
     verifyEndGame();
   }

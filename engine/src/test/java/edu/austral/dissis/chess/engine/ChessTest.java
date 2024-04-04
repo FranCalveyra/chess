@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ChessTest {
   //Setup
@@ -38,7 +39,17 @@ public class ChessTest {
     assertEquals(otherWhitePawn.getPieceColour(), Color.WHITE);
     assertEquals(getPiecePosition(otherWhitePawn), new Position(1,1));
     game.makeMove(otherWhitePawn, new Position(3,1));
+    assertNotEquals(new Position(3,1), getPiecePosition(otherWhitePawn));
+
+    Piece blackPawn = pieces.get(new Position(6,0));
+    assertEquals(blackPawn.getPieceColour(),Color.BLACK);
+    assertEquals(getPiecePosition(blackPawn), new Position(6,0));
+    game.makeMove(blackPawn, new Position(4,0));
+    assertEquals(new Position(4,0), getPiecePosition(blackPawn));
+
+    game.makeMove(otherWhitePawn, new Position(3,1));
     assertEquals(new Position(3,1), getPiecePosition(otherWhitePawn));
+
 
   }
 

@@ -16,7 +16,7 @@ public class PawnFirstMoveRule implements PieceMovementRule {
     int oldY = oldPos.getRow();
     int newX = newPos.getColumn();
     int newY = newPos.getRow();
-    boolean horizontalMove = oldX != newX;
+    boolean horizontalMove = oldX == newX;
     boolean verticalMove = Math.abs(newY - oldY) == 2;
     boolean originalPos = piece.getPieceColour() == Color.BLACK ?
       oldPos.getRow() == 6 : oldPos.getRow() == 1;

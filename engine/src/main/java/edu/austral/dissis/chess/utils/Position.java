@@ -4,9 +4,8 @@ import java.util.Objects;
 
 public class Position {
   /** X,Y coordinates encapsulation. */
-  private final int column;
-
   private final int row;
+  private final int column;
 
   public Position(int row, int column) {
     this.row = row;
