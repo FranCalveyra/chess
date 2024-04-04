@@ -6,19 +6,22 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.rule.movement.PieceMovementRule;
 import edu.austral.dissis.chess.utils.Position;
 
+import java.awt.*;
+
 public class Castling implements PieceMovementRule {
-  // Only valid whenever king and rooks haven't been moved
+  // Only valid whenever king and rooks haven't been moved yet.
 
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
     Piece firstPiece = context.getActivePiecesAndPositions().get(oldPos);
     Piece secondPiece = context.getActivePiecesAndPositions().get(newPos);
     boolean colorCheck = firstPiece.getPieceColour() == secondPiece.getPieceColour();
-    boolean typeCheck =
-        (firstPiece.getType() == PieceType.KING && secondPiece.getType() == PieceType.ROOK)
-            || (secondPiece.getType() == PieceType.KING && firstPiece.getType() == PieceType.ROOK);
+    boolean typeCheck1 = (firstPiece.getType() == PieceType.KING && secondPiece.getType() == PieceType.ROOK);
+    boolean typeCheck2 = (secondPiece.getType() == PieceType.KING && firstPiece.getType() == PieceType.ROOK);
+    boolean typeCheck = typeCheck1 || typeCheck2;
     boolean movementCheck =
-        firstPiece.checkValidMove(oldPos, newPos) && secondPiece.checkValidMove(newPos, oldPos);
+      firstPiece.checkValidMove(oldPos, newPos, context) && secondPiece.checkValidMove(newPos, oldPos, context);
+    //TODO: check by colour, check if they haven't moved and the rest of castling rules. By now, it is ok.
     return colorCheck && typeCheck && movementCheck;
   }
 }

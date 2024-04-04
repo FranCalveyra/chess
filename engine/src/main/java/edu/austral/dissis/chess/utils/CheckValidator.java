@@ -15,7 +15,7 @@ public class CheckValidator {
     Map.Entry<Position, Piece> kingEntry = getKing(context, team);
     Piece pieceThatChecks = entry.getValue();
     assert kingEntry != null;
-    return pieceThatChecks.checkValidMove(entry.getKey(), kingEntry.getKey());
+    return pieceThatChecks.checkValidMove(entry.getKey(), kingEntry.getKey(), context);
   }
 
   private Map.Entry<Position, Piece> getKing(Board context, Color team) {

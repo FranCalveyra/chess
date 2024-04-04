@@ -44,7 +44,7 @@ public class Board {
       return; // Check piece activity
     }
     Position oldPos = getPieceCurrentPosition(piece); // Fetches piece position before moving
-    if (!piece.checkValidMove(oldPos, newPos)) {
+    if (!piece.checkValidMove(oldPos, newPos,this)) {
       return; // Check move validity
     }
     // Now, move the piece. Take piece in newPos whether exists
@@ -58,6 +58,9 @@ public class Board {
       return;
     }
     board[i][j] = piece;
+    pieces.remove(oldPos);
+    pieces.put(new Position(i,j), piece);
+
     // This should work, check later
   }
 

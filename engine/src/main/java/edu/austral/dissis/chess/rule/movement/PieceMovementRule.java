@@ -7,7 +7,6 @@ import edu.austral.dissis.chess.utils.Position;
 public interface PieceMovementRule {
   // If I make a PieceMovementRule extend GameRule, O(ruleCheck) can be enormous.
   // Deficient.
-  //TODO: check movement based on colour and context. Handle pieces in the middle of the way.
 
   boolean isValidMove(Position oldPos, Position newPos, Board context);
   default Piece getPiece(Position currentPosition, Board context){
