@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ChessTest {
   //Setup
@@ -49,9 +48,24 @@ public class ChessTest {
 
     game.makeMove(otherWhitePawn, new Position(3,1));
     assertEquals(new Position(3,1), getPiecePosition(otherWhitePawn));
-
-
   }
+
+  @Test
+  public void validateKnightMovement(){
+    Piece whiteLeftKnight = pieces.get(new Position(0,1));
+    assertEquals(whiteLeftKnight.getPieceColour(), Color.WHITE);
+    game.makeMove(whiteLeftKnight, new Position(2,0));
+    assertEquals(new Position(2,0), getPiecePosition(whiteLeftKnight));
+    Piece blackPawn = pieces.get(new Position(6,1));
+    game.makeMove(blackPawn, new Position(4,1));
+
+    game.makeMove(whiteLeftKnight, new Position(4,1));
+    assertEquals(new Position(4,1), getPiecePosition(whiteLeftKnight));
+    assertFalse(blackPawn.isActiveInBoard());
+  }
+
+
+
 
   private Position getPiecePosition(Piece piece){
     for(Map.Entry<Position, Piece> entry: pieces.entrySet()){

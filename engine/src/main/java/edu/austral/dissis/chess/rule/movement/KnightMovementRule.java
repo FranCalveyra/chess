@@ -13,6 +13,6 @@ public class KnightMovementRule implements PieceMovementRule {
     int newY = newPos.getRow();
     int deltaX = Math.abs(newX - oldX);
     int deltaY = Math.abs(newY - oldY);
-    return (deltaX == 2 && deltaY == 1 || deltaX == 1 && deltaY == 2) && isPieceBetween(oldPos, newPos,context);
+    return (deltaX == 2 && deltaY == 1 || deltaX == 1 && deltaY == 2);
   }
 }

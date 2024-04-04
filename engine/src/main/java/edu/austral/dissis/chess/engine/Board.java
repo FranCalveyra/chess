@@ -3,6 +3,7 @@ package edu.austral.dissis.chess.engine;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -54,13 +55,18 @@ public class Board {
         // Taking a piece
         pieces.replace(newPos, piece);
         pieces.remove(oldPos);
+        pieceToTake.changePieceActivity();
       }
       return;
     }
     board[i][j] = piece;
     pieces.remove(oldPos);
+    board[oldPos.getRow()][oldPos.getColumn()] = null;
     pieces.put(new Position(i,j), piece);
-
+    for (int k = 0; k <board.length ; k++) {
+      System.out.println(Arrays.toString(board[k]));
+    }
+    System.out.println("\n");
     // This should work, check later
   }
 
