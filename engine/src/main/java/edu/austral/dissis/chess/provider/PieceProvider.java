@@ -12,8 +12,8 @@ public class PieceProvider {
   public Piece get(Color pieceColour, PieceType type) {
     PieceMovementRule castling = new Castling();
     return switch (type) {
-      case KING -> new Piece(List.of(new KingMovementRule(), castling), pieceColour, type);
-      case ROOK -> new Piece(List.of(new RookMovementRule(), castling), pieceColour, type);
+      case KING -> new Piece(List.of(new KingMovementRule()), pieceColour, type);
+      case ROOK -> new Piece(List.of(new RookMovementRule()), pieceColour, type);
       case QUEEN -> new Piece(List.of(new QueenMovementRule()), pieceColour, type);
       case PAWN ->
           new Piece(

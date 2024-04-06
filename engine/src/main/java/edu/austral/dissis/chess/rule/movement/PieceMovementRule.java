@@ -10,33 +10,33 @@ public interface PieceMovementRule {
 
   boolean isValidMove(Position oldPos, Position newPos, Board context);
 
-  default Piece getPiece(Position currentPosition, Board context) {
+  private Piece getPiece(Position currentPosition, Board context) {
     return context.getActivePiecesAndPositions().get(currentPosition);
   }
 
   default boolean isPieceBetween(Position oldPos, Position newPos, Board context) {
-    //TODO: check on negative displacements (oldX > newX || oldY > newY)
-    int oldX = oldPos.getColumn();
-    int oldY = oldPos.getRow();
-    int newX = newPos.getColumn();
-    int newY = newPos.getRow();
-    int compareX = newX - oldX;
-    int compareY = newY - oldY;
-    int fromX = compareX>0 ? oldX : newX;
-    int fromY = compareY>0 ? oldY : newY;
-    int toX = compareX>0 ? newX : oldX;
-    int toY = compareY>0 ? newY : oldY;
-    return checkBetween(new Position(fromX,fromY), new Position(toX,toY), context);
-  }
-  private boolean checkBetween(Position oldPos, Position newPos, Board context) {
-    Piece piece = getPiece(oldPos, context);
-    for (int i = oldPos.getRow(); i <= newPos.getRow(); i++) {
-      for (int j = oldPos.getColumn(); j <= newPos.getColumn(); j++) {
-        Piece pieceAt = getPiece(new Position(i, j), context);
-        if (pieceAt != null && pieceAt.getPieceColour() == piece.getPieceColour()) return false;
-      }
-    }
-    return true;
+    //TODO: check on displacement type
+    int oldColumn = oldPos.getColumn();
+    int oldRow = oldPos.getRow();
+    int newColumn = newPos.getColumn();
+    int newRow = newPos.getRow();
+    int compareColumn = newColumn - oldColumn;
+    int compareRow = newRow - oldRow;
+    int fromColumn = compareColumn > 0 ? oldColumn : newColumn;
+    int fromRow = compareRow > 0 ? oldRow : newRow;
+    int toColumn = compareColumn > 0 ? newColumn : oldColumn;
+    int toRow = compareRow > 0 ? newRow : oldRow;
+    return isTeammateBetween(new Position(fromRow, fromColumn), new Position(toRow, toColumn), context, compareRow, compareColumn);
   }
 
+  private boolean isTeammateBetween(Position oldPos, Position newPos, Board context, int deltaRow, int deltaColumn) {
+  //Change for loops depending on displacement type
+    for (int i = oldPos.getRow(); i < newPos.getRow(); i++) {
+      for (int j = oldPos.getColumn(); j < newPos.getColumn(); j++) {
+        Piece pieceAt = getPiece(new Position(i, j), context);
+        if (pieceAt != null) return true;
+      }
+    }
+    return false;
+  }
 }

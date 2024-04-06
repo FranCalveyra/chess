@@ -18,7 +18,7 @@ public class ChessTest {
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
   private final Board board = new Board(pieces);
   private final List<GameRule> rules =
-      new ArrayList<>(List.of(new Check(), new CheckMate(), new Stalemate()));
+      new ArrayList<>(List.of(new DefaultCheck(), new CheckMate(), new Stalemate()));
   private final ChessGame game = new ChessGame(board, rules);
 
   ChessTest() {
@@ -68,6 +68,27 @@ public class ChessTest {
     assertFalse(blackPawn.isActiveInBoard());
   }
 
+  @Test
+  public void putWhiteKingInCheckmate() {
+    Piece blackPawn = pieces.get(new Position(6, 4));
+    Piece whitePawn = pieces.get(new Position(1, 5));
+    Piece whitePawn2 = pieces.get(new Position(1, 6));
+    Piece blackQueen = pieces.get(new Position(7, 3));
+    assertEquals(blackPawn.getPieceColour(), Color.BLACK);
+    game.makeMove(whitePawn, new Position(2,5));
+    assertEquals(new Position(2, 5), getPiecePosition(whitePawn));
+    game.makeMove(blackPawn, new Position(4,4));
+    assertEquals(new Position(4, 4), getPiecePosition(blackPawn));
+    game.makeMove(whitePawn2, new Position(3,6));
+    assertEquals(new Position(3, 6), getPiecePosition(whitePawn2));
+    game.makeMove(blackQueen, new Position(3,7));
+    assertEquals(new Position(3, 7), getPiecePosition(blackQueen));
+    assertTrue(new DefaultCheck().isValidRule(board)); //TODO: MUST CHANGE CHECK AND CHECKMATE, something wrong
+
+
+  }
+
+  //Private stuff
   private Position getPiecePosition(Piece piece) {
     for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
       if (entry.getValue() == piece) return entry.getKey();

@@ -15,7 +15,7 @@ public class RuleValidator {
   public boolean isAnyNotValid(Board context) {
     // O(N)
     for (GameRule rule : rules) {
-      if (rule.getClass() == Check.class) continue; //TODO: change it to not affect during normal game
+      if (rule instanceof Check) continue; //TODO: change it to not affect during normal game
       if (!rule.isValidRule(context)) {
         return true;
       }
