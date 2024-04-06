@@ -1,7 +1,6 @@
 package edu.austral.dissis.chess.rule.movement;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
 
 public class DiagonalMovementRule implements PieceMovementRule {
@@ -13,6 +12,6 @@ public class DiagonalMovementRule implements PieceMovementRule {
     boolean moveCondition = deltaX == deltaY;
     return !isPieceBetween(oldPos, newPos, context) && moveCondition;
     // They have to move the same amount in both coordinates.
-    // If not, movement should be resemblance to a Knight movement.
+    // If not, movement should resemble to a Knight movement.
   }
 }

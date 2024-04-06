@@ -4,8 +4,8 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.rule.GameRule;
 import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.utils.Position;
-import edu.austral.dissis.chess.utils.RuleValidator;
-import edu.austral.dissis.chess.utils.WinConditionValidator;
+import edu.austral.dissis.chess.validator.RuleValidator;
+import edu.austral.dissis.chess.validator.WinConditionValidator;
 import java.awt.Color;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.Set;
 
 public class ChessGame {
   /** Simulates a real Chess Game. */
+  //TODO: make everything immutable once the game works
   private final Board board;
 
   private final RuleValidator ruleValidator;
@@ -46,10 +47,9 @@ public class ChessGame {
     if (piece.getPieceColour() != board.getCurrentTurn()) {
       return; // Player who has just moved a piece cannot move another (unless Castling)
     }
-    if(piece.getPieceColour() == Color.BLACK) {
+    if (piece.getPieceColour() == Color.BLACK) {
       setTurn(board, Color.WHITE);
-    }
-    else {
+    } else {
       setTurn(board, Color.BLACK); // If blacks just moved a piece, whites may make the next move
     }
     board.updatePiecePosition(newPos, piece);
@@ -63,7 +63,7 @@ public class ChessGame {
         conditions.add((WinCondition) rule);
       }
     }
-    for(WinCondition condition: conditions){
+    for (WinCondition condition : conditions) {
       rules.remove(condition);
     }
     return conditions;

@@ -5,6 +5,7 @@ import java.util.Objects;
 public class Position {
   /** X,Y coordinates encapsulation. */
   private final int row;
+
   private final int column;
 
   public Position(int row, int column) {
@@ -20,20 +21,16 @@ public class Position {
     return row;
   }
 
-  //More understandable
+  // More understandable
   @Override
   public String toString() {
-    return "Position{" +
-      "row=" + row +
-      ", column=" + column +
-      '}';
+    return "Position{" + "row=" + row + ", column=" + column + '}';
   }
 
-
-  //Easier map getting
+  // Easier map getting
   @Override
   public boolean equals(Object obj) {
-    if(obj.getClass() != Position.class) return false;
+    if (obj.getClass() != Position.class) return false;
     return ((Position) obj).getRow() == getRow() && ((Position) obj).getColumn() == getColumn();
   }
 

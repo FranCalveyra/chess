@@ -2,7 +2,7 @@ package edu.austral.dissis.chess.rule;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.utils.CheckValidator;
+import edu.austral.dissis.chess.validator.CheckValidator;
 import edu.austral.dissis.chess.utils.Position;
 import java.awt.Color;
 import java.util.Map.Entry;

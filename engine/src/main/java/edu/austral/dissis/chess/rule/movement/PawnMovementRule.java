@@ -11,6 +11,9 @@ public class PawnMovementRule implements PieceMovementRule {
     int oldY = oldPos.getRow();
     int newX = newPos.getColumn();
     int newY = newPos.getRow();
-    return (oldX == newX && (Math.abs(newY - oldY) == 1 || new PawnFirstMoveRule().isValidMove(oldPos,newPos,context))) && !isPieceBetween(oldPos,newPos,context);
+    return (oldX == newX
+            && (Math.abs(newY - oldY) == 1
+                || new PawnFirstMoveRule().isValidMove(oldPos, newPos, context)))
+        && !isPieceBetween(oldPos, newPos, context);
   }
 }

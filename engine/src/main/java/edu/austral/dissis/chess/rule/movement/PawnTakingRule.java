@@ -12,11 +12,11 @@ public class PawnTakingRule implements PieceMovementRule {
     int oldY = oldPos.getRow();
     int newX = newPos.getColumn();
     int newY = newPos.getRow();
-    boolean diagonalPositiveMove = (newY - oldY) > 0 && (newX - oldX) > 0;
-    if (!diagonalPositiveMove) {
+    boolean diagonalMove = Math.abs(newY - oldY) ==1 && Math.abs(newX - oldX) == 1;
+    if (!diagonalMove) {
       return false;
     }
     Piece pieceAtNewPos = context.getActivePiecesAndPositions().get(newPos);
-    return pieceAtNewPos != null;
+    return pieceAtNewPos != null && pieceAtNewPos.getPieceColour() == context.getCurrentTurn();
   }
 }

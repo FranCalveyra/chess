@@ -38,37 +38,60 @@ public class Board {
     int i = newPos.getRow();
     int j = newPos.getColumn();
     // Do all needed checks
-    if (i > rows || j > columns || i<0 || j<0) {
+    if (i > rows || j > columns || i < 0 || j < 0) {
       return; // Check out of bounds
     }
     if (!piece.isActiveInBoard()) {
       return; // Check piece activity
     }
     Position oldPos = getPieceCurrentPosition(piece); // Fetches piece position before moving
-    if (!piece.checkValidMove(oldPos, newPos,this)) {
+    if (!piece.checkValidMove(oldPos, newPos, this)) {
       return; // Check move validity
     }
     // Now, move the piece. Take piece in newPos whether exists
     Piece pieceToTake = board[i][j];
     if (pieceToTake != null) {
-      if (pieceToTake.getPieceColour() != piece.getPieceColour()) {
+        if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
+            return;
+        }
         // Taking a piece
-        pieces.replace(newPos, piece);
-        pieces.remove(oldPos);
-        pieceToTake.changePieceActivity();
-      }
-      return;
+//        pieces.replace(newPos, piece);
+//        pieces.remove(oldPos);
+//        pieceToTake.changePieceActivity();
+        removePieceAt(newPos);
+        removePieceAt(oldPos);
+        addPieceAt(newPos, piece);
     }
-    board[i][j] = piece;
-    pieces.remove(oldPos);
     board[oldPos.getRow()][oldPos.getColumn()] = null;
-    pieces.put(new Position(i,j), piece);
-    for (int k = 0; k <board.length ; k++) {
+    pieces.remove(oldPos);
+    board[i][j] = piece;
+    pieces.put(new Position(i, j), piece);
+
+
+    //Debugging code ahead:
+    for (int k = 0; k < board.length; k++) {
       System.out.println(Arrays.toString(board[k]));
     }
     System.out.println("\n");
+    System.out.println(pieces.size());
+    System.out.println("\n");
+
     // This should work, check later
   }
+  public void addPieceAt(Position pos, Piece piece) {
+    piece.changePieceActivity(); //Activate piece
+    board[pos.getRow()][pos.getColumn()] = piece; //Add it to board
+    pieces.put(pos, piece); // Get the map
+  }
+  public void removePieceAt(Position pos) {
+    board[pos.getRow()][pos.getColumn()] = null;
+    Piece pieceToRemove = pieces.get(pos);
+    pieceToRemove.changePieceActivity();
+    pieces.remove(pos);
+  }
+
+
+
 
   public Color getCurrentTurn() {
     return currentTurn;

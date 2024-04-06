@@ -9,6 +9,7 @@ public class KingMovementRule implements PieceMovementRule {
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
     // King should move only in one direction, one tile at a time
     return Math.abs(newPos.getColumn() - oldPos.getColumn()) == 1
-        || Math.abs(newPos.getRow() - oldPos.getRow()) == 1 && !isPieceBetween(oldPos,newPos,context);
+        || Math.abs(newPos.getRow() - oldPos.getRow()) == 1
+            && !isPieceBetween(oldPos, newPos, context);
   }
 }

@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.utils;
+package edu.austral.dissis.chess.validator;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.rule.Check;
@@ -15,7 +15,7 @@ public class RuleValidator {
   public boolean isAnyNotValid(Board context) {
     // O(N)
     for (GameRule rule : rules) {
-      if(rule.getClass() == Check.class) continue;
+      if (rule.getClass() == Check.class) continue; //TODO: change it to not affect during normal game
       if (!rule.isValidRule(context)) {
         return true;
       }

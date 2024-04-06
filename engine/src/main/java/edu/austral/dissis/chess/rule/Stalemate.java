@@ -25,7 +25,7 @@ public class Stalemate implements TieRule {
   }
 
   private boolean hasValidMove(Position position, Piece piece) {
-    //TODO
+    // TODO
     return false;
   }
 }

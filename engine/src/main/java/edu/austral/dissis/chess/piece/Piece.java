@@ -31,7 +31,7 @@ public class Piece {
   public String toString() {
     String colour = pieceColour == Color.BLACK ? "BLACK" : "WHITE";
 
-    return String.valueOf((type.toString().charAt(0)));
+    return colour + " " + type.toString().charAt(0);
   }
 
   public boolean isActiveInBoard() {
