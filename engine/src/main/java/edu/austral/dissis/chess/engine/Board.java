@@ -2,6 +2,8 @@ package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.UnallowedMoveException;
+
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.Map;
@@ -25,7 +27,7 @@ public class Board {
   public Board(Map<Position, Piece> pieces) {
     this.pieces = pieces;
     this.rows = this.columns = 8;
-    this.board = new Piece[8][8];
+    this.board = new Piece[rows][columns];
     setup();
   }
 
@@ -33,7 +35,7 @@ public class Board {
     return pieces;
   }
 
-  public void updatePiecePosition(Position newPos, Piece piece) {
+  public void updatePiecePosition(Position newPos, Piece piece) throws UnallowedMoveException {
     // First, ChessGame checks if the wanted piece to move is from its team
     int i = newPos.getRow();
     int j = newPos.getColumn();
@@ -46,7 +48,7 @@ public class Board {
     }
     Position oldPos = getPieceCurrentPosition(piece); // Fetches piece position before moving
     if (!piece.checkValidMove(oldPos, newPos, this)) {
-      return; // Check move validity
+      throw new UnallowedMoveException("Cannot move this piece to that position");// Check move validity
     }
     // Now, move the piece. Take piece in newPos whether exists
     Piece pieceToTake = board[i][j];
@@ -62,11 +64,9 @@ public class Board {
         removePieceAt(oldPos);
         addPieceAt(newPos, piece);
     }
-    board[oldPos.getRow()][oldPos.getColumn()] = null;
-    pieces.remove(oldPos);
-    board[i][j] = piece;
-    pieces.put(new Position(i, j), piece);
-
+    updateToEmptyPosition(piece, oldPos, i, j);
+    Color nextTurn = piece.getPieceColour() == Color.WHITE ? Color.BLACK : Color.WHITE;
+    changeTurn(nextTurn);
 
     //Debugging code ahead:
     for (int k = 0; k < board.length; k++) {
@@ -78,6 +78,9 @@ public class Board {
 
     // This should work, check later
   }
+
+
+
   public void addPieceAt(Position pos, Piece piece) {
     piece.changePieceActivity(); //Activate piece
     board[pos.getRow()][pos.getColumn()] = piece; //Add it to board
@@ -90,7 +93,9 @@ public class Board {
     pieces.remove(pos);
   }
 
-
+  public Piece pieceAt(Position pos) {
+    return pieces.get(pos);
+  }
 
 
   public Color getCurrentTurn() {
@@ -99,6 +104,13 @@ public class Board {
 
   public void changeTurn(Color turn) {
     currentTurn = turn;
+  }
+
+  public int getColumns() {
+    return columns;
+  }
+  public int getRows() {
+    return rows;
   }
 
   // Private methods
@@ -118,5 +130,11 @@ public class Board {
       int j = entry.getKey().getColumn();
       board[i][j] = entry.getValue();
     }
+  }
+  private void updateToEmptyPosition(Piece piece, Position oldPos, int i, int j) {
+    board[oldPos.getRow()][oldPos.getColumn()] = null;
+    pieces.remove(oldPos);
+    board[i][j] = piece;
+    pieces.put(new Position(i, j), piece);
   }
 }

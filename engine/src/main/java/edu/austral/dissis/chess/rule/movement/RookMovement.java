@@ -3,7 +3,7 @@ package edu.austral.dissis.chess.rule.movement;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.Position;
 
-public class RookMovementRule implements PieceMovementRule {
+public class RookMovement implements PieceMovement {
 
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {

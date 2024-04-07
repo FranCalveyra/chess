@@ -3,11 +3,10 @@ package edu.austral.dissis.chess.rule;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.rule.movement.PieceMovementRule;
+import edu.austral.dissis.chess.rule.movement.PieceMovement;
 import edu.austral.dissis.chess.utils.Position;
-import java.awt.*;
 
-public class Castling implements PieceMovementRule {
+public class Castling implements PieceMovement {
   // Only valid whenever king and rooks haven't been moved yet.
 
   @Override

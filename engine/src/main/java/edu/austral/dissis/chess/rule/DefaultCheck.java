@@ -8,9 +8,14 @@ import java.awt.Color;
 import java.util.Map.Entry;
 
 public class DefaultCheck implements Check {
+  private final Color team;
+  public DefaultCheck(Color team) {
+    this.team = team;
+  }
+
   @Override
   public boolean isValidRule(Board context) {
-    return check(context, Color.WHITE) || check(context, Color.BLACK);
+    return check(context, team);
   }
 
   protected boolean check(Board context, Color team) {

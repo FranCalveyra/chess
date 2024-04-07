@@ -4,7 +4,7 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
 
-public class PawnTakingRule implements PieceMovementRule {
+public class PawnTaking implements PieceMovement {
 
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
@@ -17,6 +17,7 @@ public class PawnTakingRule implements PieceMovementRule {
       return false;
     }
     Piece pieceAtNewPos = context.getActivePiecesAndPositions().get(newPos);
-    return pieceAtNewPos != null && pieceAtNewPos.getPieceColour() == context.getCurrentTurn();
+    System.out.println(pieceAtNewPos != null && pieceAtNewPos.getPieceColour() == context.getCurrentTurn());
+    return pieceAtNewPos != null && pieceAtNewPos.getPieceColour() != context.getCurrentTurn();
   }
 }

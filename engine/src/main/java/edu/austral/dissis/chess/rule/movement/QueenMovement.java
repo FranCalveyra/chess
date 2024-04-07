@@ -3,7 +3,7 @@ package edu.austral.dissis.chess.rule.movement;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.Position;
 
-public class QueenMovementRule implements PieceMovementRule {
+public class QueenMovement implements PieceMovement {
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
     int oldX = oldPos.getColumn();

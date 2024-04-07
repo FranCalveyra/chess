@@ -4,17 +4,16 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
 
-public interface PieceMovementRule {
+import java.util.ArrayList;
+import java.util.List;
+
+public interface PieceMovement {
   // If I make a PieceMovementRule extend GameRule, O(ruleCheck) can be enormous.
   // Deficient.
 
   boolean isValidMove(Position oldPos, Position newPos, Board context);
 
-  private Piece getPiece(Position currentPosition, Board context) {
-    return context.getActivePiecesAndPositions().get(currentPosition);
-  }
-
-  default boolean isPieceBetween(Position oldPos, Position newPos, Board context) {
+  default boolean isNotPieceBetween(Position oldPos, Position newPos, Board context) {
     //TODO: check on displacement type
     int oldColumn = oldPos.getColumn();
     int oldRow = oldPos.getRow();
@@ -26,9 +25,19 @@ public interface PieceMovementRule {
     int fromRow = compareRow > 0 ? oldRow : newRow;
     int toColumn = compareColumn > 0 ? newColumn : oldColumn;
     int toRow = compareRow > 0 ? newRow : oldRow;
-    return isTeammateBetween(new Position(fromRow, fromColumn), new Position(toRow, toColumn), context, compareRow, compareColumn);
+    return !isTeammateBetween(new Position(fromRow, fromColumn), new Position(toRow, toColumn), context, compareRow, compareColumn);
   }
 
+  default List<Position> getPossibleMoves(Position oldPos, Board context) {
+    List<Position> possiblePositions = new ArrayList<>();
+    int oldColumn = oldPos.getColumn();
+    int oldRow = oldPos.getRow();
+    //TODO
+    return possiblePositions;
+  }
+
+
+  //Private methods
   private boolean isTeammateBetween(Position oldPos, Position newPos, Board context, int deltaRow, int deltaColumn) {
   //Change for loops depending on displacement type
     for (int i = oldPos.getRow(); i < newPos.getRow(); i++) {
@@ -38,5 +47,8 @@ public interface PieceMovementRule {
       }
     }
     return false;
+  }
+  private Piece getPiece(Position currentPosition, Board context) {
+    return context.getActivePiecesAndPositions().get(currentPosition);
   }
 }

@@ -3,7 +3,7 @@ package edu.austral.dissis.chess.rule.movement;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.Position;
 
-public class PawnMovementRule implements PieceMovementRule {
+public class PawnMovement implements PieceMovement {
 
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
@@ -13,7 +13,7 @@ public class PawnMovementRule implements PieceMovementRule {
     int newY = newPos.getRow();
     return (oldX == newX
             && (Math.abs(newY - oldY) == 1
-                || new PawnFirstMoveRule().isValidMove(oldPos, newPos, context)))
-        && !isPieceBetween(oldPos, newPos, context);
+                || new PawnFirstMove().isValidMove(oldPos, newPos, context)))
+        && isNotPieceBetween(oldPos, newPos, context);
   }
 }

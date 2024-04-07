@@ -15,7 +15,9 @@ public class RuleValidator {
   public boolean isAnyNotValid(Board context) {
     // O(N)
     for (GameRule rule : rules) {
-      if (rule instanceof Check) continue; //TODO: change it to not affect during normal game
+      if (rule instanceof Check) continue; //TODO: change it to not affect during normal game.
+      //May need to change Check/CheckMate validation inside ChessGame
+      //Idea: check if move leaves own king in check
       if (!rule.isValidRule(context)) {
         return true;
       }

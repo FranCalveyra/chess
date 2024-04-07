@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import org.junit.jupiter.api.Test;
 
 public class ChessTest {
@@ -18,7 +20,7 @@ public class ChessTest {
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
   private final Board board = new Board(pieces);
   private final List<GameRule> rules =
-      new ArrayList<>(List.of(new DefaultCheck(), new CheckMate(), new Stalemate()));
+      new ArrayList<>(List.of(new DefaultCheck(Color.BLACK), new DefaultCheck(Color.WHITE), new CheckMate(Color.BLACK), new CheckMate(Color.WHITE), new Stalemate()));
   private final ChessGame game = new ChessGame(board, rules);
 
   ChessTest() {
@@ -27,7 +29,7 @@ public class ChessTest {
 
   // Tests
   @Test
-  public void pawnShouldMoveOneOrTwoTilesOnFirstMove() {
+  public void pawnShouldMoveOneOrTwoTilesOnFirstMove() throws UnallowedMoveException {
     Piece whitePawn = pieces.get(new Position(1, 0));
     assertEquals(whitePawn.getPieceColour(), Color.WHITE);
     assertEquals(getPiecePosition(whitePawn), new Position(1, 0));
@@ -55,7 +57,7 @@ public class ChessTest {
   }
 
   @Test
-  public void validateKnightMovement() {
+  public void validateKnightMovement() throws UnallowedMoveException {
     Piece whiteLeftKnight = pieces.get(new Position(0, 1));
     assertEquals(whiteLeftKnight.getPieceColour(), Color.WHITE);
     game.makeMove(whiteLeftKnight, new Position(2, 0));
@@ -69,7 +71,7 @@ public class ChessTest {
   }
 
   @Test
-  public void putWhiteKingInCheckmate() {
+  public void putWhiteKingInCheck() throws UnallowedMoveException {
     Piece blackPawn = pieces.get(new Position(6, 4));
     Piece whitePawn = pieces.get(new Position(1, 5));
     Piece whitePawn2 = pieces.get(new Position(1, 6));
@@ -83,7 +85,8 @@ public class ChessTest {
     assertEquals(new Position(3, 6), getPiecePosition(whitePawn2));
     game.makeMove(blackQueen, new Position(3,7));
     assertEquals(new Position(3, 7), getPiecePosition(blackQueen));
-    assertTrue(new DefaultCheck().isValidRule(board)); //TODO: MUST CHANGE CHECK AND CHECKMATE, something wrong
+    assertTrue(new DefaultCheck(Color.WHITE).isValidRule(board));//TODO: MUST CHANGE CHECK AND CHECKMATE, something wrong
+    assertFalse(new DefaultCheck(Color.BLACK).isValidRule(board));
 
 
   }
