@@ -55,6 +55,7 @@ public class ChessGame {
     verifyEndGame();
   }
 
+  // Private methods
   private Set<WinCondition> filterWinConditions(List<GameRule> rules) {
     Set<WinCondition> conditions = new HashSet<>();
     for (GameRule rule : rules) {

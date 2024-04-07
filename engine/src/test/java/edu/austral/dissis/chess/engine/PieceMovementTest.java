@@ -80,6 +80,7 @@ public class PieceMovementTest {
     game.makeMove(whiteBishop, new Position(4, 2));
     assertFalse(blackPawn.isActiveInBoard());
     assertEquals(31, pieces.size());
+
   }
 
   @Test
@@ -108,5 +109,11 @@ public class PieceMovementTest {
     game.makeMove(blackPawn, new Position(3, 1));
     assertEquals(new Position(3, 1), getPiecePosition(blackPawn, pieces));
     assertFalse(otherWhitePawn.isActiveInBoard());
+
+    Piece newWhitePawn = board.pieceAt(new Position(1, 4));
+    assertEquals(newWhitePawn.getPieceColour(), Color.WHITE);
+    assertEquals(getPiecePosition(newWhitePawn, pieces), new Position(1, 4));
+    List<Position> pawnMoveSet = newWhitePawn.getMoveSet(new Position(1,4), board);
+    assertEquals(pawnMoveSet.size(), 2);
   }
 }

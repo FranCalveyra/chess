@@ -17,8 +17,6 @@ public class PawnTaking implements PieceMovement {
       return false;
     }
     Piece pieceAtNewPos = context.getActivePiecesAndPositions().get(newPos);
-    System.out.println(
-        pieceAtNewPos != null && pieceAtNewPos.getPieceColour() == context.getCurrentTurn());
     return pieceAtNewPos != null && pieceAtNewPos.getPieceColour() != context.getCurrentTurn();
   }
 }

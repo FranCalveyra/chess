@@ -7,16 +7,16 @@ import edu.austral.dissis.chess.utils.Position;
 import java.awt.Color;
 import java.util.Map;
 
-public class CheckValidator {
+public class DefaultCheckValidator {
 
-  public boolean kingInCheck(Board context, Color team, Map.Entry<Position, Piece> entry) {
-    if (entry.getValue().getPieceColour() == team) {
+  public boolean kingInCheck(Board context, Color team, Position toPos, Piece piece) {
+    if (piece == null) return false;
+    if (piece.getPieceColour() == team) {
       return false; // Makes no sense to check if the king's in check against your own team
     }
     Map.Entry<Position, Piece> kingEntry = getKing(context, team);
-    Piece pieceThatChecks = entry.getValue();
     assert kingEntry != null;
-    return pieceThatChecks.checkValidMove(entry.getKey(), kingEntry.getKey(), context);
+    return piece.checkValidMove(toPos, kingEntry.getKey(), context);
   }
 
   private Map.Entry<Position, Piece> getKing(Board context, Color team) {

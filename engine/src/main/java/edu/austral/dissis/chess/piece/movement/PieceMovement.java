@@ -23,9 +23,14 @@ public interface PieceMovement {
 
   default List<Position> getPossibleMoves(Position oldPos, Board context) {
     List<Position> possiblePositions = new ArrayList<>();
-    int oldColumn = oldPos.getColumn();
-    int oldRow = oldPos.getRow();
-    // TODO
+    for (int i = 0; i < context.getRows(); i++) {
+      for (int j = 0; j < context.getColumns(); j++) {
+        Position currentPos = new Position(i,j);
+        if (isValidMove(oldPos, currentPos, context) && !possiblePositions.contains(currentPos)) {
+          possiblePositions.add(currentPos);
+        }
+      }
+    }
     return possiblePositions;
   }
 

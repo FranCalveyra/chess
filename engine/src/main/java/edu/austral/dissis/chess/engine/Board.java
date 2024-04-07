@@ -15,7 +15,7 @@ public class Board {
   private final Piece[][] board;
   private final TurnSelector selector;
   private int turnNumber = 0;
-  private final List<Piece> takenPieces = new ArrayList<>(); //TODO
+  private final List<Piece> takenPieces = new ArrayList<>(); // TODO
 
   public Board(Map<Position, Piece> pieces, int rows, int columns, TurnSelector selector) {
     this.pieces = pieces;
@@ -66,14 +66,12 @@ public class Board {
       addPieceAt(newPos, piece);
     }
     updateToEmptyPosition(piece, oldPos, i, j);
-    if (!piece.hasMoved()) {
+    if (piece.hasNotMoved()) {
       piece.changeMoveState();
     }
     turnNumber++;
-    changeTurn(selector.selectTurn(this,turnNumber));
-
-    // Debugging code ahead:
-    printBoard();
+    changeTurn(selector.selectTurn(this, turnNumber));
+    System.out.println(this);
     // This should work, check later
   }
 
@@ -99,12 +97,13 @@ public class Board {
   }
 
   public void changeTurn(Color turn) {
-    currentTurn =turn;
+    currentTurn = turn;
   } // Uncouple turn
 
   public int getColumns() {
     return columns;
   }
+
   public int getRows() {
     return rows;
   }
@@ -135,12 +134,12 @@ public class Board {
     pieces.put(new Position(i, j), piece);
   }
 
-  private void printBoard() {
-      for (Piece[] value : board) {
-          System.out.println(Arrays.toString(value));
-      }
-    System.out.println("\n");
-    System.out.println(pieces.size());
-    System.out.println("\n");
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    for(Piece[] line: board){
+      builder.append(Arrays.toString(line)).append("\n");
+    }
+    return builder.toString();
   }
 }
