@@ -19,24 +19,22 @@ public class PieceProvider {
 
   public Piece get(Color pieceColour, PieceType type) {
     PieceMovement castling = new Castling();
-      switch (type) {
-          case KING:
-              return new Piece(List.of(new KingMovement()), pieceColour, type);
-          case ROOK:
-              return new Piece(List.of(new RookMovement()), pieceColour, type);
-          case QUEEN:
-              return new Piece(List.of(new QueenMovement()), pieceColour, type);
-          case PAWN:
-              return new Piece(
-                      List.of(new PawnMovement(), new PawnTaking(), new PawnFirstMove()),
-                      pieceColour,
-                      type);
-          case BISHOP:
-              return new Piece(List.of(new DiagonalMovement()), pieceColour, type);
-          case KNIGHT:
-              return new Piece(List.of(new KnightMovement()), pieceColour, type);
-          default:
-              throw new IllegalArgumentException();
-      }
+    switch (type) {
+      case KING:
+        return new Piece(List.of(new KingMovement()), pieceColour, type);
+      case ROOK:
+        return new Piece(List.of(new RookMovement()), pieceColour, type);
+      case QUEEN:
+        return new Piece(List.of(new QueenMovement()), pieceColour, type);
+      case PAWN:
+        return new Piece(
+            List.of(new PawnMovement(), new PawnTaking(), new PawnFirstMove()), pieceColour, type);
+      case BISHOP:
+        return new Piece(List.of(new DiagonalMovement()), pieceColour, type);
+      case KNIGHT:
+        return new Piece(List.of(new KnightMovement()), pieceColour, type);
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 }
