@@ -4,8 +4,7 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,9 @@ public class ChessPieceMapProvider {
   public Map<Position, Piece> provide(GameType type) {
     Map<Position, Piece> result = new HashMap<>();
     PieceProvider provider = new PieceProvider();
-    if (type != GameType.DEFAULT) return null;
+    if (type != GameType.DEFAULT) {
+      return null;
+    }
     // Pawns
     for (int j = 0; j < 8; j++) {
       result.put(new Position(1, j), provider.get(Color.WHITE, PieceType.PAWN));

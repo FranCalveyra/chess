@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.piece;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.rule.movement.PieceMovement;
+import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.utils.Position;
 import java.awt.Color;
 import java.util.List;
@@ -11,6 +11,7 @@ public class Piece {
   private final Color pieceColour;
   private final PieceType type;
   private boolean isActiveInBoard = true;
+  private boolean hasMoved = false;
 
   public Piece(List<PieceMovement> movementRules, Color pieceColour, PieceType type) {
     this.movementRules = movementRules;
@@ -31,7 +32,7 @@ public class Piece {
   public String toString() {
     String colour = pieceColour == Color.BLACK ? "BLACK" : "WHITE";
 
-    return colour + " " + type.toString().charAt(0);
+    return colour.substring(0, 2) + " " + type.toString().charAt(0);
   }
 
   public boolean isActiveInBoard() {
@@ -48,5 +49,13 @@ public class Piece {
 
   public PieceType getType() {
     return type;
+  }
+
+  public void changeMoveState() {
+    hasMoved = !hasMoved;
+  }
+
+  public boolean hasMoved() {
+    return hasMoved;
   }
 }

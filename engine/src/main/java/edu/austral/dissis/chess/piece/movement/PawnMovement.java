@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.rule.movement;
+package edu.austral.dissis.chess.piece.movement;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.Position;

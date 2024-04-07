@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.rule.movement;
+package edu.austral.dissis.chess.piece.movement;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
@@ -12,12 +12,13 @@ public class PawnTaking implements PieceMovement {
     int oldY = oldPos.getRow();
     int newX = newPos.getColumn();
     int newY = newPos.getRow();
-    boolean diagonalMove = Math.abs(newY - oldY) ==1 && Math.abs(newX - oldX) == 1;
+    boolean diagonalMove = Math.abs(newY - oldY) == 1 && Math.abs(newX - oldX) == 1;
     if (!diagonalMove) {
       return false;
     }
     Piece pieceAtNewPos = context.getActivePiecesAndPositions().get(newPos);
-    System.out.println(pieceAtNewPos != null && pieceAtNewPos.getPieceColour() == context.getCurrentTurn());
+    System.out.println(
+        pieceAtNewPos != null && pieceAtNewPos.getPieceColour() == context.getCurrentTurn());
     return pieceAtNewPos != null && pieceAtNewPos.getPieceColour() != context.getCurrentTurn();
   }
 }

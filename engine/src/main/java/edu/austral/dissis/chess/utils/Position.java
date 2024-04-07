@@ -30,7 +30,9 @@ public class Position {
   // Easier map getting
   @Override
   public boolean equals(Object obj) {
-    if (obj.getClass() != Position.class) return false;
+    if (obj.getClass() != Position.class) {
+      return false;
+    }
     return ((Position) obj).getRow() == getRow() && ((Position) obj).getColumn() == getColumn();
   }
 

@@ -16,12 +16,12 @@ import java.util.Set;
 
 public class ChessGame {
   /** Simulates a real Chess Game. */
-  //TODO: make everything immutable once the game works
+  // TODO: make everything immutable once the game works
   private final Board board;
 
   private final RuleValidator ruleValidator;
   private final WinConditionValidator winConditionValidator;
-  private final List<Check> checkRules; //TODO: Check later
+  private final List<Check> checkRules; // TODO: Check later
 
   public ChessGame(Board board, List<GameRule> rules) {
     this.board = board;
@@ -67,6 +67,7 @@ public class ChessGame {
     }
     return conditions;
   }
+
   private List<Check> filterChecks(List<GameRule> rules) {
     List<Check> checks = new ArrayList<>();
     for (GameRule rule : rules) {

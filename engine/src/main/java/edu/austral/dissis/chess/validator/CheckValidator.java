@@ -4,7 +4,6 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.utils.Position;
-
 import java.awt.Color;
 import java.util.Map;
 
