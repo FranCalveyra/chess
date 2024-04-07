@@ -10,6 +10,7 @@ import edu.austral.dissis.chess.rule.CheckMate;
 import edu.austral.dissis.chess.rule.DefaultCheck;
 import edu.austral.dissis.chess.rule.GameRule;
 import edu.austral.dissis.chess.rule.Stalemate;
+import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
@@ -22,7 +23,7 @@ import org.junit.jupiter.api.Test;
 public class ChessTest {
   // Setup
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
-  private final Board board = new Board(pieces);
+  private final Board board = new Board(pieces, new StandardTurnSelector());
   private final List<GameRule> rules =
       new ArrayList<>(
           List.of(
@@ -53,9 +54,7 @@ public class ChessTest {
     assertEquals(new Position(3, 6), getPiecePosition(whitePawn2, pieces));
     game.makeMove(blackQueen, new Position(3, 7));
     assertEquals(new Position(3, 7), getPiecePosition(blackQueen, pieces));
-    assertTrue(
-        new DefaultCheck(Color.WHITE)
-            .isValidRule(board)); // TODO: MUST CHANGE CHECK AND CHECKMATE, something wrong
+    assertTrue(new DefaultCheck(Color.WHITE).isValidRule(board));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(board));
   }
 

@@ -11,6 +11,6 @@ public class RookMovement implements PieceMovement {
         oldPos.getColumn() != newPos.getColumn() && oldPos.getRow() == newPos.getRow();
     boolean verticalMove =
         oldPos.getColumn() == newPos.getColumn() && oldPos.getRow() != newPos.getRow();
-    return horizontalMove || verticalMove;
+    return horizontalMove || verticalMove && isNotPieceBetween(oldPos, newPos, context);
   }
 }

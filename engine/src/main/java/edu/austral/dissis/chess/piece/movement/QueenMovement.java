@@ -6,13 +6,7 @@ import edu.austral.dissis.chess.utils.Position;
 public class QueenMovement implements PieceMovement {
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
-    int oldX = oldPos.getColumn();
-    int oldY = oldPos.getRow();
-    int newX = newPos.getColumn();
-    int newY = newPos.getRow();
-    boolean verticalMove = oldX == newX & oldY != newY;
-    boolean horizontalMove = oldX != newX & oldY == newY;
-    boolean diagonalMove = Math.abs(newX - oldX) == Math.abs(newY - oldY);
-    return verticalMove || horizontalMove || diagonalMove;
+    return new DiagonalMovement().isValidMove(oldPos, newPos, context)
+        || new RookMovement().isValidMove(oldPos, newPos, context);
   }
 }

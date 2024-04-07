@@ -17,6 +17,7 @@ public class RuleValidator {
     for (GameRule rule : rules) {
       if (rule instanceof Check) {
         continue; // TODO: change it to not affect during normal game.
+        // Solution: make Check a Rule apart from the others, and validate it separately
       }
       // May need to change Check/CheckMate validation inside ChessGame
       // Idea: check if move leaves own king in check

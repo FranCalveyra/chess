@@ -1,12 +1,11 @@
 package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Board {
   private final Map<Position, Piece> pieces;
@@ -14,19 +13,24 @@ public class Board {
   private final int columns;
   private Color currentTurn;
   private final Piece[][] board;
+  private final TurnSelector selector;
+  private int turnNumber = 0;
+  private final List<Piece> takenPieces = new ArrayList<>(); //TODO
 
-  public Board(Map<Position, Piece> pieces, int rows, int columns) {
+  public Board(Map<Position, Piece> pieces, int rows, int columns, TurnSelector selector) {
     this.pieces = pieces;
     this.rows = rows;
     this.columns = columns;
     this.board = new Piece[rows][columns];
+    this.selector = selector;
   }
 
   // Default constructor for Chess Board
-  public Board(Map<Position, Piece> pieces) {
+  public Board(Map<Position, Piece> pieces, TurnSelector selector) {
     this.pieces = pieces;
     this.rows = this.columns = 8;
     this.board = new Piece[rows][columns];
+    this.selector = selector;
     setup();
   }
 
@@ -56,20 +60,17 @@ public class Board {
       if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
         return;
       }
-      // Taking a piece
-      //        pieces.replace(newPos, piece);
-      //        pieces.remove(oldPos);
-      //        pieceToTake.changePieceActivity();
       removePieceAt(newPos);
       removePieceAt(oldPos);
+      takenPieces.add(pieceToTake);
       addPieceAt(newPos, piece);
     }
     updateToEmptyPosition(piece, oldPos, i, j);
     if (!piece.hasMoved()) {
       piece.changeMoveState();
     }
-    Color nextTurn = piece.getPieceColour() == Color.WHITE ? Color.BLACK : Color.WHITE;
-    changeTurn(nextTurn);
+    turnNumber++;
+    changeTurn(selector.selectTurn(this,turnNumber));
 
     // Debugging code ahead:
     printBoard();
@@ -98,15 +99,15 @@ public class Board {
   }
 
   public void changeTurn(Color turn) {
-    currentTurn = turn;
-  }
+    currentTurn =turn;
+  } // Uncouple turn
 
-  //  public int getColumns() {
-  //    return columns;
-  //  }
-  //  public int getRows() {
-  //    return rows;
-  //  }
+  public int getColumns() {
+    return columns;
+  }
+  public int getRows() {
+    return rows;
+  }
 
   // Private methods
   private Position getPieceCurrentPosition(Piece piece) {
@@ -135,9 +136,9 @@ public class Board {
   }
 
   private void printBoard() {
-    for (int k = 0; k < board.length; k++) {
-      System.out.println(Arrays.toString(board[k]));
-    }
+      for (Piece[] value : board) {
+          System.out.println(Arrays.toString(value));
+      }
     System.out.println("\n");
     System.out.println(pieces.size());
     System.out.println("\n");

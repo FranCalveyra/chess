@@ -13,7 +13,6 @@ public interface PieceMovement {
   boolean isValidMove(Position oldPos, Position newPos, Board context);
 
   default boolean isNotPieceBetween(Position oldPos, Position newPos, Board context) {
-    // TODO: check on displacement type
     int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
     int fromRow = Math.min(oldPos.getRow(), newPos.getRow());
     int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());

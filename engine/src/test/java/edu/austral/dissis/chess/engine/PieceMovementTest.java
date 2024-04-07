@@ -12,6 +12,7 @@ import edu.austral.dissis.chess.rule.CheckMate;
 import edu.austral.dissis.chess.rule.DefaultCheck;
 import edu.austral.dissis.chess.rule.GameRule;
 import edu.austral.dissis.chess.rule.Stalemate;
+import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
@@ -24,8 +25,8 @@ import org.junit.jupiter.api.Test;
 public class PieceMovementTest {
 
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
-  private final Board board = new Board(pieces);
-  private final java.util.List<GameRule> rules =
+  private final Board board = new Board(pieces, new StandardTurnSelector());
+  private final List<GameRule> rules =
       new ArrayList<>(
           List.of(
               new DefaultCheck(Color.BLACK),

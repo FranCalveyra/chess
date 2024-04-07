@@ -1,9 +1,8 @@
-package edu.austral.dissis.chess.rule;
+package edu.austral.dissis.chess.piece.movement;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.utils.Position;
 
 public class Castling implements PieceMovement {
