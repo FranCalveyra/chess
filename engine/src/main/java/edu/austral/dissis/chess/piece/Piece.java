@@ -12,10 +12,23 @@ public class Piece {
   private final List<PieceMovement> movements;
   private final Color pieceColour;
   private final PieceType type;
-  private final boolean isActiveInBoard;
-  private final boolean hasMoved;
+  private boolean isActiveInBoard;
+  private boolean hasMoved;
 
-  public Piece(List<PieceMovement> movements, Color pieceColour, PieceType type, boolean activeInBoard, boolean hasMoved) {
+  public Piece(List<PieceMovement> movements, Color pieceColour, PieceType type) {
+    this.movements = movements;
+    this.pieceColour = pieceColour;
+    this.type = type;
+    this.isActiveInBoard = true;
+    this.hasMoved = false;
+  }
+
+  private Piece(
+      List<PieceMovement> movements,
+      Color pieceColour,
+      PieceType type,
+      boolean activeInBoard,
+      boolean hasMoved) {
     this.movements = movements;
     this.pieceColour = pieceColour;
     this.type = type;
@@ -43,8 +56,10 @@ public class Piece {
     return isActiveInBoard;
   }
 
-  public Piece changePieceActivity() {
-    return new Piece(movements, pieceColour, type, !isActiveInBoard, hasMoved);
+  public void changePieceActivity() {
+    isActiveInBoard = !isActiveInBoard;
+    //    return new Piece(movements, pieceColour, type, !isActiveInBoard, hasMoved); Immutable
+    // approach
   }
 
   public Color getPieceColour() {
@@ -55,8 +70,10 @@ public class Piece {
     return type;
   }
 
-  public Piece changeMoveState() {
-    return new Piece(movements, pieceColour, type, isActiveInBoard, !hasMoved);
+  public void changeMoveState() {
+    //    return new Piece(movements, pieceColour, type, isActiveInBoard, !hasMoved); Immutable
+    // approach
+    hasMoved = !hasMoved;
   }
 
   public boolean hasNotMoved() {

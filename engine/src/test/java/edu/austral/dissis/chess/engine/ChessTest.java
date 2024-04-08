@@ -46,14 +46,22 @@ public class ChessTest {
     final Piece whitePawn2 = board.pieceAt(new Position(1, 6));
     final Piece blackQueen = board.pieceAt(new Position(7, 3));
     assertEquals(blackPawn.getPieceColour(), Color.BLACK);
-    game = updateGame(game,whitePawn, new Position(2, 5));
-    assertEquals(new Position(2, 5), getPiecePosition(whitePawn, game.getBoard().getActivePiecesAndPositions()));
-    game = updateGame(game,blackPawn, new Position(4, 4));
-    assertEquals(new Position(4, 4), getPiecePosition(blackPawn, game.getBoard().getActivePiecesAndPositions()));
-    game = updateGame(game,whitePawn2, new Position(3, 6));
-    assertEquals(new Position(3, 6), getPiecePosition(whitePawn2, game.getBoard().getActivePiecesAndPositions()));
-    game = updateGame(game,blackQueen, new Position(3, 7));
-    assertEquals(new Position(3, 7), getPiecePosition(blackQueen, game.getBoard().getActivePiecesAndPositions()));
+    game = updateGame(game, whitePawn, new Position(2, 5));
+    assertEquals(
+        new Position(2, 5),
+        getPiecePosition(whitePawn, game.getBoard().getActivePiecesAndPositions()));
+    game = updateGame(game, blackPawn, new Position(4, 4));
+    assertEquals(
+        new Position(4, 4),
+        getPiecePosition(blackPawn, game.getBoard().getActivePiecesAndPositions()));
+    game = updateGame(game, whitePawn2, new Position(3, 6));
+    assertEquals(
+        new Position(3, 6),
+        getPiecePosition(whitePawn2, game.getBoard().getActivePiecesAndPositions()));
+    game = updateGame(game, blackQueen, new Position(3, 7));
+    assertEquals(
+        new Position(3, 7),
+        getPiecePosition(blackQueen, game.getBoard().getActivePiecesAndPositions()));
     assertTrue(new DefaultCheck(Color.WHITE).isValidRule(game.getBoard()));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
     assertTrue(new CheckMate(Color.WHITE).isValidRule(game.getBoard()));
@@ -68,7 +76,9 @@ public class ChessTest {
     }
     return null;
   }
-  protected static ChessGame updateGame(ChessGame game, Piece piece, Position position) throws UnallowedMoveException {
+
+  protected static ChessGame updateGame(ChessGame game, Piece piece, Position position)
+      throws UnallowedMoveException {
     return new ChessGame(game.makeMove(piece, position), game.getRules());
   }
 }

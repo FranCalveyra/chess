@@ -3,7 +3,7 @@ package edu.austral.dissis.chess.piece.movement;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
-import java.awt.*;
+import java.awt.Color;
 
 public class PawnMovement implements PieceMovement {
 
