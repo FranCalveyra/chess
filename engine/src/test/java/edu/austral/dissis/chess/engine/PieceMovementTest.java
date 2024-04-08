@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
 import edu.austral.dissis.chess.rule.BorderGameRule;
 import edu.austral.dissis.chess.rule.CheckMate;
@@ -116,4 +117,39 @@ public class PieceMovementTest {
     List<Position> pawnMoveSet = newWhitePawn.getMoveSet(new Position(1, 4), game.getBoard());
     assertEquals(pawnMoveSet.size(), 2);
   }
+  @Test
+  public void validateRookMovement() throws UnallowedMoveException {
+    Piece whiteRook = board.pieceAt(new Position(0, 0));
+    Piece whitePawn = board.pieceAt(new Position(1, 0));
+    Piece blackPawn = board.pieceAt(new Position(6, 1));
+    game = updateGame(game,whitePawn, new Position(3,0));
+    game = updateGame(game,blackPawn, new Position(4,1));
+    game = updateGame(game,whitePawn, new Position(4,1));
+    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
+    assertThrows(UnallowedMoveException.class, () -> updateGame(game,game.getBoard().pieceAt(new Position(7,7)), new Position(3,1)));
+    game = updateGame(game,game.getBoard().pieceAt(new Position(6,2)), new Position(5,2));
+    game = updateGame(game,whiteRook, new Position(3,0));
+    assertEquals(PieceType.ROOK, game.getBoard().pieceAt(new Position(3,0)).getType());
+    game = updateGame(game,whiteRook, new Position(3,1));
+    System.out.println(game.getBoard());
+  }
+
+  @Test
+  public void validateQueenMovement() throws UnallowedMoveException {
+    Piece whiteQueen = board.pieceAt(new Position(0, 3));
+    Piece whitePawn = board.pieceAt(new Position(1, 3));
+    Piece blackPawn = board.pieceAt(new Position(6, 4));
+    assertEquals(whiteQueen.getType(), PieceType.QUEEN);
+    game = updateGame(game,whitePawn, new Position(3,3));
+    System.out.println(game.getBoard());
+    List<Position> whiteQueenMoveSet = whiteQueen.getMoveSet(new Position(0,3), game.getBoard());
+    System.out.println(whiteQueenMoveSet);
+    assertEquals(whiteQueenMoveSet.size(), 1);
+    game = updateGame(game,blackPawn, new Position(4,4));
+    game = updateGame(game,whitePawn, new Position(4,4));
+    game = updateGame(game,game.getBoard().pieceAt(new Position(6,3)), new Position(5,3));
+  }
+
+
+
 }

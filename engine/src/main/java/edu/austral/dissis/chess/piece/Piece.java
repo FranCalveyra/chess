@@ -12,13 +12,15 @@ public class Piece {
   private final List<PieceMovement> movements;
   private final Color pieceColour;
   private final PieceType type;
-  private boolean isActiveInBoard = true;
-  private boolean hasMoved = false;
+  private final boolean isActiveInBoard;
+  private final boolean hasMoved;
 
-  public Piece(List<PieceMovement> movements, Color pieceColour, PieceType type) {
+  public Piece(List<PieceMovement> movements, Color pieceColour, PieceType type, boolean activeInBoard, boolean hasMoved) {
     this.movements = movements;
     this.pieceColour = pieceColour;
     this.type = type;
+    this.isActiveInBoard = activeInBoard;
+    this.hasMoved = hasMoved;
   }
 
   public boolean checkValidMove(Position oldPos, Position newPos, Board context) {
@@ -41,8 +43,8 @@ public class Piece {
     return isActiveInBoard;
   }
 
-  public void changePieceActivity() {
-    isActiveInBoard = !isActiveInBoard;
+  public Piece changePieceActivity() {
+    return new Piece(movements, pieceColour, type, !isActiveInBoard, hasMoved);
   }
 
   public Color getPieceColour() {
@@ -53,8 +55,8 @@ public class Piece {
     return type;
   }
 
-  public void changeMoveState() {
-    hasMoved = !hasMoved;
+  public Piece changeMoveState() {
+    return new Piece(movements, pieceColour, type, isActiveInBoard, !hasMoved);
   }
 
   public boolean hasNotMoved() {
