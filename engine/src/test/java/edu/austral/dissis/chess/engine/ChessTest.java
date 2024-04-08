@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
+import edu.austral.dissis.chess.rule.BorderGameRule;
 import edu.austral.dissis.chess.rule.CheckMate;
 import edu.austral.dissis.chess.rule.DefaultCheck;
-import edu.austral.dissis.chess.rule.GameRule;
 import edu.austral.dissis.chess.rule.Stalemate;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
@@ -24,7 +24,7 @@ public class ChessTest {
   // Setup
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
   private final Board board = new Board(pieces, new StandardTurnSelector());
-  private final List<GameRule> rules =
+  private final List<BorderGameRule> rules =
       new ArrayList<>(
           List.of(
               new DefaultCheck(Color.BLACK),
@@ -32,10 +32,10 @@ public class ChessTest {
               new CheckMate(Color.BLACK),
               new CheckMate(Color.WHITE),
               new Stalemate()));
-  private final ChessGame game = new ChessGame(board, rules);
+  private ChessGame game = new ChessGame(board, rules);
 
   ChessTest() {
-    game.startGame();
+    game = game.startGame();
   }
 
   // Tests
@@ -46,16 +46,17 @@ public class ChessTest {
     final Piece whitePawn2 = board.pieceAt(new Position(1, 6));
     final Piece blackQueen = board.pieceAt(new Position(7, 3));
     assertEquals(blackPawn.getPieceColour(), Color.BLACK);
-    game.makeMove(whitePawn, new Position(2, 5));
-    assertEquals(new Position(2, 5), getPiecePosition(whitePawn, pieces));
-    game.makeMove(blackPawn, new Position(4, 4));
-    assertEquals(new Position(4, 4), getPiecePosition(blackPawn, pieces));
-    game.makeMove(whitePawn2, new Position(3, 6));
-    assertEquals(new Position(3, 6), getPiecePosition(whitePawn2, pieces));
-    game.makeMove(blackQueen, new Position(3, 7));
-    assertEquals(new Position(3, 7), getPiecePosition(blackQueen, pieces));
-    assertTrue(new DefaultCheck(Color.WHITE).isValidRule(board));
-    assertFalse(new DefaultCheck(Color.BLACK).isValidRule(board));
+    game = updateGame(game,whitePawn, new Position(2, 5));
+    assertEquals(new Position(2, 5), getPiecePosition(whitePawn, game.getBoard().getActivePiecesAndPositions()));
+    game = updateGame(game,blackPawn, new Position(4, 4));
+    assertEquals(new Position(4, 4), getPiecePosition(blackPawn, game.getBoard().getActivePiecesAndPositions()));
+    game = updateGame(game,whitePawn2, new Position(3, 6));
+    assertEquals(new Position(3, 6), getPiecePosition(whitePawn2, game.getBoard().getActivePiecesAndPositions()));
+    game = updateGame(game,blackQueen, new Position(3, 7));
+    assertEquals(new Position(3, 7), getPiecePosition(blackQueen, game.getBoard().getActivePiecesAndPositions()));
+    assertTrue(new DefaultCheck(Color.WHITE).isValidRule(game.getBoard()));
+    assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
+    assertTrue(new CheckMate(Color.WHITE).isValidRule(game.getBoard()));
   }
 
   // Private stuff
@@ -66,5 +67,8 @@ public class ChessTest {
       }
     }
     return null;
+  }
+  protected static ChessGame updateGame(ChessGame game, Piece piece, Position position) throws UnallowedMoveException {
+    return new ChessGame(game.makeMove(piece, position), game.getRules());
   }
 }

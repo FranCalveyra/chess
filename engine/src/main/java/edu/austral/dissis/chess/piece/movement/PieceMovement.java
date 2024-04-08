@@ -25,7 +25,7 @@ public interface PieceMovement {
     List<Position> possiblePositions = new ArrayList<>();
     for (int i = 0; i < context.getRows(); i++) {
       for (int j = 0; j < context.getColumns(); j++) {
-        Position currentPos = new Position(i,j);
+        Position currentPos = new Position(i, j);
         if (isValidMove(oldPos, currentPos, context) && !possiblePositions.contains(currentPos)) {
           possiblePositions.add(currentPos);
         }

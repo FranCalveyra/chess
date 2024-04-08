@@ -5,12 +5,25 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.provider.PieceProvider;
 import edu.austral.dissis.chess.utils.Position;
-import java.awt.*;
+import java.awt.Color;
 
 public class StandardPromoter implements Promoter {
 
   @Override
   public boolean hasToPromote(Board context, Color team) {
+    return isAnyPawnPromotable(context, team);
+  }
+
+  private boolean isAnyPawnPromotable(Board context, Color team) {
+    int rowToCheck = team == Color.WHITE ? context.getRows() - 1 : 0;
+    for (int j = 0; j < context.getColumns(); j++) {
+      Piece pieceAt = context.pieceAt(new Position(rowToCheck, j));
+      if (pieceAt != null
+          && pieceAt.getType() == PieceType.PAWN
+          && pieceAt.getPieceColour() == team) {
+        return true;
+      }
+    }
     return false;
   }
 

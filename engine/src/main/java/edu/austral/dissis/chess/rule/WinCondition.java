@@ -1,3 +1,3 @@
 package edu.austral.dissis.chess.rule;
 
-public interface WinCondition extends GameRule {}
+public interface WinCondition extends BorderGameRule {}

@@ -17,6 +17,9 @@ public class Castling implements PieceMovement {
   private boolean isCastlingPossible(Position oldPos, Position newPos, Board context) {
     Piece firstPiece = context.getActivePiecesAndPositions().get(oldPos);
     Piece secondPiece = context.getActivePiecesAndPositions().get(newPos);
+    if (firstPiece == null || secondPiece == null) {
+      return false;
+    }
     boolean colorCheck = firstPiece.getPieceColour() == secondPiece.getPieceColour();
     boolean typeCheck1 =
         (firstPiece.getType() == PieceType.KING && secondPiece.getType() == PieceType.ROOK);
@@ -29,11 +32,11 @@ public class Castling implements PieceMovement {
     boolean movementCheck = firstPiece.hasNotMoved() && secondPiece.hasNotMoved();
     boolean checkValidation = validateIfCheck(oldPos, newPos, context);
     return colorCheck
-            && typeCheck
-            && movementCheck
-            && isNotPieceBetween(oldPos, newPos, context)
-            && displacementCheck
-            && checkValidation;
+        && typeCheck
+        && movementCheck
+        && isNotPieceBetween(oldPos, newPos, context)
+        && displacementCheck
+        && checkValidation;
   }
 
   private boolean validateIfCheck(Position fromPos, Position toPos, Board context) {
