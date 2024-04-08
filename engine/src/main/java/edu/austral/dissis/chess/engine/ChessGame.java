@@ -14,7 +14,6 @@ import java.util.Set;
 
 public class ChessGame {
   /** Simulates a real Chess Game. */
-  // TODO: make everything immutable once the game works
   private final Board board;
 
   private final RuleValidator ruleValidator;
@@ -51,7 +50,7 @@ public class ChessGame {
   }
 
   public Board makeMove(Piece piece, Position newPos)
-      throws UnallowedMoveException { // TODO change tests
+      throws UnallowedMoveException {
     if (ruleValidator.isAnyActive(board)) {
       return board;
     }

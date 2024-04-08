@@ -64,7 +64,7 @@ public class ChessTest {
         getPiecePosition(blackQueen, game.getBoard().getActivePiecesAndPositions()));
     assertTrue(new DefaultCheck(Color.WHITE).isValidRule(game.getBoard()));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
-    assertTrue(new CheckMate(Color.WHITE).isValidRule(game.getBoard()));
+    assertTrue(new CheckMate(Color.WHITE).isValidRule(game.getBoard())); //Need to fix checkmate because movement rules are not working
   }
 
   // Private stuff

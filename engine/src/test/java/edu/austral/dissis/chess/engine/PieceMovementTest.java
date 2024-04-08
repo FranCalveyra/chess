@@ -174,7 +174,7 @@ public class PieceMovementTest {
     System.out.println(game.getBoard());
     List<Position> whiteQueenMoveSet = whiteQueen.getMoveSet(new Position(0, 3), game.getBoard());
     System.out.println(whiteQueenMoveSet);
-    //    assertEquals(whiteQueenMoveSet.size(), 1); Need to fix it
+    assertEquals(2,whiteQueenMoveSet.size()); //Need to fix it
     Piece blackPawn = board.pieceAt(new Position(6, 4));
     game = updateGame(game, blackPawn, new Position(4, 4));
     game = updateGame(game, whitePawn, new Position(4, 4));

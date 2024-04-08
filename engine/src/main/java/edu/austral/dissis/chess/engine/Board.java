@@ -95,7 +95,7 @@ public class Board {
     Position oldPos = getPieceCurrentPosition(piece); // Fetches piece position before moving
     if (!piece.checkValidMove(oldPos, newPos, this)) {
       throw new UnallowedMoveException(
-          "Cannot move this piece to that position"); // Check move validity
+          "Cannot move this piece from position (" +oldPos.getRow() + ", "+oldPos.getColumn() + ")" + "to position (" +newPos.getRow() + ", "+newPos.getColumn() + ")" ); // Check move validity
     }
     Board newBoard;
     // Now, move the piece. Take piece in newPos whether exists

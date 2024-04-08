@@ -28,10 +28,20 @@ public class CheckMate implements WinCondition {
     }
     Map<Position, Piece> teamPieces = getPiecesByColor(context, team);
     Map<Piece, List<Position>> piecesWithPossibleMoves = getPieceMovesMap(teamPieces, context);
-
-    //    return noPossibleSaving(piecesWithPossibleMoves, context); TODO
-    return true;
+    System.out.println(context);
+    System.out.println(piecesWithPossibleMoves);
+    return noPossibleSaving(piecesWithPossibleMoves, context);
   }
+  /*
+  [BL R, BL K, BL B, null, BL K, BL B, BL K, BL R]
+  [BL P, BL P, BL P, BL P, null, BL P, BL P, BL P]
+  [null, null, null, null, null, null, null, null]
+  [null, null, null, null, BL P, null, null, null]
+  [null, null, null, null, null, null, WH P, BL Q]
+  [null, null, null, null, null, WH P, null, null]
+  [WH P, WH P, WH P, WH P, WH P, null, null, WH P]
+  [WH R, WH K, WH B, WH Q, WH K, WH B, WH K, WH R]
+   */
 
   private boolean noPossibleSaving(Map<Piece, List<Position>> piecePossibleMoves, Board context)
       throws UnallowedMoveException {
@@ -39,13 +49,6 @@ public class CheckMate implements WinCondition {
       Position currentPiecePosition = getPiecePosition(entry.getKey(), context);
       DefaultCheck check = new DefaultCheck(entry.getKey().getPieceColour());
       for (Position possibleMove : entry.getValue()) {
-
-        getAllPieceThatHasThisPositionAsAllowedMovement(
-            piecePossibleMoves, context, new Position(0, 7));
-
-        if (context.pieceAt(currentPiecePosition) == null) {
-          System.out.println(currentPiecePosition);
-        }
         Board newBoard = new Board(context.getActivePiecesAndPositions(), context.getSelector());
         newBoard.updatePiecePosition(possibleMove, newBoard.pieceAt(currentPiecePosition));
         if (!check.isValidRule(newBoard)) {
@@ -54,16 +57,6 @@ public class CheckMate implements WinCondition {
       }
     }
     return true;
-  }
-
-  private void getAllPieceThatHasThisPositionAsAllowedMovement(
-      Map<Piece, List<Position>> piecePossibleMoves, Board context, Position position) {
-    for (Entry<Piece, List<Position>> entry : piecePossibleMoves.entrySet()) {
-      if (entry.getValue().contains(position)) {
-        System.out.println(
-            entry.getKey() + ", " + getPiecePosition(entry.getKey(), context) + position);
-      }
-    }
   }
 
   private Position getPiecePosition(Piece piece, Board context) {

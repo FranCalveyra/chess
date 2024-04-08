@@ -12,7 +12,7 @@ public interface PieceMovement {
 
   boolean isValidMove(Position oldPos, Position newPos, Board context);
 
-  default boolean isNotPieceBetween(Position oldPos, Position newPos, Board context) {
+  default boolean noPieceBetween(Position oldPos, Position newPos, Board context) {
     int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
     int fromRow = Math.min(oldPos.getRow(), newPos.getRow());
     int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
@@ -26,7 +26,9 @@ public interface PieceMovement {
     for (int i = 0; i < context.getRows(); i++) {
       for (int j = 0; j < context.getColumns(); j++) {
         Position currentPos = new Position(i, j);
-        if (isValidMove(oldPos, currentPos, context) && !possiblePositions.contains(currentPos)) {
+        if (isValidMove(oldPos, currentPos, context) && !possiblePositions.contains(currentPos) &&
+                context.pieceAt(currentPos) == null &&
+                noPieceBetween(oldPos, currentPos, context)) {
           possiblePositions.add(currentPos);
         }
       }
@@ -37,8 +39,8 @@ public interface PieceMovement {
   // Private methods
   private boolean isTeammateBetween(Position oldPos, Position newPos, Board context) {
     // Change for loops depending on displacement type
-    for (int i = oldPos.getRow(); i < newPos.getRow(); i++) {
-      for (int j = oldPos.getColumn(); j < newPos.getColumn(); j++) {
+    for (int i = oldPos.getRow()+1; i <= newPos.getRow(); i++) {
+      for (int j = oldPos.getColumn()+1; j <= newPos.getColumn(); j++) {
         Piece pieceAt = context.pieceAt(new Position(i, j));
         if (pieceAt != null) {
           return true;

@@ -12,6 +12,6 @@ public class KingMovement implements PieceMovement {
     boolean verticalMove = Math.abs(newPos.getRow() - oldPos.getRow()) == 1;
     boolean diagonalMove = horizontalMove && verticalMove;
     boolean move = horizontalMove || verticalMove || diagonalMove;
-    return isNotPieceBetween(oldPos, newPos, context) && move;
+    return noPieceBetween(oldPos, newPos, context) && move;
   }
 }

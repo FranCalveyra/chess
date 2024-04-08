@@ -18,6 +18,6 @@ public class PawnFirstMove implements PieceMovement {
     return horizontalMove
         && verticalMove
         && piece.hasNotMoved()
-        && isNotPieceBetween(oldPos, newPos, context);
+        && noPieceBetween(oldPos, newPos, context);
   }
 }

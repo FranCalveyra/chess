@@ -11,13 +11,13 @@ public class DiagonalMovement implements PieceMovement {
     int deltaX = Math.abs(newPos.getColumn() - oldPos.getColumn());
     int deltaY = Math.abs(newPos.getRow() - oldPos.getRow());
     boolean moveCondition = deltaX == deltaY;
-    return isNotPieceBetween(oldPos, newPos, context) && moveCondition;
+    return noPieceBetween(oldPos, newPos, context) && moveCondition;
     // They have to move the same amount in both coordinates.
     // If not, movement should resemble to a Knight movement.
   }
 
   @Override
-  public boolean isNotPieceBetween(Position oldPos, Position newPos, Board context) {
+  public boolean noPieceBetween(Position oldPos, Position newPos, Board context) {
     int fromRow = Math.min(oldPos.getRow(), newPos.getRow());
     int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
     int toRow = Math.max(oldPos.getRow(), newPos.getRow());
@@ -27,7 +27,7 @@ public class DiagonalMovement implements PieceMovement {
   }
 
   private boolean noTeammateInDiagonal(Position oldPos, Position newPos, Board context) {
-    for (int i = oldPos.getRow(); i < newPos.getRow(); i++) {
+    for (int i = oldPos.getRow()+1; i <= newPos.getRow(); i++) {
       Piece pieceAt = context.pieceAt(new Position(oldPos.getRow() + i, oldPos.getColumn() + i));
       if (pieceAt == null) {
         return true;

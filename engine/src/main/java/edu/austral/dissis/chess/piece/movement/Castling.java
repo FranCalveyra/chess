@@ -34,7 +34,7 @@ public class Castling implements PieceMovement {
     return colorCheck
         && typeCheck
         && movementCheck
-        && isNotPieceBetween(oldPos, newPos, context)
+        && noPieceBetween(oldPos, newPos, context)
         && displacementCheck
         && checkValidation;
   }
