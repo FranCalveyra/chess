@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 public class ChessGame {
   /** Simulates a real Chess Game. */
   private final Board board;
-
+  //Separate responsibilities, put promoter and turn selector in game
   private final WinConditionValidator winConditionValidator;
   private final List<WinCondition> rules;
   private final List<Check> checkConditions;
@@ -31,7 +31,7 @@ public class ChessGame {
     this.rules = rules;
     this.checkConditions = checkConditions;
     this.winConditionValidator = new WinConditionValidator(rules);
-  }
+  } // make it public
 
   public ChessGame startGame() {
     // As per base Chess, we'll be working with BLACKS and WHITES.
@@ -52,7 +52,10 @@ public class ChessGame {
   public ChessGame makeMove(Position oldPos, Position newPos, PieceType typeForPromotion)
       throws UnallowedMoveException {
     if (winConditionValidator.isGameWon(board)) {
-      final Color winner = board.getCurrentTurn() == Color.BLACK ? Color.WHITE : Color.BLACK;
+      final Color winner =
+          board.getCurrentTurn() == Color.BLACK
+              ? Color.WHITE
+              : Color.BLACK; // Change it for more colors
       System.out.println("Game has been won by: " + winner);
       return this;
     }
@@ -62,6 +65,8 @@ public class ChessGame {
     if (board.pieceAt(oldPos).getPieceColour() != board.getCurrentTurn()) {
       return this; // Player who has just moved a piece cannot move another (unless Castling)
     }
+    // Validate move here, not in Board
+
     // Validate check
     if (playIsInCheck(board.getCurrentTurn(), board, oldPos, newPos, typeForPromotion)) {
       return this;

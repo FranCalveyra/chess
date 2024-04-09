@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface PieceMovement {
-  // If I make a PieceMovementRule extend GameRule, O(ruleCheck) can be enormous.
-  // Deficient.
 
   boolean isValidMove(Position oldPos, Position newPos, Board context);
 

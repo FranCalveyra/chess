@@ -78,7 +78,7 @@ public class Board {
       TurnSelector selector,
       Color currentTurn,
       int turnNumber,
-      Piece[][] board,
+      Piece[][] board, // Deletable
       List<Piece> takenPieces,
       Promoter promoter) {
     this.pieces = pieces;
@@ -108,7 +108,7 @@ public class Board {
 
     // Now, move the piece. Take piece in newPos whether exists
     Board newBoard;
-    Piece pieceToTake = pieces.get(newPos);
+    Piece pieceToTake = pieces.get(newPos); // Check outside
     Color nextTurn;
     if (pieceToTake != null) {
       if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
@@ -119,7 +119,7 @@ public class Board {
         return new Board(
             newBoard.getPiecesAndPositions(),
             newBoard.getSelector(),
-            changeTurn(selector.selectTurn(this, turnNumber + 1)),
+            changeTurn(selector.selectTurn(this, turnNumber + 1)), // Move turn selector to game
             turnNumber + 1,
             newBoard.getBoard(),
             newBoard.getTakenPieces(),
