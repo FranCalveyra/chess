@@ -24,6 +24,7 @@ public class VerticalMovement implements PieceMovement {
       }
     }
     Piece lastPiece = context.pieceAt(newPos);
-    return lastPiece == null || lastPiece.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
+    return lastPiece == null
+        || lastPiece.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
   }
 }

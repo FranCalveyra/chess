@@ -3,7 +3,6 @@ package edu.austral.dissis.chess.piece;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.utils.Position;
-import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;

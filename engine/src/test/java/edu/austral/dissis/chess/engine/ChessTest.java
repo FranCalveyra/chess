@@ -35,19 +35,19 @@ public class ChessTest {
               new CheckMate(Color.WHITE),
               new Stalemate()));
   private ChessGame game = new ChessGame(board, rules);
-//  Map<String, Position> tiles = mapChessPositions();
-//
-//  private Map<String, Position> mapChessPositions() {
-//    Map<String, Position> map = new HashMap<>();
-//    String alphabet = "abcdefgh";
-//    for (int i = 1; i <=alphabet.length() ; i++) {
-//      for (int j = 1; j <=alphabet.length() ; j++) {
-//        map.put(alphabet.charAt(i-1) + Integer.toString(j), new Position( j-1,i-1));
-//      }
-//    }
-//    return map;
-//  }
 
+  //  Map<String, Position> tiles = mapChessPositions();
+  //
+  //  private Map<String, Position> mapChessPositions() {
+  //    Map<String, Position> map = new HashMap<>();
+  //    String alphabet = "abcdefgh";
+  //    for (int i = 1; i <=alphabet.length() ; i++) {
+  //      for (int j = 1; j <=alphabet.length() ; j++) {
+  //        map.put(alphabet.charAt(i-1) + Integer.toString(j), new Position( j-1,i-1));
+  //      }
+  //    }
+  //    return map;
+  //  }
 
   ChessTest() {
     game = game.startGame();
@@ -83,44 +83,45 @@ public class ChessTest {
 
   @Test
   public void validateStalemate() {
-    //To implement
+    // To implement
   }
 
   @Test
-  public void validatePromotion(){
-    assertEquals(Color.WHITE,game.getBoard().getCurrentTurn());
-//    //Move first Pawn
-//    game = game.makeMove(new Position(1,0), new Position(3,0));
-//    //Make rook free
-//    game = game.makeMove(new Position(6,0), new Position(4,0));
-//    assertEquals(Color.WHITE,game.getBoard().getCurrentTurn());
-//    game = game.makeMove(new Position(1,1), new Position(3,1));
-//    //Move black rook
-//    game = game.makeMove(new Position(7,0), new Position(5,0));
-//    //Take the black pawn with right white pawn
-//    game = game.makeMove(new Position(3,1), new Position(4,0));
-//    //Take white pawn with black rook
-//    game = game.makeMove(new Position(5,0), new Position(4,0));
-//    //Move white knight
-//    game = game.makeMove(new Position(0,1), new Position(2,2));
-//    //Align black rook with white knight
-//    Position rookPosition = new Position(4,0);
-////    List<Position> moveSet = game.getBoard().pieceAt(rookPosition).getMoveSet(rookPosition, game.getBoard());
-////    System.out.println(moveSet);
-//    System.out.println(game.getBoard().getPiecesAndPositions().get(rookPosition));
-//    game = game.makeMove(rookPosition, new Position(4,3));
-//    System.out.println(game.getBoard());
-//    //Move white pawn to promote
-//    game = game.makeMove(new Position(3,0), new Position(4,0));
-//    //Take white knight with black rook
-//    game = game.makeMove(new Position(4,2), new Position(2,2));
-//    game = game.makeMove(new Position(4,0), new Position(5,0));
-//    game = game.makeMove(new Position(2,2), new Position(5,2));
-//    game = game.makeMove(new Position(5,0), new Position(6,0));
-//    game = game.makeMove(new Position(5,2), new Position(4,2));
-//    game = game.makeMove(new Position(6,0), new Position(7,0), PieceType.KNIGHT);
-//    System.out.println(game.getBoard());
-//    assertEquals(PieceType.KING, game.getBoard().pieceAt(new Position(7,0)).getType());
+  public void validatePromotion() {
+    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
+    //    //Move first Pawn
+    //    game = game.makeMove(new Position(1,0), new Position(3,0));
+    //    //Make rook free
+    //    game = game.makeMove(new Position(6,0), new Position(4,0));
+    //    assertEquals(Color.WHITE,game.getBoard().getCurrentTurn());
+    //    game = game.makeMove(new Position(1,1), new Position(3,1));
+    //    //Move black rook
+    //    game = game.makeMove(new Position(7,0), new Position(5,0));
+    //    //Take the black pawn with right white pawn
+    //    game = game.makeMove(new Position(3,1), new Position(4,0));
+    //    //Take white pawn with black rook
+    //    game = game.makeMove(new Position(5,0), new Position(4,0));
+    //    //Move white knight
+    //    game = game.makeMove(new Position(0,1), new Position(2,2));
+    //    //Align black rook with white knight
+    //    Position rookPosition = new Position(4,0);
+    ////    List<Position> moveSet = game.getBoard().pieceAt(rookPosition).getMoveSet(rookPosition,
+    // game.getBoard());
+    ////    System.out.println(moveSet);
+    //    System.out.println(game.getBoard().getPiecesAndPositions().get(rookPosition));
+    //    game = game.makeMove(rookPosition, new Position(4,3));
+    //    System.out.println(game.getBoard());
+    //    //Move white pawn to promote
+    //    game = game.makeMove(new Position(3,0), new Position(4,0));
+    //    //Take white knight with black rook
+    //    game = game.makeMove(new Position(4,2), new Position(2,2));
+    //    game = game.makeMove(new Position(4,0), new Position(5,0));
+    //    game = game.makeMove(new Position(2,2), new Position(5,2));
+    //    game = game.makeMove(new Position(5,0), new Position(6,0));
+    //    game = game.makeMove(new Position(5,2), new Position(4,2));
+    //    game = game.makeMove(new Position(6,0), new Position(7,0), PieceType.KNIGHT);
+    //    System.out.println(game.getBoard());
+    //    assertEquals(PieceType.KING, game.getBoard().pieceAt(new Position(7,0)).getType());
   }
 
   // Private stuff

@@ -26,18 +26,19 @@ public class Board {
   private final Promoter promoter;
 
   public Board(
-          Map<Position, Piece> pieces,
-          TurnSelector selector,
-          int rows,
-          int columns,
-          List<Piece> takenPieces,
-          Color currentTurn, Promoter promoter) {
+      Map<Position, Piece> pieces,
+      TurnSelector selector,
+      int rows,
+      int columns,
+      List<Piece> takenPieces,
+      Color currentTurn,
+      Promoter promoter) {
     this.pieces = pieces;
     this.rows = rows;
     this.columns = columns;
     this.takenPieces = takenPieces;
-      this.promoter = promoter;
-      this.board = setup();
+    this.promoter = promoter;
+    this.board = setup();
     this.selector = selector;
     this.currentTurn = currentTurn;
     this.turnNumber = 0;
@@ -46,8 +47,8 @@ public class Board {
   public Board(Map<Position, Piece> pieces, TurnSelector selector, Promoter promoter) {
     this.pieces = pieces;
     this.selector = selector;
-      this.promoter = promoter;
-      this.rows = this.columns = 8;
+    this.promoter = promoter;
+    this.rows = this.columns = 8;
     this.currentTurn = changeTurn(Color.WHITE);
     this.takenPieces = new ArrayList<>();
     this.turnNumber = 0;
@@ -56,14 +57,15 @@ public class Board {
 
   // Default constructor for Chess Board
   public Board(
-          Map<Position, Piece> pieces,
-          TurnSelector selector,
-          List<Piece> takenPieces,
-          Color currentTurn, Promoter promoter) {
+      Map<Position, Piece> pieces,
+      TurnSelector selector,
+      List<Piece> takenPieces,
+      Color currentTurn,
+      Promoter promoter) {
     this.pieces = pieces;
     this.takenPieces = takenPieces;
-      this.promoter = promoter;
-      this.rows = this.columns = 8;
+    this.promoter = promoter;
+    this.rows = this.columns = 8;
     this.board = setup();
     this.selector = selector;
     this.currentTurn = currentTurn;
@@ -72,15 +74,16 @@ public class Board {
 
   // Default private immutable constructor
   private Board(
-          Map<Position, Piece> pieces,
-          TurnSelector selector,
-          Color currentTurn,
-          int turnNumber,
-          Piece[][] board,
-          List<Piece> takenPieces, Promoter promoter) {
+      Map<Position, Piece> pieces,
+      TurnSelector selector,
+      Color currentTurn,
+      int turnNumber,
+      Piece[][] board,
+      List<Piece> takenPieces,
+      Promoter promoter) {
     this.pieces = pieces;
-      this.promoter = promoter;
-      this.rows = this.columns = 8;
+    this.promoter = promoter;
+    this.rows = this.columns = 8;
     this.board = board;
     this.selector = selector;
     this.currentTurn = currentTurn;
@@ -88,7 +91,8 @@ public class Board {
     this.takenPieces = takenPieces;
   }
 
-  public Board updatePiecePosition(Position oldPos, Position newPos, PieceType typeForPromotion) throws UnallowedMoveException {
+  public Board updatePiecePosition(Position oldPos, Position newPos, PieceType typeForPromotion)
+      throws UnallowedMoveException {
     // First, ChessGame checks if the wanted piece to move is from its team
     // Do all needed checks
     if (checkOutOfBounds(newPos) || checkOutOfBounds(oldPos)) {
@@ -111,7 +115,8 @@ public class Board {
         return this;
       } else {
         newBoard = removePieceAt(oldPos).removePieceAt(newPos).addPieceAt(newPos, piece);
-        if(promoter.hasToPromote(newBoard, piece.getPieceColour()) || promoter.canPromote(newPos, newBoard)){
+        if (promoter.hasToPromote(newBoard, piece.getPieceColour())
+            || promoter.canPromote(newPos, newBoard)) {
           newBoard = promoter.promote(newPos, typeForPromotion, newBoard);
         }
         return new Board(
@@ -120,10 +125,10 @@ public class Board {
             changeTurn(selector.selectTurn(this, turnNumber + 1)),
             turnNumber + 1,
             newBoard.getBoard(),
-            newBoard.getTakenPieces(),promoter );
+            newBoard.getTakenPieces(),
+            promoter);
       }
-    }
-    else {
+    } else {
       nextTurn = selector.selectTurn(this, turnNumber + 1);
       Map<Position, Piece> newPieces = copyMap(pieces);
       if (piece.hasNotMoved()) {
@@ -136,7 +141,8 @@ public class Board {
           nextTurn,
           newBoard.getTurnNumber() + 1,
           newBoard.getBoard(),
-          newBoard.getTakenPieces(),promoter );
+          newBoard.getTakenPieces(),
+          promoter);
     }
   }
 
@@ -148,7 +154,7 @@ public class Board {
     newBoard[pos.getRow()][pos.getColumn()] = changedPiece; // Add it to board
     newMap.put(pos, changedPiece); // Get the map
 
-    return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces,promoter );
+    return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces, promoter);
   }
 
   public Board removePieceAt(Position pos) {
@@ -156,7 +162,7 @@ public class Board {
     newBoard[pos.getRow()][pos.getColumn()] = null;
     Map<Position, Piece> newMap = copyMap(pieces);
     newMap.remove(pos);
-    return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces,promoter );
+    return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces, promoter);
   }
 
   // Getters and extra stuff
@@ -215,7 +221,7 @@ public class Board {
     return builder.toString();
   }
 
-  //Private stuff
+  // Private stuff
   private Piece[][] setup() {
     Piece[][] newBoard = new Piece[rows][columns];
     for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
@@ -246,10 +252,11 @@ public class Board {
             + ". Type = "
             + pieceAt(oldPos).getType());
   }
+
   private boolean checkOutOfBounds(Position newPos) {
     return newPos.getRow() >= rows
-            || newPos.getColumn() >= columns
-            || newPos.getRow() < 0
-            || newPos.getColumn() < 0;
+        || newPos.getColumn() >= columns
+        || newPos.getRow() < 0
+        || newPos.getColumn() < 0;
   }
 }

@@ -39,15 +39,19 @@ public class CheckMate implements WinCondition {
       Piece currentPiece = context.pieceAt(entry.getKey());
       DefaultCheck check = new DefaultCheck(currentPiece.getPieceColour());
       for (Position possibleMove : entry.getValue()) {
-        Board newBoard = new Board(context.getPiecesAndPositions(), context.getSelector(), context.getPromoter());
-        newBoard = newBoard.updatePiecePosition(currentPiecePosition, possibleMove, PieceType.QUEEN);
+        Board newBoard =
+            new Board(
+                context.getPiecesAndPositions(), context.getSelector(), context.getPromoter());
+        newBoard =
+            newBoard.updatePiecePosition(currentPiecePosition, possibleMove, PieceType.QUEEN);
         if (newBoard.getCurrentTurn() != currentPiece.getPieceColour()) {
           newBoard =
               new Board(
                   context.getPiecesAndPositions(),
                   context.getSelector(),
                   context.getTakenPieces(),
-                  context.changeTurn(currentPiece.getPieceColour()), context.getPromoter());
+                  context.changeTurn(currentPiece.getPieceColour()),
+                  context.getPromoter());
         }
         if (!check.isValidRule(newBoard)) {
           return false;
@@ -58,7 +62,7 @@ public class CheckMate implements WinCondition {
   }
 
   private Map<Position, List<Position>> getPieceMovesMap(
-      Map<Position, Piece> teamPieces, Board context){
+      Map<Position, Piece> teamPieces, Board context) {
     Map<Position, List<Position>> piecePossibleMoves = new HashMap<>();
     for (Entry<Position, Piece> entry : teamPieces.entrySet()) {
       Position currentPosition = entry.getKey();

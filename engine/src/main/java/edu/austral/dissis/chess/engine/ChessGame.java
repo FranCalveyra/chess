@@ -38,7 +38,8 @@ public class ChessGame {
             board.getRows(),
             board.getColumns(),
             board.getTakenPieces(),
-            board.changeTurn(board.getSelector().selectTurn(board, board.getTurnNumber())),board.getPromoter() ),
+            board.changeTurn(board.getSelector().selectTurn(board, board.getTurnNumber())),
+            board.getPromoter()),
         getRules());
   }
 
@@ -49,7 +50,8 @@ public class ChessGame {
     }
   }
 
-  public ChessGame makeMove(Position oldPos, Position newPos, PieceType typeForPromotion) throws UnallowedMoveException {
+  public ChessGame makeMove(Position oldPos, Position newPos, PieceType typeForPromotion)
+      throws UnallowedMoveException {
     if (ruleValidator.isAnyActive(board)) {
       return this;
     }
@@ -64,10 +66,9 @@ public class ChessGame {
   }
 
   public ChessGame makeMove(Position oldPos, Position newPos) throws UnallowedMoveException {
-    //If no argument is passed, it promotes to a Queen (maybe change later on)
+    // If no argument is passed, it promotes to a Queen (maybe change later on)
     return makeMove(oldPos, newPos, PieceType.QUEEN);
   }
-
 
   // Private methods
   private Set<WinCondition> filterWinConditions(List<BorderGameRule> rules) {
