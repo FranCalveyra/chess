@@ -107,7 +107,7 @@ public class Board {
     }
 
     // Now, move the piece. Take piece in newPos whether exists
-    Board newBoard = new Board(pieces, selector, promoter);
+    Board newBoard;
     Piece pieceToTake = pieces.get(newPos);
     Color nextTurn;
     if (pieceToTake != null) {
@@ -127,7 +127,7 @@ public class Board {
       }
     } else {
       nextTurn = selector.selectTurn(this, turnNumber + 1);
-      Map<Position, Piece> newPieces = copyMap(pieces);
+      Map<Position, Piece> newPieces;
       if (piece.hasNotMoved()) {
         newBoard = removePieceAt(oldPos).addPieceAt(newPos, piece.changeMoveState());
       }
