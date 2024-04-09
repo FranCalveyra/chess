@@ -123,10 +123,8 @@ public class PieceMovementTest {
     game = game.makeMove(new Position(6, 6), new Position(5, 6));
     List<Position> rookMoveSet =
         game.getBoard().pieceAt(new Position(0, 0)).getMoveSet(new Position(0, 0), game.getBoard());
-    System.out.println(rookMoveSet);
     assertEquals(5, rookMoveSet.size());
     game = game.makeMove(new Position(0, 0), new Position(4, 0));
-    System.out.println(game.getBoard());
     assertEquals(PieceType.ROOK, game.getBoard().pieceAt(new Position(4, 0)).getType());
   }
 
@@ -141,11 +139,9 @@ public class PieceMovementTest {
     game = game.makeMove(new Position(6, 4), new Position(4, 4));
     game = game.makeMove(new Position(3, 3), new Position(4, 4));
     game = game.makeMove(new Position(6, 3), new Position(5, 3));
-    System.out.println(game.getBoard());
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
     whiteQueenMoveSet =
         game.getBoard().pieceAt(new Position(0, 3)).getMoveSet(new Position(0, 3), game.getBoard());
-    System.out.println(whiteQueenMoveSet);
     assertEquals(4, whiteQueenMoveSet.size());
   }
 
@@ -178,7 +174,6 @@ public class PieceMovementTest {
     assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
     game = game.makeMove(new Position(0, 2), new Position(2, 0));
     game = game.makeMove(new Position(6, 0), new Position(4, 0));
-    System.out.println(game.getBoard());
     game = game.makeMove(new Position(0, 3), new Position(1, 3));
     game = game.makeMove(new Position(6, 5), new Position(4, 5));
     assertTrue(new Castling().isValidMove(new Position(0, 0), new Position(0, 4), game.getBoard()));

@@ -143,6 +143,5 @@ public class ChessTest {
 
   private void assertPositionType(ChessGame currentGame, PieceType pieceType, int i, int j) {
     assertEquals(pieceType, currentGame.getBoard().pieceAt(new Position(i, j)).getType());
-    System.out.println(currentGame.getBoard());
   }
 }
