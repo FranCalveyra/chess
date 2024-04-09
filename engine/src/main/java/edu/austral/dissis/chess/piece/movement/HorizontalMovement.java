@@ -8,7 +8,7 @@ public class HorizontalMovement implements PieceMovement {
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
     boolean validMove =
-        oldPos.getColumn() != newPos.getColumn() && oldPos.getRow() == newPos.getRow();
+        (oldPos.getColumn() != newPos.getColumn()) && (oldPos.getRow() == newPos.getRow());
     if (!validMove) {
       return false;
     }

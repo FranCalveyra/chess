@@ -6,17 +6,21 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.rule.DefaultCheck;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
-import java.util.List;
 
 public class Castling implements PieceMovement {
   // Only valid whenever king and rooks haven't been moved yet.
 
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
-    return isCastlingPossible(oldPos, newPos, context);
+    try {
+      return isCastlingPossible(oldPos, newPos, context);
+    } catch (UnallowedMoveException e) {
+      return false;
+    }
   }
 
-  private boolean isCastlingPossible(Position oldPos, Position newPos, Board context) {
+  private boolean isCastlingPossible(Position oldPos, Position newPos, Board context)
+      throws UnallowedMoveException {
     Piece firstPiece = context.getPiecesAndPositions().get(oldPos);
     Piece secondPiece = context.getPiecesAndPositions().get(newPos);
     if (firstPiece == null || secondPiece == null) {
@@ -38,55 +42,25 @@ public class Castling implements PieceMovement {
       return false;
     }
     boolean isInCheckFromStart = new DefaultCheck(firstPiece.getPieceColour()).isValidRule(context);
-    if (!this.noPieceBetween(
+    if (!(this.noPieceBetween(
             new Position(oldPos.getRow(), oldPos.getColumn() + 1),
             new Position(newPos.getRow(), newPos.getColumn() - 1),
             context)
-        || isInCheckFromStart) {
+        && !isInCheckFromStart)) {
       return false;
     }
     return validateCheckBetween(oldPos, newPos, context);
   }
 
-  private boolean validateCheckBetween(Position oldPos, Position newPos, Board context) {
+  private boolean validateCheckBetween(Position oldPos, Position newPos, Board context)
+      throws UnallowedMoveException {
     int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
     int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
-    Position fromPos = new Position(oldPos.getRow(), fromColumn);
-    Position toPos = new Position(oldPos.getRow(), toColumn);
-
-    Piece firstPiece = context.pieceAt(fromPos);
-    Piece secondPiece = context.pieceAt(toPos);
-
-    List<PieceMovement> firstPieceMoves = firstPiece.getMovements();
-    List<PieceMovement> secondPieceMoves = secondPiece.getMovements();
-    boolean firstValid = validateMovements(firstPieceMoves, fromPos, toPos, context);
-    boolean secondValid = validateMovements(secondPieceMoves, toPos, fromPos, context);
-    return firstValid && secondValid;
-  }
-
-  private boolean validateMovements(
-      List<PieceMovement> pieceMovements, Position fromPos, Position toPos, Board context) {
-    int fromColumn = fromPos.getColumn();
-    int toColumn = toPos.getColumn();
     for (int j = fromColumn + 1; j < toColumn; j++) {
-      Position currentTile = new Position(fromPos.getRow(), j);
-      for (PieceMovement rule : pieceMovements) {
-        if (rule.getClass() == Castling.class) {
-          continue;
-        }
-        try {
-          if (!rule.isValidMove(fromPos, toPos, context)) {
-            return false;
-          }
-          Board possibleContext =
-              context.updatePiecePosition(fromPos, currentTile, PieceType.QUEEN);
-          if (new DefaultCheck(context.pieceAt(fromPos).getPieceColour())
-              .isValidRule(possibleContext)) {
-            return false;
-          }
-        } catch (UnallowedMoveException e) {
-          continue;
-        }
+      Position currentTile = new Position(oldPos.getRow(), j);
+      Board possibleBoard = context.updatePiecePosition(currentTile, newPos, PieceType.QUEEN);
+      if (new DefaultCheck(context.pieceAt(oldPos).getPieceColour()).isValidRule(possibleBoard)) {
+        return false;
       }
     }
     return true;

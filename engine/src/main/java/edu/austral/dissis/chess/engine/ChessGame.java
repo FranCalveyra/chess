@@ -14,7 +14,8 @@ import java.util.NoSuchElementException;
 public class ChessGame {
   /** Simulates a real Chess Game. */
   private final Board board;
-  //Separate responsibilities, put promoter and turn selector in game
+
+  // Separate responsibilities, put promoter and turn selector in game
   private final WinConditionValidator winConditionValidator;
   private final List<WinCondition> rules;
   private final List<Check> checkConditions;

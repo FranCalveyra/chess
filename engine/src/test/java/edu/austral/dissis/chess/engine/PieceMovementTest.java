@@ -176,6 +176,7 @@ public class PieceMovementTest {
     game = game.makeMove(new Position(6, 0), new Position(4, 0));
     game = game.makeMove(new Position(0, 3), new Position(1, 3));
     game = game.makeMove(new Position(6, 5), new Position(4, 5));
+    System.out.println(game.getBoard());
     assertTrue(new Castling().isValidMove(new Position(0, 0), new Position(0, 4), game.getBoard()));
   }
 
