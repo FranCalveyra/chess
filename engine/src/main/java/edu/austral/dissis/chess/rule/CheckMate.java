@@ -82,7 +82,4 @@ public class CheckMate implements WinCondition {
     return teamPieces;
   }
 
-  // IF NOT CHECK FALSE, ELSE:
-  // MOVE ALL TEAMMATES TO ALL THEIR POSSIBLE POSITIONS TO CHECK IF KING STILL IN CHECK ☠☠☠☠☠
-
 }
