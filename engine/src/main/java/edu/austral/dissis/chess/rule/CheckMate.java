@@ -81,5 +81,4 @@ public class CheckMate implements WinCondition {
     }
     return teamPieces;
   }
-
 }
