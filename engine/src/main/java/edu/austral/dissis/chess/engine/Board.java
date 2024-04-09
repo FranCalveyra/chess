@@ -115,7 +115,7 @@ public class Board {
         return this;
       } else {
         newBoard = removePieceAt(oldPos).removePieceAt(newPos).addPieceAt(newPos, piece);
-        newBoard = promoteIfAble(newBoard, piece.getPieceColour(), newPos,typeForPromotion);
+        newBoard = promoteIfAble(newBoard, piece.getPieceColour(), newPos, typeForPromotion);
         return new Board(
             newBoard.getPiecesAndPositions(),
             newBoard.getSelector(),
@@ -130,8 +130,9 @@ public class Board {
       Map<Position, Piece> newPieces;
       if (piece.hasNotMoved()) {
         newBoard = removePieceAt(oldPos).addPieceAt(newPos, piece.changeMoveState());
+      } else {
+        newBoard = removePieceAt(oldPos).addPieceAt(newPos, piece);
       }
-      else newBoard = removePieceAt(oldPos).addPieceAt(newPos, piece);
       newBoard = promoteIfAble(newBoard, piece.getPieceColour(), newPos, typeForPromotion);
       newPieces = newBoard.getPiecesAndPositions();
       return new Board(
@@ -143,14 +144,6 @@ public class Board {
           newBoard.getTakenPieces(),
           promoter);
     }
-  }
-
-  private Board promoteIfAble(Board newBoard, Color pieceColour, Position newPos, PieceType typeForPromotion) {
-    if (promoter.hasToPromote(newBoard, pieceColour)
-            || promoter.canPromote(newPos, newBoard)) {
-       return promoter.promote(newPos, typeForPromotion, newBoard);
-    }
-    return newBoard;
   }
 
   // Board modifiers
@@ -264,5 +257,13 @@ public class Board {
         || newPos.getColumn() >= columns
         || newPos.getRow() < 0
         || newPos.getColumn() < 0;
+  }
+
+  private Board promoteIfAble(
+      Board newBoard, Color pieceColour, Position newPos, PieceType typeForPromotion) {
+    if (promoter.hasToPromote(newBoard, pieceColour) || promoter.canPromote(newPos, newBoard)) {
+      return promoter.promote(newPos, typeForPromotion, newBoard);
+    }
+    return newBoard;
   }
 }

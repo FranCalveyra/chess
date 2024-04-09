@@ -26,7 +26,7 @@ public class ChessGame {
     this.rules = rules;
   }
 
-  private ChessGame(Board board, List<WinCondition> rules, List<Check> checkConditions){
+  private ChessGame(Board board, List<WinCondition> rules, List<Check> checkConditions) {
     this.board = board;
     this.rules = rules;
     this.checkConditions = checkConditions;
@@ -45,7 +45,8 @@ public class ChessGame {
             board.getTakenPieces(),
             board.changeTurn(board.getSelector().selectTurn(board, board.getTurnNumber())),
             board.getPromoter()),
-        getRules(), checkConditions);
+        getRules(),
+        checkConditions);
   }
 
   public ChessGame makeMove(Position oldPos, Position newPos, PieceType typeForPromotion)
@@ -61,12 +62,13 @@ public class ChessGame {
     if (board.pieceAt(oldPos).getPieceColour() != board.getCurrentTurn()) {
       return this; // Player who has just moved a piece cannot move another (unless Castling)
     }
-    //Validate check
-    if(playIsInCheck(board.getCurrentTurn(), board, oldPos, newPos, typeForPromotion)){
+    // Validate check
+    if (playIsInCheck(board.getCurrentTurn(), board, oldPos, newPos, typeForPromotion)) {
       return this;
     }
 
-    return new ChessGame(board.updatePiecePosition(oldPos, newPos, typeForPromotion), rules, checkConditions);
+    return new ChessGame(
+        board.updatePiecePosition(oldPos, newPos, typeForPromotion), rules, checkConditions);
   }
 
   public ChessGame makeMove(Position oldPos, Position newPos) throws UnallowedMoveException {
@@ -82,30 +84,34 @@ public class ChessGame {
     return board;
   }
 
-  //Private methods:
-  private boolean playIsInCheck(Color currentTurn, Board board, Position oldPos, Position newPos, PieceType typeForPromotion) throws UnallowedMoveException {
-  Check checkRule = getCheckRuleByTeam(checkConditions, currentTurn);
-  Board possiblePlay = board.updatePiecePosition(oldPos,newPos,typeForPromotion);
-  return checkRule.isValidRule(possiblePlay);
-}
+  // Private methods:
+  private boolean playIsInCheck(
+      Color currentTurn, Board board, Position oldPos, Position newPos, PieceType typeForPromotion)
+      throws UnallowedMoveException {
+    Check checkRule = getCheckRuleByTeam(checkConditions, currentTurn);
+    Board possiblePlay = board.updatePiecePosition(oldPos, newPos, typeForPromotion);
+    return checkRule.isValidRule(possiblePlay);
+  }
 
   private Check getCheckRuleByTeam(List<Check> checkConditions, Color currentTurn) {
-    for(Check check: checkConditions){
-      if(check.getTeam() == currentTurn) return check;
+    for (Check check : checkConditions) {
+      if (check.getTeam() == currentTurn) {
+        return check;
+      }
     }
     throw new NoSuchElementException();
   }
+
   private List<Check> filterCheckConditions(List<WinCondition> rules) {
     List<Check> checks = new ArrayList<>();
-    for(WinCondition condition: rules){
-      if(condition instanceof Check){
-        checks.add((Check)condition);
+    for (WinCondition condition : rules) {
+      if (condition instanceof Check) {
+        checks.add((Check) condition);
       }
     }
-    for(Check check: checks){
+    for (Check check : checks) {
       rules.remove(check);
     }
     return checks;
   }
-
-  }
+}

@@ -2,9 +2,11 @@ package edu.austral.dissis.chess.rule;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.awt.Color;
+import java.util.List;
 import java.util.Map;
 
 public class Stalemate implements WinCondition {
@@ -17,8 +19,8 @@ public class Stalemate implements WinCondition {
   private boolean bruteForceMovementCheck(Board context, Color team) throws UnallowedMoveException {
     for (Map.Entry<Position, Piece> entry : context.getPiecesAndPositions().entrySet()) {
       Position actualPosition = entry.getKey();
-      Piece piece = entry.getValue();
-      if (hasValidMove(actualPosition, piece, context, team)) {
+      Piece currentPiece = entry.getValue();
+      if (hasValidMove(actualPosition, currentPiece, context, team)) {
         return false;
       }
     }
@@ -30,6 +32,23 @@ public class Stalemate implements WinCondition {
     if (piece.getPieceColour() != team) {
       return false;
     }
-    return !piece.getMoveSet(position, context).isEmpty();
+    List<Position> possibleMoves = piece.getMoveSet(position, context);
+    Check check = new DefaultCheck(team);
+    if (possibleMoves.isEmpty()) {
+      return true;
+    }
+    return possibleMovesPutGameInCheck(possibleMoves, check, context, position);
+  }
+
+  private boolean possibleMovesPutGameInCheck(
+      List<Position> possibleMoves, Check check, Board context, Position initialPosition)
+      throws UnallowedMoveException {
+    for (Position move : possibleMoves) {
+      Board possibleBoard = context.updatePiecePosition(initialPosition, move, PieceType.QUEEN);
+      if (!check.isValidRule(possibleBoard)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
