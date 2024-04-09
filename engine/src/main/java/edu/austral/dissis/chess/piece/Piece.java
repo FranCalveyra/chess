@@ -3,6 +3,7 @@ package edu.austral.dissis.chess.piece;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,27 +13,19 @@ public class Piece {
   private final List<PieceMovement> movements;
   private final Color pieceColour;
   private final PieceType type;
-  private boolean isActiveInBoard;
-  private boolean hasMoved;
+  private final boolean hasMoved;
 
   public Piece(List<PieceMovement> movements, Color pieceColour, PieceType type) {
     this.movements = movements;
     this.pieceColour = pieceColour;
     this.type = type;
-    this.isActiveInBoard = true;
     this.hasMoved = false;
   }
 
-  private Piece(
-      List<PieceMovement> movements,
-      Color pieceColour,
-      PieceType type,
-      boolean activeInBoard,
-      boolean hasMoved) {
+  public Piece(List<PieceMovement> movements, Color pieceColour, PieceType type, boolean hasMoved) {
     this.movements = movements;
     this.pieceColour = pieceColour;
     this.type = type;
-    this.isActiveInBoard = activeInBoard;
     this.hasMoved = hasMoved;
   }
 
@@ -52,16 +45,6 @@ public class Piece {
     return colour.substring(0, 2) + " " + type.toString().charAt(0);
   }
 
-  public boolean isActiveInBoard() {
-    return isActiveInBoard;
-  }
-
-  public void changePieceActivity() {
-    isActiveInBoard = !isActiveInBoard;
-    //    return new Piece(movements, pieceColour, type, !isActiveInBoard, hasMoved); Immutable
-    // approach
-  }
-
   public Color getPieceColour() {
     return pieceColour;
   }
@@ -70,10 +53,13 @@ public class Piece {
     return type;
   }
 
-  public void changeMoveState() {
-    //    return new Piece(movements, pieceColour, type, isActiveInBoard, !hasMoved); Immutable
-    // approach
-    hasMoved = !hasMoved;
+  public List<PieceMovement> getMovements() {
+    return movements;
+  }
+
+  public Piece changeMoveState() {
+    return new Piece(movements, pieceColour, type, !hasMoved); // Immutable approach
+    // hasMoved = !hasMoved; //Mutable approach
   }
 
   public boolean hasNotMoved() {

@@ -3,6 +3,7 @@ package edu.austral.dissis.chess.piece.movement;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
+import java.awt.Color;
 
 public class PawnTaking implements PieceMovement {
 
@@ -12,11 +13,14 @@ public class PawnTaking implements PieceMovement {
     int oldY = oldPos.getRow();
     int newX = newPos.getColumn();
     int newY = newPos.getRow();
-    boolean diagonalMove = Math.abs(newY - oldY) == 1 && Math.abs(newX - oldX) == 1;
+    int deltaY = newY - oldY;
+    boolean colorBasedVerticalMovement =
+        context.getCurrentTurn() == Color.BLACK ? deltaY == -1 : deltaY == 1;
+    boolean diagonalMove = colorBasedVerticalMovement && Math.abs(newX - oldX) == 1;
     if (!diagonalMove) {
       return false;
     }
-    Piece pieceAtNewPos = context.getActivePiecesAndPositions().get(newPos);
+    Piece pieceAtNewPos = context.getPiecesAndPositions().get(newPos);
     return pieceAtNewPos != null && pieceAtNewPos.getPieceColour() != context.getCurrentTurn();
   }
 }

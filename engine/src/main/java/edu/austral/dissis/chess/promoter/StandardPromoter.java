@@ -39,8 +39,11 @@ public class StandardPromoter implements Promoter {
 
   @Override
   public void promote(Position position, PieceType type, Board context) {
-    Piece piece = new PieceProvider().get(context.pieceAt(position).getPieceColour(), type);
+    Piece initialPiece = context.pieceAt(position);
+    Piece piece = new PieceProvider().get(initialPiece.getPieceColour(), type);
+    Piece actualPiece =
+        new Piece(piece.getMovements(), piece.getPieceColour(), type, !initialPiece.hasNotMoved());
     context.removePieceAt(position);
-    context.addPieceAt(position, piece);
+    context.addPieceAt(position, actualPiece);
   }
 }

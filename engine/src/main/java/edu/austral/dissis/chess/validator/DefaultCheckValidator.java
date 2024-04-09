@@ -19,7 +19,7 @@ public class DefaultCheckValidator {
   }
 
   private Position getKingPosition(Board context, Color team) {
-    for (Entry<Position, Piece> entry : context.getActivePiecesAndPositions().entrySet()) {
+    for (Entry<Position, Piece> entry : context.getPiecesAndPositions().entrySet()) {
       Piece currentPiece = entry.getValue();
       if (currentPiece.getType() == PieceType.KING && currentPiece.getPieceColour() == team) {
         return entry.getKey();

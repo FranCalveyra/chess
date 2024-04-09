@@ -4,7 +4,6 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.utils.Position;
-import edu.austral.dissis.chess.validator.DefaultCheckValidator;
 
 public class Castling implements PieceMovement {
   // Only valid whenever king and rooks haven't been moved yet.
@@ -15,8 +14,8 @@ public class Castling implements PieceMovement {
   }
 
   private boolean isCastlingPossible(Position oldPos, Position newPos, Board context) {
-    Piece firstPiece = context.getActivePiecesAndPositions().get(oldPos);
-    Piece secondPiece = context.getActivePiecesAndPositions().get(newPos);
+    Piece firstPiece = context.getPiecesAndPositions().get(oldPos);
+    Piece secondPiece = context.getPiecesAndPositions().get(newPos);
     if (firstPiece == null || secondPiece == null) {
       return false;
     }
@@ -30,29 +29,26 @@ public class Castling implements PieceMovement {
     boolean displacementCheck =
         oldPos.getRow() == newPos.getRow() && (columnDelta == 3 || columnDelta == 4);
     boolean movementCheck = firstPiece.hasNotMoved() && secondPiece.hasNotMoved();
-    boolean checkValidation = validateIfCheck(oldPos, newPos, context);
-    return colorCheck
-        && typeCheck
-        && movementCheck
-        && noPieceBetween(oldPos, newPos, context)
-        && displacementCheck
-        && checkValidation;
+    boolean generalChecks = colorCheck && typeCheck && movementCheck && displacementCheck;
+    if (!generalChecks) {
+      return false;
+    }
+    return this.noPieceBetween(
+        new Position(oldPos.getRow(), oldPos.getColumn() + 1),
+        new Position(newPos.getRow(), newPos.getColumn() - 1),
+        context);
   }
 
-  private boolean validateIfCheck(Position fromPos, Position toPos, Board context) {
-    DefaultCheckValidator validator = new DefaultCheckValidator();
-    int from = Math.min(fromPos.getColumn(), toPos.getColumn());
-    int to = Math.max(fromPos.getColumn(), toPos.getColumn());
-    int row = fromPos.getRow();
-    for (int j = from; j <= to; j++) {
-      Position currentPos = new Position(row, j);
-      boolean check =
-          validator.kingInCheck(
-              context, context.getCurrentTurn(), toPos, context.pieceAt(currentPos));
-      if (check) {
-        return true;
+  @Override
+  public boolean noPieceBetween(Position oldPos, Position newPos, Board context) {
+    int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
+    int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
+    for (int j = fromColumn + 1; j < toColumn; j++) {
+      Position currentTile = new Position(oldPos.getRow(), j);
+      if (context.pieceAt(currentTile) != null) {
+        return false;
       }
     }
-    return false;
+    return true;
   }
 }

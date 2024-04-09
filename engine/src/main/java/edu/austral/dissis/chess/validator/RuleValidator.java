@@ -5,7 +5,9 @@ import edu.austral.dissis.chess.rule.BorderGameRule;
 import edu.austral.dissis.chess.rule.Check;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.util.List;
-//May delete this class, quite useless. Check is a rule apart from the others, and win conditions are what really matter.
+
+// May delete this class, quite useless. Check is a rule apart from the others, and win conditions
+// are what really matter.
 public class RuleValidator {
   private final List<BorderGameRule> rules;
 

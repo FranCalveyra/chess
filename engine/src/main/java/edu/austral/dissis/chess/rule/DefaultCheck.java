@@ -21,7 +21,7 @@ public class DefaultCheck implements Check {
 
   protected boolean check(Board context, Color team) {
     DefaultCheckValidator validator = new DefaultCheckValidator();
-    for (Entry<Position, Piece> entry : context.getActivePiecesAndPositions().entrySet()) {
+    for (Entry<Position, Piece> entry : context.getPiecesAndPositions().entrySet()) {
       if (validator.kingInCheck(context, team, entry.getKey(), entry.getValue())) {
         return true;
       }

@@ -8,7 +8,7 @@ public class PawnFirstMove implements PieceMovement {
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
     // Need pawn original position. Get if from default
-    Piece piece = context.getActivePiecesAndPositions().get(oldPos);
+    Piece piece = context.getPiecesAndPositions().get(oldPos);
     int oldX = oldPos.getColumn();
     int oldY = oldPos.getRow();
     int newX = newPos.getColumn();
@@ -18,6 +18,6 @@ public class PawnFirstMove implements PieceMovement {
     return horizontalMove
         && verticalMove
         && piece.hasNotMoved()
-        && noPieceBetween(oldPos, newPos, context);
+        && new VerticalMovement().noPieceBetween(oldPos, newPos, context);
   }
 }

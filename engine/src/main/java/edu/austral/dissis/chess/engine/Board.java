@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
+import org.jetbrains.annotations.NotNull;
 
 public class Board {
   private final Map<Position, Piece> pieces;
@@ -81,61 +81,63 @@ public class Board {
     this.takenPieces = takenPieces;
   }
 
-  public Board updatePiecePosition(Position newPos, Piece piece) throws UnallowedMoveException {
+  public Board updatePiecePosition(Position oldPos, Position newPos) throws UnallowedMoveException {
     // First, ChessGame checks if the wanted piece to move is from its team
-    int i = newPos.getRow();
-    int j = newPos.getColumn();
     // Do all needed checks
-    if (i > rows || j > columns || i < 0 || j < 0) {
+    if (newPos.getRow() >= rows
+        || newPos.getColumn() >= columns
+        || newPos.getRow() < 0
+        || newPos.getColumn() < 0) {
       return this; // Check out of bounds
     }
-    if (!piece.isActiveInBoard()) {
-      return this; // Check piece activity
+    Piece piece = pieceAt(oldPos); // Fetches piece position before moving
+    if (piece == null) {
+      return this;
     }
-    Position oldPos = getPieceCurrentPosition(piece); // Fetches piece position before moving
     if (!piece.checkValidMove(oldPos, newPos, this)) {
-      throw new UnallowedMoveException(
-          "Cannot move this piece from position (" +oldPos.getRow() + ", "+oldPos.getColumn() + ")" + "to position (" +newPos.getRow() + ", "+newPos.getColumn() + ")" ); // Check move validity
+      throwException(oldPos, newPos); // Check move validity
     }
-    Board newBoard;
+    Board newBoard = new Board(pieces, selector);
     // Now, move the piece. Take piece in newPos whether exists
-    Piece pieceToTake = board[i][j];
+    Piece pieceToTake = pieces.get(newPos);
+    Color nextTurn;
     if (pieceToTake != null) {
       if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
         return this;
+      } else {
+        newBoard = removePieceAt(oldPos).removePieceAt(newPos).addPieceAt(newPos, piece);
+        return new Board(
+            newBoard.getPiecesAndPositions(),
+            newBoard.getSelector(),
+            changeTurn(selector.selectTurn(this, turnNumber + 1)),
+            turnNumber + 1,
+            newBoard.getBoard(),
+            newBoard.getTakenPieces());
       }
-      Board otherBoard = removePieceAt(newPos).removePieceAt(oldPos);
-      List<Piece> newTakenPieces = new ArrayList<>(List.copyOf(takenPieces));
-      newTakenPieces.add(pieceToTake);
-      newBoard = otherBoard.addPieceAt(newPos, piece);
+    } else {
+      nextTurn = selector.selectTurn(this, turnNumber + 1);
+      Map<Position, Piece> newPieces = copyMap(pieces);
+      if (piece.hasNotMoved()) {
+        newBoard = removePieceAt(oldPos).addPieceAt(newPos, piece);
+        newPieces = newBoard.getPiecesAndPositions();
+      }
       return new Board(
-          newBoard.getActivePiecesAndPositions(),
+          newPieces,
           newBoard.getSelector(),
-          newBoard.changeTurn(getSelector().selectTurn(newBoard, newBoard.getTurnNumber() + 1)),
+          nextTurn,
           newBoard.getTurnNumber() + 1,
           newBoard.getBoard(),
-          newTakenPieces);
+          newBoard.getTakenPieces());
     }
-    newBoard = updateToEmptyPosition(piece, oldPos, i, j);
-    if (piece.hasNotMoved()) {
-      piece.changeMoveState();
-    }
-    Color newTurn = changeTurn(selector.selectTurn(this, turnNumber + 1));
-    return new Board(
-        newBoard.getActivePiecesAndPositions(),
-        newBoard.getSelector(),
-        newTurn,
-        newBoard.getTurnNumber() + 1,
-        newBoard.getBoard(),
-        newBoard.takenPieces);
-    // This should work, check later
   }
 
+  // Board modifiers
   public Board addPieceAt(Position pos, Piece piece) {
     Piece[][] newBoard = board.clone();
-    newBoard[pos.getRow()][pos.getColumn()] = piece; // Add it to board
-    Map<Position, Piece> newMap = new HashMap<>(Map.copyOf(pieces));
-    newMap.put(pos, piece); // Get the map
+    Piece changedPiece = piece.hasNotMoved() ? piece.changeMoveState() : piece;
+    Map<Position, Piece> newMap = copyMap(pieces);
+    newBoard[pos.getRow()][pos.getColumn()] = changedPiece; // Add it to board
+    newMap.put(pos, changedPiece); // Get the map
 
     return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces);
   }
@@ -143,9 +145,7 @@ public class Board {
   public Board removePieceAt(Position pos) {
     Piece[][] newBoard = board.clone();
     newBoard[pos.getRow()][pos.getColumn()] = null;
-    Piece pieceToRemove = pieces.get(pos);
-    Map<Position, Piece> newMap = new HashMap<>(Map.copyOf(pieces));
-    pieceToRemove.changePieceActivity();
+    Map<Position, Piece> newMap = copyMap(pieces);
     newMap.remove(pos);
     return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces);
   }
@@ -162,7 +162,7 @@ public class Board {
 
   public Color changeTurn(Color turn) {
     return turn;
-  } // Uncouple turn
+  }
 
   public int getColumns() {
     return columns;
@@ -172,7 +172,7 @@ public class Board {
     return rows;
   }
 
-  public Map<Position, Piece> getActivePiecesAndPositions() {
+  public Map<Position, Piece> getPiecesAndPositions() {
     return pieces;
   }
 
@@ -192,15 +192,14 @@ public class Board {
     return turnNumber;
   }
 
-  // Private methods
-  private Position getPieceCurrentPosition(Piece piece) {
-    // O(N)
-    for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
-      if (entry.getValue() == piece) {
-        return entry.getKey();
-      }
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    for (int i = board.length - 1; i >= 0; i--) {
+      String line = Arrays.toString(board[i]);
+      builder.append(line).append("\n");
     }
-    throw new NoSuchElementException("Piece does not exist");
+    return builder.toString();
   }
 
   private Piece[][] setup() {
@@ -213,23 +212,24 @@ public class Board {
     return newBoard;
   }
 
-  private Board updateToEmptyPosition(Piece piece, Position oldPos, int i, int j) {
-    Piece[][] newBoard = Arrays.copyOf(board, board.length);
-    newBoard[oldPos.getRow()][oldPos.getColumn()] = null;
-    Map<Position, Piece> newMap = new HashMap<>(Map.copyOf(pieces));
-    newMap.remove(oldPos);
-    newBoard[i][j] = piece;
-    newMap.put(new Position(i, j), piece);
-    return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces);
+  private @NotNull HashMap<Position, Piece> copyMap(Map<Position, Piece> pieces) {
+    return new HashMap<>(Map.copyOf(pieces));
   }
 
-  @Override
-  public String toString() {
-    StringBuilder builder = new StringBuilder();
-    for (int i = board.length - 1; i >= 0; i--) {
-      String line = Arrays.toString(board[i]);
-      builder.append(line).append("\n");
-    }
-    return builder.toString();
+  private void throwException(Position oldPos, Position newPos) throws UnallowedMoveException {
+    throw new UnallowedMoveException(
+        "Cannot move this piece from position ("
+            + oldPos.getRow()
+            + ", "
+            + oldPos.getColumn()
+            + ")"
+            + "to position ("
+            + newPos.getRow()
+            + ", "
+            + newPos.getColumn()
+            + "). \n Its possible moves are: "
+            + pieceAt(oldPos).getMoveSet(oldPos, this)
+            + ". Type = "
+            + pieceAt(oldPos).getType());
   }
 }

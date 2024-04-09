@@ -24,12 +24,15 @@ public class Position {
   // More understandable
   @Override
   public String toString() {
-    return "Position{" + "row=" + row + ", column=" + column + '}';
+    return "(" + row + "," + column + ')';
   }
 
   // Easier map getting
   @Override
   public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
     if (obj.getClass() != Position.class) {
       return false;
     }

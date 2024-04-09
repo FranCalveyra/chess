@@ -26,9 +26,9 @@ public interface PieceMovement {
     for (int i = 0; i < context.getRows(); i++) {
       for (int j = 0; j < context.getColumns(); j++) {
         Position currentPos = new Position(i, j);
-        if (isValidMove(oldPos, currentPos, context) && !possiblePositions.contains(currentPos) &&
-                context.pieceAt(currentPos) == null &&
-                noPieceBetween(oldPos, currentPos, context)) {
+        if (isValidMove(oldPos, currentPos, context)
+            && !possiblePositions.contains(currentPos)
+            && context.pieceAt(currentPos) == null) {
           possiblePositions.add(currentPos);
         }
       }
@@ -37,12 +37,12 @@ public interface PieceMovement {
   }
 
   // Private methods
-  private boolean isTeammateBetween(Position oldPos, Position newPos, Board context) {
+  private boolean isTeammateBetween(Position fromPos, Position toPos, Board context) {
     // Change for loops depending on displacement type
-    for (int i = oldPos.getRow()+1; i <= newPos.getRow(); i++) {
-      for (int j = oldPos.getColumn()+1; j <= newPos.getColumn(); j++) {
+    for (int i = fromPos.getRow(); i <= toPos.getRow(); i++) {
+      for (int j = fromPos.getColumn(); j <= toPos.getColumn(); j++) {
         Piece pieceAt = context.pieceAt(new Position(i, j));
-        if (pieceAt != null) {
+        if (pieceAt != null && pieceAt.getPieceColour() != context.getCurrentTurn()) {
           return true;
         }
       }

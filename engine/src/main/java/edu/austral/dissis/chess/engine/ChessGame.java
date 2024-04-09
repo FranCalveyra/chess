@@ -1,6 +1,5 @@
 package edu.austral.dissis.chess.engine;
 
-import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.rule.BorderGameRule;
 import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.utils.Position;
@@ -33,13 +32,13 @@ public class ChessGame {
     // Whites always make the first move.
     return new ChessGame(
         new Board(
-            board.getActivePiecesAndPositions(),
+            board.getPiecesAndPositions(),
             board.getSelector(),
             board.getRows(),
             board.getColumns(),
             board.getTakenPieces(),
-            board.changeTurn(Color.WHITE)),
-        rules);
+            board.changeTurn(board.getSelector().selectTurn(board, board.getTurnNumber()))),
+        getRules());
   }
 
   public void verifyEndGame() throws UnallowedMoveException {
@@ -49,16 +48,18 @@ public class ChessGame {
     }
   }
 
-  public Board makeMove(Piece piece, Position newPos)
-      throws UnallowedMoveException {
+  public ChessGame makeMove(Position oldPos, Position newPos) throws UnallowedMoveException {
     if (ruleValidator.isAnyActive(board)) {
-      return board;
+      return this;
     }
-    if (piece.getPieceColour() != board.getCurrentTurn()) {
-      return board; // Player who has just moved a piece cannot move another (unless Castling)
+    if (board.pieceAt(oldPos) == null) {
+      return this;
+    }
+    if (board.pieceAt(oldPos).getPieceColour() != board.getCurrentTurn()) {
+      return this; // Player who has just moved a piece cannot move another (unless Castling)
     }
     verifyEndGame();
-    return board.updatePiecePosition(newPos, piece);
+    return new ChessGame(board.updatePiecePosition(oldPos, newPos), rules);
   }
 
   // Private methods

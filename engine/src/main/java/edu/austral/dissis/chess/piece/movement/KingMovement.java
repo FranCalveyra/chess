@@ -11,7 +11,13 @@ public class KingMovement implements PieceMovement {
     boolean horizontalMove = Math.abs(newPos.getColumn() - oldPos.getColumn()) == 1;
     boolean verticalMove = Math.abs(newPos.getRow() - oldPos.getRow()) == 1;
     boolean diagonalMove = horizontalMove && verticalMove;
-    boolean move = horizontalMove || verticalMove || diagonalMove;
-    return noPieceBetween(oldPos, newPos, context) && move;
+    if (diagonalMove) {
+      return new DiagonalMovement().noPieceBetween(oldPos, newPos, context);
+    } else if (horizontalMove) {
+      return new HorizontalMovement().noPieceBetween(oldPos, newPos, context);
+    } else if (verticalMove) {
+      return new VerticalMovement().noPieceBetween(oldPos, newPos, context);
+    }
+    return false;
   }
 }

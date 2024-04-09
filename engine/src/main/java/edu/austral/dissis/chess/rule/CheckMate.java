@@ -27,30 +27,27 @@ public class CheckMate implements WinCondition {
       return false;
     }
     Map<Position, Piece> teamPieces = getPiecesByColor(context, team);
-    Map<Piece, List<Position>> piecesWithPossibleMoves = getPieceMovesMap(teamPieces, context);
-    System.out.println(context);
-    System.out.println(piecesWithPossibleMoves);
+    Map<Position, List<Position>> piecesWithPossibleMoves = getPieceMovesMap(teamPieces, context);
     return noPossibleSaving(piecesWithPossibleMoves, context);
   }
-  /*
-  [BL R, BL K, BL B, null, BL K, BL B, BL K, BL R]
-  [BL P, BL P, BL P, BL P, null, BL P, BL P, BL P]
-  [null, null, null, null, null, null, null, null]
-  [null, null, null, null, BL P, null, null, null]
-  [null, null, null, null, null, null, WH P, BL Q]
-  [null, null, null, null, null, WH P, null, null]
-  [WH P, WH P, WH P, WH P, WH P, null, null, WH P]
-  [WH R, WH K, WH B, WH Q, WH K, WH B, WH K, WH R]
-   */
 
-  private boolean noPossibleSaving(Map<Piece, List<Position>> piecePossibleMoves, Board context)
+  private boolean noPossibleSaving(Map<Position, List<Position>> piecePossibleMoves, Board context)
       throws UnallowedMoveException {
-    for (Entry<Piece, List<Position>> entry : piecePossibleMoves.entrySet()) {
-      Position currentPiecePosition = getPiecePosition(entry.getKey(), context);
-      DefaultCheck check = new DefaultCheck(entry.getKey().getPieceColour());
+    for (Entry<Position, List<Position>> entry : piecePossibleMoves.entrySet()) {
+      Position currentPiecePosition = entry.getKey();
+      Piece currentPiece = context.pieceAt(entry.getKey());
+      DefaultCheck check = new DefaultCheck(currentPiece.getPieceColour());
       for (Position possibleMove : entry.getValue()) {
-        Board newBoard = new Board(context.getActivePiecesAndPositions(), context.getSelector());
-        newBoard.updatePiecePosition(possibleMove, newBoard.pieceAt(currentPiecePosition));
+        Board newBoard = new Board(context.getPiecesAndPositions(), context.getSelector());
+        newBoard = newBoard.updatePiecePosition(currentPiecePosition, possibleMove);
+        if (newBoard.getCurrentTurn() != currentPiece.getPieceColour()) {
+          newBoard =
+              new Board(
+                  context.getPiecesAndPositions(),
+                  context.getSelector(),
+                  context.getTakenPieces(),
+                  context.changeTurn(currentPiece.getPieceColour()));
+        }
         if (!check.isValidRule(newBoard)) {
           return false;
         }
@@ -59,28 +56,20 @@ public class CheckMate implements WinCondition {
     return true;
   }
 
-  private Position getPiecePosition(Piece piece, Board context) {
-    for (Map.Entry<Position, Piece> entry : context.getActivePiecesAndPositions().entrySet()) {
-      if (entry.getValue() == piece && piece != null) {
-        return entry.getKey();
-      }
-    }
-    return null;
-  }
-
-  private Map<Piece, List<Position>> getPieceMovesMap(
-      Map<Position, Piece> teamPieces, Board context) {
-    Map<Piece, List<Position>> piecePossibleMoves = new HashMap<>();
+  private Map<Position, List<Position>> getPieceMovesMap(
+      Map<Position, Piece> teamPieces, Board context) throws UnallowedMoveException {
+    Map<Position, List<Position>> piecePossibleMoves = new HashMap<>();
     for (Entry<Position, Piece> entry : teamPieces.entrySet()) {
-      Piece piece = entry.getValue();
-      piecePossibleMoves.put(piece, piece.getMoveSet(entry.getKey(), context));
+      Position currentPosition = entry.getKey();
+      piecePossibleMoves.put(
+          currentPosition, context.pieceAt(currentPosition).getMoveSet(entry.getKey(), context));
     }
     return piecePossibleMoves;
   }
 
   private Map<Position, Piece> getPiecesByColor(Board context, Color team) {
     Map<Position, Piece> teamPieces = new HashMap<>();
-    for (Entry<Position, Piece> entry : context.getActivePiecesAndPositions().entrySet()) {
+    for (Entry<Position, Piece> entry : context.getPiecesAndPositions().entrySet()) {
       if (entry.getValue().getPieceColour() == team) {
         teamPieces.put(entry.getKey(), entry.getValue());
       }
