@@ -1,27 +1,31 @@
 package edu.austral.dissis.chess.piece.movement;
 
 import edu.austral.dissis.chess.engine.Board;
+import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
 
 public class HorizontalMovement implements PieceMovement {
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
-    return oldPos.getColumn() != newPos.getColumn()
-        && oldPos.getRow() == newPos.getRow()
-        && noPieceBetween(oldPos, newPos, context);
+    boolean validMove = oldPos.getColumn() != newPos.getColumn()
+            && oldPos.getRow() == newPos.getRow();
+    if(!validMove){
+      return false;
+    }
+    return this.noPieceBetween(oldPos, newPos, context);
   }
 
   @Override
   public boolean noPieceBetween(Position oldPos, Position newPos, Board context) {
-    int fromColumn = Math.min(oldPos.getRow(), newPos.getRow());
-    int toColumn = Math.max(oldPos.getRow(), newPos.getRow());
-    for (int j = fromColumn; j <= toColumn; j++) {
+    int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
+    int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
+    for (int j = fromColumn+1; j < toColumn; j++) {
       Position currentTile = new Position(oldPos.getRow(), j);
       if (context.pieceAt(currentTile) != null) {
-        System.out.println(context.getPiecesAndPositions());
         return false;
       }
     }
-    return true;
+    Piece lastPiece = context.pieceAt(newPos);
+    return lastPiece == null || lastPiece.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
   }
 }

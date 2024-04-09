@@ -19,6 +19,6 @@ public class PawnMovement implements PieceMovement {
         currentPawn.getPieceColour() == Color.BLACK ? deltaY == -1 : deltaY == 1;
     return (oldX == newX
             && (movementByColor || new PawnFirstMove().isValidMove(oldPos, newPos, context)))
-        && new VerticalMovement().noPieceBetween(oldPos, newPos, context);
+        && this.noPieceBetween(oldPos, newPos, context);
   }
 }

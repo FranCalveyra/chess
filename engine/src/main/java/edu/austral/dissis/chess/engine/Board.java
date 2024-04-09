@@ -1,6 +1,7 @@
 package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.Promoter;
 import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.Position;
@@ -87,13 +88,10 @@ public class Board {
     this.takenPieces = takenPieces;
   }
 
-  public Board updatePiecePosition(Position oldPos, Position newPos) throws UnallowedMoveException {
+  public Board updatePiecePosition(Position oldPos, Position newPos, PieceType typeForPromotion) throws UnallowedMoveException {
     // First, ChessGame checks if the wanted piece to move is from its team
     // Do all needed checks
-    if (newPos.getRow() >= rows
-        || newPos.getColumn() >= columns
-        || newPos.getRow() < 0
-        || newPos.getColumn() < 0) {
+    if (checkOutOfBounds(newPos) || checkOutOfBounds(oldPos)) {
       return this; // Check out of bounds
     }
     Piece piece = pieceAt(oldPos); // Fetches piece position before moving
@@ -103,8 +101,9 @@ public class Board {
     if (!piece.checkValidMove(oldPos, newPos, this)) {
       throwException(oldPos, newPos); // Check move validity
     }
-    Board newBoard = new Board(pieces, selector, promoter);
+
     // Now, move the piece. Take piece in newPos whether exists
+    Board newBoard = new Board(pieces, selector, promoter);
     Piece pieceToTake = pieces.get(newPos);
     Color nextTurn;
     if (pieceToTake != null) {
@@ -112,6 +111,9 @@ public class Board {
         return this;
       } else {
         newBoard = removePieceAt(oldPos).removePieceAt(newPos).addPieceAt(newPos, piece);
+        if(promoter.hasToPromote(newBoard, piece.getPieceColour()) || promoter.canPromote(newPos, newBoard)){
+          newBoard = promoter.promote(newPos, typeForPromotion, newBoard);
+        }
         return new Board(
             newBoard.getPiecesAndPositions(),
             newBoard.getSelector(),
@@ -120,7 +122,8 @@ public class Board {
             newBoard.getBoard(),
             newBoard.getTakenPieces(),promoter );
       }
-    } else {
+    }
+    else {
       nextTurn = selector.selectTurn(this, turnNumber + 1);
       Map<Position, Piece> newPieces = copyMap(pieces);
       if (piece.hasNotMoved()) {
@@ -212,6 +215,7 @@ public class Board {
     return builder.toString();
   }
 
+  //Private stuff
   private Piece[][] setup() {
     Piece[][] newBoard = new Piece[rows][columns];
     for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
@@ -241,5 +245,11 @@ public class Board {
             + pieceAt(oldPos).getMoveSet(oldPos, this)
             + ". Type = "
             + pieceAt(oldPos).getType());
+  }
+  private boolean checkOutOfBounds(Position newPos) {
+    return newPos.getRow() >= rows
+            || newPos.getColumn() >= columns
+            || newPos.getRow() < 0
+            || newPos.getColumn() < 0;
   }
 }

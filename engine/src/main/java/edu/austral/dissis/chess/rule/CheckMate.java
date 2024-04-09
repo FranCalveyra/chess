@@ -2,6 +2,7 @@ package edu.austral.dissis.chess.rule;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.awt.Color;
@@ -39,7 +40,7 @@ public class CheckMate implements WinCondition {
       DefaultCheck check = new DefaultCheck(currentPiece.getPieceColour());
       for (Position possibleMove : entry.getValue()) {
         Board newBoard = new Board(context.getPiecesAndPositions(), context.getSelector(), context.getPromoter());
-        newBoard = newBoard.updatePiecePosition(currentPiecePosition, possibleMove);
+        newBoard = newBoard.updatePiecePosition(currentPiecePosition, possibleMove, PieceType.QUEEN);
         if (newBoard.getCurrentTurn() != currentPiece.getPieceColour()) {
           newBoard =
               new Board(
@@ -57,7 +58,7 @@ public class CheckMate implements WinCondition {
   }
 
   private Map<Position, List<Position>> getPieceMovesMap(
-      Map<Position, Piece> teamPieces, Board context) throws UnallowedMoveException {
+      Map<Position, Piece> teamPieces, Board context){
     Map<Position, List<Position>> piecePossibleMoves = new HashMap<>();
     for (Entry<Position, Piece> entry : teamPieces.entrySet()) {
       Position currentPosition = entry.getKey();

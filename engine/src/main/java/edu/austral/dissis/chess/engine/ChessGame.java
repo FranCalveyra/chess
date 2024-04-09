@@ -1,5 +1,6 @@
 package edu.austral.dissis.chess.engine;
 
+import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.rule.BorderGameRule;
 import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.utils.Position;
@@ -48,7 +49,7 @@ public class ChessGame {
     }
   }
 
-  public ChessGame makeMove(Position oldPos, Position newPos) throws UnallowedMoveException {
+  public ChessGame makeMove(Position oldPos, Position newPos, PieceType typeForPromotion) throws UnallowedMoveException {
     if (ruleValidator.isAnyActive(board)) {
       return this;
     }
@@ -59,8 +60,14 @@ public class ChessGame {
       return this; // Player who has just moved a piece cannot move another (unless Castling)
     }
     verifyEndGame();
-    return new ChessGame(board.updatePiecePosition(oldPos, newPos), rules);
+    return new ChessGame(board.updatePiecePosition(oldPos, newPos, typeForPromotion), rules);
   }
+
+  public ChessGame makeMove(Position oldPos, Position newPos) throws UnallowedMoveException {
+    //If no argument is passed, it promotes to a Queen (maybe change later on)
+    return makeMove(oldPos, newPos, PieceType.QUEEN);
+  }
+
 
   // Private methods
   private Set<WinCondition> filterWinConditions(List<BorderGameRule> rules) {
