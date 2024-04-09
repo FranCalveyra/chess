@@ -5,7 +5,6 @@ import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
 
 import java.util.List;
-import java.util.Set;
 
 public class WinConditionValidator {
   // Single Responsibility, removes winning check responsibility from ChessGame
