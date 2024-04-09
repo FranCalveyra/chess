@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
+import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
 import edu.austral.dissis.chess.rule.BorderGameRule;
 import edu.austral.dissis.chess.rule.CheckMate;
@@ -24,7 +25,7 @@ import org.junit.jupiter.api.Test;
 public class ChessTest {
   // Setup
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
-  private final Board board = new Board(pieces, new StandardTurnSelector());
+  private final Board board = new Board(pieces, new StandardTurnSelector(), new StandardPromoter());
   private final List<BorderGameRule> rules =
       new ArrayList<>(
           List.of(

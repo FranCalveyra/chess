@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.piece.movement.Castling;
+import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
 import edu.austral.dissis.chess.rule.BorderGameRule;
 import edu.austral.dissis.chess.rule.CheckMate;
@@ -26,7 +27,7 @@ import org.junit.jupiter.api.Test;
 public class PieceMovementTest {
 
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
-  private final Board board = new Board(pieces, new StandardTurnSelector());
+  private final Board board = new Board(pieces, new StandardTurnSelector(), new StandardPromoter());
   private final List<BorderGameRule> rules =
       new ArrayList<>(
           List.of(
@@ -149,8 +150,8 @@ public class PieceMovementTest {
   }
 
   @Test
-  public void validateCastling() throws UnallowedMoveException {
-    validateRightCastling();
+  public void validateRightCastling() throws UnallowedMoveException {
+    assertRightCastling();
   }
 
   @Test
@@ -183,7 +184,7 @@ public class PieceMovementTest {
     assertTrue(new Castling().isValidMove(new Position(0, 0), new Position(0, 4), game.getBoard()));
   }
 
-  private void validateRightCastling() throws UnallowedMoveException {
+  private void assertRightCastling() throws UnallowedMoveException {
     game = game.makeMove(new Position(1, 5), new Position(3, 5));
     assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
     game = game.makeMove(new Position(6, 1), new Position(4, 1));

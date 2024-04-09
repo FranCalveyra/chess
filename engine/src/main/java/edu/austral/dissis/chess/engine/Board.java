@@ -1,6 +1,7 @@
 package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.promoter.Promoter;
 import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
@@ -21,28 +22,31 @@ public class Board {
   private final TurnSelector selector;
   private final int turnNumber;
   private final List<Piece> takenPieces;
+  private final Promoter promoter;
 
   public Board(
-      Map<Position, Piece> pieces,
-      TurnSelector selector,
-      int rows,
-      int columns,
-      List<Piece> takenPieces,
-      Color currentTurn) {
+          Map<Position, Piece> pieces,
+          TurnSelector selector,
+          int rows,
+          int columns,
+          List<Piece> takenPieces,
+          Color currentTurn, Promoter promoter) {
     this.pieces = pieces;
     this.rows = rows;
     this.columns = columns;
     this.takenPieces = takenPieces;
-    this.board = setup();
+      this.promoter = promoter;
+      this.board = setup();
     this.selector = selector;
     this.currentTurn = currentTurn;
     this.turnNumber = 0;
   }
 
-  public Board(Map<Position, Piece> pieces, TurnSelector selector) {
+  public Board(Map<Position, Piece> pieces, TurnSelector selector, Promoter promoter) {
     this.pieces = pieces;
     this.selector = selector;
-    this.rows = this.columns = 8;
+      this.promoter = promoter;
+      this.rows = this.columns = 8;
     this.currentTurn = changeTurn(Color.WHITE);
     this.takenPieces = new ArrayList<>();
     this.turnNumber = 0;
@@ -51,13 +55,14 @@ public class Board {
 
   // Default constructor for Chess Board
   public Board(
-      Map<Position, Piece> pieces,
-      TurnSelector selector,
-      List<Piece> takenPieces,
-      Color currentTurn) {
+          Map<Position, Piece> pieces,
+          TurnSelector selector,
+          List<Piece> takenPieces,
+          Color currentTurn, Promoter promoter) {
     this.pieces = pieces;
     this.takenPieces = takenPieces;
-    this.rows = this.columns = 8;
+      this.promoter = promoter;
+      this.rows = this.columns = 8;
     this.board = setup();
     this.selector = selector;
     this.currentTurn = currentTurn;
@@ -66,14 +71,15 @@ public class Board {
 
   // Default private immutable constructor
   private Board(
-      Map<Position, Piece> pieces,
-      TurnSelector selector,
-      Color currentTurn,
-      int turnNumber,
-      Piece[][] board,
-      List<Piece> takenPieces) {
+          Map<Position, Piece> pieces,
+          TurnSelector selector,
+          Color currentTurn,
+          int turnNumber,
+          Piece[][] board,
+          List<Piece> takenPieces, Promoter promoter) {
     this.pieces = pieces;
-    this.rows = this.columns = 8;
+      this.promoter = promoter;
+      this.rows = this.columns = 8;
     this.board = board;
     this.selector = selector;
     this.currentTurn = currentTurn;
@@ -97,7 +103,7 @@ public class Board {
     if (!piece.checkValidMove(oldPos, newPos, this)) {
       throwException(oldPos, newPos); // Check move validity
     }
-    Board newBoard = new Board(pieces, selector);
+    Board newBoard = new Board(pieces, selector, promoter);
     // Now, move the piece. Take piece in newPos whether exists
     Piece pieceToTake = pieces.get(newPos);
     Color nextTurn;
@@ -112,7 +118,7 @@ public class Board {
             changeTurn(selector.selectTurn(this, turnNumber + 1)),
             turnNumber + 1,
             newBoard.getBoard(),
-            newBoard.getTakenPieces());
+            newBoard.getTakenPieces(),promoter );
       }
     } else {
       nextTurn = selector.selectTurn(this, turnNumber + 1);
@@ -127,7 +133,7 @@ public class Board {
           nextTurn,
           newBoard.getTurnNumber() + 1,
           newBoard.getBoard(),
-          newBoard.getTakenPieces());
+          newBoard.getTakenPieces(),promoter );
     }
   }
 
@@ -139,7 +145,7 @@ public class Board {
     newBoard[pos.getRow()][pos.getColumn()] = changedPiece; // Add it to board
     newMap.put(pos, changedPiece); // Get the map
 
-    return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces);
+    return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces,promoter );
   }
 
   public Board removePieceAt(Position pos) {
@@ -147,7 +153,7 @@ public class Board {
     newBoard[pos.getRow()][pos.getColumn()] = null;
     Map<Position, Piece> newMap = copyMap(pieces);
     newMap.remove(pos);
-    return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces);
+    return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces,promoter );
   }
 
   // Getters and extra stuff
@@ -190,6 +196,10 @@ public class Board {
 
   public int getTurnNumber() {
     return turnNumber;
+  }
+
+  public Promoter getPromoter() {
+    return promoter;
   }
 
   @Override

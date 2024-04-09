@@ -37,7 +37,7 @@ public class ChessGame {
             board.getRows(),
             board.getColumns(),
             board.getTakenPieces(),
-            board.changeTurn(board.getSelector().selectTurn(board, board.getTurnNumber()))),
+            board.changeTurn(board.getSelector().selectTurn(board, board.getTurnNumber())),board.getPromoter() ),
         getRules());
   }
 

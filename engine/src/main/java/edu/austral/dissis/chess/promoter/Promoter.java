@@ -10,5 +10,5 @@ public interface Promoter {
 
   boolean canPromote(Position position, Board context);
 
-  void promote(Position position, PieceType type, Board context);
+  Board promote(Position position, PieceType type, Board context);
 }

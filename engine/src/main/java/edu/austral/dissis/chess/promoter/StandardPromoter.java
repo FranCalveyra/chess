@@ -14,19 +14,6 @@ public class StandardPromoter implements Promoter {
     return isAnyPawnPromotable(context, team);
   }
 
-  private boolean isAnyPawnPromotable(Board context, Color team) {
-    int rowToCheck = team == Color.WHITE ? context.getRows() - 1 : 0;
-    for (int j = 0; j < context.getColumns(); j++) {
-      Piece pieceAt = context.pieceAt(new Position(rowToCheck, j));
-      if (pieceAt != null
-          && pieceAt.getType() == PieceType.PAWN
-          && pieceAt.getPieceColour() == team) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   @Override
   public boolean canPromote(Position position, Board context) {
     Piece piece = context.pieceAt(position);
@@ -38,12 +25,25 @@ public class StandardPromoter implements Promoter {
   }
 
   @Override
-  public void promote(Position position, PieceType type, Board context) {
+  public Board promote(Position position, PieceType type, Board context) {
     Piece initialPiece = context.pieceAt(position);
     Piece piece = new PieceProvider().get(initialPiece.getPieceColour(), type);
     Piece actualPiece =
         new Piece(piece.getMovements(), piece.getPieceColour(), type, !initialPiece.hasNotMoved());
-    context.removePieceAt(position);
-    context.addPieceAt(position, actualPiece);
+      return context.removePieceAt(position).addPieceAt(position, actualPiece);
+  }
+
+  //Private stuff
+  private boolean isAnyPawnPromotable(Board context, Color team) {
+    int rowToCheck = team == Color.WHITE ? context.getRows() - 1 : 0;
+    for (int j = 0; j < context.getColumns(); j++) {
+      Piece pieceAt = context.pieceAt(new Position(rowToCheck, j));
+      if (pieceAt != null
+              && pieceAt.getType() == PieceType.PAWN
+              && pieceAt.getPieceColour() == team) {
+        return true;
+      }
+    }
+    return false;
   }
 }
