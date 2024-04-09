@@ -8,7 +8,7 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
-import edu.austral.dissis.chess.rule.BorderGameRule;
+import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.rule.CheckMate;
 import edu.austral.dissis.chess.rule.DefaultCheck;
 import edu.austral.dissis.chess.rule.Stalemate;
@@ -26,7 +26,7 @@ public class ChessTest {
   // Setup
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
   private final Board board = new Board(pieces, new StandardTurnSelector(), new StandardPromoter());
-  private final List<BorderGameRule> rules =
+  private final List<WinCondition> rules =
       new ArrayList<>(
           List.of(
               new DefaultCheck(Color.BLACK),
@@ -36,18 +36,6 @@ public class ChessTest {
               new Stalemate()));
   private ChessGame game = new ChessGame(board, rules);
 
-  //  Map<String, Position> tiles = mapChessPositions();
-  //
-  //  private Map<String, Position> mapChessPositions() {
-  //    Map<String, Position> map = new HashMap<>();
-  //    String alphabet = "abcdefgh";
-  //    for (int i = 1; i <=alphabet.length() ; i++) {
-  //      for (int j = 1; j <=alphabet.length() ; j++) {
-  //        map.put(alphabet.charAt(i-1) + Integer.toString(j), new Position( j-1,i-1));
-  //      }
-  //    }
-  //    return map;
-  //  }
 
   ChessTest() {
     game = game.startGame();

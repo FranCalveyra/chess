@@ -1,3 +1,7 @@
 package edu.austral.dissis.chess.rule;
 
-public interface Check extends BorderGameRule {}
+import java.awt.*;
+
+public interface Check extends WinCondition {
+    Color getTeam();
+}

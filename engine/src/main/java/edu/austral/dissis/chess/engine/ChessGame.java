@@ -1,31 +1,36 @@
 package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.rule.BorderGameRule;
+import edu.austral.dissis.chess.rule.Check;
 import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
-import edu.austral.dissis.chess.validator.RuleValidator;
 import edu.austral.dissis.chess.validator.WinConditionValidator;
 import java.awt.Color;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.NoSuchElementException;
 
 public class ChessGame {
   /** Simulates a real Chess Game. */
   private final Board board;
 
-  private final RuleValidator ruleValidator;
   private final WinConditionValidator winConditionValidator;
-  private final List<BorderGameRule> rules;
+  private final List<WinCondition> rules;
+  private final List<Check> checkConditions;
 
-  public ChessGame(Board board, List<BorderGameRule> rules) {
+  public ChessGame(Board board, List<WinCondition> rules) {
     this.board = board;
-    Set<WinCondition> winConditions = filterWinConditions(rules);
-    this.ruleValidator = new RuleValidator(rules);
-    this.winConditionValidator = new WinConditionValidator(winConditions);
+    this.checkConditions = filterCheckConditions(rules);
+    this.winConditionValidator = new WinConditionValidator(rules);
     this.rules = rules;
+  }
+
+  private ChessGame(Board board, List<WinCondition> rules, List<Check> checkConditions){
+    this.board = board;
+    this.rules = rules;
+    this.checkConditions = checkConditions;
+    this.winConditionValidator = new WinConditionValidator(rules);
   }
 
   public ChessGame startGame() {
@@ -40,19 +45,14 @@ public class ChessGame {
             board.getTakenPieces(),
             board.changeTurn(board.getSelector().selectTurn(board, board.getTurnNumber())),
             board.getPromoter()),
-        getRules());
-  }
-
-  public void verifyEndGame() throws UnallowedMoveException {
-    final Color winner = board.getCurrentTurn() == Color.BLACK ? Color.WHITE : Color.BLACK;
-    if (winConditionValidator.isGameWon(board)) {
-      System.out.println("Game has been won by: " + winner);
-    }
+        getRules(), checkConditions);
   }
 
   public ChessGame makeMove(Position oldPos, Position newPos, PieceType typeForPromotion)
       throws UnallowedMoveException {
-    if (ruleValidator.isAnyActive(board)) {
+    if (winConditionValidator.isGameWon(board)) {
+      final Color winner = board.getCurrentTurn() == Color.BLACK ? Color.WHITE : Color.BLACK;
+      System.out.println("Game has been won by: " + winner);
       return this;
     }
     if (board.pieceAt(oldPos) == null) {
@@ -61,8 +61,12 @@ public class ChessGame {
     if (board.pieceAt(oldPos).getPieceColour() != board.getCurrentTurn()) {
       return this; // Player who has just moved a piece cannot move another (unless Castling)
     }
-    verifyEndGame();
-    return new ChessGame(board.updatePiecePosition(oldPos, newPos, typeForPromotion), rules);
+    //Validate check
+    if(playIsInCheck(board.getCurrentTurn(), board, oldPos, newPos, typeForPromotion)){
+      return this;
+    }
+
+    return new ChessGame(board.updatePiecePosition(oldPos, newPos, typeForPromotion), rules, checkConditions);
   }
 
   public ChessGame makeMove(Position oldPos, Position newPos) throws UnallowedMoveException {
@@ -70,25 +74,38 @@ public class ChessGame {
     return makeMove(oldPos, newPos, PieceType.QUEEN);
   }
 
-  // Private methods
-  private Set<WinCondition> filterWinConditions(List<BorderGameRule> rules) {
-    final Set<WinCondition> conditions = new HashSet<>();
-    for (BorderGameRule rule : rules) {
-      if (rule instanceof WinCondition) {
-        conditions.add((WinCondition) rule);
-      }
-    }
-    for (WinCondition condition : conditions) {
-      rules.remove(condition);
-    }
-    return conditions;
-  }
-
-  public List<BorderGameRule> getRules() {
+  public List<WinCondition> getRules() {
     return rules;
   }
 
   public Board getBoard() {
     return board;
   }
+
+  //Private methods:
+  private boolean playIsInCheck(Color currentTurn, Board board, Position oldPos, Position newPos, PieceType typeForPromotion) throws UnallowedMoveException {
+  Check checkRule = getCheckRuleByTeam(checkConditions, currentTurn);
+  Board possiblePlay = board.updatePiecePosition(oldPos,newPos,typeForPromotion);
+  return checkRule.isValidRule(possiblePlay);
 }
+
+  private Check getCheckRuleByTeam(List<Check> checkConditions, Color currentTurn) {
+    for(Check check: checkConditions){
+      if(check.getTeam() == currentTurn) return check;
+    }
+    throw new NoSuchElementException();
+  }
+  private List<Check> filterCheckConditions(List<WinCondition> rules) {
+    List<Check> checks = new ArrayList<>();
+    for(WinCondition condition: rules){
+      if(condition instanceof Check){
+        checks.add((Check)condition);
+      }
+    }
+    for(Check check: checks){
+      rules.remove(check);
+    }
+    return checks;
+  }
+
+  }

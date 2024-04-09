@@ -28,4 +28,9 @@ public class DefaultCheck implements Check {
     }
     return false;
   }
+
+  @Override
+  public Color getTeam() {
+    return team;
+  }
 }

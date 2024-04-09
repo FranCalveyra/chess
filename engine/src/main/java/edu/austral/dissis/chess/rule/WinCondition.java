@@ -1,3 +1,8 @@
 package edu.austral.dissis.chess.rule;
 
-public interface WinCondition extends BorderGameRule {}
+import edu.austral.dissis.chess.engine.Board;
+import edu.austral.dissis.chess.utils.UnallowedMoveException;
+
+public interface WinCondition {
+  boolean isValidRule(Board context) throws UnallowedMoveException;
+}

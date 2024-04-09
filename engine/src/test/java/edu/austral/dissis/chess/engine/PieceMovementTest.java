@@ -10,7 +10,7 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.piece.movement.Castling;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
-import edu.austral.dissis.chess.rule.BorderGameRule;
+import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.rule.CheckMate;
 import edu.austral.dissis.chess.rule.DefaultCheck;
 import edu.austral.dissis.chess.rule.Stalemate;
@@ -28,7 +28,7 @@ public class PieceMovementTest {
 
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
   private final Board board = new Board(pieces, new StandardTurnSelector(), new StandardPromoter());
-  private final List<BorderGameRule> rules =
+  private final List<WinCondition> rules =
       new ArrayList<>(
           List.of(
               new DefaultCheck(Color.BLACK),
