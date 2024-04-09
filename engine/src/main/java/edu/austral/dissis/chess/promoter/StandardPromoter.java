@@ -6,7 +6,6 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.provider.PieceProvider;
 import edu.austral.dissis.chess.utils.Position;
 import java.awt.Color;
-import java.util.List;
 
 public class StandardPromoter implements Promoter {
 
@@ -27,35 +26,11 @@ public class StandardPromoter implements Promoter {
 
   @Override
   public Board promote(Position position, PieceType type, Board context) {
-    if (takenPiecesDontIncludeType(context.getTakenPieces(), type)) {
-      return context;
-    }
     Piece initialPiece = context.pieceAt(position);
     Piece piece = new PieceProvider().get(initialPiece.getPieceColour(), type);
     Piece actualPiece =
         new Piece(piece.getMovements(), piece.getPieceColour(), type, !initialPiece.hasNotMoved());
-
-    List<Piece> updatedTakenPieces = context.getTakenPieces();
-    removeRevivedPiece(updatedTakenPieces, type);
-
-    Board newBoard = context.removePieceAt(position).addPieceAt(position, actualPiece);
-    return new Board(
-        newBoard.getPiecesAndPositions(),
-        newBoard.getSelector(),
-        newBoard.getRows(),
-        newBoard.getColumns(),
-        updatedTakenPieces,
-        newBoard.getCurrentTurn(),
-        newBoard.getPromoter());
-    /*
-        Map<Position, Piece> pieces,
-    TurnSelector selector,
-    int rows,
-    int columns,
-    List<Piece> takenPieces,
-    Color currentTurn,
-    Promoter promoter
-         */
+    return context.removePieceAt(position).addPieceAt(position, actualPiece);
   }
 
   // Private stuff
@@ -70,21 +45,5 @@ public class StandardPromoter implements Promoter {
       }
     }
     return false;
-  }
-
-  private void removeRevivedPiece(List<Piece> updatedTakenPieces, PieceType type) {
-    if (!updatedTakenPieces.isEmpty() || takenPiecesDontIncludeType(updatedTakenPieces, type)) {
-      return;
-    }
-    updatedTakenPieces.removeIf(piece -> piece.getType() == type);
-  }
-
-  private boolean takenPiecesDontIncludeType(List<Piece> takenPieces, PieceType type) {
-    for (Piece piece : takenPieces) {
-      if (piece.getType() == type) {
-        return false;
-      }
-    }
-    return true;
   }
 }
