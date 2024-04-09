@@ -115,10 +115,7 @@ public class Board {
         return this;
       } else {
         newBoard = removePieceAt(oldPos).removePieceAt(newPos).addPieceAt(newPos, piece);
-        if (promoter.hasToPromote(newBoard, piece.getPieceColour())
-            || promoter.canPromote(newPos, newBoard)) {
-          newBoard = promoter.promote(newPos, typeForPromotion, newBoard);
-        }
+        newBoard = promoteIfAble(newBoard, piece.getPieceColour(), newPos,typeForPromotion);
         return new Board(
             newBoard.getPiecesAndPositions(),
             newBoard.getSelector(),
@@ -132,9 +129,11 @@ public class Board {
       nextTurn = selector.selectTurn(this, turnNumber + 1);
       Map<Position, Piece> newPieces = copyMap(pieces);
       if (piece.hasNotMoved()) {
-        newBoard = removePieceAt(oldPos).addPieceAt(newPos, piece);
-        newPieces = newBoard.getPiecesAndPositions();
+        newBoard = removePieceAt(oldPos).addPieceAt(newPos, piece.changeMoveState());
       }
+      else newBoard = removePieceAt(oldPos).addPieceAt(newPos, piece);
+      newBoard = promoteIfAble(newBoard, piece.getPieceColour(), newPos, typeForPromotion);
+      newPieces = newBoard.getPiecesAndPositions();
       return new Board(
           newPieces,
           newBoard.getSelector(),
@@ -146,13 +145,20 @@ public class Board {
     }
   }
 
+  private Board promoteIfAble(Board newBoard, Color pieceColour, Position newPos, PieceType typeForPromotion) {
+    if (promoter.hasToPromote(newBoard, pieceColour)
+            || promoter.canPromote(newPos, newBoard)) {
+       return promoter.promote(newPos, typeForPromotion, newBoard);
+    }
+    return newBoard;
+  }
+
   // Board modifiers
   public Board addPieceAt(Position pos, Piece piece) {
     Piece[][] newBoard = board.clone();
-    Piece changedPiece = piece.hasNotMoved() ? piece.changeMoveState() : piece;
     Map<Position, Piece> newMap = copyMap(pieces);
-    newBoard[pos.getRow()][pos.getColumn()] = changedPiece; // Add it to board
-    newMap.put(pos, changedPiece); // Get the map
+    newBoard[pos.getRow()][pos.getColumn()] = piece; // Add it to board
+    newMap.put(pos, piece); // Update the map
 
     return new Board(newMap, selector, currentTurn, turnNumber, newBoard, takenPieces, promoter);
   }

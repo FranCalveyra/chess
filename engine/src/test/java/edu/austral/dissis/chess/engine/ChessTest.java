@@ -87,39 +87,46 @@ public class ChessTest {
   }
 
   @Test
-  public void validatePromotion() {
+  public void validatePromotion() throws UnallowedMoveException {
     // Smth doesn't work
-    //    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
-    //        //Move first Pawn
-    //        game = game.makeMove(new Position(1,0), new Position(3,0));
-    //        //Make rook free
-    //        game = game.makeMove(new Position(6,0), new Position(4,0));
-    //        assertEquals(Color.WHITE,game.getBoard().getCurrentTurn());
-    //        game = game.makeMove(new Position(1,1), new Position(3,1));
-    //        //Move black rook
-    //        game = game.makeMove(new Position(7,0), new Position(5,0));
-    //        //Take the black pawn with right white pawn
-    //        game = game.makeMove(new Position(3,1), new Position(4,0));
-    //        //Take white pawn with black rook
-    //        game = game.makeMove(new Position(5,0), new Position(4,0));
-    //        //Move white knight
-    //        game = game.makeMove(new Position(0,1), new Position(2,2));
-    //    //Align black rook with white knight
-    //        assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    //        game = new ChessGame(game.getBoard().removePieceAt(new Position(4,0)),
-    // game.getRules());
-    //        //Move white pawn to promote
-    //        game = game.makeMove(new Position(7,1), new Position(5,2));
-    //        game = game.makeMove(new Position(3,0), new Position(4,0));
-    //    //Take white knight with black rook
-    //        game = game.makeMove(new Position(5,2), new Position(4,4));
-    //        game = game.makeMove(new Position(4,0), new Position(5,0));
-    //        game = game.makeMove(new Position(4,4), new Position(5,2));
-    //        game = game.makeMove(new Position(5,0), new Position(6,0));
-    //        game = game.makeMove(new Position(5,2), new Position(4,4));
-    //        game = game.makeMove(new Position(6,0), new Position(7,0), PieceType.KNIGHT);
-    //        System.out.println(game.getBoard());
-    //        assertEquals(PieceType.KING, game.getBoard().pieceAt(new Position(7,0)).getType());
+    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
+    game = game.makeMove(new Position(1,0), new Position(3,0))
+            .makeMove(new Position(6,0), new Position(4,0));
+    assertPositionType(game, PieceType.PAWN,3,0);
+    assertPositionType(game, PieceType.PAWN,4,0);
+    game = game.makeMove(new Position(1,1), new Position(3,1));
+    assertPositionType(game, PieceType.PAWN,3,1);
+    game = game.makeMove(new Position(7,0), new Position(5,0));
+    assertPositionType(game, PieceType.ROOK,5,0);
+
+    game = game.makeMove(new Position(3,1), new Position(4,0));
+    assertPositionType(game,PieceType.PAWN, 4,0);
+
+    game = game.makeMove(new Position(5,0), new Position(4,0));
+    assertPositionType(game, PieceType.ROOK,4,0);
+    assertEquals(30, game.getBoard().getPiecesAndPositions().size());
+    game = game.makeMove(new Position(0,1), new Position(2,2));
+    assertPositionType(game, PieceType.KNIGHT,2,2);
+    game = game.makeMove(new Position(4,0), new Position(4,2));
+    assertPositionType(game,PieceType.ROOK,4,2);
+    game = game.makeMove(new Position(3,0), new Position(4,0));
+    assertPositionType(game,PieceType.PAWN,4,0);
+    game = game.makeMove(new Position(4,2), new Position(2,2));
+    assertPositionType(game, PieceType.ROOK,2,2);
+    assertEquals(29, game.getBoard().getPiecesAndPositions().size());
+
+    game = game.makeMove(new Position(4,0), new Position(5,0));
+    assertPositionType(game, PieceType.PAWN, 5,0);
+    game = game.makeMove(new Position(2,2), new Position(4,2));
+    assertPositionType(game, PieceType.ROOK,4,2);
+    game = game.makeMove(new Position(5,0), new Position(6,0));
+    assertPositionType(game, PieceType.PAWN,6,0);
+    game = game.makeMove(new Position(4,2), new Position(2,2));
+    assertPositionType(game,PieceType.ROOK,2,2);
+    game = game.makeMove(new Position(6,0), new Position(7,0));
+    //Once promoted
+    assertPositionType(game, PieceType.QUEEN, 7,0);
+    assertEquals(Color.WHITE, game.getBoard().pieceAt(new Position(7,0)).getPieceColour());
   }
 
   // Private stuff
@@ -130,5 +137,9 @@ public class ChessTest {
       }
     }
     return null;
+  }
+  private void assertPositionType(ChessGame currentGame, PieceType pieceType, int i, int j) {
+    assertEquals(pieceType, currentGame.getBoard().pieceAt(new Position(i,j)).getType());
+    System.out.println(currentGame.getBoard());
   }
 }
