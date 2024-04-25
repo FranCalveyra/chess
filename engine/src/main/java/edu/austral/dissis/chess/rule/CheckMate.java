@@ -2,7 +2,6 @@ package edu.austral.dissis.chess.rule;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.awt.Color;
@@ -39,15 +38,9 @@ public class CheckMate implements WinCondition {
       Piece currentPiece = context.pieceAt(entry.getKey());
       DefaultCheck check = new DefaultCheck(currentPiece.getPieceColour());
       for (Position possibleMove : entry.getValue()) {
-        Board newBoard =
-            new Board(
-                context.getPiecesAndPositions());
-        newBoard =
-            newBoard.updatePiecePosition(currentPiecePosition, possibleMove);
-          newBoard =
-              new Board(
-                  context.getPiecesAndPositions(),
-                  context.getTakenPieces());
+        Board newBoard = new Board(context.getPiecesAndPositions());
+        newBoard = newBoard.updatePiecePosition(currentPiecePosition, possibleMove);
+        newBoard = new Board(context.getPiecesAndPositions(), context.getTakenPieces());
 
         if (!check.isValidRule(newBoard)) {
           return false;

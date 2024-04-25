@@ -18,7 +18,9 @@ public class KnightMovement implements PieceMovement {
     boolean noPieceAt =
         pieceAt == null
             || context.pieceAt(newPos).getPieceColour()
-                != context.pieceAt(oldPos).getPieceColour(); // Before moving, game sets the turn for the next movement.
+                != context
+                    .pieceAt(oldPos)
+                    .getPieceColour(); // Before moving, game sets the turn for the next movement.
     // (May change that in case of invalid moves)
     return (deltaX == 2 && deltaY == 1 || deltaX == 1 && deltaY == 2) && noPieceAt;
   }

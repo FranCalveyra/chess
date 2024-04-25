@@ -35,8 +35,9 @@ public class ChessTest {
               new CheckMate(Color.BLACK),
               new CheckMate(Color.WHITE),
               new Stalemate(Color.BLACK),
-                  new Stalemate(Color.WHITE)));
-  private ChessGame game = new ChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(),null);
+              new Stalemate(Color.WHITE)));
+  private ChessGame game =
+      new ChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), null);
 
   ChessTest() {
     game = game.startGame();
@@ -83,7 +84,11 @@ public class ChessTest {
             pieceProvider.get(Color.BLACK, PieceType.KING));
     ChessGame newGame =
         new ChessGame(
-            new Board(stalematePieces),game.getRules(), game.getPromoter(), game.getSelector(), Color.WHITE);
+            new Board(stalematePieces),
+            game.getRules(),
+            game.getPromoter(),
+            game.getSelector(),
+            Color.WHITE);
     assertTrue(new Stalemate(Color.WHITE).isValidRule(newGame.getBoard()));
   }
 
@@ -93,7 +98,9 @@ public class ChessTest {
     assertEquals(Color.WHITE, game.getCurrentTurn());
     game =
         game.makeMove(new Position(1, 0), new Position(3, 0))
-                .getGame().makeMove(new Position(6, 0), new Position(4, 0)).getGame();
+            .getGame()
+            .makeMove(new Position(6, 0), new Position(4, 0))
+            .getGame();
     assertPositionType(game, PieceType.PAWN, 3, 0);
     assertPositionType(game, PieceType.PAWN, 4, 0);
     game = game.makeMove(new Position(1, 1), new Position(3, 1)).getGame();

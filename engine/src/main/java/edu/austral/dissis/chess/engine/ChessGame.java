@@ -1,5 +1,8 @@
 package edu.austral.dissis.chess.engine;
 
+import static edu.austral.dissis.chess.utils.ResultEnum.*;
+import static java.awt.Color.WHITE;
+
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.Promoter;
@@ -9,13 +12,9 @@ import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.*;
 import edu.austral.dissis.chess.validator.WinConditionValidator;
 import java.awt.Color;
-import java.nio.channels.Selector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import static edu.austral.dissis.chess.utils.ResultEnum.*;
-import static java.awt.Color.WHITE;
 
 public class ChessGame {
   /** Simulates a real Chess Game. */
@@ -30,8 +29,13 @@ public class ChessGame {
   private final Color currentTurn;
   private final int turnNumber;
 
-  public ChessGame(Board board, List<WinCondition> rules, Promoter promoter, TurnSelector selector, Color currentTurn) {
-    //Should be first instance
+  public ChessGame(
+      Board board,
+      List<WinCondition> rules,
+      Promoter promoter,
+      TurnSelector selector,
+      Color currentTurn) {
+    // Should be first instance
     this.board = board;
     this.checkConditions = filterCheckConditions(rules);
     this.winConditionValidator = new WinConditionValidator(rules);
@@ -42,8 +46,15 @@ public class ChessGame {
     this.turnNumber = 0;
   }
 
-  private ChessGame(Board board, List<WinCondition> rules, List<Check> checkConditions, Promoter promoter, TurnSelector selector,Color currentTurn ,int turnNumber) {
-    //Represents state passage
+  private ChessGame(
+      Board board,
+      List<WinCondition> rules,
+      List<Check> checkConditions,
+      Promoter promoter,
+      TurnSelector selector,
+      Color currentTurn,
+      int turnNumber) {
+    // Represents state passage
     this.board = board;
     this.rules = rules;
     this.checkConditions = checkConditions;
@@ -64,14 +75,19 @@ public class ChessGame {
             board.getColumns(),
             board.getTakenPieces()),
         getRules(),
-        checkConditions,promoter, selector,WHITE, turnNumber);
+        checkConditions,
+        promoter,
+        selector,
+        WHITE,
+        turnNumber);
   }
 
   public GameResult makeMove(Position oldPos, Position newPos) throws UnallowedMoveException {
     // If no argument is passed, it promotes to a Queen (BY DEFAULT)
     return makeMove(oldPos, newPos, PieceType.QUEEN);
   }
-  //Getters
+
+  // Getters
   public List<WinCondition> getRules() {
     return rules;
   }
@@ -85,8 +101,7 @@ public class ChessGame {
   }
 
   // Private methods:
-  private boolean playIsInCheck(
-      Color currentTurn, Board board, Position oldPos, Position newPos)
+  private boolean playIsInCheck(Color currentTurn, Board board, Position oldPos, Position newPos)
       throws UnallowedMoveException {
     Check checkRule = getCheckRuleByTeam(checkConditions, currentTurn);
     Board possiblePlay = board.updatePiecePosition(oldPos, newPos);
@@ -112,11 +127,11 @@ public class ChessGame {
     for (Check check : checks) {
       rules.remove(check);
     }
-    return checks; //Change to uses of filter and map functions
+    return checks; // Change to uses of filter and map functions
   }
 
   private Board promoteIfAble(
-          Board newBoard, Color pieceColour, Position newPos, PieceType typeForPromotion) {
+      Board newBoard, Color pieceColour, Position newPos, PieceType typeForPromotion) {
     if (promoter.hasToPromote(newBoard, pieceColour) || promoter.canPromote(newPos, newBoard)) {
       return promoter.promote(newPos, typeForPromotion, newBoard);
     }
@@ -125,55 +140,75 @@ public class ChessGame {
 
   private boolean outOfBoardBounds(Position pos) {
     return pos.getRow() >= board.getRows()
-            || pos.getColumn() >= board.getColumns()
-            || pos.getRow() < 0
-            || pos.getColumn() < 0;
+        || pos.getColumn() >= board.getColumns()
+        || pos.getRow() < 0
+        || pos.getColumn() < 0;
   }
 
-  private GameResult makeMove(Position oldPos, Position newPos, PieceType typeForPromotion) throws UnallowedMoveException {
-    //Check winning at the end
-    //Do all necessary checks
-    if(outOfBoardBounds(oldPos) || outOfBoardBounds(newPos)){
+  private GameResult makeMove(Position oldPos, Position newPos, PieceType typeForPromotion)
+      throws UnallowedMoveException {
+    // Check winning at the end
+    // Do all necessary checks
+    if (outOfBoardBounds(oldPos) || outOfBoardBounds(newPos)) {
       return new GameResult(this, INVALID_MOVE);
     }
 
     Piece pieceToMove = board.pieceAt(oldPos);
     Piece pieceToTake = board.pieceAt(newPos);
-    //Want to move a piece that's not there
-    if(pieceToMove == null){
+    // Want to move a piece that's not there
+    if (pieceToMove == null) {
       return new GameResult(this, INVALID_MOVE);
     }
-    //Invalid move due to piece rules
-    if(!pieceToMove.checkValidMove(oldPos, newPos,board)){
+    // Invalid move due to piece rules
+    if (!pieceToMove.checkValidMove(oldPos, newPos, board)) {
       return new GameResult(this, INVALID_MOVE);
     }
-    //To-return
+    // To-return
     ChessGame finalGame;
     Board newBoard;
-    if(pieceToTake != null){
-      if(pieceToTake.getPieceColour() == pieceToMove.getPieceColour()){
+    if (pieceToTake != null) {
+      if (pieceToTake.getPieceColour() == pieceToMove.getPieceColour()) {
         return new GameResult(this, INVALID_MOVE);
-      }
-      else{
-        newBoard = board.removePieceAt(oldPos).removePieceAt(newPos).addPieceAt(newPos, pieceToMove);
+      } else {
+        newBoard =
+            board.removePieceAt(oldPos).removePieceAt(newPos).addPieceAt(newPos, pieceToMove);
         newBoard = promoteIfAble(newBoard, pieceToMove.getPieceColour(), newPos, typeForPromotion);
-        finalGame = new ChessGame(newBoard, rules, checkConditions, promoter, selector, selector.selectTurn(newBoard, turnNumber+1), turnNumber);
+        finalGame =
+            new ChessGame(
+                newBoard,
+                rules,
+                checkConditions,
+                promoter,
+                selector,
+                selector.selectTurn(newBoard, turnNumber + 1),
+                turnNumber);
         return new GameResult(finalGame, PIECE_TAKEN);
       }
-    }
-    else{
-      newBoard = board.removePieceAt(oldPos).addPieceAt(newPos, pieceToMove.hasNotMoved() ? pieceToMove.changeMoveState() : pieceToMove);
+    } else {
+      newBoard =
+          board
+              .removePieceAt(oldPos)
+              .addPieceAt(
+                  newPos, pieceToMove.hasNotMoved() ? pieceToMove.changeMoveState() : pieceToMove);
       newBoard = promoteIfAble(newBoard, pieceToMove.getPieceColour(), newPos, typeForPromotion);
-      finalGame = new ChessGame(newBoard, rules, checkConditions, promoter, selector, selector.selectTurn(newBoard, turnNumber+1), turnNumber);
+      finalGame =
+          new ChessGame(
+              newBoard,
+              rules,
+              checkConditions,
+              promoter,
+              selector,
+              selector.selectTurn(newBoard, turnNumber + 1),
+              turnNumber);
     }
-    //Possible play leaves my own team in check
-    if(playIsInCheck(currentTurn, board, oldPos,newPos)){
+    // Possible play leaves my own team in check
+    if (playIsInCheck(currentTurn, board, oldPos, newPos)) {
       return new GameResult(this, INVALID_MOVE);
     }
-    //End of the code
-    if(winConditionValidator.isGameWon(board)){
-      ResultEnum winner = currentTurn == WHITE ? BLACK_WIN: WHITE_WIN;
-      return new GameResult(finalGame,winner);
+    // End of the code
+    if (winConditionValidator.isGameWon(board)) {
+      ResultEnum winner = currentTurn == WHITE ? BLACK_WIN : WHITE_WIN;
+      return new GameResult(finalGame, winner);
     }
     return new GameResult(finalGame, VALID_MOVE);
   }

@@ -2,7 +2,6 @@ package edu.austral.dissis.chess.rule;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.awt.Color;
@@ -11,7 +10,8 @@ import java.util.Map;
 
 public class Stalemate implements WinCondition {
   private final Color team;
-  public Stalemate(Color team){
+
+  public Stalemate(Color team) {
     this.team = team;
   }
 

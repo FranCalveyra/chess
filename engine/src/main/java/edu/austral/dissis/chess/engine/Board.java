@@ -16,11 +16,7 @@ public class Board {
   private final Piece[][] matrix;
   private final List<Piece> takenPieces;
 
-  public Board(
-      Map<Position, Piece> pieces,
-      int rows,
-      int columns,
-      List<Piece> takenPieces) {
+  public Board(Map<Position, Piece> pieces, int rows, int columns, List<Piece> takenPieces) {
     this.pieces = pieces;
     this.rows = rows;
     this.columns = columns;
@@ -36,9 +32,7 @@ public class Board {
   }
 
   // Default constructor for Chess Board
-  public Board(
-      Map<Position, Piece> pieces,
-      List<Piece> takenPieces) {
+  public Board(Map<Position, Piece> pieces, List<Piece> takenPieces) {
     this.pieces = pieces;
     this.takenPieces = takenPieces;
     this.rows = this.columns = 8;
@@ -47,22 +41,21 @@ public class Board {
 
   // Default private immutable constructor
   private Board(
-          Map<Position, Piece> pieces,
-          Piece[][] matrix, // Deletable
-          List<Piece> takenPieces) {
+      Map<Position, Piece> pieces,
+      Piece[][] matrix, // Deletable
+      List<Piece> takenPieces) {
     this.pieces = pieces;
     this.rows = this.columns = 8;
     this.matrix = matrix;
     this.takenPieces = takenPieces;
   }
 
-  public Board updatePiecePosition(Position oldPos, Position newPos){
+  public Board updatePiecePosition(Position oldPos, Position newPos) {
     // First, ChessGame checks if the wanted piece to move is from its team
     // Do all needed checks
     Piece piece = pieceAt(oldPos);
     return removePieceAt(oldPos).addPieceAt(newPos, piece);
-    }
-
+  }
 
   // Board modifiers
   public Board addPieceAt(Position pos, Piece piece) {
@@ -71,7 +64,7 @@ public class Board {
     newBoard[pos.getRow()][pos.getColumn()] = piece; // Add it to board
     newMap.put(pos, piece); // Update the map
 
-    return new Board(newMap,newBoard, takenPieces);
+    return new Board(newMap, newBoard, takenPieces);
   }
 
   public Board removePieceAt(Position pos) {
