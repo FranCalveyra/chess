@@ -35,8 +35,10 @@ public class PieceMovementTest {
               new DefaultCheck(Color.WHITE),
               new CheckMate(Color.BLACK),
               new CheckMate(Color.WHITE),
-              new Stalemate(Color.WHITE), new Stalemate(Color.BLACK)));
-  private ChessGame game = new ChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), null);
+              new Stalemate(Color.WHITE),
+              new Stalemate(Color.BLACK)));
+  private ChessGame game =
+      new ChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), null);
 
   PieceMovementTest() {
     game = game.startGame();

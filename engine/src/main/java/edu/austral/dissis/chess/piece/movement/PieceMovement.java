@@ -40,7 +40,8 @@ public interface PieceMovement {
     for (int i = fromPos.getRow(); i <= toPos.getRow(); i++) {
       for (int j = fromPos.getColumn(); j <= toPos.getColumn(); j++) {
         Piece pieceAt = context.pieceAt(new Position(i, j));
-        if (pieceAt != null && pieceAt.getPieceColour() != context.pieceAt(fromPos).getPieceColour()) {
+        if (pieceAt != null
+            && pieceAt.getPieceColour() != context.pieceAt(fromPos).getPieceColour()) {
           return true;
         }
       }
