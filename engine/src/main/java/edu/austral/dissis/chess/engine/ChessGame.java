@@ -1,6 +1,10 @@
 package edu.austral.dissis.chess.engine;
 
-import static edu.austral.dissis.chess.utils.ResultEnum.*;
+import static edu.austral.dissis.chess.utils.ResultEnum.BLACK_WIN;
+import static edu.austral.dissis.chess.utils.ResultEnum.INVALID_MOVE;
+import static edu.austral.dissis.chess.utils.ResultEnum.PIECE_TAKEN;
+import static edu.austral.dissis.chess.utils.ResultEnum.VALID_MOVE;
+import static edu.austral.dissis.chess.utils.ResultEnum.WHITE_WIN;
 import static java.awt.Color.WHITE;
 
 import edu.austral.dissis.chess.piece.Piece;
@@ -9,7 +13,10 @@ import edu.austral.dissis.chess.promoter.Promoter;
 import edu.austral.dissis.chess.rule.Check;
 import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.turn.TurnSelector;
-import edu.austral.dissis.chess.utils.*;
+import edu.austral.dissis.chess.utils.GameResult;
+import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.ResultEnum;
+import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import edu.austral.dissis.chess.validator.WinConditionValidator;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -87,64 +94,6 @@ public class ChessGame {
     return makeMove(oldPos, newPos, PieceType.QUEEN);
   }
 
-  // Getters
-  public List<WinCondition> getRules() {
-    return rules;
-  }
-
-  public Board getBoard() {
-    return board;
-  }
-
-  public Color getCurrentTurn() {
-    return currentTurn;
-  }
-
-  // Private methods:
-  private boolean playIsInCheck(Color currentTurn, Board board, Position oldPos, Position newPos)
-      throws UnallowedMoveException {
-    Check checkRule = getCheckRuleByTeam(checkConditions, currentTurn);
-    Board possiblePlay = board.updatePiecePosition(oldPos, newPos);
-    return checkRule.isValidRule(possiblePlay);
-  }
-
-  private Check getCheckRuleByTeam(List<Check> checkConditions, Color turn) {
-    for (Check check : checkConditions) {
-      if (check.getTeam() == turn) {
-        return check;
-      }
-    }
-    throw new NoSuchElementException();
-  }
-
-  private List<Check> filterCheckConditions(List<WinCondition> rules) {
-    List<Check> checks = new ArrayList<>();
-    for (WinCondition condition : rules) {
-      if (condition instanceof Check) {
-        checks.add((Check) condition);
-      }
-    }
-    for (Check check : checks) {
-      rules.remove(check);
-    }
-    return checks; // Change to uses of filter and map functions
-  }
-
-  private Board promoteIfAble(
-      Board newBoard, Color pieceColour, Position newPos, PieceType typeForPromotion) {
-    if (promoter.hasToPromote(newBoard, pieceColour) || promoter.canPromote(newPos, newBoard)) {
-      return promoter.promote(newPos, typeForPromotion, newBoard);
-    }
-    return newBoard;
-  }
-
-  private boolean outOfBoardBounds(Position pos) {
-    return pos.getRow() >= board.getRows()
-        || pos.getColumn() >= board.getColumns()
-        || pos.getRow() < 0
-        || pos.getColumn() < 0;
-  }
-
   private GameResult makeMove(Position oldPos, Position newPos, PieceType typeForPromotion)
       throws UnallowedMoveException {
     // Check winning at the end
@@ -211,6 +160,64 @@ public class ChessGame {
       return new GameResult(finalGame, winner);
     }
     return new GameResult(finalGame, VALID_MOVE);
+  }
+
+  // Getters
+  public List<WinCondition> getRules() {
+    return rules;
+  }
+
+  public Board getBoard() {
+    return board;
+  }
+
+  public Color getCurrentTurn() {
+    return currentTurn;
+  }
+
+  // Private methods:
+  private boolean playIsInCheck(Color currentTurn, Board board, Position oldPos, Position newPos)
+      throws UnallowedMoveException {
+    Check checkRule = getCheckRuleByTeam(checkConditions, currentTurn);
+    Board possiblePlay = board.updatePiecePosition(oldPos, newPos);
+    return checkRule.isValidRule(possiblePlay);
+  }
+
+  private Check getCheckRuleByTeam(List<Check> checkConditions, Color turn) {
+    for (Check check : checkConditions) {
+      if (check.getTeam() == turn) {
+        return check;
+      }
+    }
+    throw new NoSuchElementException();
+  }
+
+  private List<Check> filterCheckConditions(List<WinCondition> rules) {
+    List<Check> checks = new ArrayList<>();
+    for (WinCondition condition : rules) {
+      if (condition instanceof Check) {
+        checks.add((Check) condition);
+      }
+    }
+    for (Check check : checks) {
+      rules.remove(check);
+    }
+    return checks; // Change to uses of filter and map functions
+  }
+
+  private Board promoteIfAble(
+      Board newBoard, Color pieceColour, Position newPos, PieceType typeForPromotion) {
+    if (promoter.hasToPromote(newBoard, pieceColour) || promoter.canPromote(newPos, newBoard)) {
+      return promoter.promote(newPos, typeForPromotion, newBoard);
+    }
+    return newBoard;
+  }
+
+  private boolean outOfBoardBounds(Position pos) {
+    return pos.getRow() >= board.getRows()
+        || pos.getColumn() >= board.getColumns()
+        || pos.getRow() < 0
+        || pos.getColumn() < 0;
   }
 
   public Promoter getPromoter() {
