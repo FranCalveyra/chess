@@ -4,4 +4,3 @@
 # Ignore Gradle build output directory
 build
 /engine/src/main/java/edu/austral/dissis/chess/utils/table.png
-gradle.properties
