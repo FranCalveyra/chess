@@ -1,11 +1,11 @@
 package edu.austral.dissis.chess.engine;
 
+import static edu.austral.dissis.chess.piece.PieceType.QUEEN;
 import static edu.austral.dissis.chess.utils.ResultEnum.BLACK_WIN;
 import static edu.austral.dissis.chess.utils.ResultEnum.INVALID_MOVE;
 import static edu.austral.dissis.chess.utils.ResultEnum.PIECE_TAKEN;
 import static edu.austral.dissis.chess.utils.ResultEnum.VALID_MOVE;
 import static edu.austral.dissis.chess.utils.ResultEnum.WHITE_WIN;
-import static java.awt.Color.WHITE;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
@@ -16,12 +16,9 @@ import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.GameResult;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.ResultEnum;
-import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import edu.austral.dissis.chess.validator.WinConditionValidator;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class ChessGame {
   /** Simulates a real Chess Game. */
@@ -72,36 +69,19 @@ public class ChessGame {
     this.currentTurn = currentTurn;
   } // make it public
 
-  public ChessGame startGame() {
-    // As per base Chess, we'll be working with BLACKS and WHITES.
-    // Whites always make the first move.
-    return new ChessGame(
-        new Board(
-            board.getPiecesAndPositions(),
-            board.getRows(),
-            board.getColumns(),
-            board.getTakenPieces()),
-        getRules(),
-        checkConditions,
-        promoter,
-        selector,
-        WHITE,
-        turnNumber);
-  }
-
-  public GameResult makeMove(Position oldPos, Position newPos) throws UnallowedMoveException {
+  public GameResult makeMove(Position oldPos, Position newPos) {
     // If no argument is passed, it promotes to a Queen (BY DEFAULT)
-    return makeMove(oldPos, newPos, PieceType.QUEEN);
+    return makeMove(oldPos, newPos, QUEEN);
   }
 
-  private GameResult makeMove(Position oldPos, Position newPos, PieceType typeForPromotion)
-      throws UnallowedMoveException {
+  private GameResult makeMove(Position oldPos, Position newPos, PieceType typeForPromotion) {
     // Check winning at the end
     // Do all necessary checks
+    // Invalid positions
     if (outOfBoardBounds(oldPos) || outOfBoardBounds(newPos)) {
       return new GameResult(this, INVALID_MOVE);
     }
-
+    // Fetch pieces
     Piece pieceToMove = board.pieceAt(oldPos);
     Piece pieceToTake = board.pieceAt(newPos);
     // Want to move a piece that's not there
@@ -109,54 +89,59 @@ public class ChessGame {
       return new GameResult(this, INVALID_MOVE);
     }
     // Invalid move due to piece rules
-    if (!pieceToMove.checkValidMove(oldPos, newPos, board)) {
+    if (!pieceToMove.isValidMove(oldPos, newPos, board)) {
       return new GameResult(this, INVALID_MOVE);
     }
-    // To-return
     ChessGame finalGame;
-    Board newBoard;
+    Board finalBoard;
+    // There is a piece at the desired position
     if (pieceToTake != null) {
-      if (pieceToTake.getPieceColour() == pieceToMove.getPieceColour()) {
+      if (pieceToTake.getPieceColour() == pieceToMove.getPieceColour()) { // Is of my own team
         return new GameResult(this, INVALID_MOVE);
-      } else {
-        newBoard =
-            board.removePieceAt(oldPos).removePieceAt(newPos).addPieceAt(newPos, pieceToMove);
-        newBoard = promoteIfAble(newBoard, pieceToMove.getPieceColour(), newPos, typeForPromotion);
-        finalGame =
-            new ChessGame(
-                newBoard,
-                rules,
-                checkConditions,
-                promoter,
-                selector,
-                selector.selectTurn(newBoard, turnNumber + 1),
-                turnNumber);
-        return new GameResult(finalGame, PIECE_TAKEN);
       }
-    } else {
-      newBoard =
+      finalBoard =
           board
               .removePieceAt(oldPos)
+              .removePieceAt(newPos)
               .addPieceAt(
                   newPos, pieceToMove.hasNotMoved() ? pieceToMove.changeMoveState() : pieceToMove);
-      newBoard = promoteIfAble(newBoard, pieceToMove.getPieceColour(), newPos, typeForPromotion);
+      finalBoard =
+          promoteIfAble(
+              finalBoard, newPos, finalBoard.pieceAt(newPos).getPieceColour(), typeForPromotion);
       finalGame =
           new ChessGame(
-              newBoard,
+              finalBoard,
               rules,
               checkConditions,
               promoter,
               selector,
-              selector.selectTurn(newBoard, turnNumber + 1),
-              turnNumber);
+              selector.selectTurn(finalBoard, turnNumber + 1),
+              turnNumber + 1);
+      return new GameResult(finalGame, PIECE_TAKEN);
     }
-    // Possible play leaves my own team in check
-    if (playIsInCheck(currentTurn, board, oldPos, newPos)) {
+    finalBoard =
+        board
+            .removePieceAt(oldPos)
+            .addPieceAt(
+                newPos, pieceToMove.hasNotMoved() ? pieceToMove.changeMoveState() : pieceToMove);
+    finalBoard =
+        promoteIfAble(
+            finalBoard, newPos, finalBoard.pieceAt(newPos).getPieceColour(), typeForPromotion);
+    finalGame =
+        new ChessGame(
+            finalBoard,
+            rules,
+            checkConditions,
+            promoter,
+            selector,
+            selector.selectTurn(finalBoard, turnNumber + 1),
+            turnNumber + 1);
+    // End of code
+    if (possiblePlayInCheck(currentTurn, finalBoard)) {
       return new GameResult(this, INVALID_MOVE);
     }
-    // End of the code
-    if (winConditionValidator.isGameWon(board)) {
-      ResultEnum winner = currentTurn == WHITE ? BLACK_WIN : WHITE_WIN;
+    if (winConditionValidator.isGameWon(finalBoard)) {
+      ResultEnum winner = currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN;
       return new GameResult(finalGame, winner);
     }
     return new GameResult(finalGame, VALID_MOVE);
@@ -175,56 +160,43 @@ public class ChessGame {
     return currentTurn;
   }
 
-  // Private methods:
-  private boolean playIsInCheck(Color currentTurn, Board board, Position oldPos, Position newPos)
-      throws UnallowedMoveException {
-    Check checkRule = getCheckRuleByTeam(checkConditions, currentTurn);
-    Board possiblePlay = board.updatePiecePosition(oldPos, newPos);
-    return checkRule.isValidRule(possiblePlay);
-  }
-
-  private Check getCheckRuleByTeam(List<Check> checkConditions, Color turn) {
-    for (Check check : checkConditions) {
-      if (check.getTeam() == turn) {
-        return check;
-      }
-    }
-    throw new NoSuchElementException();
-  }
-
-  private List<Check> filterCheckConditions(List<WinCondition> rules) {
-    List<Check> checks = new ArrayList<>();
-    for (WinCondition condition : rules) {
-      if (condition instanceof Check) {
-        checks.add((Check) condition);
-      }
-    }
-    for (Check check : checks) {
-      rules.remove(check);
-    }
-    return checks; // Change to uses of filter and map functions
-  }
-
-  private Board promoteIfAble(
-      Board newBoard, Color pieceColour, Position newPos, PieceType typeForPromotion) {
-    if (promoter.hasToPromote(newBoard, pieceColour) || promoter.canPromote(newPos, newBoard)) {
-      return promoter.promote(newPos, typeForPromotion, newBoard);
-    }
-    return newBoard;
-  }
-
-  private boolean outOfBoardBounds(Position pos) {
-    return pos.getRow() >= board.getRows()
-        || pos.getColumn() >= board.getColumns()
-        || pos.getRow() < 0
-        || pos.getColumn() < 0;
-  }
-
   public Promoter getPromoter() {
     return promoter;
   }
 
   public TurnSelector getSelector() {
     return selector;
+  }
+
+  // Private methods
+  private boolean outOfBoardBounds(Position pos) {
+    int i = pos.getRow();
+    int j = pos.getColumn();
+    return i >= board.getRows() || i < 0 || j >= board.getColumns() || j < 0;
+  }
+
+  private boolean possiblePlayInCheck(Color currentTurn, Board board) {
+    Check checkRule =
+        checkConditions.stream()
+            .filter(rule -> rule.getTeam() == currentTurn)
+            .findAny()
+            .orElse(null);
+    assert checkRule != null;
+    return checkRule.isValidRule(board);
+  }
+
+  private List<Check> filterCheckConditions(List<WinCondition> rules) {
+    List<Check> checks =
+        rules.stream().filter(rule -> rule instanceof Check).map(rule -> (Check) rule).toList();
+    rules.removeIf(item -> item instanceof Check);
+    return checks;
+  }
+
+  private Board promoteIfAble(
+      Board board, Position position, Color color, PieceType typeForPromotion) {
+    if (promoter.canPromote(position, board) || promoter.hasToPromote(board, color)) {
+      return promoter.promote(position, typeForPromotion, board);
+    }
+    return board;
   }
 }

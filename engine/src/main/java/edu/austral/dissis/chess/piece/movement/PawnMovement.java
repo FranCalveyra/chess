@@ -1,5 +1,7 @@
 package edu.austral.dissis.chess.piece.movement;
 
+import static edu.austral.dissis.chess.piece.movement.MoveType.VERTICAL;
+
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
@@ -19,6 +21,6 @@ public class PawnMovement implements PieceMovement {
         currentPawn.getPieceColour() == Color.BLACK ? deltaY == -1 : deltaY == 1;
     return (oldX == newX
             && (movementByColor || new PawnFirstMove().isValidMove(oldPos, newPos, context)))
-        && this.noPieceBetween(oldPos, newPos, context);
+        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL);
   }
 }

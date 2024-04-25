@@ -1,28 +1,24 @@
 package edu.austral.dissis.chess.piece.movement;
 
+import static edu.austral.dissis.chess.piece.movement.MoveType.HORIZONTAL;
+
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.rule.DefaultCheck;
 import edu.austral.dissis.chess.utils.Position;
-import edu.austral.dissis.chess.utils.UnallowedMoveException;
 
 public class Castling implements PieceMovement {
   // Only valid whenever king and rooks haven't been moved yet.
 
   @Override
   public boolean isValidMove(Position oldPos, Position newPos, Board context) {
-    try {
-      return isCastlingPossible(oldPos, newPos, context);
-    } catch (UnallowedMoveException e) {
-      return false;
-    }
+    return isCastlingPossible(oldPos, newPos, context);
   }
 
-  private boolean isCastlingPossible(Position oldPos, Position newPos, Board context)
-      throws UnallowedMoveException {
-    Piece firstPiece = context.getPiecesAndPositions().get(oldPos);
-    Piece secondPiece = context.getPiecesAndPositions().get(newPos);
+  private boolean isCastlingPossible(Position oldPos, Position newPos, Board context) {
+    Piece firstPiece = context.pieceAt(oldPos);
+    Piece secondPiece = context.pieceAt(newPos);
     if (firstPiece == null || secondPiece == null) {
       return false;
     }
@@ -42,37 +38,25 @@ public class Castling implements PieceMovement {
       return false;
     }
     boolean isInCheckFromStart = new DefaultCheck(firstPiece.getPieceColour()).isValidRule(context);
-    if (!(this.noPieceBetween(
-            new Position(oldPos.getRow(), oldPos.getColumn() + 1),
-            new Position(newPos.getRow(), newPos.getColumn() - 1),
-            context)
+    if (!(new PiecePathValidator()
+            .isNoPieceBetween(
+                new Position(oldPos.getRow(), oldPos.getColumn() + 1),
+                new Position(newPos.getRow(), newPos.getColumn() - 1),
+                context,
+                HORIZONTAL)
         && !isInCheckFromStart)) {
       return false;
     }
     return validateCheckBetween(oldPos, newPos, context);
   }
 
-  private boolean validateCheckBetween(Position oldPos, Position newPos, Board context)
-      throws UnallowedMoveException {
+  private boolean validateCheckBetween(Position oldPos, Position newPos, Board context) {
     int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
     int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
     for (int j = fromColumn + 1; j < toColumn; j++) {
       Position currentTile = new Position(oldPos.getRow(), j);
       Board possibleBoard = context.updatePiecePosition(currentTile, newPos);
       if (new DefaultCheck(context.pieceAt(oldPos).getPieceColour()).isValidRule(possibleBoard)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  @Override
-  public boolean noPieceBetween(Position oldPos, Position newPos, Board context) {
-    int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
-    int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
-    for (int j = fromColumn + 1; j < toColumn; j++) {
-      Position currentTile = new Position(oldPos.getRow(), j);
-      if (context.pieceAt(currentTile) != null) {
         return false;
       }
     }

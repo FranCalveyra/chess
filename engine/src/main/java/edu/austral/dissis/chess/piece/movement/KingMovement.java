@@ -1,5 +1,9 @@
 package edu.austral.dissis.chess.piece.movement;
 
+import static edu.austral.dissis.chess.piece.movement.MoveType.DIAGONAL;
+import static edu.austral.dissis.chess.piece.movement.MoveType.HORIZONTAL;
+import static edu.austral.dissis.chess.piece.movement.MoveType.VERTICAL;
+
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.Position;
 
@@ -11,13 +15,16 @@ public class KingMovement implements PieceMovement {
     boolean horizontalMove = Math.abs(newPos.getColumn() - oldPos.getColumn()) == 1;
     boolean verticalMove = Math.abs(newPos.getRow() - oldPos.getRow()) == 1;
     boolean diagonalMove = horizontalMove && verticalMove;
+    MoveType moveType;
     if (diagonalMove) {
-      return new DiagonalMovement().noPieceBetween(oldPos, newPos, context);
+      moveType = DIAGONAL;
     } else if (horizontalMove) {
-      return new HorizontalMovement().noPieceBetween(oldPos, newPos, context);
+      moveType = HORIZONTAL;
     } else if (verticalMove) {
-      return new VerticalMovement().noPieceBetween(oldPos, newPos, context);
+      moveType = VERTICAL;
+    } else {
+      return false;
     }
-    return false;
+    return new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, moveType);
   }
 }

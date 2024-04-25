@@ -16,7 +16,6 @@ import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
-import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,15 +36,11 @@ public class ChessTest {
               new Stalemate(Color.BLACK),
               new Stalemate(Color.WHITE)));
   private ChessGame game =
-      new ChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), null);
-
-  ChessTest() {
-    game = game.startGame();
-  }
+      new ChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), Color.WHITE);
 
   // Tests
   @Test
-  public void putWhiteKingInCheck() throws UnallowedMoveException {
+  public void putWhiteKingInCheck() {
     final Piece blackPawn = board.pieceAt(new Position(6, 4));
     final Piece whitePawn = board.pieceAt(new Position(1, 5));
     final Piece whitePawn2 = board.pieceAt(new Position(1, 6));
@@ -65,6 +60,7 @@ public class ChessTest {
     game = game.makeMove(new Position(1, 6), new Position(3, 6)).getGame();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(3, 6)).getType());
     game = game.makeMove(new Position(7, 3), new Position(3, 7)).getGame();
+    System.out.println(game.getBoard());
     assertEquals(PieceType.QUEEN, game.getBoard().pieceAt(new Position(3, 7)).getType());
     assertTrue(new DefaultCheck(Color.WHITE).isValidRule(game.getBoard()));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
@@ -72,7 +68,7 @@ public class ChessTest {
   }
 
   @Test
-  public void validateStalemate() throws UnallowedMoveException {
+  public void validateStalemate() {
     PieceProvider pieceProvider = new PieceProvider();
     Map<Position, Piece> stalematePieces =
         Map.of(
@@ -93,14 +89,11 @@ public class ChessTest {
   }
 
   @Test
-  public void validatePromotion() throws UnallowedMoveException {
+  public void validatePromotion() {
     // Smth doesn't work
     assertEquals(Color.WHITE, game.getCurrentTurn());
-    game =
-        game.makeMove(new Position(1, 0), new Position(3, 0))
-            .getGame()
-            .makeMove(new Position(6, 0), new Position(4, 0))
-            .getGame();
+    game = game.makeMove(new Position(1, 0), new Position(3, 0)).getGame();
+    game = game.makeMove(new Position(6, 0), new Position(4, 0)).getGame();
     assertPositionType(game, PieceType.PAWN, 3, 0);
     assertPositionType(game, PieceType.PAWN, 4, 0);
     game = game.makeMove(new Position(1, 1), new Position(3, 1)).getGame();

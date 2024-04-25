@@ -42,10 +42,13 @@ public class Board {
   // Default private immutable constructor
   private Board(
       Map<Position, Piece> pieces,
+      int rows,
+      int columns,
       Piece[][] matrix, // Deletable
       List<Piece> takenPieces) {
     this.pieces = pieces;
-    this.rows = this.columns = 8;
+    this.rows = rows;
+    this.columns = columns;
     this.matrix = matrix;
     this.takenPieces = takenPieces;
   }
@@ -64,7 +67,7 @@ public class Board {
     newBoard[pos.getRow()][pos.getColumn()] = piece; // Add it to board
     newMap.put(pos, piece); // Update the map
 
-    return new Board(newMap, newBoard, takenPieces);
+    return new Board(newMap, rows, columns, newBoard, takenPieces);
   }
 
   public Board removePieceAt(Position pos) {
@@ -72,7 +75,7 @@ public class Board {
     newBoard[pos.getRow()][pos.getColumn()] = null;
     Map<Position, Piece> newMap = copyMap(pieces);
     newMap.remove(pos);
-    return new Board(newMap, newBoard, takenPieces);
+    return new Board(newMap, rows, columns, newBoard, takenPieces);
   }
 
   // Getters and extra stuff
@@ -95,10 +98,6 @@ public class Board {
 
   public List<Piece> getTakenPieces() {
     return takenPieces;
-  }
-
-  public Piece[][] getMatrix() {
-    return matrix;
   }
 
   @Override

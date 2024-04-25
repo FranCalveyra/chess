@@ -1,5 +1,7 @@
 package edu.austral.dissis.chess.piece.movement;
 
+import static edu.austral.dissis.chess.piece.movement.MoveType.VERTICAL;
+
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
@@ -18,6 +20,6 @@ public class PawnFirstMove implements PieceMovement {
     return horizontalMove
         && verticalMove
         && piece.hasNotMoved()
-        && new VerticalMovement().noPieceBetween(oldPos, newPos, context);
+        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL);
   }
 }

@@ -15,12 +15,15 @@ public class DefaultCheckValidator {
       // your own team or an empty space
     }
     Position kingPosition = getKingPosition(context, team);
-    return kingPosition != null && piece.checkValidMove(toPos, kingPosition, context);
+    return kingPosition != null && piece.isValidMove(toPos, kingPosition, context);
   }
 
   private Position getKingPosition(Board context, Color team) {
     for (Entry<Position, Piece> entry : context.getPiecesAndPositions().entrySet()) {
       Piece currentPiece = entry.getValue();
+      if (currentPiece == null) {
+        continue;
+      }
       if (currentPiece.getType() == PieceType.KING && currentPiece.getPieceColour() == team) {
         return entry.getKey();
       }

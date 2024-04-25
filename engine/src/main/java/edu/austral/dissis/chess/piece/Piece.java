@@ -28,7 +28,7 @@ public class Piece {
     this.hasMoved = hasMoved;
   }
 
-  public boolean checkValidMove(Position oldPos, Position newPos, Board context) {
+  public boolean isValidMove(Position oldPos, Position newPos, Board context) {
     for (PieceMovement movement : movements) {
       if (movement.isValidMove(oldPos, newPos, context)) {
         return true;

@@ -7,7 +7,7 @@ import java.awt.Color;
 
 public interface Promoter {
   // Put the type to promote in constructor
-  boolean hasToPromote(Board context, Color team); // Check all first and last row for pawns
+  boolean hasToPromote(Board context, Color team); // Check the promotion row of a given team
 
   boolean canPromote(Position position, Board context);
 

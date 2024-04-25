@@ -3,7 +3,6 @@ package edu.austral.dissis.chess.rule;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
-import edu.austral.dissis.chess.utils.UnallowedMoveException;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +17,11 @@ public class CheckMate implements WinCondition {
   }
 
   @Override
-  public boolean isValidRule(Board context) throws UnallowedMoveException {
+  public boolean isValidRule(Board context) {
     return checkmate(context, team);
   }
 
-  private boolean checkmate(Board context, Color team) throws UnallowedMoveException {
+  private boolean checkmate(Board context, Color team) {
     if (!new DefaultCheck(team).isValidRule(context)) {
       return false;
     }
@@ -31,8 +30,8 @@ public class CheckMate implements WinCondition {
     return noPossibleSaving(piecesWithPossibleMoves, context);
   }
 
-  private boolean noPossibleSaving(Map<Position, List<Position>> piecePossibleMoves, Board context)
-      throws UnallowedMoveException {
+  private boolean noPossibleSaving(
+      Map<Position, List<Position>> piecePossibleMoves, Board context) {
     for (Entry<Position, List<Position>> entry : piecePossibleMoves.entrySet()) {
       Position currentPiecePosition = entry.getKey();
       Piece currentPiece = context.pieceAt(entry.getKey());
