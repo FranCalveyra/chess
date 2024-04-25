@@ -10,10 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 public class Stalemate implements WinCondition {
+  private final Color team;
+  public Stalemate(Color team){
+    this.team = team;
+  }
+
   // Should handle "tie"
   @Override
   public boolean isValidRule(Board context) throws UnallowedMoveException {
-    return bruteForceMovementCheck(context, context.getCurrentTurn());
+    return bruteForceMovementCheck(context, team);
   }
 
   private boolean bruteForceMovementCheck(Board context, Color team) throws UnallowedMoveException {
@@ -44,7 +49,7 @@ public class Stalemate implements WinCondition {
       List<Position> possibleMoves, Check check, Board context, Position initialPosition)
       throws UnallowedMoveException {
     for (Position move : possibleMoves) {
-      Board possibleBoard = context.updatePiecePosition(initialPosition, move, PieceType.QUEEN);
+      Board possibleBoard = context.updatePiecePosition(initialPosition, move);
       if (!check.isValidRule(possibleBoard)) {
         return false;
       }

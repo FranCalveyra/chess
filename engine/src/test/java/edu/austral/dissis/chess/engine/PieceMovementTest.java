@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 public class PieceMovementTest {
 
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
-  private final Board board = new Board(pieces, new StandardTurnSelector(), new StandardPromoter());
+  private final Board board = new Board(pieces);
   private final List<WinCondition> rules =
       new ArrayList<>(
           List.of(
@@ -35,8 +35,8 @@ public class PieceMovementTest {
               new DefaultCheck(Color.WHITE),
               new CheckMate(Color.BLACK),
               new CheckMate(Color.WHITE),
-              new Stalemate()));
-  private ChessGame game = new ChessGame(board, rules);
+              new Stalemate(Color.WHITE), new Stalemate(Color.BLACK)));
+  private ChessGame game = new ChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), null);
 
   PieceMovementTest() {
     game = game.startGame();
@@ -46,11 +46,11 @@ public class PieceMovementTest {
   public void validateKnightMovement() throws UnallowedMoveException {
     Piece whiteLeftKnight = board.pieceAt(new Position(0, 1));
     assertEquals(whiteLeftKnight.getPieceColour(), Color.WHITE);
-    game = game.makeMove(new Position(0, 1), new Position(2, 0));
+    game = game.makeMove(new Position(0, 1), new Position(2, 0)).getGame();
     assertEquals(PieceType.KNIGHT, game.getBoard().pieceAt(new Position(2, 0)).getType());
-    game = game.makeMove(new Position(6, 1), new Position(4, 1));
+    game = game.makeMove(new Position(6, 1), new Position(4, 1)).getGame();
 
-    game = game.makeMove(new Position(2, 0), new Position(4, 1));
+    game = game.makeMove(new Position(2, 0), new Position(4, 1)).getGame();
     assertEquals(PieceType.KNIGHT, game.getBoard().pieceAt(new Position(4, 1)).getType());
   }
 
@@ -68,12 +68,12 @@ public class PieceMovementTest {
     assertEquals(blackPawn.getPieceColour(), Color.BLACK);
     assertEquals(blackPawn.getType(), PieceType.PAWN);
     // First movement
-    game = game.makeMove(new Position(1, 3), new Position(3, 3));
-    game = game.makeMove(new Position(6, 2), new Position(4, 2));
-    game = game.makeMove(new Position(3, 3), new Position(4, 2));
-    game = game.makeMove(new Position(0, 2), new Position(2, 4));
-    game = game.makeMove(new Position(6, 0), new Position(5, 0));
-    game = game.makeMove(new Position(2, 4), new Position(4, 2));
+    game = game.makeMove(new Position(1, 3), new Position(3, 3)).getGame();
+    game = game.makeMove(new Position(6, 2), new Position(4, 2)).getGame();
+    game = game.makeMove(new Position(3, 3), new Position(4, 2)).getGame();
+    game = game.makeMove(new Position(0, 2), new Position(2, 4)).getGame();
+    game = game.makeMove(new Position(6, 0), new Position(5, 0)).getGame();
+    game = game.makeMove(new Position(2, 4), new Position(4, 2)).getGame();
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
   }
 
@@ -82,23 +82,23 @@ public class PieceMovementTest {
     Piece whitePawn = game.getBoard().pieceAt(new Position(1, 0));
     assertEquals(whitePawn.getPieceColour(), Color.WHITE);
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(1, 0)).getType());
-    game = game.makeMove(new Position(1, 0), new Position(2, 0));
+    game = game.makeMove(new Position(1, 0), new Position(2, 0)).getGame();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(2, 0)).getType());
 
     Piece blackPawn = game.getBoard().pieceAt(new Position(6, 0));
     assertEquals(blackPawn.getPieceColour(), Color.BLACK);
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(6, 0)).getType());
-    game = game.makeMove(new Position(6, 0), new Position(4, 0));
+    game = game.makeMove(new Position(6, 0), new Position(4, 0)).getGame();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(4, 0)).getType());
 
     Piece otherWhitePawn = game.getBoard().pieceAt(new Position(1, 1));
     assertEquals(otherWhitePawn.getPieceColour(), Color.WHITE);
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(1, 1)).getType());
 
-    game = game.makeMove(new Position(1, 1), new Position(3, 1));
+    game = game.makeMove(new Position(1, 1), new Position(3, 1)).getGame();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(3, 1)).getType());
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(4, 0), new Position(3, 1));
+    assertEquals(Color.BLACK, game.getCurrentTurn());
+    game = game.makeMove(new Position(4, 0), new Position(3, 1)).getGame();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(3, 1)).getType());
 
     Piece newWhitePawn = game.getBoard().pieceAt(new Position(1, 4));
@@ -113,32 +113,33 @@ public class PieceMovementTest {
 
   @Test
   public void validateRookMovement() throws UnallowedMoveException {
-    game = game.makeMove(new Position(1, 0), new Position(3, 0));
-    game = game.makeMove(new Position(6, 1), new Position(4, 1));
-    game = game.makeMove(new Position(3, 0), new Position(4, 1));
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
+    game = game.makeMove(new Position(1, 0), new Position(3, 0)).getGame();
+    game = game.makeMove(new Position(6, 1), new Position(4, 1)).getGame();
+    game = game.makeMove(new Position(3, 0), new Position(4, 1)).getGame();
+    assertEquals(Color.BLACK, game.getCurrentTurn());
     assertThrows(
         UnallowedMoveException.class, () -> game.makeMove(new Position(7, 7), new Position(3, 1)));
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
-    game = game.makeMove(new Position(6, 6), new Position(5, 6));
+    game = game.makeMove(new Position(6, 6), new Position(5, 6)).getGame();
     List<Position> rookMoveSet =
         game.getBoard().pieceAt(new Position(0, 0)).getMoveSet(new Position(0, 0), game.getBoard());
     assertEquals(5, rookMoveSet.size());
-    game = game.makeMove(new Position(0, 0), new Position(4, 0));
+    game = game.makeMove(new Position(0, 0), new Position(4, 0)).getGame();
     assertEquals(PieceType.ROOK, game.getBoard().pieceAt(new Position(4, 0)).getType());
   }
 
   @Test
   public void validateQueenMovement() throws UnallowedMoveException {
     Piece whiteQueen = board.pieceAt(new Position(0, 3));
+    System.out.println(board);
     assertEquals(whiteQueen.getType(), PieceType.QUEEN);
-    game = game.makeMove(new Position(1, 3), new Position(3, 3));
+    game = game.makeMove(new Position(1, 3), new Position(3, 3)).getGame();
     List<Position> whiteQueenMoveSet =
         game.getBoard().pieceAt(new Position(0, 3)).getMoveSet(new Position(0, 3), game.getBoard());
     assertEquals(2, whiteQueenMoveSet.size()); // Need to fix it
-    game = game.makeMove(new Position(6, 4), new Position(4, 4));
-    game = game.makeMove(new Position(3, 3), new Position(4, 4));
-    game = game.makeMove(new Position(6, 3), new Position(5, 3));
+    game = game.makeMove(new Position(6, 4), new Position(4, 4)).getGame();
+    game = game.makeMove(new Position(3, 3), new Position(4, 4)).getGame();
+    game = game.makeMove(new Position(6, 3), new Position(5, 3)).getGame();
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
     whiteQueenMoveSet =
         game.getBoard().pieceAt(new Position(0, 3)).getMoveSet(new Position(0, 3), game.getBoard());
@@ -156,50 +157,50 @@ public class PieceMovementTest {
   }
 
   private void assertLeftCastling() throws UnallowedMoveException {
-    game = game.makeMove(new Position(1, 1), new Position(3, 1));
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(6, 1), new Position(4, 1));
-    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(1, 2), new Position(3, 2));
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(6, 2), new Position(4, 2));
-    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(1, 3), new Position(3, 3));
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(6, 3), new Position(4, 3));
-    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(0, 1), new Position(2, 2));
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(6, 6), new Position(5, 6));
-    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(0, 2), new Position(2, 0));
-    game = game.makeMove(new Position(6, 0), new Position(4, 0));
-    game = game.makeMove(new Position(0, 3), new Position(1, 3));
-    game = game.makeMove(new Position(6, 5), new Position(4, 5));
+    game = game.makeMove(new Position(1, 1), new Position(3, 1)).getGame();
+    assertEquals(Color.BLACK, game.getCurrentTurn());
+    game = game.makeMove(new Position(6, 1), new Position(4, 1)).getGame();
+    assertEquals(Color.WHITE, game.getCurrentTurn());
+    game = game.makeMove(new Position(1, 2), new Position(3, 2)).getGame();
+    assertEquals(Color.BLACK, game.getCurrentTurn());
+    game = game.makeMove(new Position(6, 2), new Position(4, 2)).getGame();
+    assertEquals(Color.WHITE, game.getCurrentTurn());
+    game = game.makeMove(new Position(1, 3), new Position(3, 3)).getGame();
+    assertEquals(Color.BLACK, game.getCurrentTurn());
+    game = game.makeMove(new Position(6, 3), new Position(4, 3)).getGame();
+    assertEquals(Color.WHITE, game.getCurrentTurn());
+    game = game.makeMove(new Position(0, 1), new Position(2, 2)).getGame();
+    assertEquals(Color.BLACK, game.getCurrentTurn());
+    game = game.makeMove(new Position(6, 6), new Position(5, 6)).getGame();
+    assertEquals(Color.WHITE, game.getCurrentTurn());
+    game = game.makeMove(new Position(0, 2), new Position(2, 0)).getGame();
+    game = game.makeMove(new Position(6, 0), new Position(4, 0)).getGame();
+    game = game.makeMove(new Position(0, 3), new Position(1, 3)).getGame();
+    game = game.makeMove(new Position(6, 5), new Position(4, 5)).getGame();
     System.out.println(game.getBoard());
     assertTrue(new Castling().isValidMove(new Position(0, 0), new Position(0, 4), game.getBoard()));
   }
 
   private void assertRightCastling() throws UnallowedMoveException {
-    game = game.makeMove(new Position(1, 5), new Position(3, 5));
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(6, 1), new Position(4, 1));
-    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(1, 6), new Position(3, 6));
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(6, 2), new Position(4, 2));
-    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(1, 7), new Position(3, 7));
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(6, 3), new Position(4, 3));
-    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(0, 6), new Position(2, 5));
-    assertEquals(Color.BLACK, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(6, 6), new Position(5, 6));
-    assertEquals(Color.WHITE, game.getBoard().getCurrentTurn());
-    game = game.makeMove(new Position(0, 6), new Position(2, 7));
-    game = game.makeMove(new Position(6, 0), new Position(4, 0));
-    game = game.makeMove(new Position(0, 5), new Position(1, 6));
+    game = game.makeMove(new Position(1, 5), new Position(3, 5)).getGame();
+    assertEquals(Color.BLACK, game.getCurrentTurn());
+    game = game.makeMove(new Position(6, 1), new Position(4, 1)).getGame();
+    assertEquals(Color.WHITE, game.getCurrentTurn());
+    game = game.makeMove(new Position(1, 6), new Position(3, 6)).getGame();
+    assertEquals(Color.BLACK, game.getCurrentTurn());
+    game = game.makeMove(new Position(6, 2), new Position(4, 2)).getGame();
+    assertEquals(Color.WHITE, game.getCurrentTurn());
+    game = game.makeMove(new Position(1, 7), new Position(3, 7)).getGame();
+    assertEquals(Color.BLACK, game.getCurrentTurn());
+    game = game.makeMove(new Position(6, 3), new Position(4, 3)).getGame();
+    assertEquals(Color.WHITE, game.getCurrentTurn());
+    game = game.makeMove(new Position(0, 6), new Position(2, 5)).getGame();
+    assertEquals(Color.BLACK, game.getCurrentTurn());
+    game = game.makeMove(new Position(6, 6), new Position(5, 6)).getGame();
+    assertEquals(Color.WHITE, game.getCurrentTurn());
+    game = game.makeMove(new Position(0, 6), new Position(2, 7)).getGame();
+    game = game.makeMove(new Position(6, 0), new Position(4, 0)).getGame();
+    game = game.makeMove(new Position(0, 5), new Position(1, 6)).getGame();
     assertTrue(new Castling().isValidMove(new Position(0, 4), new Position(0, 7), game.getBoard()));
   }
 }

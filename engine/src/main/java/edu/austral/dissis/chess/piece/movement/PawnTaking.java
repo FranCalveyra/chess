@@ -15,12 +15,12 @@ public class PawnTaking implements PieceMovement {
     int newY = newPos.getRow();
     int deltaY = newY - oldY;
     boolean colorBasedVerticalMovement =
-        context.getCurrentTurn() == Color.BLACK ? deltaY == -1 : deltaY == 1;
+        context.pieceAt(oldPos).getPieceColour() == Color.BLACK ? deltaY == -1 : deltaY == 1;
     boolean diagonalMove = colorBasedVerticalMovement && Math.abs(newX - oldX) == 1;
     if (!diagonalMove) {
       return false;
     }
     Piece pieceAtNewPos = context.getPiecesAndPositions().get(newPos);
-    return pieceAtNewPos != null && pieceAtNewPos.getPieceColour() != context.getCurrentTurn();
+    return pieceAtNewPos != null && pieceAtNewPos.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
   }
 }

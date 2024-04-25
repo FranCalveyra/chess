@@ -19,7 +19,7 @@ public class VerticalMovement implements PieceMovement {
     for (int i = fromRow + 1; i < toRow; i++) {
       Position currentTile = new Position(i, oldPos.getColumn());
       if (context.pieceAt(currentTile) != null
-          && context.getCurrentTurn() != context.pieceAt(currentTile).getPieceColour()) {
+          && context.pieceAt(oldPos).getPieceColour() != context.pieceAt(currentTile).getPieceColour()) {
         return false;
       }
     }

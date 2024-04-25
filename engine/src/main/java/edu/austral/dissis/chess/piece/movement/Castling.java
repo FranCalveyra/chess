@@ -58,7 +58,7 @@ public class Castling implements PieceMovement {
     int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
     for (int j = fromColumn + 1; j < toColumn; j++) {
       Position currentTile = new Position(oldPos.getRow(), j);
-      Board possibleBoard = context.updatePiecePosition(currentTile, newPos, PieceType.QUEEN);
+      Board possibleBoard = context.updatePiecePosition(currentTile, newPos);
       if (new DefaultCheck(context.pieceAt(oldPos).getPieceColour()).isValidRule(possibleBoard)) {
         return false;
       }
