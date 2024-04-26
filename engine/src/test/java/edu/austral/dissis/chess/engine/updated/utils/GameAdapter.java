@@ -35,8 +35,7 @@ public class GameAdapter {
     }
 
     public static Position mapPos(TestPosition position){
-        System.out.println("(" + position.getRow()+ ", " + position.getCol() + ")");
-        return new Position(position.getRow(), position.getCol());
+        return new Position(position.getRow()-1, position.getCol()-1);
     }
 
     public static Piece mapPiece(TestPiece piece){

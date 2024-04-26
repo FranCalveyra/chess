@@ -29,7 +29,7 @@ public class PieceMoveTests {
     public void testBishopPositions(){
         moveTester.testMove("/moves/bishop/valid_moves.txt", new TestPosition(5, 4), new ParseSettings(Validity.INVALID));
         moveTester.testMove("/moves/bishop/valid_moves_1.txt", new TestPosition(7, 4), new ParseSettings(Validity.INVALID));
-        moveTester.testMove("/moves/bishop/valid_moves_0.txt", new TestPosition(1, 1), new ParseSettings(Validity.VALID));
+        moveTester.testMove("/moves/bishop/valid_moves_0.txt", new TestPosition(1, 1), new ParseSettings(Validity.INVALID));
     }
     @Test
     public void testPawnPositions(){
@@ -41,22 +41,22 @@ public class PieceMoveTests {
     }
     @Test
     public void testKingPositions(){
-        moveTester.testMove("/moves/king/valid_moves.txt", new TestPosition(5, 4), new ParseSettings(Validity.INVALID));
+        moveTester.testMove("/moves/king/valid_moves.txt", new TestPosition(8, 1), new ParseSettings(Validity.INVALID));
         moveTester.testMove("/moves/king/valid_moves_1.txt", new TestPosition(8, 2), new ParseSettings(Validity.INVALID));
         moveTester.testMove("/moves/king/valid_moves_0.txt", new TestPosition(8, 1), new ParseSettings(Validity.INVALID));
     }
 
 
-//    @Test
-//    public void testQueenPositions(){
-//        moveTester.testMove("/moves/queen/valid_moves.txt", new TestPosition(5, 4), new ParseSettings(Validity.INVALID));
-//        moveTester.testMove("/moves/queen/valid_moves_1.txt", new TestPosition(7, 4), new ParseSettings(Validity.INVALID));
-//        moveTester.testMove("/moves/queen/valid_moves_0.txt", new TestPosition(1, 1), new ParseSettings(Validity.INVALID));
-//    }
-//    @Test
-//    public void testRookPositions() {
-//        moveTester.testMove("/moves/rook/valid_moves.txt", new TestPosition(5, 4), new ParseSettings(Validity.INVALID));
-//        moveTester.testMove("/moves/rook/valid_moves_1.txt", new TestPosition(7, 4), new ParseSettings(Validity.INVALID));
-//        moveTester.testMove("/moves/rook/valid_moves_0.txt", new TestPosition(1, 1), new ParseSettings(Validity.INVALID));
-//    }
+    @Test
+    public void testQueenPositions(){
+        moveTester.testMove("/moves/queen/valid_moves.txt", new TestPosition(5, 4), new ParseSettings(Validity.VALID));
+        moveTester.testMove("/moves/queen/valid_moves_1.txt", new TestPosition(7, 4), new ParseSettings(Validity.INVALID));
+        moveTester.testMove("/moves/queen/valid_moves_0.txt", new TestPosition(1, 1), new ParseSettings(Validity.INVALID));
+    }
+    @Test
+    public void testRookPositions() {
+        moveTester.testMove("/moves/rook/valid_moves.txt", new TestPosition(5, 4), new ParseSettings(Validity.INVALID));
+        moveTester.testMove("/moves/rook/valid_moves_1.txt", new TestPosition(7, 4), new ParseSettings(Validity.INVALID));
+        moveTester.testMove("/moves/rook/valid_moves_0.txt", new TestPosition(1, 1), new ParseSettings(Validity.INVALID));
+    }
 }

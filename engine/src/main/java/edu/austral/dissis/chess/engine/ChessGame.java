@@ -108,7 +108,7 @@ public class ChessGame {
     if (possiblePlayInCheck(currentTurn, finalBoard)) {
       return new GameResult(this, INVALID_MOVE);
     }
-    if (winConditionValidator.isGameWon(finalBoard)) { //TODO: check why win conditions change my board
+    if (winConditionValidator.isGameWon(finalBoard)) {
       MoveResult winner = currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; //Hardcoded, need to change
       return new GameResult(finalGame, winner);
     }

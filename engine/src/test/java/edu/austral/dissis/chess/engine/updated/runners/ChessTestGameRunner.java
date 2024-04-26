@@ -56,10 +56,7 @@ public class ChessTestGameRunner implements TestGameRunner {
 
     private Map<TestPosition, TestPiece> getTestMap(Map<Position, Piece> pieceMap){
         Map<TestPosition, TestPiece> testMap = new HashMap<>();
-        for(Entry<Position, Piece> entry : pieceMap.entrySet()){
-            Position currentPosition = entry.getKey();
-            testMap.put(new TestPosition(currentPosition.getRow(), currentPosition.getColumn()), mapPiece(entry.getValue()));
-        }
+        pieceMap.forEach((currentPosition, value) -> testMap.put(TestPosition.Companion.fromZeroBased(currentPosition.getRow(), currentPosition.getColumn()), mapPiece(value)));
         return testMap;
     }
 
