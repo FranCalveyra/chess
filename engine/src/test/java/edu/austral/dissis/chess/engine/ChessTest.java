@@ -36,7 +36,7 @@ public class ChessTest {
               new Stalemate(Color.BLACK),
               new Stalemate(Color.WHITE)));
   private ChessGame game =
-      new ChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), Color.WHITE);
+          ChessGame.createChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), Color.WHITE);
 
   // Tests
   @Test
@@ -79,12 +79,12 @@ public class ChessTest {
             new Position(7, 7),
             pieceProvider.get(Color.BLACK, PieceType.KING));
     ChessGame newGame =
-        new ChessGame(
-            new Board(stalematePieces),
-            game.getRules(),
-            game.getPromoter(),
-            game.getSelector(),
-            Color.WHITE);
+            ChessGame.createChessGame(
+                new Board(stalematePieces),
+                game.getRules(),
+                game.getPromoter(),
+                game.getSelector(),
+                Color.WHITE);
     assertTrue(new Stalemate(Color.WHITE).isValidRule(newGame.getBoard()));
   }
 

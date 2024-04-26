@@ -1,11 +1,11 @@
 package edu.austral.dissis.chess.engine;
 
 import static edu.austral.dissis.chess.piece.PieceType.QUEEN;
-import static edu.austral.dissis.chess.utils.ResultEnum.BLACK_WIN;
-import static edu.austral.dissis.chess.utils.ResultEnum.INVALID_MOVE;
-import static edu.austral.dissis.chess.utils.ResultEnum.PIECE_TAKEN;
-import static edu.austral.dissis.chess.utils.ResultEnum.VALID_MOVE;
-import static edu.austral.dissis.chess.utils.ResultEnum.WHITE_WIN;
+import static edu.austral.dissis.chess.utils.MoveResult.BLACK_WIN;
+import static edu.austral.dissis.chess.utils.MoveResult.INVALID_MOVE;
+import static edu.austral.dissis.chess.utils.MoveResult.PIECE_TAKEN;
+import static edu.austral.dissis.chess.utils.MoveResult.VALID_MOVE;
+import static edu.austral.dissis.chess.utils.MoveResult.WHITE_WIN;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
@@ -15,7 +15,7 @@ import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.GameResult;
 import edu.austral.dissis.chess.utils.Position;
-import edu.austral.dissis.chess.utils.ResultEnum;
+import edu.austral.dissis.chess.utils.MoveResult;
 import edu.austral.dissis.chess.validator.WinConditionValidator;
 import java.awt.Color;
 import java.util.List;
@@ -34,11 +34,11 @@ public class ChessGame {
   private final int turnNumber;
 
   public ChessGame(
-      Board board,
-      List<WinCondition> rules,
-      Promoter promoter,
-      TurnSelector selector,
-      Color currentTurn) {
+          Board board,
+          List<WinCondition> rules,
+          Promoter promoter,
+          TurnSelector selector,
+          Color currentTurn) {
     // Should be first instance
     this.board = board;
     this.checkConditions = filterCheckConditions(rules);
@@ -69,7 +69,16 @@ public class ChessGame {
     this.currentTurn = currentTurn;
   } // make it public
 
-  public GameResult makeMove(Position oldPos, Position newPos) {
+    public static ChessGame createChessGame(
+            Board board,
+            List<WinCondition> rules,
+            Promoter promoter,
+            TurnSelector selector,
+            Color currentTurn) {
+        return new ChessGame(board, rules, promoter, selector, currentTurn);
+    }
+
+    public GameResult makeMove(Position oldPos, Position newPos) {
     // If no argument is passed, it promotes to a Queen (BY DEFAULT)
     return makeMove(oldPos, newPos, QUEEN);
   }
@@ -141,7 +150,7 @@ public class ChessGame {
       return new GameResult(this, INVALID_MOVE);
     }
     if (winConditionValidator.isGameWon(finalBoard)) {
-      ResultEnum winner = currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN;
+      MoveResult winner = currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN;
       return new GameResult(finalGame, winner);
     }
     return new GameResult(finalGame, VALID_MOVE);

@@ -4,9 +4,9 @@ import edu.austral.dissis.chess.engine.ChessGame;
 
 public class GameResult {
   private final ChessGame game;
-  private final ResultEnum message;
+  private final MoveResult message;
 
-  public GameResult(ChessGame game, ResultEnum message) {
+  public GameResult(ChessGame game, MoveResult message) {
     this.game = game;
     this.message = message;
   }
@@ -15,7 +15,7 @@ public class GameResult {
     return game;
   }
 
-  public ResultEnum getMessage() {
+  public MoveResult getMessage() {
     return message;
   }
 }

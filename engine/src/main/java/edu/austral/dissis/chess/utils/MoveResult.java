@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.utils;
 
-public enum ResultEnum {
+public enum MoveResult {
   WHITE_WIN,
   BLACK_WIN,
   INVALID_MOVE,

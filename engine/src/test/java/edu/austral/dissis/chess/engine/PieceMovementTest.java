@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.engine;
 
 import static edu.austral.dissis.chess.engine.ChessTest.getPiecePosition;
-import static edu.austral.dissis.chess.utils.ResultEnum.INVALID_MOVE;
+import static edu.austral.dissis.chess.utils.MoveResult.INVALID_MOVE;
 import static java.awt.Color.WHITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -38,7 +38,7 @@ public class PieceMovementTest {
               new Stalemate(WHITE),
               new Stalemate(Color.BLACK)));
   private ChessGame game =
-      new ChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), WHITE);
+          ChessGame.createChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), WHITE);
 
   @Test
   public void validateKnightMovement() {
