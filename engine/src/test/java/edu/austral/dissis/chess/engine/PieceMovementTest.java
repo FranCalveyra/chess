@@ -11,10 +11,7 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.piece.movement.Castling;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
-import edu.austral.dissis.chess.rule.CheckMate;
-import edu.austral.dissis.chess.rule.DefaultCheck;
-import edu.austral.dissis.chess.rule.Stalemate;
-import edu.austral.dissis.chess.rule.WinCondition;
+import edu.austral.dissis.chess.rule.*;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
@@ -31,14 +28,15 @@ public class PieceMovementTest {
   private final List<WinCondition> rules =
       new ArrayList<>(
           List.of(
-              new DefaultCheck(Color.BLACK),
-              new DefaultCheck(WHITE),
               new CheckMate(Color.BLACK),
               new CheckMate(WHITE),
               new Stalemate(WHITE),
               new Stalemate(Color.BLACK)));
+  private final List<Check> checks = List.of(
+          new DefaultCheck(Color.BLACK),
+          new DefaultCheck(WHITE));
   private ChessGame game =
-          ChessGame.createChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), WHITE);
+          ChessGame.createChessGame(board, rules,checks ,new StandardPromoter(), new StandardTurnSelector(), WHITE);
 
   @Test
   public void validateKnightMovement() {
@@ -128,7 +126,6 @@ public class PieceMovementTest {
   @Test
   public void validateQueenMovement() {
     Piece whiteQueen = board.pieceAt(new Position(0, 3));
-    System.out.println(board);
     assertEquals(whiteQueen.getType(), PieceType.QUEEN);
     game = game.makeMove(new Position(1, 3), new Position(3, 3)).getGame();
     List<Position> whiteQueenMoveSet =
@@ -174,7 +171,6 @@ public class PieceMovementTest {
     game = game.makeMove(new Position(6, 0), new Position(4, 0)).getGame();
     game = game.makeMove(new Position(0, 3), new Position(1, 3)).getGame();
     game = game.makeMove(new Position(6, 5), new Position(4, 5)).getGame();
-    System.out.println(game.getBoard());
     assertTrue(new Castling().isValidMove(new Position(0, 0), new Position(0, 4), game.getBoard()));
   }
 
@@ -198,9 +194,7 @@ public class PieceMovementTest {
     game = game.makeMove(new Position(0, 6), new Position(2, 7)).getGame();
     game = game.makeMove(new Position(6, 0), new Position(4, 0)).getGame();
     game = game.makeMove(new Position(0, 5), new Position(1, 6)).getGame();
-    System.out.println(game.getBoard());
-    System.out.println(game.getBoard().getPiecesAndPositions().size());
     assertTrue(new Castling().isValidMove(new Position(0, 4), new Position(0, 7), game.getBoard()));
-    // Implement movement
+    // TODO: Implement Castling movement in the game, may need to create a Move class
   }
 }

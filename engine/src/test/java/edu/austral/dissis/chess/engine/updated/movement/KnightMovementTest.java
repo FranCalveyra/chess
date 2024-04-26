@@ -18,6 +18,11 @@ public class KnightMovementTest {
         moveTester.testMove("/moves/knight/valid_moves.txt", new TestPosition(5, 4), new ParseSettings(Validity.INVALID));
         moveTester.testMove("/moves/knight/valid_moves_1.txt", new TestPosition(8, 2), new ParseSettings(Validity.INVALID));
         moveTester.testMove("/moves/knight/valid_moves_0.txt", new TestPosition(5, 4), new ParseSettings(Validity.INVALID));
-
+        moveTester.testMove("/moves/knight/valid_moves_0.txt", new TestPosition(3, 3), new ParseSettings(Validity.INVALID));
+        for (int i = 1; i <=8 ; i++) {
+            for (int j = 1; j <=8 ; j++) {
+                moveTester.testMove("/moves/knight/valid_moves_0.txt", new TestPosition(i, j), new ParseSettings(Validity.INVALID));
+            }
+        }
     }
 }

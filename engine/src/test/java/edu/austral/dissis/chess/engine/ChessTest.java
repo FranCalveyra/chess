@@ -9,10 +9,7 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
 import edu.austral.dissis.chess.provider.PieceProvider;
-import edu.austral.dissis.chess.rule.CheckMate;
-import edu.austral.dissis.chess.rule.DefaultCheck;
-import edu.austral.dissis.chess.rule.Stalemate;
-import edu.austral.dissis.chess.rule.WinCondition;
+import edu.austral.dissis.chess.rule.*;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
@@ -29,14 +26,15 @@ public class ChessTest {
   private final List<WinCondition> rules =
       new ArrayList<>(
           List.of(
-              new DefaultCheck(Color.BLACK),
-              new DefaultCheck(Color.WHITE),
               new CheckMate(Color.BLACK),
               new CheckMate(Color.WHITE),
               new Stalemate(Color.BLACK),
               new Stalemate(Color.WHITE)));
+  private final List<Check> checks = List.of(
+          new DefaultCheck(Color.BLACK),
+          new DefaultCheck(Color.WHITE));
   private ChessGame game =
-          ChessGame.createChessGame(board, rules, new StandardPromoter(), new StandardTurnSelector(), Color.WHITE);
+          ChessGame.createChessGame(board, rules, checks,new StandardPromoter(), new StandardTurnSelector(), Color.WHITE);
 
   // Tests
   @Test
@@ -60,7 +58,6 @@ public class ChessTest {
     game = game.makeMove(new Position(1, 6), new Position(3, 6)).getGame();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(3, 6)).getType());
     game = game.makeMove(new Position(7, 3), new Position(3, 7)).getGame();
-    System.out.println(game.getBoard());
     assertEquals(PieceType.QUEEN, game.getBoard().pieceAt(new Position(3, 7)).getType());
     assertTrue(new DefaultCheck(Color.WHITE).isValidRule(game.getBoard()));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
@@ -82,6 +79,7 @@ public class ChessTest {
             ChessGame.createChessGame(
                 new Board(stalematePieces),
                 game.getRules(),
+                game.getCheckConditions(),
                 game.getPromoter(),
                 game.getSelector(),
                 Color.WHITE);
@@ -90,7 +88,6 @@ public class ChessTest {
 
   @Test
   public void validatePromotion() {
-    // Smth doesn't work
     assertEquals(Color.WHITE, game.getCurrentTurn());
     game = game.makeMove(new Position(1, 0), new Position(3, 0)).getGame();
     game = game.makeMove(new Position(6, 0), new Position(4, 0)).getGame();

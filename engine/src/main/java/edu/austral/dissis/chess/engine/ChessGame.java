@@ -11,12 +11,15 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.Promoter;
 import edu.austral.dissis.chess.rule.Check;
+import edu.austral.dissis.chess.rule.DefaultCheck;
 import edu.austral.dissis.chess.rule.WinCondition;
 import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.GameResult;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.utils.MoveResult;
 import edu.austral.dissis.chess.validator.WinConditionValidator;
+import org.jetbrains.annotations.NotNull;
+
 import java.awt.Color;
 import java.util.List;
 
@@ -34,16 +37,17 @@ public class ChessGame {
   private final int turnNumber;
 
   public ChessGame(
-          Board board,
-          List<WinCondition> rules,
+          @NotNull Board board,
+          @NotNull List<WinCondition> rules,
+          List<Check> checkConditions,
           Promoter promoter,
           TurnSelector selector,
           Color currentTurn) {
     // Should be first instance
     this.board = board;
-    this.checkConditions = filterCheckConditions(rules);
-    this.winConditionValidator = new WinConditionValidator(rules);
     this.rules = rules;
+    this.checkConditions = checkConditions;
+    this.winConditionValidator = new WinConditionValidator(rules);
     this.promoter = promoter;
     this.selector = selector;
     this.currentTurn = currentTurn;
@@ -72,10 +76,11 @@ public class ChessGame {
     public static ChessGame createChessGame(
             Board board,
             List<WinCondition> rules,
+            List<Check> checkConditions,
             Promoter promoter,
             TurnSelector selector,
             Color currentTurn) {
-        return new ChessGame(board, rules, promoter, selector, currentTurn);
+        return new ChessGame(board, rules, checkConditions,promoter, selector, currentTurn);
     }
 
     public GameResult makeMove(Position oldPos, Position newPos) {
@@ -97,6 +102,10 @@ public class ChessGame {
     if (pieceToMove == null) {
       return new GameResult(this, INVALID_MOVE);
     }
+    if (pieceToMove.getPieceColour() != currentTurn){
+      return new GameResult(this, INVALID_MOVE);
+    }
+
     // Invalid move due to piece rules
     if (!pieceToMove.isValidMove(oldPos, newPos, board)) {
       return new GameResult(this, INVALID_MOVE);
@@ -117,6 +126,7 @@ public class ChessGame {
       finalBoard =
           promoteIfAble(
               finalBoard, newPos, finalBoard.pieceAt(newPos).getPieceColour(), typeForPromotion);
+      finalBoard.getTakenPieces().add(pieceToTake);
       finalGame =
           new ChessGame(
               finalBoard,
@@ -150,7 +160,7 @@ public class ChessGame {
       return new GameResult(this, INVALID_MOVE);
     }
     if (winConditionValidator.isGameWon(finalBoard)) {
-      MoveResult winner = currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN;
+      MoveResult winner = currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; //Hardcoded, need to change
       return new GameResult(finalGame, winner);
     }
     return new GameResult(finalGame, VALID_MOVE);
@@ -188,17 +198,9 @@ public class ChessGame {
     Check checkRule =
         checkConditions.stream()
             .filter(rule -> rule.getTeam() == currentTurn)
-            .findAny()
-            .orElse(null);
-    assert checkRule != null;
-    return checkRule.isValidRule(board);
-  }
-
-  private List<Check> filterCheckConditions(List<WinCondition> rules) {
-    List<Check> checks =
-        rules.stream().filter(rule -> rule instanceof Check).map(rule -> (Check) rule).toList();
-    rules.removeIf(item -> item instanceof Check);
-    return checks;
+            .findAny().orElse(null);
+      assert checkRule != null;
+      return checkRule.isValidRule(board);
   }
 
   private Board promoteIfAble(
@@ -207,5 +209,9 @@ public class ChessGame {
       return promoter.promote(position, typeForPromotion, board);
     }
     return board;
+  }
+
+  public List<Check> getCheckConditions() {
+    return checkConditions;
   }
 }

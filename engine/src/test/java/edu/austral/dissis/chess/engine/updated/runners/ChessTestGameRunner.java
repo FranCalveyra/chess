@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import static edu.austral.dissis.chess.engine.ChessGame.createChessGame;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPos;
 
@@ -43,7 +44,7 @@ public class ChessTestGameRunner implements TestGameRunner {
     @NotNull
     @Override
     public TestGameRunner withBoard(@NotNull TestBoard testBoard) {
-        return new ChessTestGameRunner(ChessGame.createChessGame(mapBoard(testBoard), game.getRules(), game.getPromoter(), game.getSelector(), game.getCurrentTurn()));
+        return new ChessTestGameRunner(createChessGame(mapBoard(testBoard), game.getRules(), game.getCheckConditions(),game.getPromoter(), game.getSelector(), game.getCurrentTurn()));
     }
 
     private Map<TestPosition, TestPiece> getTestMap(Map<Position, Piece> pieceMap){

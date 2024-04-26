@@ -36,12 +36,10 @@ public class GameAdapter {
     }
 
     public static Position mapPos(TestPosition position){
-        return new Position(position.getRow(), position.getCol());
+        return new Position(position.getRow()-1, position.getCol()-1);
     }
 
-
     public static Piece mapPiece(TestPiece piece){
-
         return new PieceProvider().get(mapColour(piece.component2()), mapPieceType(piece));
     }
 
