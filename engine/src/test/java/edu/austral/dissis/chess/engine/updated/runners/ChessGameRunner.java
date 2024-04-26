@@ -1,6 +1,7 @@
 package edu.austral.dissis.chess.engine.updated.runners;
 
 
+import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
@@ -18,10 +19,10 @@ import static edu.austral.dissis.chess.engine.ChessGame.createChessGame;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 
-public class ChessTestGameRunner implements TestGameRunner {
+public class ChessGameRunner implements TestGameRunner {
 
-    private final ChessGame game;
-    public ChessTestGameRunner(ChessGame game){
+    private ChessGame game;
+    public ChessGameRunner(ChessGame game){
         this.game = game;
     }
 
@@ -29,10 +30,11 @@ public class ChessTestGameRunner implements TestGameRunner {
     @Override
     public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
         GameResult gameResult = game.makeMove(mapPosition(from), mapPosition(to));
+        game = gameResult.getGame();
         return switch (gameResult.getMessage()){
             case INVALID_MOVE -> new TestMoveFailure(mapTestBoard(game));
-            case WHITE_WIN -> new BlackCheckMate(mapTestBoard(game));
             case BLACK_WIN -> new WhiteCheckMate(mapTestBoard(game));
+            case WHITE_WIN -> new BlackCheckMate(mapTestBoard(game));
             case VALID_MOVE, PIECE_TAKEN -> new TestMoveSuccess(this);
         };
     }
@@ -46,7 +48,7 @@ public class ChessTestGameRunner implements TestGameRunner {
     @NotNull
     @Override
     public TestGameRunner withBoard(@NotNull TestBoard testBoard) {
-        return new ChessTestGameRunner(createChessGame(mapBoard(testBoard), game.getWinConditions(), game.getCheckConditions(),game.getPromoter(), game.getSelector(), game.getCurrentTurn(), game.getTurnNumber()));
+        return new ChessGameRunner(createChessGame(mapBoard(testBoard), game.getWinConditions(), game.getCheckConditions(),game.getPromoter(), game.getSelector(), game.getCurrentTurn(), game.getTurnNumber()));
     }
 
     private TestBoard mapTestBoard(ChessGame game){

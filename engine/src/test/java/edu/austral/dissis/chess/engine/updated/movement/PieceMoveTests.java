@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.engine.updated.movement;
 
-import edu.austral.dissis.chess.engine.updated.runners.ChessTestMoveRunner;
+import edu.austral.dissis.chess.engine.updated.runners.ChessMoveRunner;
 import edu.austral.dissis.chess.test.TestPosition;
 import edu.austral.dissis.chess.test.Validity;
 import edu.austral.dissis.chess.test.move.MoveTester;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class PieceMoveTests {
     //Runners
-    private final ChessTestMoveRunner moveRunner = new ChessTestMoveRunner();
+    private final ChessMoveRunner moveRunner = new ChessMoveRunner();
     private final MoveTester moveTester = new MoveTester(moveRunner);
 
     @Test

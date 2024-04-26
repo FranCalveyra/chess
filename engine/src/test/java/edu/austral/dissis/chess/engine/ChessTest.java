@@ -9,6 +9,7 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
 import edu.austral.dissis.chess.provider.PieceProvider;
+import edu.austral.dissis.chess.provider.RuleProvider;
 import edu.austral.dissis.chess.winConditions.*;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
@@ -24,10 +25,7 @@ public class ChessTest {
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
   private final Board board = new Board(pieces);
   private final List<WinCondition> rules =
-      new ArrayList<>(
-          List.of(
-              new CheckMate(Color.BLACK),
-              new CheckMate(Color.WHITE)));
+      new RuleProvider().provide(GameType.DEFAULT);
   private final List<Check> checks = List.of(
           new DefaultCheck(Color.BLACK),
           new DefaultCheck(Color.WHITE));

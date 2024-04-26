@@ -2,7 +2,7 @@ package edu.austral.dissis.chess.engine.exam;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
-import edu.austral.dissis.chess.engine.updated.runners.ChessTestGameRunner;
+import edu.austral.dissis.chess.engine.updated.runners.ChessGameRunner;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
 import edu.austral.dissis.chess.winConditions.*;
@@ -32,7 +32,7 @@ public class ChessTestCase {
     private final ChessGame game = new ChessGame(new Board(pieceMapProvider.provide(GameType.DEFAULT)),
             rules,checks, new StandardPromoter(), new StandardTurnSelector(), Color.WHITE);
 
-    private final ChessTestGameRunner gameRunner = new ChessTestGameRunner(game);
+    private final ChessGameRunner gameRunner = new ChessGameRunner(game);
     private final GameTester gameTester = new GameTester(gameRunner);
 
     @TestFactory

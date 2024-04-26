@@ -20,7 +20,7 @@ import java.util.List;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 
-public class ChessTestMoveRunner implements TestMoveRunner {
+public class ChessMoveRunner implements TestMoveRunner {
     @NotNull
     @Override
     public Validity executeMove(@NotNull TestBoard testBoard, @NotNull TestPosition fromPosition, @NotNull TestPosition toPosition) {

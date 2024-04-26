@@ -72,9 +72,9 @@ public class Board {
       matrix[entry.getKey().getRow()][entry.getKey().getColumn()] = entry.getValue();
     }
     StringBuilder sb = new StringBuilder();
-    for (int i = matrix.length-1; i >=0 ; i--) {
-      sb.append(Arrays.toString(matrix[i])).append("\n");
-    }
+      for (Piece[] value : matrix) {
+          sb.append(Arrays.toString(value)).append("\n");
+      }
     return sb.toString();
   }
 
