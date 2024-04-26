@@ -1,9 +1,10 @@
 package edu.austral.dissis.chess.piece.movement;
 
-import static edu.austral.dissis.chess.piece.movement.MoveType.DIAGONAL;
+import static edu.austral.dissis.chess.utils.MoveType.DIAGONAL;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.validator.PiecePathValidator;
 
 public class DiagonalMovement implements PieceMovement {
 

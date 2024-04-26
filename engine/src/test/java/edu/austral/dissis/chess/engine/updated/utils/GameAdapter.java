@@ -8,7 +8,6 @@ import edu.austral.dissis.chess.test.*;
 import edu.austral.dissis.chess.utils.Position;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,11 +31,12 @@ public class GameAdapter {
         int rows = board.component1().getRows();
         int cols = board.component1().getCols();
         Map<Position, Piece> map = mapPieces(board.component2());
-        return new Board(map, rows, cols, new ArrayList<>()); //Taken pieces is an empty list
+        return new Board(map, rows, cols); //Taken pieces is an empty list
     }
 
     public static Position mapPos(TestPosition position){
-        return new Position(position.getRow()-1, position.getCol()-1);
+        System.out.println("(" + position.getRow()+ ", " + position.getCol() + ")");
+        return new Position(position.getRow(), position.getCol());
     }
 
     public static Piece mapPiece(TestPiece piece){

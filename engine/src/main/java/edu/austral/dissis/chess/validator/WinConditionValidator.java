@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.validator;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.rule.WinCondition;
+import edu.austral.dissis.chess.winConditions.WinCondition;
 import java.util.List;
 
 public class WinConditionValidator {

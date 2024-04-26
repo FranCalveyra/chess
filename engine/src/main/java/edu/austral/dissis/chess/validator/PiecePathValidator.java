@@ -1,13 +1,18 @@
-package edu.austral.dissis.chess.piece.movement;
+package edu.austral.dissis.chess.validator;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.utils.MoveType;
 import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.utils.Position;
 
 public class PiecePathValidator {
-  public boolean isNoPieceBetween(Position from, Position to, Board context, MoveType moveType) {
-    return !switch (moveType) {
+
+    public boolean isNoPieceBetween(Position from, Position to, Board context, MoveType moveType) {
+        if(outOfBoardBounds(from,context) || outOfBoardBounds(to,context)){
+            return false;
+        }
+        return !switch (moveType) {
       case DIAGONAL -> !checkDiagonal(from, to, context); // Border cases
       case VERTICAL -> checkVertical(from, to, context);
       case HORIZONTAL -> checkHorizontal(from, to, context);
@@ -95,4 +100,10 @@ public class PiecePathValidator {
     return lastPiece == null
         || lastPiece.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
   }
+    private boolean outOfBoardBounds(Position pos, Board context) {
+        int i = pos.getRow();
+        int j = pos.getColumn();
+        return i >= context.getRows() || i < 0 || j >= context.getColumns() || j < 0;
+    }
+
 }

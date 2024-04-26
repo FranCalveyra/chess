@@ -1,10 +1,12 @@
 package edu.austral.dissis.chess.engine.updated.runners;
 
+import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.test.*;
 import edu.austral.dissis.chess.test.game.*;
+import edu.austral.dissis.chess.utils.GameResult;
 import edu.austral.dissis.chess.utils.Position;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,10 +29,11 @@ public class ChessTestGameRunner implements TestGameRunner {
     @NotNull
     @Override
     public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
-        return switch (game.makeMove(mapPos(from), mapPos(to)).getMessage()){
-            case INVALID_MOVE -> new TestMoveFailure(getBoard());
-            case WHITE_WIN -> new BlackCheckMate(getBoard());
-            case BLACK_WIN -> new WhiteCheckMate(getBoard());
+        GameResult gameResult = game.makeMove(mapPos(from), mapPos(to));
+        return switch (gameResult.getMessage()){
+            case INVALID_MOVE -> new TestMoveFailure(mapTestBoard(game));
+            case WHITE_WIN -> new BlackCheckMate(mapTestBoard(game));
+            case BLACK_WIN -> new WhiteCheckMate(mapTestBoard(game));
             case VALID_MOVE, PIECE_TAKEN -> new TestMoveSuccess(this);
         };
     }
@@ -38,13 +41,17 @@ public class ChessTestGameRunner implements TestGameRunner {
     @NotNull
     @Override
     public TestBoard getBoard() {
-        return new TestBoard(new TestSize(game.getBoard().getRows(), game.getBoard().getColumns()),getTestMap(game.getBoard().getPiecesAndPositions()));
+        return mapTestBoard(game);
     }
 
     @NotNull
     @Override
     public TestGameRunner withBoard(@NotNull TestBoard testBoard) {
-        return new ChessTestGameRunner(createChessGame(mapBoard(testBoard), game.getRules(), game.getCheckConditions(),game.getPromoter(), game.getSelector(), game.getCurrentTurn()));
+        return new ChessTestGameRunner(createChessGame(mapBoard(testBoard), game.getWinConditions(), game.getCheckConditions(),game.getPromoter(), game.getSelector(), game.getCurrentTurn(), game.getTurnNumber()));
+    }
+
+    private TestBoard mapTestBoard(ChessGame game){
+        return new TestBoard(new TestSize(game.getBoard().getRows(), game.getBoard().getColumns()),getTestMap(game.getBoard().getPiecesAndPositions()));
     }
 
     private Map<TestPosition, TestPiece> getTestMap(Map<Position, Piece> pieceMap){

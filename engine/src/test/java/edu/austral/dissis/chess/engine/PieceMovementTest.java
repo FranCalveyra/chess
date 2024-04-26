@@ -11,7 +11,7 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.piece.movement.Castling;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
-import edu.austral.dissis.chess.rule.*;
+import edu.austral.dissis.chess.winConditions.*;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
@@ -29,14 +29,12 @@ public class PieceMovementTest {
       new ArrayList<>(
           List.of(
               new CheckMate(Color.BLACK),
-              new CheckMate(WHITE),
-              new Stalemate(WHITE),
-              new Stalemate(Color.BLACK)));
+              new CheckMate(WHITE)));
   private final List<Check> checks = List.of(
           new DefaultCheck(Color.BLACK),
           new DefaultCheck(WHITE));
   private ChessGame game =
-          ChessGame.createChessGame(board, rules,checks ,new StandardPromoter(), new StandardTurnSelector(), WHITE);
+          ChessGame.createChessGame(board, rules,checks ,new StandardPromoter(), new StandardTurnSelector(), WHITE,0);
 
   @Test
   public void validateKnightMovement() {

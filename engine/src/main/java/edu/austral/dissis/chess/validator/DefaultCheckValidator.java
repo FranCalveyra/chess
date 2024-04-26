@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 
 public class DefaultCheckValidator {
 
-  public boolean kingInCheck(Board context, Color team, Position toPos, Piece piece) {
+  public boolean isInCheck(Board context, Color team, Position toPos, Piece piece) {
     if (piece == null || piece.getPieceColour() == team) {
       return false; // Makes no sense to check if the king's in check against
       // your own team or an empty space

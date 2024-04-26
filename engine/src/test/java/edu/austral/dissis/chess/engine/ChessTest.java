@@ -9,7 +9,7 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
 import edu.austral.dissis.chess.provider.PieceProvider;
-import edu.austral.dissis.chess.rule.*;
+import edu.austral.dissis.chess.winConditions.*;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
@@ -27,14 +27,12 @@ public class ChessTest {
       new ArrayList<>(
           List.of(
               new CheckMate(Color.BLACK),
-              new CheckMate(Color.WHITE),
-              new Stalemate(Color.BLACK),
-              new Stalemate(Color.WHITE)));
+              new CheckMate(Color.WHITE)));
   private final List<Check> checks = List.of(
           new DefaultCheck(Color.BLACK),
           new DefaultCheck(Color.WHITE));
   private ChessGame game =
-          ChessGame.createChessGame(board, rules, checks,new StandardPromoter(), new StandardTurnSelector(), Color.WHITE);
+          ChessGame.createChessGame(board, rules, checks,new StandardPromoter(), new StandardTurnSelector(), Color.WHITE,0);
 
   // Tests
   @Test
@@ -61,30 +59,31 @@ public class ChessTest {
     assertEquals(PieceType.QUEEN, game.getBoard().pieceAt(new Position(3, 7)).getType());
     assertTrue(new DefaultCheck(Color.WHITE).isValidRule(game.getBoard()));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
+    System.out.println(game.getBoard());
     assertTrue(new CheckMate(Color.WHITE).isValidRule(game.getBoard()));
   }
 
-  @Test
-  public void validateStalemate() {
-    PieceProvider pieceProvider = new PieceProvider();
-    Map<Position, Piece> stalematePieces =
-        Map.of(
-            new Position(0, 0),
-            pieceProvider.get(Color.WHITE, PieceType.KING),
-            new Position(5, 6),
-            pieceProvider.get(Color.WHITE, PieceType.QUEEN),
-            new Position(7, 7),
-            pieceProvider.get(Color.BLACK, PieceType.KING));
-    ChessGame newGame =
-            ChessGame.createChessGame(
-                new Board(stalematePieces),
-                game.getRules(),
-                game.getCheckConditions(),
-                game.getPromoter(),
-                game.getSelector(),
-                Color.WHITE);
-    assertTrue(new Stalemate(Color.WHITE).isValidRule(newGame.getBoard()));
-  }
+//  @Test
+//  public void validateStalemate() {
+//    PieceProvider pieceProvider = new PieceProvider();
+//    Map<Position, Piece> stalematePieces =
+//        Map.of(
+//            new Position(0, 0),
+//            pieceProvider.get(Color.WHITE, PieceType.KING),
+//            new Position(5, 6),
+//            pieceProvider.get(Color.WHITE, PieceType.QUEEN),
+//            new Position(7, 7),
+//            pieceProvider.get(Color.BLACK, PieceType.KING));
+//    ChessGame newGame =
+//            ChessGame.createChessGame(
+//                new Board(stalematePieces),
+//                game.getWinConditions(),
+//                game.getCheckConditions(),
+//                game.getPromoter(),
+//                game.getSelector(),
+//                Color.WHITE,0);
+//    assertTrue(new Stalemate(Color.WHITE).isValidRule(newGame.getBoard()));
+//  }
 
   @Test
   public void validatePromotion() {

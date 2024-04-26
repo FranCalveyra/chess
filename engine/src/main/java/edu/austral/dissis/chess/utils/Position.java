@@ -3,7 +3,8 @@ package edu.austral.dissis.chess.utils;
 import java.util.Objects;
 
 public class Position {
-  /** X,Y coordinates encapsulation. */
+  /** X,Y coordinates encapsulation.
+   * Try to do it one-based */
   private final int row;
 
   private final int column;

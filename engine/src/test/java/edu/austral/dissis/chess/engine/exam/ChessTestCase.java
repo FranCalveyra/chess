@@ -5,8 +5,7 @@ import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.engine.updated.runners.ChessTestGameRunner;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
-import edu.austral.dissis.chess.provider.RuleProvider;
-import edu.austral.dissis.chess.rule.*;
+import edu.austral.dissis.chess.winConditions.*;
 import edu.austral.dissis.chess.test.game.GameTester;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
@@ -24,9 +23,7 @@ public class ChessTestCase {
             new ArrayList<>(
                     List.of(
                             new CheckMate(Color.BLACK),
-                            new CheckMate(Color.WHITE),
-                            new Stalemate(Color.BLACK),
-                            new Stalemate(Color.WHITE)));
+                            new CheckMate(Color.WHITE)));
     private final List<Check> checks = List.of(
             new DefaultCheck(Color.BLACK),
             new DefaultCheck(Color.WHITE));

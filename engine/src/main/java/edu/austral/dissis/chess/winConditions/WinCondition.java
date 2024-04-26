@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.rule;
+package edu.austral.dissis.chess.winConditions;
 
 import edu.austral.dissis.chess.engine.Board;
 

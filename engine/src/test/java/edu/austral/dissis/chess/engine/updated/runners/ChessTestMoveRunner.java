@@ -28,6 +28,6 @@ public class ChessTestMoveRunner implements TestMoveRunner {
         Board board = mapBoard(testBoard);
         List<Position> moveSet = board.pieceAt(mapPos(fromPosition)).getMoveSet(mapPos(fromPosition), board);
         return new ArrayList<>(moveSet
-                .stream().map(position -> new TestPosition(position.getRow(), position.getColumn())).toList());
+                .stream().map(position -> TestPosition.Companion.fromZeroBased(position.getRow(), position.getColumn())).toList());
     }
 }

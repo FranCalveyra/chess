@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.rule;
+package edu.austral.dissis.chess.winConditions;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
@@ -22,7 +22,7 @@ public class DefaultCheck implements Check {
   protected boolean check(Board context, Color team) {
     DefaultCheckValidator validator = new DefaultCheckValidator();
     for (Entry<Position, Piece> entry : context.getPiecesAndPositions().entrySet()) {
-      if (validator.kingInCheck(context, team, entry.getKey(), entry.getValue())) {
+      if (validator.isInCheck(context, team, entry.getKey(), entry.getValue())) {
         return true;
       }
     }
