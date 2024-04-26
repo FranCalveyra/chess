@@ -31,10 +31,10 @@ public class GameAdapter {
         int rows = board.component1().getRows();
         int cols = board.component1().getCols();
         Map<Position, Piece> map = mapPieces(board.component2());
-        return new Board(map, rows, cols); //Taken pieces is an empty list
+        return new Board(map, rows, cols);
     }
 
-    public static Position mapPos(TestPosition position){
+    public static Position mapPosition(TestPosition position){
         return new Position(position.getRow()-1, position.getCol()-1);
     }
 
@@ -66,7 +66,7 @@ public class GameAdapter {
         for(Map.Entry<TestPosition,TestPiece> entry: map.entrySet()){
             TestPosition position = entry.getKey();
             TestPiece piece = entry.getValue();
-            pieceMap.put(mapPos(position), mapPiece(piece));
+            pieceMap.put(mapPosition(position), mapPiece(piece));
         }
         return pieceMap;
     }

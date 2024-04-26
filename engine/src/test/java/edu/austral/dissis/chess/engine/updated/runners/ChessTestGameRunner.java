@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.engine.updated.runners;
 
-import edu.austral.dissis.chess.engine.Board;
+
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
@@ -13,11 +13,10 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import static edu.austral.dissis.chess.engine.ChessGame.createChessGame;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard;
-import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPos;
+import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 
 public class ChessTestGameRunner implements TestGameRunner {
 
@@ -29,7 +28,7 @@ public class ChessTestGameRunner implements TestGameRunner {
     @NotNull
     @Override
     public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
-        GameResult gameResult = game.makeMove(mapPos(from), mapPos(to));
+        GameResult gameResult = game.makeMove(mapPosition(from), mapPosition(to));
         return switch (gameResult.getMessage()){
             case INVALID_MOVE -> new TestMoveFailure(mapTestBoard(game));
             case WHITE_WIN -> new BlackCheckMate(mapTestBoard(game));

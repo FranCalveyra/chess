@@ -1,6 +1,5 @@
 package edu.austral.dissis.chess.turn;
 
-import edu.austral.dissis.chess.engine.Board;
 import java.awt.Color;
 
 public class StandardTurnSelector implements TurnSelector {

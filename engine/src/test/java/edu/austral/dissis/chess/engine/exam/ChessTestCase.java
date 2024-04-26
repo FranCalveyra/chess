@@ -27,9 +27,11 @@ public class ChessTestCase {
     private final List<Check> checks = List.of(
             new DefaultCheck(Color.BLACK),
             new DefaultCheck(Color.WHITE));
+
     private final ChessPieceMapProvider pieceMapProvider = new ChessPieceMapProvider();
     private final ChessGame game = new ChessGame(new Board(pieceMapProvider.provide(GameType.DEFAULT)),
             rules,checks, new StandardPromoter(), new StandardTurnSelector(), Color.WHITE);
+
     private final ChessTestGameRunner gameRunner = new ChessTestGameRunner(game);
     private final GameTester gameTester = new GameTester(gameRunner);
 

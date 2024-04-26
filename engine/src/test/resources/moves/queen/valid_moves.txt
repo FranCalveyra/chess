@@ -1,9 +1,9 @@
    1  2  3  4  5  6  7  8
-1 |  |  |  |  |  |  |  |  |
-2 |  |  |  |  |  |  |  |  |
-3 |  |  |BP|  |BP|  |  |  |
-4 |  |BP|  |  |  |BP|  |  |
-5 |  |  |  |WQ|  |  |  |  |
-6 |  |BP|  |  |  |BP|  |  |
-7 |  |  |BP|  |BP|  |  |  |
-8 |  |  |  |  |  |  |  |  |
+1 |WP|WP|WP|OO|WP|WP|WP|OO|
+2 |OO|WP|WP|OO|WP|WP|OO|WP|
+3 |WP|OO|WP|OO|WP|OO|WP|WP|
+4 |WP|WP|OO|OO|OO|WP|WP|WP|
+5 |OO|OO|OO|WQ|OO|OO|OO|OO|WP
+6 |WP|WP|OO|OO|OO|WP|WP|WP|
+7 |WP|OO|WP|OO|WP|OO|WP|WP|
+8 |OO|WP|WP|OO|WP|WP|OO|WP|
