@@ -2,6 +2,7 @@ package edu.austral.dissis.chess.piece;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.movement.PieceMovement;
+import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -78,5 +79,15 @@ public class Piece {
     }
     moveList = new ArrayList<>(new HashSet<>(moveList));
     return moveList;
+  }
+
+  public List<ChessMove> getPlay(ChessPosition oldPos, ChessPosition newPos, Board board) {
+    List<ChessMove> play = new ArrayList<>();
+    for (PieceMovement movement : movements) {
+      if (movement.isValidMove(oldPos, newPos, board)) {
+        play.addAll(movement.getMovesToExecute(oldPos,newPos,board));
+      }
+    }
+    return play;
   }
 }

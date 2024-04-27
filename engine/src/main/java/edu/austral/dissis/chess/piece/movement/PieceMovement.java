@@ -1,6 +1,7 @@
 package edu.austral.dissis.chess.piece.movement;
 
 import edu.austral.dissis.chess.engine.Board;
+import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,5 +23,9 @@ public interface PieceMovement {
       }
     }
     return possibleChessPositions;
+  }
+
+  default List<ChessMove> getMovesToExecute(ChessPosition oldPos, ChessPosition newPos, Board context){
+    return List.of(new ChessMove(oldPos,newPos));
   }
 }

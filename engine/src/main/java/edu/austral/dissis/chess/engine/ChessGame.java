@@ -2,12 +2,10 @@ package edu.austral.dissis.chess.engine;
 
 import static edu.austral.dissis.chess.utils.ChessMoveResult.BLACK_WIN;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.PIECE_TAKEN;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.WHITE_WIN;
 
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.PieceType;
+import edu.austral.dissis.chess.piece.movement.MoveExecutor;
 import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.WinCondition;
@@ -15,6 +13,7 @@ import edu.austral.dissis.chess.selectors.TurnSelector;
 import edu.austral.dissis.chess.utils.*;
 import edu.austral.dissis.chess.validators.WinConditionValidator;
 import java.awt.Color;
+import java.util.Iterator;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +28,7 @@ public class ChessGame {
   private final TurnSelector selector;
   private final Color currentTurn;
   private final int turnNumber;
+  private final MoveExecutor executor;
 
   public ChessGame(
       @NotNull Board board,
@@ -46,6 +46,7 @@ public class ChessGame {
     this.selector = selector;
     this.currentTurn = currentTurn;
     this.turnNumber = 0;
+      executor = new MoveExecutor();
   }
 
   private ChessGame(
@@ -65,6 +66,7 @@ public class ChessGame {
     this.selector = selector;
     this.turnNumber = turnNumber;
     this.currentTurn = currentTurn;
+      executor = new MoveExecutor();
   } // make it public
 
   public static ChessGame createChessGame(
@@ -96,14 +98,30 @@ public class ChessGame {
     if (pieceToMove == null || pieceToMove.getPieceColour() != currentTurn) {
       return new GameResult(this, INVALID_MOVE);
     }
-    // Invalid move due to piece rules
-    if (!pieceToMove.isValidMove(oldPos, newPos, board)) {
-      return new GameResult(this, INVALID_MOVE);
+//    // Invalid move due to piece rules
+//    if (!pieceToMove.isValidMove(oldPos, newPos, board)) {
+//      return new GameResult(this, INVALID_MOVE);
+//    } //Can delete due to line below (?)
+    Pair<Board, ChessMoveResult> resultPair = new Pair<>(board, INVALID_MOVE);
+    final List<ChessMove> playToExecute = pieceToMove.getPlay(oldPos, newPos, board);
+
+    //No move available, should not happen in this instance
+    if(playToExecute.isEmpty()){
+      return new GameResult(this, resultPair.second());
     }
-//    if(castlingIsValid(pieceToMove, board)){
-//
-//    }
-    Pair<Board, ChessMoveResult> resultPair = handleMovement(oldPos, newPos);
+
+    if(playToExecute.size() == 1){
+      ChessMove move = playToExecute.getFirst();
+      resultPair = executor.executeMove(move.from(), move.to(), board, promoter);
+    }
+    else{
+      for (ChessMove move : playToExecute) {
+        Board currentBoard = resultPair.first();
+        resultPair = executor.executeMove(move.from(), move.to(), currentBoard, promoter);
+      }
+    }
+
+    //Execute move
     Board finalBoard = resultPair.first();
     Color nextTurn = selector.selectTurn(turnNumber + 1);
     ChessGame finalGame =
@@ -167,38 +185,8 @@ public class ChessGame {
     return checkRule.isValidRule(board);
   }
 
-  private Board promoteIfAble(Board board, ChessPosition chessPosition, Color color) {
-    if (promoter.canPromote(chessPosition, board) || promoter.hasToPromote(board, color)) {
-      return promoter.promote(chessPosition, PieceType.QUEEN, board);
-    }
-    return board;
-  }
-
   public List<Check> getCheckConditions() {
     return checkConditions;
-  }
-
-  private Pair<Board, ChessMoveResult> handleMovement(ChessPosition oldPos, ChessPosition newPos) {
-    // Now, move the piece. Take piece in newPos whether exists
-    Piece piece = board.pieceAt(oldPos);
-    Board newBoard;
-    Piece pieceToTake = board.pieceAt(newPos); // Check outside
-    if (pieceToTake != null) {
-      if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
-        return new Pair<>(board, INVALID_MOVE);
-      } else {
-        newBoard = board.removePieceAt(newPos).updatePiecePosition(oldPos, newPos);
-        newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour());
-        return new Pair<>(newBoard, PIECE_TAKEN);
-      }
-    } else {
-      newBoard =
-          board
-              .removePieceAt(oldPos)
-              .addPieceAt(newPos, piece.hasNotMoved() ? piece.changeMoveState() : piece);
-      newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour());
-      return new Pair<>(newBoard, VALID_MOVE);
-    }
   }
 
   public int getTurnNumber() {

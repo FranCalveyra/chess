@@ -19,6 +19,7 @@ import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 
 public class ChessGameEngine implements GameEngine {
+    //TODO: fix it to work normally
 
     private final ChessGame game;
     private final Map<ChessMoveResult, MoveResult> moveResults;

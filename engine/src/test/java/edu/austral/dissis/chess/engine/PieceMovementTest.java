@@ -139,17 +139,9 @@ public class PieceMovementTest {
     assertEquals(4, whiteQueenMoveSet.size());
   }
 
-  @Test
-  public void validateRightCastling() {
-    assertRightCastling();
-  }
 
   @Test
-  public void validateLeftCastling() {
-    assertLeftCastling();
-  }
-
-  private void assertLeftCastling() {
+  public void assertLeftCastling() {
     game = game.makeMove(new ChessMove(new ChessPosition(1, 1), new ChessPosition(3, 1))).game();
     assertEquals(Color.BLACK, game.getCurrentTurn());
     game = game.makeMove(new ChessMove(new ChessPosition(6, 1), new ChessPosition(4, 1))).game();
@@ -170,10 +162,15 @@ public class PieceMovementTest {
     game = game.makeMove(new ChessMove(new ChessPosition(6, 0), new ChessPosition(4, 0))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(0, 3), new ChessPosition(1, 3))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(6, 5), new ChessPosition(4, 5))).game();
-    assertTrue(new Castling().isValidMove(new ChessPosition(0, 0), new ChessPosition(0, 4), game.getBoard()));
+    assertTrue(new Castling().isValidMove(new ChessPosition(0, 4), new ChessPosition(0, 2), game.getBoard()));
+    game = game.makeMove(new ChessMove(new ChessPosition(0,4), new ChessPosition(0,2))).game();
+    System.out.println(game.getBoard());
+    assertEquals(PieceType.KING,game.getBoard().pieceAt(new ChessPosition(0,2)).getType());
+    assertEquals(PieceType.ROOK,game.getBoard().pieceAt(new ChessPosition(0,3)).getType());
   }
 
-  private void assertRightCastling() {
+  @Test
+  public void assertRightCastling() {
     game = game.makeMove(new ChessMove(new ChessPosition(1, 5), new ChessPosition(3, 5))).game();
     assertEquals(Color.BLACK, game.getCurrentTurn());
     game = game.makeMove(new ChessMove(new ChessPosition(6, 1), new ChessPosition(4, 1))).game();
@@ -193,7 +190,11 @@ public class PieceMovementTest {
     game = game.makeMove(new ChessMove(new ChessPosition(0, 6), new ChessPosition(2, 7))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(6, 0), new ChessPosition(4, 0))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(0, 5), new ChessPosition(1, 6))).game();
-    assertTrue(new Castling().isValidMove(new ChessPosition(0, 4), new ChessPosition(0, 7), game.getBoard()));
-    // TODO: Implement Castling movement in the game, may need to create a Move class
+    game = game.makeMove(new ChessMove(new ChessPosition(4, 1), new ChessPosition(3, 1))).game();
+    assertTrue(new Castling().isValidMove(new ChessPosition(0, 4), new ChessPosition(0, 6), game.getBoard()));
+    System.out.println(game.getBoard());
+    game = game.makeMove(new ChessMove(new ChessPosition(0,4), new ChessPosition(0,6))).game();
+    assertEquals(PieceType.KING,game.getBoard().pieceAt(new ChessPosition(0,6)).getType());
+    assertEquals(PieceType.ROOK,game.getBoard().pieceAt(new ChessPosition(0,5)).getType());
   }
 }
