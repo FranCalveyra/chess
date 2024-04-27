@@ -16,7 +16,7 @@ import edu.austral.dissis.chess.provider.PieceProvider;
 import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPiece;
 import edu.austral.dissis.chess.test.TestPosition;
-import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,12 +27,12 @@ public class GameAdapter {
   public static Board mapBoard(TestBoard board) {
     int rows = board.component1().getRows();
     int cols = board.component1().getCols();
-    Map<Position, Piece> map = mapPieces(board.component2());
+    Map<ChessPosition, Piece> map = mapPieces(board.component2());
     return new Board(map, rows, cols);
   }
 
-  public static Position mapPosition(TestPosition position) {
-    return new Position(position.getRow() - 1, position.getCol() - 1);
+  public static ChessPosition mapPosition(TestPosition position) {
+    return new ChessPosition(position.getRow() - 1, position.getCol() - 1);
   }
 
   public static Piece mapPiece(TestPiece piece) {
@@ -59,8 +59,8 @@ public class GameAdapter {
     };
   }
 
-  private static Map<Position, Piece> mapPieces(Map<TestPosition, TestPiece> map) {
-    Map<Position, Piece> pieceMap = new HashMap<>();
+  private static Map<ChessPosition, Piece> mapPieces(Map<TestPosition, TestPiece> map) {
+    Map<ChessPosition, Piece> pieceMap = new HashMap<>();
     for (Map.Entry<TestPosition, TestPiece> entry : map.entrySet()) {
       TestPosition position = entry.getKey();
       TestPiece piece = entry.getValue();

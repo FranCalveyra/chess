@@ -6,18 +6,18 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.rules.DefaultCheck;
-import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.ChessPosition;
 import edu.austral.dissis.chess.validator.PiecePathValidator;
 
 public class Castling implements PieceMovement {
   // Only valid whenever king and rooks haven't been moved yet.
 
   @Override
-  public boolean isValidMove(Position oldPos, Position newPos, Board context) {
+  public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
     return isCastlingPossible(oldPos, newPos, context);
   }
 
-  private boolean isCastlingPossible(Position oldPos, Position newPos, Board context) {
+  private boolean isCastlingPossible(ChessPosition oldPos, ChessPosition newPos, Board context) {
     Piece firstPiece = context.pieceAt(oldPos);
     Piece secondPiece = context.pieceAt(newPos);
     if (firstPiece == null || secondPiece == null) {
@@ -41,8 +41,8 @@ public class Castling implements PieceMovement {
     boolean isInCheckFromStart = new DefaultCheck(firstPiece.getPieceColour()).isValidRule(context);
     if (!(new PiecePathValidator()
             .isNoPieceBetween(
-                new Position(oldPos.getRow(), oldPos.getColumn() + 1),
-                new Position(newPos.getRow(), newPos.getColumn() - 1),
+                new ChessPosition(oldPos.getRow(), oldPos.getColumn() + 1),
+                new ChessPosition(newPos.getRow(), newPos.getColumn() - 1),
                 context,
                 HORIZONTAL)
         && !isInCheckFromStart)) {
@@ -51,11 +51,11 @@ public class Castling implements PieceMovement {
     return validateCheckBetween(oldPos, newPos, context);
   }
 
-  private boolean validateCheckBetween(Position oldPos, Position newPos, Board context) {
+  private boolean validateCheckBetween(ChessPosition oldPos, ChessPosition newPos, Board context) {
     int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
     int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
     for (int j = fromColumn + 1; j < toColumn; j++) {
-      Position currentTile = new Position(oldPos.getRow(), j);
+      ChessPosition currentTile = new ChessPosition(oldPos.getRow(), j);
       Board possibleBoard = context.updatePiecePosition(currentTile, newPos);
       if (new DefaultCheck(context.pieceAt(oldPos).getPieceColour()).isValidRule(possibleBoard)) {
         return false;

@@ -1,10 +1,10 @@
 package edu.austral.dissis.chess.engine;
 
-import static edu.austral.dissis.chess.utils.MoveResult.BLACK_WIN;
-import static edu.austral.dissis.chess.utils.MoveResult.INVALID_MOVE;
-import static edu.austral.dissis.chess.utils.MoveResult.PIECE_TAKEN;
-import static edu.austral.dissis.chess.utils.MoveResult.VALID_MOVE;
-import static edu.austral.dissis.chess.utils.MoveResult.WHITE_WIN;
+import static edu.austral.dissis.chess.utils.ChessMoveResult.BLACK_WIN;
+import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
+import static edu.austral.dissis.chess.utils.ChessMoveResult.PIECE_TAKEN;
+import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
+import static edu.austral.dissis.chess.utils.ChessMoveResult.WHITE_WIN;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
@@ -13,9 +13,9 @@ import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.GameResult;
-import edu.austral.dissis.chess.utils.MoveResult;
+import edu.austral.dissis.chess.utils.ChessMoveResult;
 import edu.austral.dissis.chess.utils.Pair;
-import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.ChessPosition;
 import edu.austral.dissis.chess.validator.WinConditionValidator;
 import java.awt.Color;
 import java.util.List;
@@ -86,7 +86,7 @@ public class ChessGame {
   //    // If no argument is passed, it promotes to a Queen (BY DEFAULT)
   //    return makeMove(oldPos, newPos);
 
-  public GameResult makeMove(Position oldPos, Position newPos) {
+  public GameResult makeMove(ChessPosition oldPos, ChessPosition newPos) {
     // Check winning at the end
     // Do all necessary checks
     // Invalid positions
@@ -103,7 +103,7 @@ public class ChessGame {
     if (!pieceToMove.isValidMove(oldPos, newPos, board)) {
       return new GameResult(this, INVALID_MOVE);
     }
-    Pair<Board, MoveResult> resultPair = handleMovement(oldPos, newPos);
+    Pair<Board, ChessMoveResult> resultPair = handleMovement(oldPos, newPos);
     Board finalBoard = resultPair.first();
     Color nextTurn = selector.selectTurn(turnNumber + 1);
     ChessGame finalGame =
@@ -121,7 +121,7 @@ public class ChessGame {
       return new GameResult(this, INVALID_MOVE);
     }
     if (winConditionValidator.isGameWon(finalBoard)) {
-      MoveResult winner =
+      ChessMoveResult winner =
           currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; // Hardcoded, need to change
       return new GameResult(finalGame, winner);
     }
@@ -151,7 +151,7 @@ public class ChessGame {
   }
 
   // Private methods
-  private boolean outOfBoardBounds(Position pos) {
+  private boolean outOfBoardBounds(ChessPosition pos) {
     int i = pos.getRow();
     int j = pos.getColumn();
     return i >= board.getRows() || i < 0 || j >= board.getColumns() || j < 0;
@@ -167,9 +167,9 @@ public class ChessGame {
     return checkRule.isValidRule(board);
   }
 
-  private Board promoteIfAble(Board board, Position position, Color color) {
-    if (promoter.canPromote(position, board) || promoter.hasToPromote(board, color)) {
-      return promoter.promote(position, PieceType.QUEEN, board);
+  private Board promoteIfAble(Board board, ChessPosition chessPosition, Color color) {
+    if (promoter.canPromote(chessPosition, board) || promoter.hasToPromote(board, color)) {
+      return promoter.promote(chessPosition, PieceType.QUEEN, board);
     }
     return board;
   }
@@ -178,7 +178,7 @@ public class ChessGame {
     return checkConditions;
   }
 
-  private Pair<Board, MoveResult> handleMovement(Position oldPos, Position newPos) {
+  private Pair<Board, ChessMoveResult> handleMovement(ChessPosition oldPos, ChessPosition newPos) {
     // Now, move the piece. Take piece in newPos whether exists
     Piece piece = board.pieceAt(oldPos);
     Board newBoard;

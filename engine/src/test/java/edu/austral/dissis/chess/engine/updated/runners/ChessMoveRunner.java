@@ -10,7 +10,7 @@ import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPosition;
 import edu.austral.dissis.chess.test.Validity;
 import edu.austral.dissis.chess.test.move.TestMoveRunner;
-import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class ChessMoveRunner implements TestMoveRunner {
     if (piece == null) {
       return new ArrayList<>();
     }
-    List<Position> moveSet = piece.getMoveSet(mapPosition(fromPosition), board);
+    List<ChessPosition> moveSet = piece.getMoveSet(mapPosition(fromPosition), board);
     if (piece.getType() == PieceType.ROOK && piece.getPieceColour() == Color.BLACK) {
       System.out.println(
           "Piece in: "
@@ -58,7 +58,7 @@ public class ChessMoveRunner implements TestMoveRunner {
 
   private boolean checkOutOfBounds(TestBoard testBoard, TestPosition position) {
     Board board = mapBoard(testBoard);
-    Position piecePos = mapPosition(position);
+    ChessPosition piecePos = mapPosition(position);
     int i = piecePos.getRow();
     int j = piecePos.getColumn();
     return i >= board.getRows() || i < 0 || j >= board.getColumns() || j < 0;

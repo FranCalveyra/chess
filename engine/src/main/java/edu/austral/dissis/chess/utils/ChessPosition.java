@@ -2,13 +2,13 @@ package edu.austral.dissis.chess.utils;
 
 import java.util.Objects;
 
-public class Position {
+public class ChessPosition {
   /** X,Y coordinates encapsulation. Try to do it one-based */
   private final int row;
 
   private final int column;
 
-  public Position(int row, int column) {
+  public ChessPosition(int row, int column) {
     this.row = row;
     this.column = column;
   }
@@ -30,10 +30,10 @@ public class Position {
   // Easier map getting
   @Override
   public boolean equals(Object obj) {
-    if (obj == null || obj.getClass() != Position.class) {
+    if (obj == null || obj.getClass() != ChessPosition.class) {
       return false;
     }
-    return ((Position) obj).getRow() == getRow() && ((Position) obj).getColumn() == getColumn();
+    return ((ChessPosition) obj).getRow() == getRow() && ((ChessPosition) obj).getColumn() == getColumn();
   }
 
   @Override

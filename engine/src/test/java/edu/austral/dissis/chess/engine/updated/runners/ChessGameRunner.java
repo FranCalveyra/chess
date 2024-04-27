@@ -19,7 +19,7 @@ import edu.austral.dissis.chess.test.game.TestMoveResult;
 import edu.austral.dissis.chess.test.game.TestMoveSuccess;
 import edu.austral.dissis.chess.test.game.WhiteCheckMate;
 import edu.austral.dissis.chess.utils.GameResult;
-import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +72,7 @@ public class ChessGameRunner implements TestGameRunner {
         getTestMap(game.getBoard().getPiecesAndPositions()));
   }
 
-  private Map<TestPosition, TestPiece> getTestMap(Map<Position, Piece> pieceMap) {
+  private Map<TestPosition, TestPiece> getTestMap(Map<ChessPosition, Piece> pieceMap) {
     Map<TestPosition, TestPiece> testMap = new HashMap<>();
     pieceMap.forEach(
         (currentPosition, value) ->

@@ -1,26 +1,28 @@
 package edu.austral.dissis.chess.ui;
 
-import edu.austral.dissis.chess.gui.CachedImageResolver;
-import edu.austral.dissis.chess.gui.DefaultImageResolver;
-import edu.austral.dissis.chess.gui.GameEngine;
-import edu.austral.dissis.chess.gui.GameView;
-import edu.austral.dissis.chess.gui.ImageResolver;
-import edu.austral.dissis.chess.gui.SimpleGameEngine;
+import edu.austral.dissis.chess.gui.*;
+import edu.austral.dissis.chess.provider.GameProvider;
+import edu.austral.dissis.chess.utils.GameType;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ChessApplication extends Application {
-  private final GameEngine gameEngine = new SimpleGameEngine();
+
+  private final GameEngine gameEngine = new ChessGameEngine(new GameProvider().provide(GameType.DEFAULT));
   private final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
 
-  @Override
-  public void start(Stage stage) {
-    stage.setTitle("Chess");
-    stage.setResizable(false);
-    GameView rootView = new GameView(gameEngine, imageResolver);
-    Scene scene = new Scene(rootView);
-    stage.setScene(scene);
-    stage.show();
+    @Override
+  public void start(Stage stage) throws Exception {
+    try{
+      stage.setTitle("Chess");
+      GameView root = new GameView(gameEngine, imageResolver);
+      stage.setScene(new Scene(root));
+      stage.show();
+    }
+    catch(Exception e){
+      System.out.println("Error: " + e);
+    }
   }
+
 }

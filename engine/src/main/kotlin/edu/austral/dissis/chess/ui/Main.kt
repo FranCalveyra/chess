@@ -10,7 +10,7 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 
 fun main() {
-    launch(ChessGameApplication::class.java)
+    launch(ChessApplication::class.java)
 }
 
 class ChessGameApplication : Application() {

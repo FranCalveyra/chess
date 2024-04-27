@@ -6,13 +6,13 @@ import static edu.austral.dissis.chess.utils.MoveType.VERTICAL;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.MoveType;
-import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.ChessPosition;
 import edu.austral.dissis.chess.validator.PiecePathValidator;
 
 public class KingMovement implements PieceMovement {
 
   @Override
-  public boolean isValidMove(Position oldPos, Position newPos, Board context) {
+  public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
     // King should move only in one direction, one tile at a time
     boolean horizontalMove = Math.abs(newPos.getColumn() - oldPos.getColumn()) == 1;
     boolean verticalMove = Math.abs(newPos.getRow() - oldPos.getRow()) == 1;

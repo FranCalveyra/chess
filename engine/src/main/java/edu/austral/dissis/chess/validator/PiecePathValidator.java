@@ -4,11 +4,11 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.MoveType;
 import edu.austral.dissis.chess.utils.Pair;
-import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.ChessPosition;
 
 public class PiecePathValidator {
 
-  public boolean isNoPieceBetween(Position from, Position to, Board context, MoveType moveType) {
+  public boolean isNoPieceBetween(ChessPosition from, ChessPosition to, Board context, MoveType moveType) {
     if (outOfBoardBounds(from, context) || outOfBoardBounds(to, context)) {
       return false;
     }
@@ -19,25 +19,25 @@ public class PiecePathValidator {
     };
   }
 
-  private boolean checkHorizontal(Position from, Position to, Board context) {
+  private boolean checkHorizontal(ChessPosition from, ChessPosition to, Board context) {
     return from.getColumn() > to.getColumn()
         ? isPieceInHorizontal(to, from, context)
         : isPieceInHorizontal(from, to, context);
   }
 
-  private boolean checkVertical(Position from, Position to, Board context) {
+  private boolean checkVertical(ChessPosition from, ChessPosition to, Board context) {
     return from.getRow() > to.getRow()
         ? isPieceInVertical(to, from, context)
         : isPieceInVertical(from, to, context);
   }
 
-  private boolean checkDiagonal(Position from, Position to, Board context) {
+  private boolean checkDiagonal(ChessPosition from, ChessPosition to, Board context) {
     return noTeammateInDiagonal(from, to, context);
   }
 
-  private boolean isPieceInHorizontal(Position from, Position to, Board context) {
+  private boolean isPieceInHorizontal(ChessPosition from, ChessPosition to, Board context) {
     for (int j = from.getColumn() + 1; j < to.getColumn(); j++) {
-      Position p = new Position(from.getRow(), j);
+      ChessPosition p = new ChessPosition(from.getRow(), j);
       Piece currentPiece = context.pieceAt(p);
       if (currentPiece != null) {
         return true;
@@ -46,9 +46,9 @@ public class PiecePathValidator {
     return false;
   }
 
-  private boolean isPieceInVertical(Position from, Position to, Board context) {
+  private boolean isPieceInVertical(ChessPosition from, ChessPosition to, Board context) {
     for (int i = from.getRow() + 1; i < to.getRow(); i++) {
-      Position p = new Position(i, from.getColumn());
+      ChessPosition p = new ChessPosition(i, from.getColumn());
       Piece currentPiece = context.pieceAt(p);
       if (currentPiece != null) {
         return true;
@@ -57,14 +57,14 @@ public class PiecePathValidator {
     return false;
   }
 
-  private boolean noTeammateInDiagonal(Position oldPos, Position newPos, Board context) {
+  private boolean noTeammateInDiagonal(ChessPosition oldPos, ChessPosition newPos, Board context) {
     int deltaX = newPos.getColumn() - oldPos.getColumn();
     int deltaY = newPos.getRow() - oldPos.getRow();
     return noOneInDiagonal(oldPos, newPos, context, deltaX, deltaY);
   }
 
   private boolean noOneInDiagonal(
-      Position oldPos, Position newPos, Board context, int deltaX, int deltaY) {
+          ChessPosition oldPos, ChessPosition newPos, Board context, int deltaX, int deltaY) {
     if (deltaX > 0) {
       if (deltaY > 0) {
         return checkDiagonalWithDelta(oldPos, newPos, context, new Pair<>(1, 1));
@@ -81,7 +81,7 @@ public class PiecePathValidator {
   }
 
   private boolean checkDiagonalWithDelta(
-      Position oldPos, Position newPos, Board context, Pair<Integer, Integer> vector) {
+          ChessPosition oldPos, ChessPosition newPos, Board context, Pair<Integer, Integer> vector) {
     int deltaRow = vector.first();
     int deltaColumn = vector.second();
     for (int i = oldPos.getRow() + deltaRow, j = oldPos.getColumn() + deltaColumn;
@@ -90,8 +90,8 @@ public class PiecePathValidator {
       if (i < 0 || j < 0 || i >= context.getRows() || j >= context.getColumns()) {
         break;
       }
-      Position currentPosition = new Position(i, j);
-      Piece pieceAt = context.pieceAt(currentPosition);
+      ChessPosition currentChessPosition = new ChessPosition(i, j);
+      Piece pieceAt = context.pieceAt(currentChessPosition);
       if (pieceAt != null) {
         return false;
       }
@@ -101,7 +101,7 @@ public class PiecePathValidator {
         || lastPiece.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
   }
 
-  private boolean outOfBoardBounds(Position pos, Board context) {
+  private boolean outOfBoardBounds(ChessPosition pos, Board context) {
     int i = pos.getRow();
     int j = pos.getColumn();
     return i >= context.getRows() || i < 0 || j >= context.getColumns() || j < 0;

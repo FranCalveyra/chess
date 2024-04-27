@@ -4,7 +4,7 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.provider.PieceProvider;
-import edu.austral.dissis.chess.utils.Position;
+import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 
 public class StandardPromoter implements Promoter {
@@ -15,29 +15,29 @@ public class StandardPromoter implements Promoter {
   }
 
   @Override
-  public boolean canPromote(Position position, Board context) {
-    Piece piece = context.pieceAt(position);
+  public boolean canPromote(ChessPosition chessPosition, Board context) {
+    Piece piece = context.pieceAt(chessPosition);
     if (piece == null) {
       return false;
     }
     int promoteRow = piece.getPieceColour() == Color.BLACK ? 0 : context.getRows() - 1;
-    return piece.getType() == PieceType.PAWN && position.getRow() == promoteRow;
+    return piece.getType() == PieceType.PAWN && chessPosition.getRow() == promoteRow;
   }
 
   @Override
-  public Board promote(Position position, PieceType type, Board context) {
-    Piece initialPiece = context.pieceAt(position);
+  public Board promote(ChessPosition chessPosition, PieceType type, Board context) {
+    Piece initialPiece = context.pieceAt(chessPosition);
     Piece piece = new PieceProvider().get(initialPiece.getPieceColour(), type);
     Piece actualPiece =
-        new Piece(piece.getMovements(), piece.getPieceColour(), type, !initialPiece.hasNotMoved());
-    return context.removePieceAt(position).addPieceAt(position, actualPiece);
+        new Piece(piece.getMovements(), piece.getPieceColour(), type, !initialPiece.hasNotMoved(), initialPiece.getId() );
+    return context.removePieceAt(chessPosition).addPieceAt(chessPosition, actualPiece);
   }
 
   // Private stuff
   private boolean isAnyPawnPromotable(Board context, Color team) {
     int rowToCheck = team == Color.WHITE ? context.getRows() - 1 : 0;
     for (int j = 0; j < context.getColumns(); j++) {
-      Piece pieceAt = context.pieceAt(new Position(rowToCheck, j));
+      Piece pieceAt = context.pieceAt(new ChessPosition(rowToCheck, j));
       if (pieceAt != null
           && pieceAt.getType() == PieceType.PAWN
           && pieceAt.getPieceColour() == team) {
