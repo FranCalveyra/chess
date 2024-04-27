@@ -1,14 +1,10 @@
 package edu.austral.dissis.chess.engine;
 
-import static edu.austral.dissis.chess.utils.MoveResult.BLACK_WIN;
-import static edu.austral.dissis.chess.utils.MoveResult.VALID_MOVE;
-import static edu.austral.dissis.chess.utils.MoveResult.INVALID_MOVE;
-import static edu.austral.dissis.chess.utils.MoveResult.WHITE_WIN;
-
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.Promoter;
 import edu.austral.dissis.chess.utils.MoveResult;
+import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.winConditions.Check;
 import edu.austral.dissis.chess.winConditions.WinCondition;
 import edu.austral.dissis.chess.turn.TurnSelector;
@@ -19,6 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
 import java.util.List;
+
+import static edu.austral.dissis.chess.utils.MoveResult.*;
 
 public class ChessGame {
   /** Simulates a real Chess Game. */
@@ -100,11 +98,13 @@ public class ChessGame {
     if (!pieceToMove.isValidMove(oldPos, newPos, board)) {
       return new GameResult(this, INVALID_MOVE);
     }
-   Board finalBoard = handleMovement(oldPos,newPos);
+    Pair<Board, MoveResult> resultPair = handleMovement(oldPos,newPos);
+    Board finalBoard = resultPair.first() ;
     Color nextTurn = selector.selectTurn(turnNumber+1);
     ChessGame finalGame = createChessGame(finalBoard, winConditions, checkConditions,
             promoter, selector, nextTurn,turnNumber+1);
-    // End of code
+
+    //If this play makes your own team in check, it shouldn't be executed
     if (possiblePlayInCheck(currentTurn, finalBoard)) {
       return new GameResult(this, INVALID_MOVE);
     }
@@ -112,7 +112,8 @@ public class ChessGame {
       MoveResult winner = currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; //Hardcoded, need to change
       return new GameResult(finalGame, winner);
     }
-    return new GameResult(finalGame, VALID_MOVE);
+    //Get the resulting game at last
+    return new GameResult(finalGame, resultPair.second());
   }
 
   // Getters
@@ -164,23 +165,23 @@ public class ChessGame {
     return checkConditions;
   }
 
-  private Board handleMovement(Position oldPos, Position newPos){
+  private Pair<Board, MoveResult> handleMovement(Position oldPos, Position newPos){
     // Now, move the piece. Take piece in newPos whether exists
     Piece piece = board.pieceAt(oldPos);
     Board newBoard;
     Piece pieceToTake = board.pieceAt(newPos); // Check outside
     if (pieceToTake != null) {
       if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
-        return board;
+        return new Pair<>(board, INVALID_MOVE);
       } else {
         newBoard = board.removePieceAt(newPos).updatePiecePosition(oldPos,newPos);
         newBoard = promoteIfAble(newBoard, newPos,piece.getPieceColour());
-        return newBoard;
+        return new Pair<>(newBoard,PIECE_TAKEN);
       }
     } else {
       newBoard = board.removePieceAt(oldPos).addPieceAt(newPos, piece.hasNotMoved() ? piece.changeMoveState() : piece);
       newBoard = promoteIfAble(newBoard, newPos,piece.getPieceColour());
-      return newBoard;
+      return new Pair<>(newBoard, VALID_MOVE);
     }
   }
 

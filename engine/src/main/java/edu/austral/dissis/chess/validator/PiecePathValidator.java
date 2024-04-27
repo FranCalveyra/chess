@@ -81,7 +81,7 @@ public class PiecePathValidator {
   }
 
   private boolean checkDiagonalWithDelta(
-      Position oldPos, Position newPos, Board context, Pair<Integer> vector) {
+      Position oldPos, Position newPos, Board context, Pair<Integer,Integer> vector) {
     int deltaRow = vector.first();
     int deltaColumn = vector.second();
     for (int i = oldPos.getRow() + deltaRow, j = oldPos.getColumn() + deltaColumn;
