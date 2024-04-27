@@ -5,13 +5,11 @@ import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosit
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPosition;
 import edu.austral.dissis.chess.test.Validity;
 import edu.austral.dissis.chess.test.move.TestMoveRunner;
 import edu.austral.dissis.chess.utils.ChessPosition;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;

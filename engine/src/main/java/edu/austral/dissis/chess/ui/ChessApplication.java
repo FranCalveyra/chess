@@ -12,7 +12,7 @@ public class ChessApplication extends Application {
   private final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
 
     @Override
-  public void start(Stage stage) throws Exception {
+  public void start(Stage stage){
     try{
       stage.setTitle("Chess");
       GameView root = new GameView(gameEngine, imageResolver);
