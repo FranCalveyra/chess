@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ChessApplication extends Application {
-
   private final GameEngine gameEngine = new ChessGameEngine(new GameProvider().provide(GameType.DEFAULT));
   private final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
 

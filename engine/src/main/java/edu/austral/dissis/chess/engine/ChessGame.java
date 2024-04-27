@@ -106,7 +106,7 @@ public class ChessGame {
       return new GameResult(this, resultPair.second());
     }
     for(ChessMove move: playToExecute){
-      resultPair = executor.executeMove(move.from(), move.to(), board, promoter);
+      resultPair = executor.executeMove(move.from(), move.to(), resultPair.first(), promoter);
     }
 
     //Execute move

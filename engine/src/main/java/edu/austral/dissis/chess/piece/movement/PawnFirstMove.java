@@ -20,7 +20,7 @@ public class PawnFirstMove implements PieceMovement {
     boolean verticalMove = Math.abs(newY - oldY) == 2;
     return horizontalMove
         && verticalMove
-        && piece.hasNotMoved()
+        && !piece.hasMoved()
         && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL);
   }
 }

@@ -43,4 +43,9 @@ public class ChessTestCase {
   public Stream<DynamicTest> examTests() {
     return gameTester.test();
   }
+
+  @TestFactory
+    public Stream<DynamicTest> debug() {
+      return gameTester.debug("mate_fools.md");
+  }
 }

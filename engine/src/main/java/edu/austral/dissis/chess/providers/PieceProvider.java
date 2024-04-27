@@ -21,7 +21,7 @@ public class PieceProvider {
   public Piece provide(Color pieceColour, PieceType type) {
     PieceMovement castling = new Castling();
     String colorName = pieceColour == Color.WHITE ? "white" : "black";
-    int randInt = new Random().nextInt(100000);
+    int randInt = new Random().nextInt();
     return switch (type) {
       case KING -> new Piece(List.of(new KingMovement(), castling), pieceColour, type, randInt + colorName + " " + type.name().toLowerCase());
       case ROOK -> new Piece(List.of(new RookMovement()), pieceColour, type, randInt + colorName + " " + type.name().toLowerCase());

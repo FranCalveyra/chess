@@ -40,10 +40,10 @@ public class ChessGameRunner implements TestGameRunner {
     GameResult gameResult = game.makeMove(new ChessMove(mapPosition(from), mapPosition(to)));
     game = gameResult.game();
     return switch (gameResult.message()) {
-      case INVALID_MOVE -> new TestMoveFailure(mapTestBoard(game));
-      case WHITE_WIN -> new WhiteCheckMate(mapTestBoard(game));
-      case BLACK_WIN -> new BlackCheckMate(mapTestBoard(game));
-      case VALID_MOVE, PIECE_TAKEN -> new TestMoveSuccess(withBoard(getBoard()));
+      case INVALID_MOVE -> new TestMoveFailure(getBoard());
+      case WHITE_WIN -> new WhiteCheckMate(getBoard());
+      case BLACK_WIN -> new BlackCheckMate(getBoard());
+      case VALID_MOVE, PIECE_TAKEN -> new TestMoveSuccess(this);
     };
   }
 

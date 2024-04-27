@@ -10,7 +10,7 @@ import java.util.List;
 public class RuleProvider {
   public List<WinCondition> provide(GameType type) {
     if (type == GameType.DEFAULT) {
-      return (List.of(new WinCondition[] {new CheckMate(Color.WHITE), new CheckMate(Color.BLACK)}));
+      return (List.of(new CheckMate(Color.WHITE), new CheckMate(Color.BLACK)));
     }
     return new ArrayList<>();
   }

@@ -44,7 +44,7 @@ public class Castling implements PieceMovement {
     int columnDelta = Math.abs(newPos.getColumn() - oldPos.getColumn());
     boolean displacementCheck =
         oldPos.getRow() == newPos.getRow() && columnDelta == 2;
-    boolean movementCheck = firstPiece.hasNotMoved() && secondPiece.hasNotMoved();
+    boolean movementCheck = !firstPiece.hasMoved() && !secondPiece.hasMoved();
     boolean generalChecks = colorCheck && typeCheck && movementCheck && displacementCheck;
 
     if (!generalChecks) {

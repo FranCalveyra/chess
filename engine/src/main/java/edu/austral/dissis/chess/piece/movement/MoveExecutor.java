@@ -4,7 +4,6 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoters.Promoter;
-import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessMoveResult;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import edu.austral.dissis.chess.utils.Pair;
@@ -26,7 +25,7 @@ public class MoveExecutor {
             if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
                 return new Pair<>(board, INVALID_MOVE);
             } else {
-                newBoard = board.removePieceAt(newPos).updatePiecePosition(oldPos, newPos);
+                newBoard = board.removePieceAt(newPos).removePieceAt(oldPos).addPieceAt(newPos, !piece.hasMoved() ? piece.changeMoveState(): piece);
                 newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
                 return new Pair<>(newBoard, PIECE_TAKEN);
             }
@@ -34,7 +33,7 @@ public class MoveExecutor {
             newBoard =
                     board
                             .removePieceAt(oldPos)
-                            .addPieceAt(newPos, piece.hasNotMoved() ? piece.changeMoveState() : piece);
+                            .addPieceAt(newPos, !piece.hasMoved() ? piece.changeMoveState(): piece);
             newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
             return new Pair<>(newBoard, VALID_MOVE);
         }

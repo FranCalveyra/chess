@@ -68,8 +68,8 @@ public class Piece {
     return new Piece(movements, pieceColour, type, !hasMoved,id); // Immutable approach
   }
 
-  public boolean hasNotMoved() {
-    return !hasMoved;
+  public boolean hasMoved() {
+    return hasMoved;
   }
 
   public List<ChessPosition> getMoveSet(ChessPosition oldPos, Board context) {
