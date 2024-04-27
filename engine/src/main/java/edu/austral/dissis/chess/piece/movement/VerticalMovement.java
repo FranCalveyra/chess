@@ -1,4 +1,5 @@
 package edu.austral.dissis.chess.piece.movement;
+
 import static edu.austral.dissis.chess.utils.MoveType.VERTICAL;
 
 import edu.austral.dissis.chess.engine.Board;

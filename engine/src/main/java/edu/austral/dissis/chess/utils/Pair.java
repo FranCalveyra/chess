@@ -1,3 +1,3 @@
 package edu.austral.dissis.chess.utils;
 
-public record Pair<T,V>(T first, V second) {}
+public record Pair<T, W>(T first, W second) {}

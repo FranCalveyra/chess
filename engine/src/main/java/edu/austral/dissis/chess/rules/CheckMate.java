@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.winConditions;
+package edu.austral.dissis.chess.rules;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
@@ -32,42 +32,49 @@ public class CheckMate implements WinCondition {
     return kingHasNoPossibleSaving(piecesWithPossibleMoves, context);
   }
 
-
-  private Map<Position, List<Position>> getPieceMovesMap(Map<Position, Piece> teamPieces, Board context) {
+  private Map<Position, List<Position>> getPieceMovesMap(
+      Map<Position, Piece> teamPieces, Board context) {
     Map<Position, List<Position>> piecesWithPossibleMoves = new HashMap<>();
-      teamPieces.forEach((pos, piece) -> {
+    teamPieces.forEach(
+        (pos, piece) -> {
           List<Position> moveSet = piece.getMoveSet(pos, context);
           if (moveSet.isEmpty()) {
-              return;
+            return;
           }
           piecesWithPossibleMoves.put(pos, moveSet);
-      });
+        });
     return piecesWithPossibleMoves;
   }
 
   private Map<Position, Piece> getPiecesByColor(Board context, Color team) {
     Map<Position, Piece> map = context.getPiecesAndPositions();
-    return map.entrySet().stream().filter(entry -> entry.getValue() != null && entry.getValue().getPieceColour() == team && entry.getValue().getType() != PieceType.KING)
-            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+    return map.entrySet().stream()
+        .filter(
+            entry ->
+                entry.getValue() != null
+                    && entry.getValue().getPieceColour() == team
+                    && entry.getValue().getType() != PieceType.KING)
+        .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
   }
 
-  private boolean kingHasNoPossibleSaving(Map<Position, List<Position>> piecesWithPossibleMoves, Board context) {
+  private boolean kingHasNoPossibleSaving(
+      Map<Position, List<Position>> piecesWithPossibleMoves, Board context) {
     for (Entry<Position, List<Position>> entry : piecesWithPossibleMoves.entrySet()) {
-      //Fetch current piece to analyse
+      // Fetch current piece to analyse
       Position pos = entry.getKey();
       List<Position> moveSet = entry.getValue();
-      //Iterate over all of its possible moves
+      // Iterate over all of its possible moves
       for (Position possibleMove : moveSet) {
         Board possibleBoardState = context.updatePiecePosition(pos, possibleMove);
         DefaultCheck check = new DefaultCheck(context.pieceAt(pos).getPieceColour());
 
-        //If after executing the move is not in check anymore, return false. Return true otherwise (going through all the pieces)
-        if(!check.isValidRule(possibleBoardState)){
+        // If after executing the move is not in check anymore, return false. Return true otherwise
+        // (going through all the pieces)
+        if (!check.isValidRule(possibleBoardState)) {
           return false;
         }
       }
     }
     return true;
   }
-
 }

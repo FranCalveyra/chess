@@ -9,7 +9,10 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
 import edu.austral.dissis.chess.provider.RuleProvider;
-import edu.austral.dissis.chess.winConditions.*;
+import edu.austral.dissis.chess.rules.Check;
+import edu.austral.dissis.chess.rules.CheckMate;
+import edu.austral.dissis.chess.rules.DefaultCheck;
+import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
@@ -22,13 +25,12 @@ public class ChessTest {
   // Setup
   private final Map<Position, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
   private final Board board = new Board(pieces);
-  private final List<WinCondition> rules =
-      new RuleProvider().provide(GameType.DEFAULT);
-  private final List<Check> checks = List.of(
-          new DefaultCheck(Color.BLACK),
-          new DefaultCheck(Color.WHITE));
+  private final List<WinCondition> rules = new RuleProvider().provide(GameType.DEFAULT);
+  private final List<Check> checks =
+      List.of(new DefaultCheck(Color.BLACK), new DefaultCheck(Color.WHITE));
   private ChessGame game =
-          ChessGame.createChessGame(board, rules, checks,new StandardPromoter(), new StandardTurnSelector(), Color.WHITE,0);
+      ChessGame.createChessGame(
+          board, rules, checks, new StandardPromoter(), new StandardTurnSelector(), Color.WHITE, 0);
 
   // Tests
   @Test
@@ -45,13 +47,13 @@ public class ChessTest {
     assertEquals(PieceType.PAWN, whitePawn.getType());
     assertEquals(PieceType.PAWN, whitePawn2.getType());
     assertEquals(PieceType.QUEEN, blackQueen.getType());
-    game = game.makeMove(new Position(1, 5), new Position(2, 5)).getGame();
+    game = game.makeMove(new Position(1, 5), new Position(2, 5)).game();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(2, 5)).getType());
-    game = game.makeMove(new Position(6, 4), new Position(4, 4)).getGame();
+    game = game.makeMove(new Position(6, 4), new Position(4, 4)).game();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(4, 4)).getType());
-    game = game.makeMove(new Position(1, 6), new Position(3, 6)).getGame();
+    game = game.makeMove(new Position(1, 6), new Position(3, 6)).game();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(new Position(3, 6)).getType());
-    game = game.makeMove(new Position(7, 3), new Position(3, 7)).getGame();
+    game = game.makeMove(new Position(7, 3), new Position(3, 7)).game();
     assertEquals(PieceType.QUEEN, game.getBoard().pieceAt(new Position(3, 7)).getType());
     assertTrue(new DefaultCheck(Color.WHITE).isValidRule(game.getBoard()));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
@@ -62,40 +64,40 @@ public class ChessTest {
   @Test
   public void validatePromotion() {
     assertEquals(Color.WHITE, game.getCurrentTurn());
-    game = game.makeMove(new Position(1, 0), new Position(3, 0)).getGame();
-    game = game.makeMove(new Position(6, 0), new Position(4, 0)).getGame();
+    game = game.makeMove(new Position(1, 0), new Position(3, 0)).game();
+    game = game.makeMove(new Position(6, 0), new Position(4, 0)).game();
     assertPositionType(game, PieceType.PAWN, 3, 0);
     assertPositionType(game, PieceType.PAWN, 4, 0);
-    game = game.makeMove(new Position(1, 1), new Position(3, 1)).getGame();
+    game = game.makeMove(new Position(1, 1), new Position(3, 1)).game();
     assertPositionType(game, PieceType.PAWN, 3, 1);
-    game = game.makeMove(new Position(7, 0), new Position(5, 0)).getGame();
+    game = game.makeMove(new Position(7, 0), new Position(5, 0)).game();
     assertPositionType(game, PieceType.ROOK, 5, 0);
 
-    game = game.makeMove(new Position(3, 1), new Position(4, 0)).getGame();
+    game = game.makeMove(new Position(3, 1), new Position(4, 0)).game();
     assertPositionType(game, PieceType.PAWN, 4, 0);
 
-    game = game.makeMove(new Position(5, 0), new Position(4, 0)).getGame();
+    game = game.makeMove(new Position(5, 0), new Position(4, 0)).game();
     assertPositionType(game, PieceType.ROOK, 4, 0);
     assertEquals(30, game.getBoard().getPiecesAndPositions().size());
-    game = game.makeMove(new Position(0, 1), new Position(2, 2)).getGame();
+    game = game.makeMove(new Position(0, 1), new Position(2, 2)).game();
     assertPositionType(game, PieceType.KNIGHT, 2, 2);
-    game = game.makeMove(new Position(4, 0), new Position(4, 2)).getGame();
+    game = game.makeMove(new Position(4, 0), new Position(4, 2)).game();
     assertPositionType(game, PieceType.ROOK, 4, 2);
-    game = game.makeMove(new Position(3, 0), new Position(4, 0)).getGame();
+    game = game.makeMove(new Position(3, 0), new Position(4, 0)).game();
     assertPositionType(game, PieceType.PAWN, 4, 0);
-    game = game.makeMove(new Position(4, 2), new Position(2, 2)).getGame();
+    game = game.makeMove(new Position(4, 2), new Position(2, 2)).game();
     assertPositionType(game, PieceType.ROOK, 2, 2);
     assertEquals(29, game.getBoard().getPiecesAndPositions().size());
 
-    game = game.makeMove(new Position(4, 0), new Position(5, 0)).getGame();
+    game = game.makeMove(new Position(4, 0), new Position(5, 0)).game();
     assertPositionType(game, PieceType.PAWN, 5, 0);
-    game = game.makeMove(new Position(2, 2), new Position(4, 2)).getGame();
+    game = game.makeMove(new Position(2, 2), new Position(4, 2)).game();
     assertPositionType(game, PieceType.ROOK, 4, 2);
-    game = game.makeMove(new Position(5, 0), new Position(6, 0)).getGame();
+    game = game.makeMove(new Position(5, 0), new Position(6, 0)).game();
     assertPositionType(game, PieceType.PAWN, 6, 0);
-    game = game.makeMove(new Position(4, 2), new Position(2, 2)).getGame();
+    game = game.makeMove(new Position(4, 2), new Position(2, 2)).game();
     assertPositionType(game, PieceType.ROOK, 2, 2);
-    game = game.makeMove(new Position(6, 0), new Position(7, 0)).getGame();
+    game = game.makeMove(new Position(6, 0), new Position(7, 0)).game();
     // Once promoted
     assertPositionType(game, PieceType.QUEEN, 7, 0);
     assertEquals(Color.WHITE, game.getBoard().pieceAt(new Position(7, 0)).getPieceColour());

@@ -2,7 +2,6 @@ package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.Position;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +28,6 @@ public class Board {
     Piece piece = pieceAt(oldPos);
     return removePieceAt(oldPos).addPieceAt(newPos, piece);
   }
-
-
 
   // Board modifiers
   public Board addPieceAt(Position pos, Piece piece) {
@@ -72,17 +69,17 @@ public class Board {
       matrix[entry.getKey().getRow()][entry.getKey().getColumn()] = entry.getValue();
     }
     StringBuilder sb = new StringBuilder();
-      for (Piece[] value : matrix) {
-          sb.append(Arrays.toString(value)).append("\n");
-      }
+    for (Piece[] value : matrix) {
+      sb.append(Arrays.toString(value)).append("\n");
+    }
     return sb.toString();
   }
 
-  public Board createCopy(){
+  public Board createCopy() {
     return new Board(pieces, rows, columns);
   }
 
-  //Private stuff
+  // Private stuff
   private @NotNull HashMap<Position, Piece> copyMap(Map<Position, Piece> pieces) {
     return new HashMap<>(pieces);
   }

@@ -5,7 +5,7 @@ import static edu.austral.dissis.chess.utils.MoveType.HORIZONTAL;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.winConditions.DefaultCheck;
+import edu.austral.dissis.chess.rules.DefaultCheck;
 import edu.austral.dissis.chess.utils.Position;
 import edu.austral.dissis.chess.validator.PiecePathValidator;
 
