@@ -33,7 +33,8 @@ public class ChessPosition {
     if (obj == null || obj.getClass() != ChessPosition.class) {
       return false;
     }
-    return ((ChessPosition) obj).getRow() == getRow() && ((ChessPosition) obj).getColumn() == getColumn();
+    return ((ChessPosition) obj).getRow() == getRow()
+        && ((ChessPosition) obj).getColumn() == getColumn();
   }
 
   @Override

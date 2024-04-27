@@ -10,7 +10,11 @@ import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.selectors.TurnSelector;
-import edu.austral.dissis.chess.utils.*;
+import edu.austral.dissis.chess.utils.ChessMove;
+import edu.austral.dissis.chess.utils.ChessMoveResult;
+import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.GameResult;
+import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.validators.WinConditionValidator;
 import java.awt.Color;
 import java.util.List;
@@ -45,7 +49,7 @@ public class ChessGame {
     this.selector = selector;
     this.currentTurn = currentTurn;
     this.turnNumber = 0;
-      executor = new MoveExecutor();
+    executor = new MoveExecutor();
   }
 
   private ChessGame(
@@ -65,7 +69,7 @@ public class ChessGame {
     this.selector = selector;
     this.turnNumber = turnNumber;
     this.currentTurn = currentTurn;
-      executor = new MoveExecutor();
+    executor = new MoveExecutor();
   } // make it public
 
   public static ChessGame createChessGame(
@@ -80,7 +84,7 @@ public class ChessGame {
         board, rules, checkConditions, promoter, selector, currentTurn, turnNumber);
   }
 
-  public GameResult makeMove(ChessMove move){
+  public GameResult makeMove(ChessMove move) {
     return makeMove(move.from(), move.to());
   }
 
@@ -101,15 +105,15 @@ public class ChessGame {
     Pair<Board, ChessMoveResult> resultPair = new Pair<>(board, INVALID_MOVE);
     final List<ChessMove> playToExecute = pieceToMove.getPlay(oldPos, newPos, board);
 
-    //No move available, should not happen in this instance
-    if(playToExecute.isEmpty()){
+    // No move available, should not happen in this instance
+    if (playToExecute.isEmpty()) {
       return new GameResult(this, resultPair.second());
     }
-    for(ChessMove move: playToExecute){
+    for (ChessMove move : playToExecute) {
       resultPair = executor.executeMove(move.from(), move.to(), resultPair.first(), promoter);
     }
 
-    //Execute move
+    // Execute move
     Board finalBoard = resultPair.first();
     Color nextTurn = selector.selectTurn(turnNumber + 1);
     ChessGame finalGame =

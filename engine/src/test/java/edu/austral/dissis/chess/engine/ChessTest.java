@@ -15,8 +15,8 @@ import edu.austral.dissis.chess.rules.DefaultCheck;
 import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.selectors.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.GameType;
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +24,8 @@ import org.junit.jupiter.api.Test;
 
 public class ChessTest {
   // Setup
-  private final Map<ChessPosition, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
+  private final Map<ChessPosition, Piece> pieces =
+      new ChessPieceMapProvider().provide(GameType.DEFAULT);
   private final Board board = new Board(pieces);
   private final List<WinCondition> rules = new RuleProvider().provide(GameType.DEFAULT);
   private final List<Check> checks =

@@ -28,11 +28,13 @@ public class CheckMate implements WinCondition {
       return false;
     }
     Map<ChessPosition, Piece> teamPieces = getPiecesByColor(context, team);
-    Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves = getPieceMovesMap(teamPieces, context);
+    Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves =
+        getPieceMovesMap(teamPieces, context);
     return kingHasNoPossibleSaving(piecesWithPossibleMoves, context);
   }
+
   private Map<ChessPosition, List<ChessPosition>> getPieceMovesMap(
-          Map<ChessPosition, Piece> teamPieces, Board context) {
+      Map<ChessPosition, Piece> teamPieces, Board context) {
     Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves = new HashMap<>();
     teamPieces.forEach(
         (pos, piece) -> {
@@ -57,7 +59,7 @@ public class CheckMate implements WinCondition {
   }
 
   private boolean kingHasNoPossibleSaving(
-          Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves, Board context) {
+      Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves, Board context) {
     for (Entry<ChessPosition, List<ChessPosition>> entry : piecesWithPossibleMoves.entrySet()) {
       // Fetch current piece to analyse
       ChessPosition pos = entry.getKey();

@@ -17,8 +17,8 @@ import edu.austral.dissis.chess.rules.DefaultCheck;
 import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.selectors.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.GameType;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,8 @@ import org.junit.jupiter.api.Test;
 
 public class PieceMovementTest {
 
-  private final Map<ChessPosition, Piece> pieces = new ChessPieceMapProvider().provide(GameType.DEFAULT);
+  private final Map<ChessPosition, Piece> pieces =
+      new ChessPieceMapProvider().provide(GameType.DEFAULT);
   private final Board board = new Board(pieces);
   private final List<WinCondition> rules =
       new ArrayList<>(List.of(new CheckMate(Color.BLACK), new CheckMate(WHITE)));
@@ -102,7 +103,8 @@ public class PieceMovementTest {
     assertEquals(
         getPiecePosition(newWhitePawn, game.getBoard().getPiecesAndPositions()),
         new ChessPosition(1, 4));
-    List<ChessPosition> pawnMoveSet = newWhitePawn.getMoveSet(new ChessPosition(1, 4), game.getBoard());
+    List<ChessPosition> pawnMoveSet =
+        newWhitePawn.getMoveSet(new ChessPosition(1, 4), game.getBoard());
     assertEquals(pawnMoveSet.size(), 2);
   }
 
@@ -112,11 +114,15 @@ public class PieceMovementTest {
     game = game.makeMove(new ChessMove(new ChessPosition(6, 1), new ChessPosition(4, 1))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(3, 0), new ChessPosition(4, 1))).game();
     assertEquals(Color.BLACK, game.getCurrentTurn());
-    assertEquals(INVALID_MOVE, game.makeMove(new ChessMove(new ChessPosition(7, 7), new ChessPosition(3, 1))).message());
+    assertEquals(
+        INVALID_MOVE,
+        game.makeMove(new ChessMove(new ChessPosition(7, 7), new ChessPosition(3, 1))).message());
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
     game = game.makeMove(new ChessMove(new ChessPosition(6, 6), new ChessPosition(5, 6))).game();
     List<ChessPosition> rookMoveSet =
-        game.getBoard().pieceAt(new ChessPosition(0, 0)).getMoveSet(new ChessPosition(0, 0), game.getBoard());
+        game.getBoard()
+            .pieceAt(new ChessPosition(0, 0))
+            .getMoveSet(new ChessPosition(0, 0), game.getBoard());
     assertEquals(5, rookMoveSet.size());
     game = game.makeMove(new ChessMove(new ChessPosition(0, 0), new ChessPosition(4, 0))).game();
     assertEquals(PieceType.ROOK, game.getBoard().pieceAt(new ChessPosition(4, 0)).getType());
@@ -128,17 +134,20 @@ public class PieceMovementTest {
     assertEquals(whiteQueen.getType(), PieceType.QUEEN);
     game = game.makeMove(new ChessMove(new ChessPosition(1, 3), new ChessPosition(3, 3))).game();
     List<ChessPosition> whiteQueenMoveSet =
-        game.getBoard().pieceAt(new ChessPosition(0, 3)).getMoveSet(new ChessPosition(0, 3), game.getBoard());
+        game.getBoard()
+            .pieceAt(new ChessPosition(0, 3))
+            .getMoveSet(new ChessPosition(0, 3), game.getBoard());
     assertEquals(2, whiteQueenMoveSet.size()); // Need to fix it
     game = game.makeMove(new ChessMove(new ChessPosition(6, 4), new ChessPosition(4, 4))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(3, 3), new ChessPosition(4, 4))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(6, 3), new ChessPosition(5, 3))).game();
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
     whiteQueenMoveSet =
-        game.getBoard().pieceAt(new ChessPosition(0, 3)).getMoveSet(new ChessPosition(0, 3), game.getBoard());
+        game.getBoard()
+            .pieceAt(new ChessPosition(0, 3))
+            .getMoveSet(new ChessPosition(0, 3), game.getBoard());
     assertEquals(4, whiteQueenMoveSet.size());
   }
-
 
   @Test
   public void assertLeftCastling() {
@@ -162,11 +171,13 @@ public class PieceMovementTest {
     game = game.makeMove(new ChessMove(new ChessPosition(6, 0), new ChessPosition(4, 0))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(0, 3), new ChessPosition(1, 3))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(6, 5), new ChessPosition(4, 5))).game();
-    assertTrue(new Castling().isValidMove(new ChessPosition(0, 4), new ChessPosition(0, 2), game.getBoard()));
-    game = game.makeMove(new ChessMove(new ChessPosition(0,4), new ChessPosition(0,2))).game();
+    assertTrue(
+        new Castling()
+            .isValidMove(new ChessPosition(0, 4), new ChessPosition(0, 2), game.getBoard()));
+    game = game.makeMove(new ChessMove(new ChessPosition(0, 4), new ChessPosition(0, 2))).game();
     System.out.println(game.getBoard());
-    assertEquals(PieceType.KING,game.getBoard().pieceAt(new ChessPosition(0,2)).getType());
-    assertEquals(PieceType.ROOK,game.getBoard().pieceAt(new ChessPosition(0,3)).getType());
+    assertEquals(PieceType.KING, game.getBoard().pieceAt(new ChessPosition(0, 2)).getType());
+    assertEquals(PieceType.ROOK, game.getBoard().pieceAt(new ChessPosition(0, 3)).getType());
   }
 
   @Test
@@ -191,10 +202,12 @@ public class PieceMovementTest {
     game = game.makeMove(new ChessMove(new ChessPosition(6, 0), new ChessPosition(4, 0))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(0, 5), new ChessPosition(1, 6))).game();
     game = game.makeMove(new ChessMove(new ChessPosition(4, 1), new ChessPosition(3, 1))).game();
-    assertTrue(new Castling().isValidMove(new ChessPosition(0, 4), new ChessPosition(0, 6), game.getBoard()));
+    assertTrue(
+        new Castling()
+            .isValidMove(new ChessPosition(0, 4), new ChessPosition(0, 6), game.getBoard()));
     System.out.println(game.getBoard());
-    game = game.makeMove(new ChessMove(new ChessPosition(0,4), new ChessPosition(0,6))).game();
-    assertEquals(PieceType.KING,game.getBoard().pieceAt(new ChessPosition(0,6)).getType());
-    assertEquals(PieceType.ROOK,game.getBoard().pieceAt(new ChessPosition(0,5)).getType());
+    game = game.makeMove(new ChessMove(new ChessPosition(0, 4), new ChessPosition(0, 6))).game();
+    assertEquals(PieceType.KING, game.getBoard().pieceAt(new ChessPosition(0, 6)).getType());
+    assertEquals(PieceType.ROOK, game.getBoard().pieceAt(new ChessPosition(0, 5)).getType());
   }
 }

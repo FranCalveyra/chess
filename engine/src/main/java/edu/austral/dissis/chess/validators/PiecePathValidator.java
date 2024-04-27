@@ -2,13 +2,14 @@ package edu.austral.dissis.chess.validators;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.utils.ChessPosition;
 import edu.austral.dissis.chess.utils.MoveType;
 import edu.austral.dissis.chess.utils.Pair;
-import edu.austral.dissis.chess.utils.ChessPosition;
 
 public class PiecePathValidator {
 
-  public boolean isNoPieceBetween(ChessPosition from, ChessPosition to, Board context, MoveType moveType) {
+  public boolean isNoPieceBetween(
+      ChessPosition from, ChessPosition to, Board context, MoveType moveType) {
     if (outOfBoardBounds(from, context) || outOfBoardBounds(to, context)) {
       return false;
     }
@@ -64,7 +65,7 @@ public class PiecePathValidator {
   }
 
   private boolean noOneInDiagonal(
-          ChessPosition oldPos, ChessPosition newPos, Board context, int deltaX, int deltaY) {
+      ChessPosition oldPos, ChessPosition newPos, Board context, int deltaX, int deltaY) {
     if (deltaX > 0) {
       if (deltaY > 0) {
         return checkDiagonalWithDelta(oldPos, newPos, context, new Pair<>(1, 1));
@@ -81,7 +82,7 @@ public class PiecePathValidator {
   }
 
   private boolean checkDiagonalWithDelta(
-          ChessPosition oldPos, ChessPosition newPos, Board context, Pair<Integer, Integer> vector) {
+      ChessPosition oldPos, ChessPosition newPos, Board context, Pair<Integer, Integer> vector) {
     int deltaRow = vector.first();
     int deltaColumn = vector.second();
     for (int i = oldPos.getRow() + deltaRow, j = oldPos.getColumn() + deltaColumn;

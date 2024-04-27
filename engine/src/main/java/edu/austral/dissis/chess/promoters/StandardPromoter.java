@@ -29,7 +29,12 @@ public class StandardPromoter implements Promoter {
     Piece initialPiece = context.pieceAt(chessPosition);
     Piece piece = new PieceProvider().provide(initialPiece.getPieceColour(), type);
     Piece actualPiece =
-        new Piece(piece.getMovements(), piece.getPieceColour(), type, initialPiece.hasMoved(), initialPiece.getId() );
+        new Piece(
+            piece.getMovements(),
+            piece.getPieceColour(),
+            type,
+            initialPiece.hasMoved(),
+            initialPiece.getId());
     return context.removePieceAt(chessPosition).addPieceAt(chessPosition, actualPiece);
   }
 

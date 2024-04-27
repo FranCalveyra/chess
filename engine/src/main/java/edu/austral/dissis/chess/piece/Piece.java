@@ -24,7 +24,12 @@ public class Piece {
     this.hasMoved = false;
   }
 
-  public Piece(List<PieceMovement> movements, Color pieceColour, PieceType type, boolean hasMoved, String id) {
+  public Piece(
+      List<PieceMovement> movements,
+      Color pieceColour,
+      PieceType type,
+      boolean hasMoved,
+      String id) {
     this.movements = movements;
     this.pieceColour = pieceColour;
     this.type = type;
@@ -44,7 +49,8 @@ public class Piece {
   @Override
   public String toString() {
     String colour = pieceColour == Color.BLACK ? "BLACK" : "WHITE";
-    char typeName = type != PieceType.KNIGHT ? type.toString().charAt(0) : type.toString().charAt(1);
+    char typeName =
+        type != PieceType.KNIGHT ? type.toString().charAt(0) : type.toString().charAt(1);
     return colour.substring(0, 2) + " " + typeName;
   }
 
@@ -65,7 +71,7 @@ public class Piece {
   }
 
   public Piece changeMoveState() {
-    return new Piece(movements, pieceColour, type, !hasMoved,id); // Immutable approach
+    return new Piece(movements, pieceColour, type, !hasMoved, id); // Immutable approach
   }
 
   public boolean hasMoved() {
@@ -85,7 +91,7 @@ public class Piece {
     List<ChessMove> play = new ArrayList<>();
     for (PieceMovement movement : movements) {
       if (movement.isValidMove(oldPos, newPos, board)) {
-        play.addAll(movement.getMovesToExecute(oldPos,newPos,board));
+        play.addAll(movement.getMovesToExecute(oldPos, newPos, board));
       }
     }
     return play;

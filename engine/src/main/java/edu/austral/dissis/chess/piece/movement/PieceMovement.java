@@ -25,7 +25,8 @@ public interface PieceMovement {
     return possibleChessPositions;
   }
 
-  default List<ChessMove> getMovesToExecute(ChessPosition oldPos, ChessPosition newPos, Board context){
-    return List.of(new ChessMove(oldPos,newPos));
+  default List<ChessMove> getMovesToExecute(
+      ChessPosition oldPos, ChessPosition newPos, Board context) {
+    return List.of(new ChessMove(oldPos, newPos));
   }
 }

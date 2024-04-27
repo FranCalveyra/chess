@@ -9,8 +9,8 @@ import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.CheckMate;
 import edu.austral.dissis.chess.rules.DefaultCheck;
 import edu.austral.dissis.chess.rules.WinCondition;
-import edu.austral.dissis.chess.test.game.GameTester;
 import edu.austral.dissis.chess.selectors.StandardTurnSelector;
+import edu.austral.dissis.chess.test.game.GameTester;
 import edu.austral.dissis.chess.utils.GameType;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class ChessTestCase {
   }
 
   @TestFactory
-    public Stream<DynamicTest> debug() {
-      return gameTester.debug("mate_fools.md");
+  public Stream<DynamicTest> debug() {
+    return gameTester.debug("mate_fools.md");
   }
 }
