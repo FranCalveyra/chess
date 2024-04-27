@@ -8,14 +8,12 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoter.StandardPromoter;
 import edu.austral.dissis.chess.provider.ChessPieceMapProvider;
-import edu.austral.dissis.chess.provider.PieceProvider;
 import edu.austral.dissis.chess.provider.RuleProvider;
 import edu.austral.dissis.chess.winConditions.*;
 import edu.austral.dissis.chess.turn.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.utils.Position;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -60,28 +58,6 @@ public class ChessTest {
     System.out.println(game.getBoard());
     assertTrue(new CheckMate(Color.WHITE).isValidRule(game.getBoard()));
   }
-
-//  @Test
-//  public void validateStalemate() {
-//    PieceProvider pieceProvider = new PieceProvider();
-//    Map<Position, Piece> stalematePieces =
-//        Map.of(
-//            new Position(0, 0),
-//            pieceProvider.get(Color.WHITE, PieceType.KING),
-//            new Position(5, 6),
-//            pieceProvider.get(Color.WHITE, PieceType.QUEEN),
-//            new Position(7, 7),
-//            pieceProvider.get(Color.BLACK, PieceType.KING));
-//    ChessGame newGame =
-//            ChessGame.createChessGame(
-//                new Board(stalematePieces),
-//                game.getWinConditions(),
-//                game.getCheckConditions(),
-//                game.getPromoter(),
-//                game.getSelector(),
-//                Color.WHITE,0);
-//    assertTrue(new Stalemate(Color.WHITE).isValidRule(newGame.getBoard()));
-//  }
 
   @Test
   public void validatePromotion() {

@@ -1,7 +1,6 @@
 package edu.austral.dissis.chess.engine.updated.runners;
 
 
-import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
@@ -35,7 +34,7 @@ public class ChessGameRunner implements TestGameRunner {
             case INVALID_MOVE -> new TestMoveFailure(mapTestBoard(game));
             case BLACK_WIN -> new WhiteCheckMate(mapTestBoard(game));
             case WHITE_WIN -> new BlackCheckMate(mapTestBoard(game));
-            case VALID_MOVE, PIECE_TAKEN -> new TestMoveSuccess(this);
+            case VALID_MOVE, PIECE_TAKEN -> new TestMoveSuccess(withBoard(getBoard()));
         };
     }
 
