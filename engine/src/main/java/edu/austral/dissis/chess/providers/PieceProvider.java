@@ -14,23 +14,25 @@ import edu.austral.dissis.chess.piece.movement.QueenMovement;
 import edu.austral.dissis.chess.piece.movement.RookMovement;
 import java.awt.Color;
 import java.util.List;
+import java.util.Random;
 
 public class PieceProvider {
 
-  public Piece get(Color pieceColour, PieceType type) {
+  public Piece provide(Color pieceColour, PieceType type) {
     PieceMovement castling = new Castling();
     String colorName = pieceColour == Color.WHITE ? "white" : "black";
+    int randInt = new Random().nextInt(100000);
     return switch (type) {
-      case KING -> new Piece(List.of(new KingMovement(), castling), pieceColour, type, colorName + " " + type.name().toLowerCase());
-      case ROOK -> new Piece(List.of(new RookMovement()), pieceColour, type, colorName + " " + type.name().toLowerCase());
-      case QUEEN -> new Piece(List.of(new QueenMovement()), pieceColour, type, colorName + " " + type.name().toLowerCase());
+      case KING -> new Piece(List.of(new KingMovement(), castling), pieceColour, type, randInt + colorName + " " + type.name().toLowerCase());
+      case ROOK -> new Piece(List.of(new RookMovement()), pieceColour, type, randInt + colorName + " " + type.name().toLowerCase());
+      case QUEEN -> new Piece(List.of(new QueenMovement()), pieceColour, type, randInt + colorName + " " + type.name().toLowerCase());
       case PAWN ->
           new Piece(
               List.of(new PawnMovement(), new PawnTaking(), new PawnFirstMove()),
               pieceColour,
-              type, colorName + " " + type.name().toLowerCase());
-      case BISHOP -> new Piece(List.of(new DiagonalMovement()), pieceColour, type, colorName + " " + type.name().toLowerCase());
-      case KNIGHT -> new Piece(List.of(new KnightMovement()), pieceColour, type, colorName + " " + type.name().toLowerCase());
+              type, randInt + colorName + " " + type.name().toLowerCase());
+      case BISHOP -> new Piece(List.of(new DiagonalMovement()), pieceColour, type, randInt + colorName + " " + type.name().toLowerCase());
+      case KNIGHT -> new Piece(List.of(new KnightMovement()), pieceColour, type, randInt + colorName + " " + type.name().toLowerCase());
     };
   }
 }

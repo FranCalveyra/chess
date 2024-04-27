@@ -17,29 +17,29 @@ public class ChessPieceMapProvider {
     }
     // Pawns
     for (int j = 0; j < 8; j++) {
-      result.put(new ChessPosition(1, j), provider.get(Color.WHITE, PieceType.PAWN));
-      result.put(new ChessPosition(6, j), provider.get(Color.BLACK, PieceType.PAWN));
+      result.put(new ChessPosition(1, j), provider.provide(Color.WHITE, PieceType.PAWN));
+      result.put(new ChessPosition(6, j), provider.provide(Color.BLACK, PieceType.PAWN));
     }
     // Rooks
-    result.put(new ChessPosition(0, 0), provider.get(Color.WHITE, PieceType.ROOK));
-    result.put(new ChessPosition(0, 7), provider.get(Color.WHITE, PieceType.ROOK));
-    result.put(new ChessPosition(7, 7), provider.get(Color.BLACK, PieceType.ROOK));
-    result.put(new ChessPosition(7, 0), provider.get(Color.BLACK, PieceType.ROOK));
+    result.put(new ChessPosition(0, 0), provider.provide(Color.WHITE, PieceType.ROOK));
+    result.put(new ChessPosition(0, 7), provider.provide(Color.WHITE, PieceType.ROOK));
+    result.put(new ChessPosition(7, 7), provider.provide(Color.BLACK, PieceType.ROOK));
+    result.put(new ChessPosition(7, 0), provider.provide(Color.BLACK, PieceType.ROOK));
     // Knights
-    result.put(new ChessPosition(0, 1), provider.get(Color.WHITE, PieceType.KNIGHT));
-    result.put(new ChessPosition(0, 6), provider.get(Color.WHITE, PieceType.KNIGHT));
-    result.put(new ChessPosition(7, 1), provider.get(Color.BLACK, PieceType.KNIGHT));
-    result.put(new ChessPosition(7, 6), provider.get(Color.BLACK, PieceType.KNIGHT));
+    result.put(new ChessPosition(0, 1), provider.provide(Color.WHITE, PieceType.KNIGHT));
+    result.put(new ChessPosition(0, 6), provider.provide(Color.WHITE, PieceType.KNIGHT));
+    result.put(new ChessPosition(7, 1), provider.provide(Color.BLACK, PieceType.KNIGHT));
+    result.put(new ChessPosition(7, 6), provider.provide(Color.BLACK, PieceType.KNIGHT));
     // Bishops
-    result.put(new ChessPosition(0, 2), provider.get(Color.WHITE, PieceType.BISHOP));
-    result.put(new ChessPosition(0, 5), provider.get(Color.WHITE, PieceType.BISHOP));
-    result.put(new ChessPosition(7, 2), provider.get(Color.BLACK, PieceType.BISHOP));
-    result.put(new ChessPosition(7, 5), provider.get(Color.BLACK, PieceType.BISHOP));
+    result.put(new ChessPosition(0, 2), provider.provide(Color.WHITE, PieceType.BISHOP));
+    result.put(new ChessPosition(0, 5), provider.provide(Color.WHITE, PieceType.BISHOP));
+    result.put(new ChessPosition(7, 2), provider.provide(Color.BLACK, PieceType.BISHOP));
+    result.put(new ChessPosition(7, 5), provider.provide(Color.BLACK, PieceType.BISHOP));
     // King and Queen
-    result.put(new ChessPosition(0, 3), provider.get(Color.WHITE, PieceType.QUEEN));
-    result.put(new ChessPosition(0, 4), provider.get(Color.WHITE, PieceType.KING));
-    result.put(new ChessPosition(7, 3), provider.get(Color.BLACK, PieceType.QUEEN));
-    result.put(new ChessPosition(7, 4), provider.get(Color.BLACK, PieceType.KING));
+    result.put(new ChessPosition(0, 3), provider.provide(Color.WHITE, PieceType.QUEEN));
+    result.put(new ChessPosition(0, 4), provider.provide(Color.WHITE, PieceType.KING));
+    result.put(new ChessPosition(7, 3), provider.provide(Color.BLACK, PieceType.QUEEN));
+    result.put(new ChessPosition(7, 4), provider.provide(Color.BLACK, PieceType.KING));
     return result;
   }
 }

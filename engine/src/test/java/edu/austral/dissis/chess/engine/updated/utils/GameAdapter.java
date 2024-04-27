@@ -36,7 +36,7 @@ public class GameAdapter {
   }
 
   public static Piece mapPiece(TestPiece piece) {
-    return new PieceProvider().get(mapColour(piece.component2()), mapPieceType(piece));
+    return new PieceProvider().provide(mapColour(piece.component2()), mapPieceType(piece));
   }
 
   private static Color mapColour(char c) {

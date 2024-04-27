@@ -13,7 +13,6 @@ import edu.austral.dissis.chess.selectors.TurnSelector;
 import edu.austral.dissis.chess.utils.*;
 import edu.austral.dissis.chess.validators.WinConditionValidator;
 import java.awt.Color;
-import java.util.Iterator;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
@@ -98,10 +97,7 @@ public class ChessGame {
     if (pieceToMove == null || pieceToMove.getPieceColour() != currentTurn) {
       return new GameResult(this, INVALID_MOVE);
     }
-//    // Invalid move due to piece rules
-//    if (!pieceToMove.isValidMove(oldPos, newPos, board)) {
-//      return new GameResult(this, INVALID_MOVE);
-//    } //Can delete due to line below (?)
+
     Pair<Board, ChessMoveResult> resultPair = new Pair<>(board, INVALID_MOVE);
     final List<ChessMove> playToExecute = pieceToMove.getPlay(oldPos, newPos, board);
 
@@ -109,16 +105,8 @@ public class ChessGame {
     if(playToExecute.isEmpty()){
       return new GameResult(this, resultPair.second());
     }
-
-    if(playToExecute.size() == 1){
-      ChessMove move = playToExecute.getFirst();
+    for(ChessMove move: playToExecute){
       resultPair = executor.executeMove(move.from(), move.to(), board, promoter);
-    }
-    else{
-      for (ChessMove move : playToExecute) {
-        Board currentBoard = resultPair.first();
-        resultPair = executor.executeMove(move.from(), move.to(), currentBoard, promoter);
-      }
     }
 
     //Execute move

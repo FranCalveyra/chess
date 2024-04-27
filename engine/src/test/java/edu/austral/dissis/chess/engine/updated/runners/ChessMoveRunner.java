@@ -38,16 +38,6 @@ public class ChessMoveRunner implements TestMoveRunner {
       return new ArrayList<>();
     }
     List<ChessPosition> moveSet = piece.getMoveSet(mapPosition(fromPosition), board);
-    if (piece.getType() == PieceType.ROOK && piece.getPieceColour() == Color.BLACK) {
-      System.out.println(
-          "Piece in: "
-              + fromPosition
-              + "has the following moves: \n"
-              + moveSet.stream()
-                  .map(pos -> TestPosition.Companion.fromZeroBased(pos.getRow(), pos.getColumn()))
-                  .toList()
-              + "\n");
-    }
     return new ArrayList<>(
         moveSet.stream()
             .map(

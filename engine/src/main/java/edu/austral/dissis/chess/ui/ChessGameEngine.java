@@ -7,6 +7,7 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessMoveResult;
 import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.GameResult;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;
@@ -21,32 +22,24 @@ import static java.awt.Color.WHITE;
 public class ChessGameEngine implements GameEngine {
     //TODO: fix it to work normally
 
-    private final ChessGame game;
-    private final Map<ChessMoveResult, MoveResult> moveResults;
+    private  ChessGame game;
 
     public ChessGameEngine(ChessGame game) {
         this.game = game;
-        this.moveResults =
-                Map.of(VALID_MOVE, updateGameState(game),
-                        INVALID_MOVE, new InvalidMove("Invalid move"),
-                        PIECE_TAKEN, updateGameState(game),
-                        WHITE_WIN, new GameOver(getPlayerColor(WHITE)),
-                        BLACK_WIN, new GameOver(getPlayerColor(BLACK))
-                        );
     }
-
-
 
     @NotNull
     @Override
     public MoveResult applyMove(@NotNull Move move) {
-        return moveResults.get(game.makeMove(new ChessMove(mapPos(move.component1()), mapPos(move.component2()))).message());
+        GameResult gameResult = game.makeMove(new ChessMove(mapPos(move.component1()), mapPos(move.component2())));
+        game = gameResult.game();
+        return getMoveResults(game).get(gameResult.message());
     }
 
     @NotNull
     @Override
     public InitialState init() {
-        return new InitialState(new BoardSize(game.getBoard().getColumns(), game.getBoard().getRows()), getPiecesList(game),getPlayerColor(WHITE));
+        return new InitialState(new BoardSize(game.getBoard().getColumns(), game.getBoard().getRows()), getPiecesList(game),getPlayerColor(game.getCurrentTurn()));
     }
 
     private static PlayerColor getPlayerColor(Color color) {
@@ -75,5 +68,14 @@ public class ChessGameEngine implements GameEngine {
 
     private ChessPosition mapPos(Position position) {
         return new ChessPosition(position.getRow()-1, position.getColumn()-1);
+    }
+
+    private @NotNull Map<ChessMoveResult, MoveResult> getMoveResults(ChessGame game) {
+        return Map.of(VALID_MOVE, updateGameState(game),
+                INVALID_MOVE, new InvalidMove("Invalid move"),
+                PIECE_TAKEN, updateGameState(game),
+                WHITE_WIN, new GameOver(getPlayerColor(WHITE)),
+                BLACK_WIN, new GameOver(getPlayerColor(BLACK))
+        );
     }
 }

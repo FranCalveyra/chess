@@ -27,7 +27,7 @@ public class StandardPromoter implements Promoter {
   @Override
   public Board promote(ChessPosition chessPosition, PieceType type, Board context) {
     Piece initialPiece = context.pieceAt(chessPosition);
-    Piece piece = new PieceProvider().get(initialPiece.getPieceColour(), type);
+    Piece piece = new PieceProvider().provide(initialPiece.getPieceColour(), type);
     Piece actualPiece =
         new Piece(piece.getMovements(), piece.getPieceColour(), type, !initialPiece.hasNotMoved(), initialPiece.getId() );
     return context.removePieceAt(chessPosition).addPieceAt(chessPosition, actualPiece);
