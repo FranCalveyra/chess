@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.turn;
+package edu.austral.dissis.chess.selectors;
 
 import java.awt.Color;
 

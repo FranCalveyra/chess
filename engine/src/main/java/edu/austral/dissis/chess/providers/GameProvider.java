@@ -1,10 +1,10 @@
-package edu.austral.dissis.chess.provider;
+package edu.austral.dissis.chess.providers;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
-import edu.austral.dissis.chess.promoter.StandardPromoter;
+import edu.austral.dissis.chess.promoters.StandardPromoter;
 import edu.austral.dissis.chess.rules.DefaultCheck;
-import edu.austral.dissis.chess.turn.StandardTurnSelector;
+import edu.austral.dissis.chess.selectors.StandardTurnSelector;
 import edu.austral.dissis.chess.utils.GameType;
 
 import java.awt.Color;

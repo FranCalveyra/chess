@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.ui;
 
 import edu.austral.dissis.chess.gui.*;
-import edu.austral.dissis.chess.provider.GameProvider;
+import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.utils.GameType;
 import javafx.application.Application;
 import javafx.scene.Scene;

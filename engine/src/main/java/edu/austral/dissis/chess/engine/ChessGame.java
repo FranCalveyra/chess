@@ -8,12 +8,12 @@ import static edu.austral.dissis.chess.utils.ChessMoveResult.WHITE_WIN;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.promoter.Promoter;
+import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.WinCondition;
-import edu.austral.dissis.chess.turn.TurnSelector;
+import edu.austral.dissis.chess.selectors.TurnSelector;
 import edu.austral.dissis.chess.utils.*;
-import edu.austral.dissis.chess.validator.WinConditionValidator;
+import edu.austral.dissis.chess.validators.WinConditionValidator;
 import java.awt.Color;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;

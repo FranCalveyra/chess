@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.provider;
+package edu.austral.dissis.chess.providers;
 
 import edu.austral.dissis.chess.rules.CheckMate;
 import edu.austral.dissis.chess.rules.WinCondition;

@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.promoter;
+package edu.austral.dissis.chess.promoters;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.PieceType;

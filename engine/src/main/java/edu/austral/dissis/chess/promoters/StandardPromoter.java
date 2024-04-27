@@ -1,9 +1,9 @@
-package edu.austral.dissis.chess.promoter;
+package edu.austral.dissis.chess.promoters;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.provider.PieceProvider;
+import edu.austral.dissis.chess.providers.PieceProvider;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 

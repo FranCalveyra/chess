@@ -12,7 +12,7 @@ import static java.awt.Color.WHITE;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.provider.PieceProvider;
+import edu.austral.dissis.chess.providers.PieceProvider;
 import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPiece;
 import edu.austral.dissis.chess.test.TestPosition;

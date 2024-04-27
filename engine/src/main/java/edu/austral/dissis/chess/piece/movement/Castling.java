@@ -7,7 +7,7 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.rules.DefaultCheck;
 import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.validator.PiecePathValidator;
+import edu.austral.dissis.chess.validators.PiecePathValidator;
 
 public class Castling implements PieceMovement {
   // Only valid whenever king and rooks haven't been moved yet.

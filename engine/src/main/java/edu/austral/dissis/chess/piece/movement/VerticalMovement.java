@@ -4,7 +4,7 @@ import static edu.austral.dissis.chess.utils.MoveType.VERTICAL;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.validator.PiecePathValidator;
+import edu.austral.dissis.chess.validators.PiecePathValidator;
 
 public class VerticalMovement implements PieceMovement {
   @Override
