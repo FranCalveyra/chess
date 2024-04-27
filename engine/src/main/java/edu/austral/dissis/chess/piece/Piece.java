@@ -43,8 +43,8 @@ public class Piece {
   @Override
   public String toString() {
     String colour = pieceColour == Color.BLACK ? "BLACK" : "WHITE";
-
-    return colour.substring(0, 2) + " " + type.toString().charAt(0);
+    char typeName = type != PieceType.KNIGHT ? type.toString().charAt(0) : type.toString().charAt(1);
+    return colour.substring(0, 2) + " " + typeName;
   }
 
   public Color getPieceColour() {
@@ -65,7 +65,6 @@ public class Piece {
 
   public Piece changeMoveState() {
     return new Piece(movements, pieceColour, type, !hasMoved,id); // Immutable approach
-    // hasMoved = !hasMoved; //Mutable approach
   }
 
   public boolean hasNotMoved() {

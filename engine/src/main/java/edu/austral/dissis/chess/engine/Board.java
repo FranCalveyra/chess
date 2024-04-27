@@ -68,11 +68,11 @@ public class Board {
     for (Map.Entry<ChessPosition, Piece> entry : pieces.entrySet()) {
       matrix[entry.getKey().getRow()][entry.getKey().getColumn()] = entry.getValue();
     }
-    StringBuilder sb = new StringBuilder();
+    StringBuilder builder = new StringBuilder();
     for (Piece[] value : matrix) {
-      sb.append(Arrays.toString(value)).append("\n");
+      builder.append(Arrays.toString(value)).append("\n");
     }
-    return sb.toString();
+    return builder.toString();
   }
 
   public Board createCopy() {

@@ -4,6 +4,7 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.gui.*;
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessMoveResult;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +39,7 @@ public class ChessGameEngine implements GameEngine {
     @NotNull
     @Override
     public MoveResult applyMove(@NotNull Move move) {
-        return moveResults.get(game.makeMove(mapPos(move.component1()), mapPos(move.component2())).message());
+        return moveResults.get(game.makeMove(new ChessMove(mapPos(move.component1()), mapPos(move.component2()))).message());
     }
 
     @NotNull

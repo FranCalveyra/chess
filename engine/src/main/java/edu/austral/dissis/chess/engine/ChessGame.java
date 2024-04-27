@@ -12,10 +12,7 @@ import edu.austral.dissis.chess.promoter.Promoter;
 import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.turn.TurnSelector;
-import edu.austral.dissis.chess.utils.GameResult;
-import edu.austral.dissis.chess.utils.ChessMoveResult;
-import edu.austral.dissis.chess.utils.Pair;
-import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.*;
 import edu.austral.dissis.chess.validator.WinConditionValidator;
 import java.awt.Color;
 import java.util.List;
@@ -82,18 +79,18 @@ public class ChessGame {
         board, rules, checkConditions, promoter, selector, currentTurn, turnNumber);
   }
 
-  //    public GameResult makeMove(Position oldPos, Position newPos) {
-  //    // If no argument is passed, it promotes to a Queen (BY DEFAULT)
-  //    return makeMove(oldPos, newPos);
+  public GameResult makeMove(ChessMove move){
+    return makeMove(move.from(), move.to());
+  }
 
-  public GameResult makeMove(ChessPosition oldPos, ChessPosition newPos) {
+  private GameResult makeMove(ChessPosition oldPos, ChessPosition newPos) {
     // Check winning at the end
     // Do all necessary checks
     // Invalid positions
     if (outOfBoardBounds(oldPos) || outOfBoardBounds(newPos)) {
       return new GameResult(this, INVALID_MOVE);
     }
-    // Fetch pieces
+    // Fetch piece
     Piece pieceToMove = board.pieceAt(oldPos);
     // Want to move a piece that's not there
     if (pieceToMove == null || pieceToMove.getPieceColour() != currentTurn) {
@@ -103,6 +100,9 @@ public class ChessGame {
     if (!pieceToMove.isValidMove(oldPos, newPos, board)) {
       return new GameResult(this, INVALID_MOVE);
     }
+//    if(castlingIsValid(pieceToMove, board)){
+//
+//    }
     Pair<Board, ChessMoveResult> resultPair = handleMovement(oldPos, newPos);
     Board finalBoard = resultPair.first();
     Color nextTurn = selector.selectTurn(turnNumber + 1);

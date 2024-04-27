@@ -18,6 +18,7 @@ import edu.austral.dissis.chess.test.game.TestMoveFailure;
 import edu.austral.dissis.chess.test.game.TestMoveResult;
 import edu.austral.dissis.chess.test.game.TestMoveSuccess;
 import edu.austral.dissis.chess.test.game.WhiteCheckMate;
+import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.GameResult;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
@@ -36,7 +37,7 @@ public class ChessGameRunner implements TestGameRunner {
   @NotNull
   @Override
   public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
-    GameResult gameResult = game.makeMove(mapPosition(from), mapPosition(to));
+    GameResult gameResult = game.makeMove(new ChessMove(mapPosition(from), mapPosition(to)));
     game = gameResult.game();
     return switch (gameResult.message()) {
       case INVALID_MOVE -> new TestMoveFailure(mapTestBoard(game));

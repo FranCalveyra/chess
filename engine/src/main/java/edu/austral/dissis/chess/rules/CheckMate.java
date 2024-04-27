@@ -31,7 +31,6 @@ public class CheckMate implements WinCondition {
     Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves = getPieceMovesMap(teamPieces, context);
     return kingHasNoPossibleSaving(piecesWithPossibleMoves, context);
   }
-
   private Map<ChessPosition, List<ChessPosition>> getPieceMovesMap(
           Map<ChessPosition, Piece> teamPieces, Board context) {
     Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves = new HashMap<>();
