@@ -22,7 +22,7 @@ public class ChessMoveRunner implements TestMoveRunner {
       @NotNull TestPosition fromPosition,
       @NotNull TestPosition toPosition) {
     boolean outOfBounds =
-        checkOutOfBounds(testBoard, fromPosition) || checkOutOfBounds(testBoard, toPosition);
+        positionIsOutOfBounds(testBoard, fromPosition) || positionIsOutOfBounds(testBoard, toPosition);
     List<TestPosition> moveSet = getValidPositions(testBoard, fromPosition);
     boolean containCondition = moveSet.contains(toPosition);
     return (containCondition && !outOfBounds) ? Validity.VALID : Validity.INVALID;
@@ -44,7 +44,7 @@ public class ChessMoveRunner implements TestMoveRunner {
             .toList());
   }
 
-  private boolean checkOutOfBounds(TestBoard testBoard, TestPosition position) {
+  private boolean positionIsOutOfBounds(TestBoard testBoard, TestPosition position) {
     Board board = mapBoard(testBoard);
     ChessPosition piecePos = mapPosition(position);
     int i = piecePos.getRow();

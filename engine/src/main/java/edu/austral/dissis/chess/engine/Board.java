@@ -5,6 +5,9 @@ import edu.austral.dissis.chess.utils.ChessPosition;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.jetbrains.annotations.NotNull;
 
 public class Board {
@@ -68,11 +71,7 @@ public class Board {
     for (Map.Entry<ChessPosition, Piece> entry : pieces.entrySet()) {
       matrix[entry.getKey().getRow()][entry.getKey().getColumn()] = entry.getValue();
     }
-    StringBuilder builder = new StringBuilder();
-    for (Piece[] value : matrix) {
-      builder.append(Arrays.toString(value)).append("\n");
-    }
-    return builder.toString();
+      return IntStream.iterate(matrix.length - 1, i -> i >= 0, i -> i - 1).mapToObj(i -> Arrays.toString(matrix[i]) + "\n").collect(Collectors.joining());
   }
 
   public Board createCopy() {

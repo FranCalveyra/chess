@@ -18,9 +18,11 @@ public class PawnFirstMove implements PieceMovement {
     int newY = newPos.getRow();
     boolean horizontalMove = oldX == newX;
     boolean verticalMove = Math.abs(newY - oldY) == 2;
+    Piece lastPiece = context.pieceAt(newPos);
+    boolean lastCond = lastPiece == null;
     return horizontalMove
         && verticalMove
         && !piece.hasMoved()
-        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL);
+        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL) && lastCond;
   }
 }

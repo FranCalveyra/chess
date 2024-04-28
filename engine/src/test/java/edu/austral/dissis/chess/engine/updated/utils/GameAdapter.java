@@ -25,9 +25,9 @@ import java.util.Map;
 public class GameAdapter {
 
   public static Board mapBoard(TestBoard board) {
-    int rows = board.component1().getRows();
-    int cols = board.component1().getCols();
-    Map<ChessPosition, Piece> map = mapPieces(board.component2());
+    int rows = board.getSize().getRows();
+    int cols = board.getSize().getCols();
+    Map<ChessPosition, Piece> map = mapPieces(board.getPieces());
     return new Board(map, rows, cols);
   }
 
@@ -36,7 +36,7 @@ public class GameAdapter {
   }
 
   public static Piece mapPiece(TestPiece piece) {
-    return new PieceProvider().provide(mapColour(piece.component2()), mapPieceType(piece));
+    return new PieceProvider().provide(mapColour(piece.getPlayerColorSymbol()), mapPieceType(piece));
   }
 
   private static Color mapColour(char c) {

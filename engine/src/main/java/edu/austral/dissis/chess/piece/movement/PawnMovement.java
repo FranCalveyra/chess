@@ -18,10 +18,12 @@ public class PawnMovement implements PieceMovement {
     int newY = newPos.getRow();
     int deltaY = newY - oldY;
     Piece currentPawn = context.pieceAt(oldPos);
+    Piece lastPiece = context.pieceAt(newPos);
+    boolean lastCond = lastPiece == null;
     boolean movementByColor =
         currentPawn.getPieceColour() == Color.BLACK ? deltaY == -1 : deltaY == 1;
     return (oldX == newX
         && movementByColor
-        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL));
+        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL) && lastCond );
   }
 }
