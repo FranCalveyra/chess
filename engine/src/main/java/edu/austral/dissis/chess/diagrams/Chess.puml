@@ -93,7 +93,7 @@ class PawnFirstMove implements PieceMovement{
 }
 class PawnMovement implements PieceMovement{
 }
-class PawnFirstMove implements PieceMovement{
+class PawnTaking implements PieceMovement{
 }
 class QueenMovement implements PieceMovement{
 }
@@ -202,5 +202,5 @@ DefaultCheck -> DefaultCheckValidator
 MoveExecutor --> MoveType
 MoveExecutor --> Pair
 Piece o-- PieceType
-Piece o-- PieceMovement
+Piece o--- PieceMovement
 @enduml

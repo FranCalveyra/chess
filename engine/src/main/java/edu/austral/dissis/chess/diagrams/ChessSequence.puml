@@ -1,54 +1,86 @@
 @startuml
-' Game
+' ChessGame
 ' Board
-' GameRule
-' PieceMovementRule
-' Player
+' WinCondition
+' PieceMovement
+' WinConditionValidator
+' Check
+' PiecePathValidator
 ' Piece
-' Position
-User -> BoardGame: Play Request
-BoardGame -> BoardGame: startGame(): void
-BoardGame->BoardGame: activatePlayers(): void
-BoardGame -> BoardGame: makeMove(Piece piece, Position newCoords): void
-' Should check throughout all the rules, asserts context
-BoardGame->GameRule: isValidRule(): boolean
-alt isValidRule(Board context) == true
-    GameRule->GameRule: return true
-    GameRule->BoardGame: end
-    BoardGame -> Board: makeMove(Piece piece, Position newCoords): void
-    Board -> PieceMovementRule: updatePiecePosition(Piece piece, Position newCoords): void
-    PieceMovementRule->PieceMovementRule: isValidMove(Position oldPos, Position newPos): boolean
-    alt isValidMove(Position oldPos, Position newPos) == true
-        PieceMovementRule -> Piece: return true
-        Piece->Board: "notify valid move"
-        Board->Board: "change piece position"
-        Board->Board: end
-    else
-        PieceMovementRule->Piece: return false
-        Piece->Board: end
-        Board->Board: "do nothing"
-    end
-
-    BoardGame->Board: checkGameEnd(): boolean
-    Board->Board: getActivePieces(): List<Piece>
-    Piece->Board: isActive(): boolean
-    ' Should check win condition piece/s
-    alt isActive(Board context) == true
-        Piece->Board: return true
-        Board->BoardGame: return
-        BoardGame->BoardGame: continue
-    else isActive(Board context) == false
-        Piece->Board: return false
-        Board->BoardGame: return true
-        BoardGame->BoardGame: endGame(): void
-        BoardGame->BoardGame: deactivatePlayers(): void
-        BoardGame->BoardGame: end
-        BoardGame->User: end
-    end
-else isValidRule(Board context) == false
-    GameRule->GameRule: return false
-    GameRule->BoardGame: end
-    BoardGame->User: "The move is not valid. Please try another"
-    'This should make the execution cyclic
+' ChessPosition
+' Move = (ChessPosition from, ChessPosition to)
+Client -> ChessGame: makeMove(move)
+' Not valid move is caused by piece rules, out of board bounds move, piece to move == null, etc
+ChessGame -> Board: board.pieceAt(move.from()) = pieceToMove
+alt outOfBoardBounds(move) or pieceToMove.pieceColor != currentTurn
+    ChessGame -> Client: return GameResult(game, INVALID_MOVE)
+else
+    ChessGame -> ChessGame: continue execution
 end
+ChessGame -> Piece: getPlay(move, board)
+loop for pieceMovement in piece.pieceMovements
+    Piece -> PieceMovement: isValidMove(move, board)
+    alt move is valid == true
+        PieceMovement -> Piece: add(move)
+    else move is not valid
+        PieceMovement -> Piece: continue execution
+    end
+    PieceMovement -> Piece: return List<ChessMove>movesToExecute
+end
+Piece -> ChessGame: return movesToExecute
+alt movesToExecute.isEmpty()
+    ChessGame -> Client: return GameResult(game, INVALID_MOVE)
+    else is not empty
+    ChessGame-> ChessGame: continue execution
+end
+
+loop for move in movesToExecute
+    ChessGame -> MoveExecutor: executeMove(move, board, promoter)
+    MoveExecutor -> Board: board.pieceAt(move.from())
+    Board -> MoveExecutor: pieceToMove
+    alt pieceToMove == null
+        MoveExecutor->ChessGame: Pair(board, INVALID_MOVE)
+        ChessGame-> Client: return GameResult(game, INVALID_MOVE)
+    end
+    MoveExecutor -> Board: board.pieceAt(move.to())
+    Board -> MoveExecutor: pieceToTake
+    alt pieceToTake != null
+        alt pieceToMove.pieceColor == pieceToTake.pieceColor
+            MoveExecutor->ChessGame: Pair(board, INVALID_MOVE)
+            ChessGame-> Client: return GameResult(game, INVALID_MOVE)
+        else
+            MoveExecutor -> Board: removePieceAt(move.to())
+            Board -> MoveExecutor: return updatedBoard
+            MoveExecutor -> Board: removePieceAt(move.from()).addPieceAt(move.to(), pieceToMove.hasMoved() ? pieceToMove.changeActivity(): pieceToMove)
+            Board -> MoveExecutor: return updatedBoard
+            MoveExecutor -> ChessGame: return Pair(updatedBoard, PIECE_TAKEN)
+        end
+    MoveExecutor -> Board: removePieceAt(move.from()).addPieceAt(move.to(), pieceToMove.hasMoved() ? pieceToMove.changeActivity(): pieceToMove)
+    Board->MoveExecutor: return updatedBoard
+    MoveExecutor -> ChessGame: return Pair(updatedBoard, VALID_MOVE)
+end
+end
+MoveExecutor -> ChessGame: return Pair(finalBoard, validMoveResult)
+ChessGame -> checkConditions: isInCheck(finalBoard)
+alt true
+ChessGame -> Client: return GameResult(game, INVALID_MOVE)
+else false
+checkConditions -> ChessGame: return false
+ChessGame -> ChessGame: continue execution
+end
+ChessGame -> WinConditionValidator: isGameWon(finalBoard)
+loop for winCondition in WinConditionValidator
+WinConditionValidator -> WinCondition: isValidRule(finalBoard)
+WinCondition -> WinConditionValidator: return result
+
+alt result == true
+    WinConditionValidator -> WinConditionValidator: set winner based on currentTurn (color)
+    WinConditionValidator -> ChessGame: return winner
+    ChessGame -> Client: return GameResult(finalGame, winner)
+else result == false
+    WinConditionValidator-> WinConditionValidator: continue execution
+end
+WinConditionValidator -> ChessGame: return result (false case, no winner)
+ChessGame -> Client: return GameResult(finalGame, validMoveResult)
+
 @enduml
