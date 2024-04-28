@@ -21,17 +21,15 @@ import org.junit.jupiter.api.Test;
 
 public class ChessTest {
   // Setup
-
-  private ChessGame game =
-      new GameProvider().provide(GameType.DEFAULT);
+  private ChessGame game = new GameProvider().provide(GameType.DEFAULT);
 
   // Tests
   @Test
   public void foolsMate() {
     final Piece blackPawn = game.getBoard().pieceAt(fromAlgebraic("e7"));
     final Piece whitePawn = game.getBoard().pieceAt(fromAlgebraic("f2"));
-    final Piece whitePawn2 =game.getBoard().pieceAt(fromAlgebraic("g2"));
-    final Piece blackQueen =game.getBoard().pieceAt(fromAlgebraic("d8"));
+    final Piece whitePawn2 = game.getBoard().pieceAt(fromAlgebraic("g2"));
+    final Piece blackQueen = game.getBoard().pieceAt(fromAlgebraic("d8"));
     assertEquals(blackPawn.getPieceColour(), Color.BLACK);
     assertEquals(whitePawn.getPieceColour(), Color.WHITE);
     assertEquals(whitePawn2.getPieceColour(), Color.WHITE);
@@ -92,19 +90,19 @@ public class ChessTest {
     game = makeMove(game, "c5 -> c3").game();
     assertPositionType(game, PieceType.ROOK, 2, 2);
     game = makeMove(game, "a7 -> a8").game();
-    // Once promoted
+
+    // Once promoted:
     assertPositionType(game, PieceType.QUEEN, 7, 0);
     assertEquals(Color.WHITE, game.getBoard().pieceAt(fromAlgebraic("a8")).getPieceColour());
   }
 
   // Private stuff
   protected static ChessPosition getPiecePosition(Piece piece, Map<ChessPosition, Piece> pieces) {
-    for (Map.Entry<ChessPosition, Piece> entry : pieces.entrySet()) {
-      if (entry.getValue() == piece) {
-        return entry.getKey();
-      }
-    }
-    return null;
+    return pieces.entrySet().stream()
+        .filter(entry -> entry.getValue() == piece)
+        .findFirst()
+        .map(Map.Entry::getKey)
+        .orElse(null);
   }
 
   private void assertPositionType(ChessGame currentGame, PieceType pieceType, int i, int j) {

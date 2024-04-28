@@ -13,16 +13,16 @@ public class ChessPosition {
     this.column = column;
   }
 
-  public static ChessPosition fromAlgebraic(String pos){
+  public static ChessPosition fromAlgebraic(String pos) {
     int col = pos.charAt(0) - 'a';
     int row = pos.charAt(1) - '1';
     return new ChessPosition(row, col);
   }
 
-  public static String toAlgebraic(ChessPosition pos){
-    char col = (char)(pos.column + 'a');
-    char row = (char)(pos.row + '1');
-    return String.valueOf(col) + String.valueOf(row);
+  public static String toAlgebraic(ChessPosition pos) {
+    char col = (char) (pos.column + 'a');
+    char row = (char) (pos.row + '1');
+    return col + String.valueOf(row);
   }
 
   public int getColumn() {

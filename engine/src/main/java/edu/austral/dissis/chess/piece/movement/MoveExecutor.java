@@ -22,7 +22,7 @@ public class MoveExecutor {
       return new Pair<>(board, INVALID_MOVE);
     }
     Board newBoard;
-    Piece pieceToTake = board.pieceAt(newPos); // Check outside
+    Piece pieceToTake = board.pieceAt(newPos);
     if (pieceToTake != null) {
       if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
         return new Pair<>(board, INVALID_MOVE);

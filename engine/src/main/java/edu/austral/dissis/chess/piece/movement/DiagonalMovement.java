@@ -18,6 +18,5 @@ public class DiagonalMovement implements PieceMovement {
     }
     return new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, DIAGONAL);
     // They have to move the same amount in both coordinates.
-    // If not, movement should resemble to a Knight movement.
   }
 }

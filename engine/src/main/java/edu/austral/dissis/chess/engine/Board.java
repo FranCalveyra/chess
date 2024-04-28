@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 import org.jetbrains.annotations.NotNull;
 
 public class Board {
+  // Simplest possible board implementation
   private final Map<ChessPosition, Piece> pieces;
   private final int rows;
   private final int columns;
@@ -35,9 +35,7 @@ public class Board {
   // Board modifiers
   public Board addPieceAt(ChessPosition pos, Piece piece) {
     Map<ChessPosition, Piece> newMap = copyMap(pieces);
-    // Add it to board
-    newMap.put(pos, piece); // Update the map
-
+    newMap.put(pos, piece);
     return new Board(newMap, rows, columns);
   }
 
@@ -71,7 +69,9 @@ public class Board {
     for (Map.Entry<ChessPosition, Piece> entry : pieces.entrySet()) {
       matrix[entry.getKey().getRow()][entry.getKey().getColumn()] = entry.getValue();
     }
-      return IntStream.iterate(matrix.length - 1, i -> i >= 0, i -> i - 1).mapToObj(i -> Arrays.toString(matrix[i]) + "\n").collect(Collectors.joining());
+    return IntStream.iterate(matrix.length - 1, i -> i >= 0, i -> i - 1)
+        .mapToObj(i -> Arrays.toString(matrix[i]) + "\n")
+        .collect(Collectors.joining());
   }
 
   public Board createCopy() {

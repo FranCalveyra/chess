@@ -10,7 +10,6 @@ import edu.austral.dissis.chess.validators.PiecePathValidator;
 public class PawnFirstMove implements PieceMovement {
   @Override
   public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
-    // Need pawn original position. Get if from default
     Piece piece = context.getPiecesAndPositions().get(oldPos);
     int oldX = oldPos.getColumn();
     int oldY = oldPos.getRow();
@@ -23,6 +22,7 @@ public class PawnFirstMove implements PieceMovement {
     return horizontalMove
         && verticalMove
         && !piece.hasMoved()
-        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL) && lastCond;
+        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL)
+        && lastCond;
   }
 }

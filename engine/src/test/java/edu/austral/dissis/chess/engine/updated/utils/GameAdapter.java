@@ -36,7 +36,8 @@ public class GameAdapter {
   }
 
   public static Piece mapPiece(TestPiece piece) {
-    return new PieceProvider().provide(mapColour(piece.getPlayerColorSymbol()), mapPieceType(piece));
+    return new PieceProvider()
+        .provide(mapColour(piece.getPlayerColorSymbol()), mapPieceType(piece));
   }
 
   private static Color mapColour(char c) {
@@ -61,11 +62,7 @@ public class GameAdapter {
 
   private static Map<ChessPosition, Piece> mapPieces(Map<TestPosition, TestPiece> map) {
     Map<ChessPosition, Piece> pieceMap = new HashMap<>();
-    for (Map.Entry<TestPosition, TestPiece> entry : map.entrySet()) {
-      TestPosition position = entry.getKey();
-      TestPiece piece = entry.getValue();
-      pieceMap.put(mapPosition(position), mapPiece(piece));
-    }
+    map.forEach((position, piece) -> pieceMap.put(mapPosition(position), mapPiece(piece)));
     return pieceMap;
   }
 }

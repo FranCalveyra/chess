@@ -70,7 +70,7 @@ public class ChessGame {
     this.turnNumber = turnNumber;
     this.currentTurn = currentTurn;
     executor = new MoveExecutor();
-  } // make it public
+  }
 
   public static ChessGame createChessGame(
       Board board,
@@ -105,7 +105,7 @@ public class ChessGame {
     Pair<Board, ChessMoveResult> resultPair = new Pair<>(board, INVALID_MOVE);
     final List<ChessMove> playToExecute = pieceToMove.getPlay(oldPos, newPos, board);
 
-    // No move available, should not happen in this instance
+    // No moves available
     if (playToExecute.isEmpty()) {
       return new GameResult(this, resultPair.second());
     }
@@ -130,13 +130,14 @@ public class ChessGame {
     if (possiblePlayInCheck(currentTurn, finalBoard)) {
       return new GameResult(this, INVALID_MOVE);
     }
+    // If play
     if (winConditionValidator.isGameWon(finalBoard)) {
       ChessMoveResult winner =
           currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; // Hardcoded, need to change
       return new GameResult(finalGame, winner);
     }
     // Get the resulting game at last
-    return new GameResult(finalGame, resultPair.second());
+    return new GameResult(finalGame, resultPair.second()); // Second represents the message
   }
 
   // Getters

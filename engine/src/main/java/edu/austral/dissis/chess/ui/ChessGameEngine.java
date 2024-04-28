@@ -66,8 +66,7 @@ public class ChessGameEngine implements GameEngine {
     for (Map.Entry<ChessPosition, Piece> entry : board.getPiecesAndPositions().entrySet()) {
       if (entry.getValue().equals(piece)) {
         return new Position(
-            entry.getKey().getRow() + 1,
-            entry.getKey().getColumn() + 1); // From zero based (I think)
+            entry.getKey().getRow() + 1, entry.getKey().getColumn() + 1); // From zero based
       }
     }
     return null;

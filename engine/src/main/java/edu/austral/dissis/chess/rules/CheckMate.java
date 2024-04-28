@@ -2,7 +2,6 @@ package edu.austral.dissis.chess.rules;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 import java.util.HashMap;
@@ -50,11 +49,7 @@ public class CheckMate implements WinCondition {
   private Map<ChessPosition, Piece> getPiecesByColor(Board context, Color team) {
     Map<ChessPosition, Piece> map = context.getPiecesAndPositions();
     return map.entrySet().stream()
-        .filter(
-            entry ->
-                entry.getValue() != null
-                    && entry.getValue().getPieceColour() == team
-                    && entry.getValue().getType() != PieceType.KING)
+        .filter(entry -> entry.getValue() != null && entry.getValue().getPieceColour() == team)
         .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
   }
 
@@ -64,13 +59,13 @@ public class CheckMate implements WinCondition {
       // Fetch current piece to analyse
       ChessPosition pos = entry.getKey();
       List<ChessPosition> moveSet = entry.getValue();
+
       // Iterate over all of its possible moves
       for (ChessPosition possibleMove : moveSet) {
         Board possibleBoardState = context.updatePiecePosition(pos, possibleMove);
         DefaultCheck check = new DefaultCheck(context.pieceAt(pos).getPieceColour());
 
         // If after executing the move is not in check anymore, return false. Return true otherwise
-        // (going through all the pieces)
         if (!check.isValidRule(possibleBoardState)) {
           return false;
         }

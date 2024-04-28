@@ -24,6 +24,7 @@ public class PawnMovement implements PieceMovement {
         currentPawn.getPieceColour() == Color.BLACK ? deltaY == -1 : deltaY == 1;
     return (oldX == newX
         && movementByColor
-        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL) && lastCond );
+        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL)
+        && lastCond);
   }
 }

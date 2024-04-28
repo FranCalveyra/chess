@@ -22,7 +22,8 @@ public class ChessMoveRunner implements TestMoveRunner {
       @NotNull TestPosition fromPosition,
       @NotNull TestPosition toPosition) {
     boolean outOfBounds =
-        positionIsOutOfBounds(testBoard, fromPosition) || positionIsOutOfBounds(testBoard, toPosition);
+        positionIsOutOfBounds(testBoard, fromPosition)
+            || positionIsOutOfBounds(testBoard, toPosition);
     List<TestPosition> moveSet = getValidPositions(testBoard, fromPosition);
     boolean containCondition = moveSet.contains(toPosition);
     return (containCondition && !outOfBounds) ? Validity.VALID : Validity.INVALID;

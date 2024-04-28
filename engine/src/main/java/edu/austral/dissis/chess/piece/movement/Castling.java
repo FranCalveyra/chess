@@ -12,7 +12,8 @@ import edu.austral.dissis.chess.validators.PiecePathValidator;
 import java.util.List;
 
 public class Castling implements PieceMovement {
-  // Only valid whenever king and rooks haven't been moved yet.
+  // Only valid whenever king and rooks haven't been moved yet,
+  // and move that is wanted to be done doesn't leave the king in check/checkmate.
 
   @Override
   public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {

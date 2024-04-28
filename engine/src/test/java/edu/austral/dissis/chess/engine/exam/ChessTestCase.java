@@ -1,41 +1,18 @@
 package edu.austral.dissis.chess.engine.exam;
 
-import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.engine.updated.runners.ChessGameRunner;
-import edu.austral.dissis.chess.promoters.StandardPromoter;
-import edu.austral.dissis.chess.providers.ChessPieceMapProvider;
-import edu.austral.dissis.chess.rules.Check;
-import edu.austral.dissis.chess.rules.CheckMate;
-import edu.austral.dissis.chess.rules.DefaultCheck;
-import edu.austral.dissis.chess.rules.WinCondition;
-import edu.austral.dissis.chess.selectors.StandardTurnSelector;
+import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.test.game.GameTester;
 import edu.austral.dissis.chess.utils.GameType;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
 public class ChessTestCase {
+  //Literal copy from Exam, can be perfectly deleted
   // Setup
-  private final java.util.List<WinCondition> rules =
-      new ArrayList<>(List.of(new CheckMate(Color.BLACK), new CheckMate(Color.WHITE)));
-  private final List<Check> checks =
-      List.of(new DefaultCheck(Color.BLACK), new DefaultCheck(Color.WHITE));
-
-  private final ChessPieceMapProvider pieceMapProvider = new ChessPieceMapProvider();
-  private final ChessGame game =
-      new ChessGame(
-          new Board(pieceMapProvider.provide(GameType.DEFAULT)),
-          rules,
-          checks,
-          new StandardPromoter(),
-          new StandardTurnSelector(),
-          Color.WHITE);
-
+  private final ChessGame game = new GameProvider().provide(GameType.DEFAULT);
   private final ChessGameRunner gameRunner = new ChessGameRunner(game);
   private final GameTester gameTester = new GameTester(gameRunner);
 
