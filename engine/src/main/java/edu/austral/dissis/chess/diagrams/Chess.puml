@@ -1,96 +1,206 @@
 @startuml
-class BoardGame{
+class ChessGame{
 -board: Board
 -rules: List<GameRule>
--isEnded: boolean
-+startGame(): void
-+endGame(): void
-+makeMove(Piece piece, Position newPos): void
--activatePlayers(): void
+-winConditionValidator :WinConditionValidator
+-winConditions : List<WinCondition>
+-checkConditions : List<Check>
+-promoter : Promoter
+-selector : TurnSelector
+-currentTurn : Color
+-turnNumber : int
+-executor : MoveExecutor
++makeMove(ChessMove move): GameResult
++getWinConditions() : List<WinCondition>
++getBoard(): Board
++getCurrentTurn(): Color
++getPromoter(): Promoter
++getSelector(): TurnSelector
++getCheckConditions(): List<Check>
++getTurnNumber(): int
 }
 
 class Board {
--pieces: Map<Position, Piece>
--columns: int
+-pieces: Map<ChessPosition, Piece>
 -rows: int
-+getActivePiecesAndPositions(): Map<Position, Piece>
-+removePieceFromGame(Piece piece): void
-+addPieceToGame(Piece piece): void
-+updatePiecePosition(Piece piece, Position newCoords): void
+-columns: int
++getActivePiecesAndPositions(): Map<ChessPosition, Piece>
++getRows(): int
++getColumns(): int
++removePieceAt(ChessPosition pos): Board
++addPieceToGame(ChessPosition pos, Piece piece): Board
++updatePiecePosition(ChessPosition oldPos, ChessPosition newPos): Board
 }
 
-interface GameRule{
+interface WinCondition{
 +isValidRule(Board context): boolean
 }
-
-class WinRule implements GameRule{
-+isValidRule(Board context): boolean
+class CheckMate implements WinCondition{
+-team: Color
+}
+class DefaultCheck implements Check{
+-team: Color
 }
 
-class TurnRule implements GameRule{
-+isValidRule(Board (Board context): boolean
-+getCurrentTurn(Board context): int
-}
-
-' Decorator Pattern
-class ChessGameRule implements GameRule{
--ruleWrapper: GameRule
-+baseGameRule(GameRule gameRule): void
-+isValidRule(): boolean
+interface Check extends WinCondition{
 }
 
 class Piece{
--movementRules: List<PieceMovementRule>
--pieceColour: int
--name: String
--isActiveInBoard: boolean
-+isActive(): boolean
-+changePieceActivity(): void
+-movements: List<PieceMovement>
+-pieceColour: Color
+-type: PieceType
+-hasMoved : boolean
+-id : String
+
++toString(): String
++getPieceColour(): Color
++getType(): PieceType
++getMovements(): List<PieceMovement>
++getId(): String
++hasMoved(): boolean
+
+
++isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context): boolean
++getMoveSet(ChessPosition currentPos, Board context): List<ChessPosition>
++getPlay(ChessPosition oldPos, ChessPosition newPos ,Board context): List<ChessMove>
++changeMoveState(): Piece
 }
 
-' Extra classes
-interface PieceMovementRule implements GameRule{
-+isValidMove(Position oldPos, Position newPos): boolean
-+isValidRule(Board context): boolean
+enum PieceType{
+PAWN,
+ROOK,
+KNIGHT,
+QUEEN,
+KING,
+BISHOP
 }
 
-class DiagonalMovementRule implements PieceMovementRule{
-+isValidMove(Position oldPos, Position newPos): boolean
-+isValidRule(Board context): boolean
+interface PieceMovement{
++isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context): boolean
++getPossiblePositions(ChessPosition currentPos, Board context):List<ChessPosition>
+}
+class Castling implements PieceMovement{
+}
+class DiagonalMovement implements PieceMovement{
+}
+class HorizontalMovement implements PieceMovement{
+}
+class KingMovement implements PieceMovement{
+}
+class KnightMovement implements PieceMovement{
+}
+class PawnFirstMove implements PieceMovement{
+}
+class PawnMovement implements PieceMovement{
+}
+class PawnFirstMove implements PieceMovement{
+}
+class QueenMovement implements PieceMovement{
+}
+class RookMovement implements PieceMovement{
+}
+class VerticalMovement implements PieceMovement{
 }
 
-class KnightMovementRule implements PieceMovementRule{
-+isValidMove(Position oldPos, Position newPos): boolean
-+isValidRule(Board context): boolean
+interface Promoter{
++hasToPromote(Board context, Color team): boolean
++canPromote(ChessPosition pos, Board context): boolean
++promote(ChessPosition pos, PieceType type, Board context): Board
+}
+class StandardPromoter implements Promoter{
 }
 
-class QueenMovementRule implements PieceMovementRule{
-+isValidMove(Position oldPos, Position newPos): boolean
-+isValidRule(Board context): boolean
+interface TurnSelector{
++selectTurn(int turnNumber): Color
+}
+class StandardTurnSelector implements TurnSelector{
+}
+class MoveExecutor{
++executeMove(ChessPosition oldPos, ChessPosition newPos, Board board, Promoter promoter): Pair<Board,ChessMoveResult>
 }
 
-class KingMovementRule implements PieceMovementRule{
-+isValidMove(Position oldPos, Position newPos): boolean
-+isValidRule(Board context): boolean
-}
 
-
-class Position{
--int column
+' Utils
+class ChessPosition{
 -int row
-+getColumn(): int
+-int column
 +getRow(): int
++getColumn(): int
++toString(): String
++equals(Object obj): boolean
++hashCode(): int
++<u>toAlgebraic(ChessPosition pos): String
++<u>fromAlgebraic(String pos): ChessPosition
+}
+class ChessMove{
+'Note that it's a record
+-from: ChessPosition
+-to: ChessPosition
++from(): ChessPosition
++to(): ChessPosition
++toString(): String
+}
+enum ChessMoveResult{
+WHITE_WIN,
+BLACK_WIN,
+INVALID_MOVE,
+VALID_MOVE,
+PIECE_TAKEN
+}
+class GameResult{
+-game: ChessGame
+-moveResult: ChessMoveResult
++game(): ChessGame
++moveResult(): ChessMoveResult
+}
+enum GameType{
+DEFAULT
+}
+enum MoveType{
+HORIZONTAL,
+VERTICAL,
+DIAGONAL
+}
+class Pair{
+-first: T
+-second: W
++first(): T
++second(): W
 }
 
-' Usages and else
-BoardGame *-- Board
-BoardGame *- GameRule
-Piece *--- PieceMovementRule
-Piece *- Position
-Board *- Piece
-PieceMovementRule *-- Position
-GameRule *- Board
+'Validators
+class DefaultCheckValidator{
++isInCheck(Board context, Color team, ChessPosition toPos, Piece piece): boolean
+}
+class PiecePathValidator{
++isNoPieceBetween(ChessPosition from, ChessPosition to, Board context, MoveType moveType): boolean
+}
+class WinConditionValidator{
+-winConditions:  List<WinCondition>
++isGameWon(Board context): boolean
+}
 
-' Hacer diagrama de secuencia también
 
+'Relations
+ChessGame o--- Board
+ChessGame o--- Promoter
+ChessGame o---- TurnSelector
+ChessGame o--- WinCondition
+ChessGame o--- Check
+ChessGame o---- MoveExecutor
+ChessGame ---> WinConditionValidator
+ChessGame -> ChessMove
+MoveExecutor --> ChessMoveResult
+ChessGame -> GameResult
+
+Board *-- Piece
+Board *-- ChessPosition
+
+ChessMove *-- ChessPosition
+PieceMovement -> PiecePathValidator
+DefaultCheck -> DefaultCheckValidator
+MoveExecutor --> MoveType
+MoveExecutor --> Pair
+Piece o-- PieceType
+Piece o-- PieceMovement
 @enduml

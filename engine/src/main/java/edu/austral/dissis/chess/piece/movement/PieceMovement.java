@@ -10,15 +10,15 @@ public interface PieceMovement {
 
   boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context);
 
-  default List<ChessPosition> getPossibleMoves(ChessPosition oldPos, Board context) {
+  default List<ChessPosition> getPossiblePositions(ChessPosition currentPos, Board context) {
     List<ChessPosition> possibleChessPositions = new ArrayList<>();
     for (int i = 0; i < context.getRows(); i++) {
       for (int j = 0; j < context.getColumns(); j++) {
-        ChessPosition currentPos = new ChessPosition(i, j);
-        if (isValidMove(oldPos, currentPos, context)
-            && !possibleChessPositions.contains(currentPos)
-            && context.pieceAt(currentPos) == null) {
-          possibleChessPositions.add(currentPos);
+        ChessPosition positionToMove = new ChessPosition(i, j);
+        if (isValidMove(currentPos, positionToMove, context)
+            && !possibleChessPositions.contains(positionToMove)
+            && context.pieceAt(positionToMove) == null) {
+          possibleChessPositions.add(positionToMove);
         }
       }
     }

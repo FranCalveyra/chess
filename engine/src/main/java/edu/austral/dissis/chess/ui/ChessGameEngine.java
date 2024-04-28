@@ -46,7 +46,7 @@ public class ChessGameEngine implements GameEngine {
     GameResult gameResult =
         game.makeMove(new ChessMove(mapPos(move.getFrom()), mapPos(move.getTo())));
     game = gameResult.game();
-    return getMoveResults(game).get(gameResult.message());
+    return getMoveResults(game).get(gameResult.moveResult());
   }
 
   @NotNull

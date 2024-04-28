@@ -6,11 +6,10 @@ import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 
 public interface Promoter {
-  // Put the type to promote in constructor
   boolean hasToPromote(Board context, Color team); // Check the promotion row of a given team
 
   boolean canPromote(
-      ChessPosition chessPosition, Board context); // Check if piece at given position is promotable
+      ChessPosition position, Board context); // Check if piece at given position is promotable
 
-  Board promote(ChessPosition chessPosition, PieceType type, Board context);
+  Board promote(ChessPosition position, PieceType type, Board context);
 }

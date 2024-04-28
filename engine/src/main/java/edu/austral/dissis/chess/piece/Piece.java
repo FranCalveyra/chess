@@ -38,12 +38,7 @@ public class Piece {
   }
 
   public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
-    for (PieceMovement movement : movements) {
-      if (movement.isValidMove(oldPos, newPos, context)) {
-        return true;
-      }
-    }
-    return false;
+    return movements.stream().anyMatch(movement -> movement.isValidMove(oldPos, newPos, context));
   }
 
   @Override
@@ -53,7 +48,7 @@ public class Piece {
         type != PieceType.KNIGHT ? type.toString().charAt(0) : type.toString().charAt(1);
     return colour.substring(0, 2) + " " + typeName;
   }
-
+  //Getters
   public Color getPieceColour() {
     return pieceColour;
   }
@@ -70,21 +65,22 @@ public class Piece {
     return id;
   }
 
-  public Piece changeMoveState() {
-    return new Piece(movements, pieceColour, type, !hasMoved, id); // Immutable approach
-  }
-
   public boolean hasMoved() {
     return hasMoved;
   }
 
-  public List<ChessPosition> getMoveSet(ChessPosition oldPos, Board context) {
-    List<ChessPosition> moveList = new ArrayList<>();
+  //Own methods
+  public Piece changeMoveState() {
+    return new Piece(movements, pieceColour, type, !hasMoved, id); // Immutable approach
+  }
+
+  public List<ChessPosition> getMoveSet(ChessPosition currentPos, Board context) {
+    List<ChessPosition> positionList = new ArrayList<>();
     for (PieceMovement movement : movements) {
-      moveList.addAll(movement.getPossibleMoves(oldPos, context));
+      positionList.addAll(movement.getPossiblePositions(currentPos, context));
     }
-    moveList = new ArrayList<>(new HashSet<>(moveList));
-    return moveList;
+    positionList = new ArrayList<>(new HashSet<>(positionList)); //Remove repeated
+    return positionList;
   }
 
   public List<ChessMove> getPlay(ChessPosition oldPos, ChessPosition newPos, Board board) {

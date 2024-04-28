@@ -96,7 +96,7 @@ public class PieceMovementTest {
     game = makeMove(game, "b2 -> b4").game();
     game = makeMove(game, "a7 -> a5").game();
     game = makeMove(game, "b4 -> b5").game();
-    assertEquals(INVALID_MOVE, makeMove(game, "b7 -> b5").message());
+    assertEquals(INVALID_MOVE, makeMove(game, "b7 -> b5").moveResult());
   }
 
   @Test
@@ -105,7 +105,7 @@ public class PieceMovementTest {
     game = makeMove(game, "b7 -> b5").game();
     game = makeMove(game, "a4 -> b5").game();
     assertEquals(Color.BLACK, game.getCurrentTurn());
-    assertEquals(INVALID_MOVE, makeMove(game, "a8 -> b4").message());
+    assertEquals(INVALID_MOVE, makeMove(game, "a8 -> b4").moveResult());
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
     game = makeMove(game, "g7 -> g6").game();
     List<ChessPosition> rookMoveSet =

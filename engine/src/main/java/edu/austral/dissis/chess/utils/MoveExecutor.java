@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.piece.movement;
+package edu.austral.dissis.chess.utils;
 
 import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.PIECE_TAKEN;
@@ -8,9 +8,7 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoters.Promoter;
-import edu.austral.dissis.chess.utils.ChessMoveResult;
-import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.utils.Pair;
+
 import java.awt.Color;
 
 public class MoveExecutor {

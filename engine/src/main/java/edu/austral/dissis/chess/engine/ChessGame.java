@@ -5,7 +5,7 @@ import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.WHITE_WIN;
 
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.movement.MoveExecutor;
+import edu.austral.dissis.chess.utils.MoveExecutor;
 import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.WinCondition;
@@ -137,7 +137,7 @@ public class ChessGame {
       return new GameResult(finalGame, winner);
     }
     // Get the resulting game at last
-    return new GameResult(finalGame, resultPair.second()); // Second represents the message
+    return new GameResult(finalGame, resultPair.second()); // Second represents the moveResult
   }
 
   // Getters
@@ -161,6 +161,14 @@ public class ChessGame {
     return selector;
   }
 
+  public List<Check> getCheckConditions() {
+    return checkConditions;
+  }
+
+  public int getTurnNumber() {
+    return turnNumber;
+  }
+
   // Private methods
   private boolean outOfBoardBounds(ChessPosition pos) {
     int i = pos.getRow();
@@ -176,13 +184,5 @@ public class ChessGame {
             .orElse(null);
     assert checkRule != null;
     return checkRule.isValidRule(board);
-  }
-
-  public List<Check> getCheckConditions() {
-    return checkConditions;
-  }
-
-  public int getTurnNumber() {
-    return turnNumber;
   }
 }

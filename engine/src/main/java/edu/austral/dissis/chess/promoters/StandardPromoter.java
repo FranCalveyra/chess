@@ -15,18 +15,18 @@ public class StandardPromoter implements Promoter {
   }
 
   @Override
-  public boolean canPromote(ChessPosition chessPosition, Board context) {
-    Piece piece = context.pieceAt(chessPosition);
+  public boolean canPromote(ChessPosition position, Board context) {
+    Piece piece = context.pieceAt(position);
     if (piece == null) {
       return false;
     }
     int promoteRow = piece.getPieceColour() == Color.BLACK ? 0 : context.getRows() - 1;
-    return piece.getType() == PieceType.PAWN && chessPosition.getRow() == promoteRow;
+    return piece.getType() == PieceType.PAWN && position.getRow() == promoteRow;
   }
 
   @Override
-  public Board promote(ChessPosition chessPosition, PieceType type, Board context) {
-    Piece initialPiece = context.pieceAt(chessPosition);
+  public Board promote(ChessPosition position, PieceType type, Board context) {
+    Piece initialPiece = context.pieceAt(position);
     Piece piece = new PieceProvider().provide(initialPiece.getPieceColour(), type);
     Piece actualPiece =
         new Piece(
@@ -35,7 +35,7 @@ public class StandardPromoter implements Promoter {
             type,
             initialPiece.hasMoved(),
             initialPiece.getId());
-    return context.removePieceAt(chessPosition).addPieceAt(chessPosition, actualPiece);
+    return context.removePieceAt(position).addPieceAt(position, actualPiece);
   }
 
   // Private stuff
