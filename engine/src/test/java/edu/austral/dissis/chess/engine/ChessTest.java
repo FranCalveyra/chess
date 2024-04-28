@@ -52,7 +52,6 @@ public class ChessTest {
     assertEquals(PieceType.QUEEN, game.getBoard().pieceAt(fromAlgebraic("h4")).getType());
     assertTrue(new DefaultCheck(Color.WHITE).isValidRule(game.getBoard()));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
-    System.out.println(game.getBoard());
     assertTrue(new CheckMate(Color.WHITE).isValidRule(game.getBoard()));
   }
 

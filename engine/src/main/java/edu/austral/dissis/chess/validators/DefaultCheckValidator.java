@@ -15,13 +15,7 @@ public class DefaultCheckValidator {
       // your own team or an empty space
     }
     ChessPosition kingChessPosition = getKingPosition(context, team);
-    boolean condition =
-        kingChessPosition != null && piece.isValidMove(toPos, kingChessPosition, context);
-    if (condition) {
-      System.out.println(context.pieceAt(toPos).getMoveSet(toPos, context));
-      System.out.println(context);
-    }
-    return condition;
+      return kingChessPosition != null && piece.isValidMove(toPos, kingChessPosition, context);
   }
 
   private ChessPosition getKingPosition(Board context, Color team) {

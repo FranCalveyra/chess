@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 public class PieceMovementTest {
   //Movements based on the board added to utils
 
-  //TODO: change all position assertions to string-based positions
-
   private ChessGame game = new GameProvider().provide(GameType.DEFAULT);
 
   @Test
@@ -129,7 +127,6 @@ public class PieceMovementTest {
     Piece whiteQueen = game.getBoard().pieceAt(fromAlgebraic("d1"));
     assertEquals(whiteQueen.getType(), PieceType.QUEEN);
     game = makeMove(game, "d2 -> d4").game();
-    System.out.println(game.getBoard());
     List<ChessPosition> whiteQueenMoveSet =
         game.getBoard()
             .pieceAt(fromAlgebraic("d1"))
@@ -172,7 +169,6 @@ public class PieceMovementTest {
         new Castling()
             .isValidMove(fromAlgebraic("e1"), fromAlgebraic("c1"), game.getBoard()));
     game = makeMove(game, "e1 -> c1").game();
-    System.out.println(game.getBoard());
     assertEquals(PieceType.KING, game.getBoard().pieceAt(fromAlgebraic("c1")).getType());
     assertEquals(PieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("d1")).getType());
   }
@@ -203,7 +199,6 @@ public class PieceMovementTest {
         new Castling()
             .isValidMove(fromAlgebraic("e1"), fromAlgebraic("g1"), game.getBoard()));
     game = makeMove(game, "e1 -> g1").game();
-    System.out.println(game.getBoard());
     assertEquals(PieceType.KING, game.getBoard().pieceAt(fromAlgebraic("g1")).getType());
     assertEquals(PieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("f1")).getType());
   }
