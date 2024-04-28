@@ -18,13 +18,9 @@ public class ChessApplication extends Application {
 
   @Override
   public void start(Stage stage) {
-    try {
       stage.setTitle("Chess");
       GameView root = new GameView(gameEngine, imageResolver);
       stage.setScene(new Scene(root));
       stage.show();
-    } catch (Exception e) {
-      System.out.println("Error: " + e);
-    }
   }
 }
