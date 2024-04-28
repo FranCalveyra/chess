@@ -48,7 +48,8 @@ public class Piece {
         type != PieceType.KNIGHT ? type.toString().charAt(0) : type.toString().charAt(1);
     return colour.substring(0, 2) + " " + typeName;
   }
-  //Getters
+
+  // Getters
   public Color getPieceColour() {
     return pieceColour;
   }
@@ -69,7 +70,7 @@ public class Piece {
     return hasMoved;
   }
 
-  //Own methods
+  // Own methods
   public Piece changeMoveState() {
     return new Piece(movements, pieceColour, type, !hasMoved, id); // Immutable approach
   }
@@ -79,7 +80,7 @@ public class Piece {
     for (PieceMovement movement : movements) {
       positionList.addAll(movement.getPossiblePositions(currentPos, context));
     }
-    positionList = new ArrayList<>(new HashSet<>(positionList)); //Remove repeated
+    positionList = new ArrayList<>(new HashSet<>(positionList)); // Remove repeated
     return positionList;
   }
 

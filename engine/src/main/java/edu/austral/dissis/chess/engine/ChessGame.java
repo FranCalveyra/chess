@@ -5,7 +5,6 @@ import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.WHITE_WIN;
 
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.utils.MoveExecutor;
 import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.WinCondition;
@@ -14,6 +13,7 @@ import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessMoveResult;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import edu.austral.dissis.chess.utils.GameResult;
+import edu.austral.dissis.chess.utils.MoveExecutor;
 import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.validators.WinConditionValidator;
 import java.awt.Color;

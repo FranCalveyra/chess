@@ -10,7 +10,7 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
 public class ChessTestCase {
-  //Literal copy from Exam, can be perfectly deleted
+  // Literal copy from Exam, can be perfectly deleted
   // Setup
   private final ChessGame game = new GameProvider().provide(GameType.DEFAULT);
   private final ChessGameRunner gameRunner = new ChessGameRunner(game);

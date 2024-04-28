@@ -8,7 +8,6 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoters.Promoter;
-
 import java.awt.Color;
 
 public class MoveExecutor {

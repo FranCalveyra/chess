@@ -4,7 +4,7 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.ChessPosition;
 
 public class RookMovement implements PieceMovement {
-  //TO DELETE
+  // TO DELETE
 
   @Override
   public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
