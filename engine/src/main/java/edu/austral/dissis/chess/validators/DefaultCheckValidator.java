@@ -9,9 +9,10 @@ import java.util.Map.Entry;
 
 public class DefaultCheckValidator {
 
-  public boolean isInCheck(Board context, Color team, ChessPosition toPos, Piece piece) {
-    if (piece == null || piece.getPieceColour() == team) {
-      return false; // Makes no sense to check if the king's in check against
+  public boolean isInCheck(Board context, Color team, ChessPosition toPos) {
+    Piece piece = context.pieceAt(toPos);
+    if(notAnEnemy(piece, team)){
+      return false;// Makes no sense to check if the king's in check against
       // your own team or an empty space
     }
     ChessPosition kingChessPosition = getKingPosition(context, team);
@@ -30,4 +31,8 @@ public class DefaultCheckValidator {
     }
     return null;
   }
+  private boolean notAnEnemy(Piece piece, Color team) {
+    return piece == null || piece.getPieceColour() == team;
+  }
+
 }

@@ -11,11 +11,15 @@ public class KingMovement implements PieceMovement {
     int deltaX = Math.abs(oldPos.getColumn() - newPos.getColumn());
     int deltaY = Math.abs(oldPos.getRow() - newPos.getRow());
     boolean horizontal = deltaX == 1 && deltaY == 0;
-    boolean vertical = deltaY == 1 && deltaX == 0;
+    boolean vertical = deltaX == 0 && deltaY == 1;
     boolean diagonal = deltaX == 1 && deltaY == 1;
-    if (horizontal || vertical) {
-      return new RookMovement().isValidMove(oldPos, newPos, context);
-    } else if (diagonal) {
+    if (horizontal) {
+      return new HorizontalMovement().isValidMove(oldPos, newPos, context);
+    }
+    else if (vertical){
+      return new VerticalMovement().isValidMove(oldPos, newPos, context);
+    }
+    else if (diagonal) {
       return new DiagonalMovement().isValidMove(oldPos, newPos, context);
     }
     return false;

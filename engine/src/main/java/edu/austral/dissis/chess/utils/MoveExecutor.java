@@ -15,9 +15,6 @@ public class MoveExecutor {
       ChessPosition oldPos, ChessPosition newPos, Board board, Promoter promoter) {
     // Now, move the piece. Take piece in newPos whether exists
     Piece piece = board.pieceAt(oldPos);
-    if (piece == null) {
-      return new Pair<>(board, INVALID_MOVE);
-    }
     Board newBoard;
     Piece pieceToTake = board.pieceAt(newPos);
     if (pieceToTake != null) {

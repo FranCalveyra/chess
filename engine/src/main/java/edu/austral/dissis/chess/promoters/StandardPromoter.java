@@ -6,7 +6,8 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.providers.PieceProvider;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
-
+/**Only promotes Pawns.
+ */
 public class StandardPromoter implements Promoter {
 
   @Override
@@ -26,23 +27,31 @@ public class StandardPromoter implements Promoter {
 
   @Override
   public Board promote(ChessPosition position, PieceType type, Board context) {
+    //Fetch initial piece
     Piece initialPiece = context.pieceAt(position);
-    Piece piece = new PieceProvider().provide(initialPiece.getPieceColour(), type);
-    Piece actualPiece =
+    //Get the piece to promote
+    Piece pieceToPromoteTo = new PieceProvider().provide(initialPiece.getPieceColour(), type);
+    Piece promotedPiece =
         new Piece(
-            piece.getMovements(),
-            piece.getPieceColour(),
+            pieceToPromoteTo.getMovements(),
+            pieceToPromoteTo.getPieceColour(),
             type,
             initialPiece.hasMoved(),
             initialPiece.getId());
-    return context.removePieceAt(position).addPieceAt(position, actualPiece);
+    //Update the board
+    return context.removePieceAt(position).addPieceAt(position, promotedPiece);
   }
 
   // Private stuff
+  //If there's any pawn promotable in the board (in the last row, promote it)
   private boolean isAnyPawnPromotable(Board context, Color team) {
+    //Changes the row to check depending on the analysed color. If WHITE, checks the last row; else, checks the first
     int rowToCheck = team == Color.WHITE ? context.getRows() - 1 : 0;
+    //Go through all board columns and check if there is any pawn at that position
     for (int j = 0; j < context.getColumns(); j++) {
+      //Fetches a piece at the desired position
       Piece pieceAt = context.pieceAt(new ChessPosition(rowToCheck, j));
+      //If the piece does not match the following conditions, skip it
       if (pieceAt != null
           && pieceAt.getType() == PieceType.PAWN
           && pieceAt.getPieceColour() == team) {

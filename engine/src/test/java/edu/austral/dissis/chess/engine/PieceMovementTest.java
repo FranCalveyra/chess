@@ -49,10 +49,16 @@ public class PieceMovementTest {
     assertEquals(blackPawn.getPieceColour(), Color.BLACK);
     assertEquals(blackPawn.getType(), PieceType.PAWN);
     game = makeMove(game, "d2 -> d4").game();
+    System.out.println(game.getBoard());
     game = makeMove(game, "c7 -> c5").game();
+    System.out.println(game.getBoard());
     game = makeMove(game, "d4 -> c5").game();
+    System.out.println(game.getBoard());
+    game = makeMove(game, "d7 -> d5").game();
     game = makeMove(game, "c1 -> e3").game();
+    System.out.println(game.getBoard());
     game = makeMove(game, "a7 -> a6").game();
+    System.out.println(game.getBoard());
     game = makeMove(game, "e3 -> c5").game();
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
   }
@@ -185,10 +191,8 @@ public class PieceMovementTest {
     assertEquals(Color.BLACK, game.getCurrentTurn());
     game = makeMove(game, "g7 -> g6").game();
     assertEquals(WHITE, game.getCurrentTurn());
-    game = makeMove(game, "g1 -> h3").game();
-    game = makeMove(game, "a7 -> a5").game();
     game = makeMove(game, "f1 -> g2").game();
-    game = makeMove(game, "b5 -> b4").game();
+    game = makeMove(game, "a7 -> a5").game();
     assertTrue(
         new Castling().isValidMove(fromAlgebraic("e1"), fromAlgebraic("g1"), game.getBoard()));
     game = makeMove(game, "e1 -> g1").game();

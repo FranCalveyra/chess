@@ -2,16 +2,8 @@ package edu.austral.dissis.chess.providers;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.piece.movement.Castling;
-import edu.austral.dissis.chess.piece.movement.DiagonalMovement;
-import edu.austral.dissis.chess.piece.movement.KingMovement;
-import edu.austral.dissis.chess.piece.movement.KnightMovement;
-import edu.austral.dissis.chess.piece.movement.PawnFirstMove;
-import edu.austral.dissis.chess.piece.movement.PawnMovement;
-import edu.austral.dissis.chess.piece.movement.PawnTaking;
-import edu.austral.dissis.chess.piece.movement.PieceMovement;
-import edu.austral.dissis.chess.piece.movement.QueenMovement;
-import edu.austral.dissis.chess.piece.movement.RookMovement;
+import edu.austral.dissis.chess.piece.movement.*;
+
 import java.awt.Color;
 import java.util.List;
 import java.util.Random;
@@ -31,13 +23,13 @@ public class PieceProvider {
               randInt + colorName + " " + type.name().toLowerCase());
       case ROOK ->
           new Piece(
-              List.of(new RookMovement()),
+              List.of(new HorizontalMovement(), new VerticalMovement()),
               pieceColour,
               type,
               randInt + colorName + " " + type.name().toLowerCase());
       case QUEEN ->
           new Piece(
-              List.of(new QueenMovement()),
+              List.of(new HorizontalMovement(), new VerticalMovement(), new DiagonalMovement()),
               pieceColour,
               type,
               randInt + colorName + " " + type.name().toLowerCase());

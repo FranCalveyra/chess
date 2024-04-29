@@ -25,35 +25,31 @@ public class Castling implements PieceMovement {
       ChessPosition oldPos, ChessPosition newPos, Board context) {
     int rookColumn = newPos.getColumn() == 2 ? 0 : context.getColumns() - 1;
     int resultCol = rookColumn == 0 ? oldPos.getColumn() - 1 : oldPos.getColumn() + 1;
-    return List.of(
-        new ChessMove(oldPos, newPos),
-        new ChessMove(
+    ChessMove rookMove = new ChessMove(
             new ChessPosition(oldPos.getRow(), rookColumn),
-            new ChessPosition(oldPos.getRow(), resultCol)));
+            new ChessPosition(oldPos.getRow(), resultCol));
+    return List.of(new ChessMove(oldPos, newPos),rookMove);
   }
 
   private boolean isCastlingPossible(ChessPosition oldPos, ChessPosition newPos, Board context) {
-    Piece firstPiece = context.pieceAt(oldPos);
+    //This is a king-only rule
+    Piece king = context.pieceAt(oldPos);
     int rookColumn = newPos.getColumn() == 2 ? 0 : context.getColumns() - 1;
-    Piece secondPiece = context.pieceAt(new ChessPosition(newPos.getRow(), rookColumn));
-    if (firstPiece == null || secondPiece == null) {
+    Piece rook = context.pieceAt(new ChessPosition(newPos.getRow(), rookColumn));
+    if (king == null || rook == null) {
       return false;
     }
-    boolean colorCheck = firstPiece.getPieceColour() == secondPiece.getPieceColour();
-    boolean typeCheck1 =
-        (firstPiece.getType() == PieceType.KING && secondPiece.getType() == PieceType.ROOK);
-    boolean typeCheck2 =
-        (secondPiece.getType() == PieceType.KING && firstPiece.getType() == PieceType.ROOK);
-    boolean typeCheck = typeCheck1 || typeCheck2;
+    boolean colorCheck = king.getPieceColour() == rook.getPieceColour();
+    boolean typeCheck = validateCastlingPieceTypes(king,rook);
     int columnDelta = Math.abs(newPos.getColumn() - oldPos.getColumn());
     boolean displacementCheck = oldPos.getRow() == newPos.getRow() && columnDelta == 2;
-    boolean movementCheck = !firstPiece.hasMoved() && !secondPiece.hasMoved();
-    boolean generalChecks = colorCheck && typeCheck && movementCheck && displacementCheck;
+    boolean haveNotMoved = !king.hasMoved() && !rook.hasMoved();
+    boolean generalChecks = colorCheck && typeCheck && haveNotMoved && displacementCheck;
 
     if (!generalChecks) {
       return false;
     }
-    boolean isInCheckFromStart = new DefaultCheck(firstPiece.getPieceColour()).isValidRule(context);
+    boolean isInCheckFromStart = new DefaultCheck(king.getPieceColour()).isValidRule(context);
     // If there's a piece between or is in check from start, return false
     if (!(new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, HORIZONTAL))
         || isInCheckFromStart) {
@@ -62,12 +58,17 @@ public class Castling implements PieceMovement {
     return validateCheckBetween(oldPos, newPos, context);
   }
 
+  private boolean validateCastlingPieceTypes(Piece king, Piece rook) {
+      return king.getType() == PieceType.KING && rook.getType() == PieceType.ROOK;
+  }
+
   private boolean validateCheckBetween(ChessPosition oldPos, ChessPosition newPos, Board context) {
     int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
     int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
-    for (int j = fromColumn + 1; j < toColumn; j++) {
+    Piece king = context.pieceAt(oldPos);
+    for (int j = fromColumn + 1; j <= toColumn; j++) {
       ChessPosition currentTile = new ChessPosition(oldPos.getRow(), j);
-      Board possibleBoard = context.updatePiecePosition(currentTile, newPos);
+      Board possibleBoard = context.removePieceAt(oldPos).addPieceAt(currentTile, king);
       if (new DefaultCheck(context.pieceAt(oldPos).getPieceColour()).isValidRule(possibleBoard)) {
         return false;
       }

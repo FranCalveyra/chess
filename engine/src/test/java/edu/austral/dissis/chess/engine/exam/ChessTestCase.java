@@ -23,6 +23,6 @@ public class ChessTestCase {
 
   @TestFactory
   public Stream<DynamicTest> debug() {
-    return gameTester.debug("mate_fools.md");
+    return gameTester.debug("invalid_other_turn.md");
   }
 }

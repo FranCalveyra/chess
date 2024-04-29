@@ -9,19 +9,16 @@ public class PawnTaking implements PieceMovement {
 
   @Override
   public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
-    int oldX = oldPos.getColumn();
-    int oldY = oldPos.getRow();
-    int newX = newPos.getColumn();
-    int newY = newPos.getRow();
-    int deltaY = newY - oldY;
+    int deltaY = newPos.getRow() - oldPos.getRow();
+    int deltaX = Math.abs(newPos.getColumn() - oldPos.getColumn());
     boolean colorBasedVerticalMovement =
         context.pieceAt(oldPos).getPieceColour() == Color.BLACK ? deltaY == -1 : deltaY == 1;
-    boolean diagonalMove = colorBasedVerticalMovement && Math.abs(newX - oldX) == 1;
-    if (!diagonalMove) {
+    boolean diagonalMovement = colorBasedVerticalMovement && deltaX == 1;
+    if (!diagonalMovement) {
       return false;
     }
-    Piece pieceAtNewPos = context.getPiecesAndPositions().get(newPos);
-    return pieceAtNewPos != null
-        && pieceAtNewPos.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
+    Piece targetPiece = context.pieceAt(newPos);
+    return targetPiece != null
+        && targetPiece.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
   }
 }

@@ -12,19 +12,14 @@ public class PawnMovement implements PieceMovement {
 
   @Override
   public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
-    int oldX = oldPos.getColumn();
-    int oldY = oldPos.getRow();
-    int newX = newPos.getColumn();
-    int newY = newPos.getRow();
-    int deltaY = newY - oldY;
+    int deltaY = newPos.getRow() - oldPos.getRow();
     Piece currentPawn = context.pieceAt(oldPos);
-    Piece lastPiece = context.pieceAt(newPos);
-    boolean lastCond = lastPiece == null;
+    boolean clearTile = context.pieceAt(newPos) == null;;
     boolean movementByColor =
         currentPawn.getPieceColour() == Color.BLACK ? deltaY == -1 : deltaY == 1;
-    return (oldX == newX
+    return (oldPos.getColumn() == newPos.getColumn()
         && movementByColor
         && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL)
-        && lastCond);
+        && clearTile);
   }
 }

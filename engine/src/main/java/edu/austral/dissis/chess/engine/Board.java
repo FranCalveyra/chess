@@ -41,6 +41,9 @@ public class Board {
 
   public Board removePieceAt(ChessPosition pos) {
     Map<ChessPosition, Piece> newMap = copyMap(pieces);
+    if(!newMap.containsKey(pos)){
+      return this;
+    }
     newMap.remove(pos);
     return new Board(newMap, rows, columns);
   }

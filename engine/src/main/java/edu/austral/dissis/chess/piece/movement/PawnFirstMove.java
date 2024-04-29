@@ -11,18 +11,14 @@ public class PawnFirstMove implements PieceMovement {
   @Override
   public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
     Piece piece = context.getPiecesAndPositions().get(oldPos);
-    int oldX = oldPos.getColumn();
-    int oldY = oldPos.getRow();
-    int newX = newPos.getColumn();
-    int newY = newPos.getRow();
-    boolean horizontalMove = oldX == newX;
-    boolean verticalMove = Math.abs(newY - oldY) == 2;
+    boolean notHorizontalMove = oldPos.getColumn() == newPos.getColumn();
+    boolean verticalMove = Math.abs(newPos.getRow() - oldPos.getRow())  == 2;
     Piece lastPiece = context.pieceAt(newPos);
-    boolean lastCond = lastPiece == null;
-    return horizontalMove
+    boolean clearTile = lastPiece == null;
+    return notHorizontalMove
         && verticalMove
         && !piece.hasMoved()
         && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL)
-        && lastCond;
+        && clearTile;
   }
 }

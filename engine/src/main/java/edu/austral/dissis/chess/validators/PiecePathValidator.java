@@ -8,6 +8,7 @@ import edu.austral.dissis.chess.utils.Pair;
 
 public class PiecePathValidator {
 
+  //Checks if there's no piece between two given positions
   public boolean isNoPieceBetween(
       ChessPosition from, ChessPosition to, Board context, MoveType moveType) {
     if (outOfBoardBounds(from, context) || outOfBoardBounds(to, context)) {
