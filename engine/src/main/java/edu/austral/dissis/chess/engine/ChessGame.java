@@ -99,24 +99,23 @@ public class ChessGame {
   }
 
   public GameResult makeMove(ChessMove move) {
-    return makeMove(move.from(), move.to());
-  }
-
-  private GameResult makeMove(ChessPosition oldPos, ChessPosition newPos) {
     // Check winning at the end
     // Do all necessary checks
     // PreMovementRules should be valid
+    ChessPosition oldPos = move.from();
+    ChessPosition newPos = move.to();
     if (preMovementValidator.getMoveValidity(new ChessMove(oldPos, newPos), this) == INVALID_MOVE) {
       return new GameResult(this, INVALID_MOVE);
     }
-    Piece pieceToMove = board.pieceAt(oldPos);
-    Pair<Board, ChessMoveResult> resultPair = new Pair<>(board, INVALID_MOVE);
+    //Once valid, execute move
+    final Piece pieceToMove = board.pieceAt(oldPos);
+    Pair<Board, ChessMoveResult> result = new Pair<>(board, INVALID_MOVE);
     final List<ChessMove> playToExecute = pieceToMove.getPlay(oldPos, newPos, board);
-    for (ChessMove move : playToExecute) {
-      resultPair = executor.executeMove(move.from(), move.to(), resultPair.first(), promoter);
+    for (ChessMove moveToDo : playToExecute) {
+      result = executor.executeMove(moveToDo.from(), moveToDo.to(), result.first(), promoter);
     }
-    // Execute move
-    Board finalBoard = resultPair.first();
+    // Declare final variables
+    Board finalBoard = result.first();
     Color nextTurn = selector.selectTurn(turnNumber + 1);
     ChessGame finalGame =
         createChessGame(
@@ -129,16 +128,13 @@ public class ChessGame {
             turnNumber + 1,
             preMovementValidator);
 
-    // If this play makes your own team in check, it shouldn't be executed
-
-    // If play
     if (winConditionValidator.isGameWon(finalBoard)) {
       ChessMoveResult winner =
-          currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; // Hardcoded, need to change
+          currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; // Hardcoded, may need to change
       return new GameResult(finalGame, winner);
     }
     // Get the resulting game at last
-    return new GameResult(finalGame, resultPair.second()); // Second represents the moveResult
+    return new GameResult(finalGame, result.second()); // Second represents the moveResult
   }
 
   // Getters

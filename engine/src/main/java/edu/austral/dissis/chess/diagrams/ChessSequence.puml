@@ -11,14 +11,16 @@
 ' Move = (ChessPosition from, ChessPosition to)
 Client -> ChessGame: makeMove(move)
 ' Not valid move is caused by piece rules, out of board bounds move, piece to move == null, etc
-ChessGame -> Board: board.pieceAt(move.from()) = pieceToMove
-alt outOfBoardBounds(move) or pieceToMove.pieceColor != currentTurn
+ChessGame -> PreMovementValidator: getMoveValidity(move, game)
+PreMovementValidator -> PreMovementRule: isValidRule(move, game)
+alt all rules are valid
+    PreMovementValidator -> ChessGame: continue execution
+    else any invalid
+    PreMovementValidator -> ChessGame: return INVALID_MOVE
     ChessGame -> Client: return GameResult(game, INVALID_MOVE)
-else
-    ChessGame -> ChessGame: continue execution
 end
 ChessGame -> Piece: getPlay(move, board)
-loop for pieceMovement in piece.pieceMovements
+loop for pieceMovement in piece.pieceMovements:
     Piece -> PieceMovement: isValidMove(move, board)
     alt move is valid == true
         PieceMovement -> Piece: add(move)
@@ -28,51 +30,30 @@ loop for pieceMovement in piece.pieceMovements
     PieceMovement -> Piece: return List<ChessMove>movesToExecute
 end
 Piece -> ChessGame: return movesToExecute
-alt movesToExecute.isEmpty()
-    ChessGame -> Client: return GameResult(game, INVALID_MOVE)
-    else is not empty
-    ChessGame-> ChessGame: continue execution
-end
 
-loop for move in movesToExecute
+loop for move in movesToExecute:
     ChessGame -> MoveExecutor: executeMove(move, board, promoter)
     MoveExecutor -> Board: board.pieceAt(move.from())
-    Board -> MoveExecutor: pieceToMove
-    alt pieceToMove == null
-        MoveExecutor->ChessGame: Pair(board, INVALID_MOVE)
-        ChessGame-> Client: return GameResult(game, INVALID_MOVE)
-    end
+    Board -> MoveExecutor: return pieceToMove
+
     MoveExecutor -> Board: board.pieceAt(move.to())
-    Board -> MoveExecutor: pieceToTake
+    Board -> MoveExecutor: return pieceToTake
     alt pieceToTake != null
-        alt pieceToMove.pieceColor == pieceToTake.pieceColor
-            MoveExecutor->ChessGame: Pair(board, INVALID_MOVE)
-            ChessGame-> Client: return GameResult(game, INVALID_MOVE)
-        else
             MoveExecutor -> Board: removePieceAt(move.to())
             Board -> MoveExecutor: return updatedBoard
             MoveExecutor -> Board: removePieceAt(move.from()).addPieceAt(move.to(), pieceToMove.hasMoved() ? pieceToMove.changeActivity(): pieceToMove)
             Board -> MoveExecutor: return updatedBoard
             MoveExecutor -> ChessGame: return Pair(updatedBoard, PIECE_TAKEN)
-        end
+    else null
     MoveExecutor -> Board: removePieceAt(move.from()).addPieceAt(move.to(), pieceToMove.hasMoved() ? pieceToMove.changeActivity(): pieceToMove)
     Board->MoveExecutor: return updatedBoard
     MoveExecutor -> ChessGame: return Pair(updatedBoard, VALID_MOVE)
 end
 end
-MoveExecutor -> ChessGame: return Pair(finalBoard, validMoveResult)
-ChessGame -> checkConditions: isInCheck(finalBoard)
-alt true
-ChessGame -> Client: return GameResult(game, INVALID_MOVE)
-else false
-checkConditions -> ChessGame: return false
-ChessGame -> ChessGame: continue execution
-end
 ChessGame -> WinConditionValidator: isGameWon(finalBoard)
-loop for winCondition in WinConditionValidator
+loop for winCondition in WinConditionValidator:
 WinConditionValidator -> WinCondition: isValidRule(finalBoard)
 WinCondition -> WinConditionValidator: return result
-
 alt result == true
     WinConditionValidator -> WinConditionValidator: set winner based on currentTurn (color)
     WinConditionValidator -> ChessGame: return winner
@@ -80,7 +61,8 @@ alt result == true
 else result == false
     WinConditionValidator-> WinConditionValidator: continue execution
 end
-WinConditionValidator -> ChessGame: return result (false case, no winner)
+end
+WinConditionValidator -> ChessGame: return result (false case, no winner, then result = VALID_MOVE or PIECE_TAKEN)
 ChessGame -> Client: return GameResult(finalGame, validMoveResult)
 
 @enduml

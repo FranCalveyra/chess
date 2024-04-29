@@ -95,10 +95,6 @@ class PawnMovement implements PieceMovement{
 }
 class PawnTaking implements PieceMovement{
 }
-class QueenMovement implements PieceMovement{
-}
-class RookMovement implements PieceMovement{
-}
 class VerticalMovement implements PieceMovement{
 }
 
@@ -119,6 +115,21 @@ class MoveExecutor{
 +executeMove(ChessPosition oldPos, ChessPosition newPos, Board board, Promoter promoter): Pair<Board,ChessMoveResult>
 }
 
+interface PreMovementRule{
++isValidRule(ChessMove move, ChessGame game): boolean
+}
+class TurnRule implements PreMovementRule{
+}
+class MoveNotInCheck implements PreMovementRule{
+}
+class InsideBoardBounds implements PreMovementRule{
+}
+class PieceAtPosition implements PreMovementRule{
+}
+class PieceValidMove implements PreMovementRule{
+}
+class AvoidFriendlyFire implements PreMovementRule{
+}
 
 ' Utils
 class ChessPosition{
@@ -179,6 +190,14 @@ class WinConditionValidator{
 -winConditions:  List<WinCondition>
 +isGameWon(Board context): boolean
 }
+interface PreMovementValidator{
++getMoveValidity(ChessMove move, ChessGame game): ChessMoveResult
+}
+class TreePreMovementValidator implements PreMovementValidator{
+-left: TreePreMovementValidator
+-right: TreePreMovementValidator
+-rule: PreMovementRule
+}
 
 
 'Relations
@@ -188,10 +207,12 @@ ChessGame o---- TurnSelector
 ChessGame o--- WinCondition
 ChessGame o--- Check
 ChessGame o---- MoveExecutor
+ChessGame o-- PreMovementValidator
 ChessGame ---> WinConditionValidator
 ChessGame -> ChessMove
 MoveExecutor --> ChessMoveResult
 ChessGame -> GameResult
+TreePreMovementValidator o- PreMovementRule
 
 Board *-- Piece
 Board *-- ChessPosition
