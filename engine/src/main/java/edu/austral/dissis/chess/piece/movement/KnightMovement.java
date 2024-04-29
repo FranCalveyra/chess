@@ -1,7 +1,6 @@
 package edu.austral.dissis.chess.piece.movement;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.ChessPosition;
 
 public class KnightMovement implements PieceMovement {
@@ -14,10 +13,9 @@ public class KnightMovement implements PieceMovement {
     int newY = newPos.getRow();
     int deltaX = Math.abs(newX - oldX);
     int deltaY = Math.abs(newY - oldY);
-    Piece pieceAtDestination = context.pieceAt(newPos);
-    boolean noPieceAt =
-        pieceAtDestination == null
-            || pieceAtDestination.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
-    return (deltaX == 2 && deltaY == 1 || deltaX == 1 && deltaY == 2) && noPieceAt;
+    boolean isNotTeammate =
+        context.pieceAt(newPos) == null
+            || context.pieceAt(oldPos).getPieceColour() != context.pieceAt(newPos).getPieceColour();
+    return (deltaX == 2 && deltaY == 1 || deltaX == 1 && deltaY == 2) && isNotTeammate;
   }
 }

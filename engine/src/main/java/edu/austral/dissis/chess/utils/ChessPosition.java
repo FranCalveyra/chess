@@ -36,7 +36,7 @@ public class ChessPosition {
   // More understandable
   @Override
   public String toString() {
-    return "(" + row + "," + column + ')';
+    return toAlgebraic(this);
   }
 
   // Easier map getting

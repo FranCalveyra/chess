@@ -9,8 +9,12 @@ import edu.austral.dissis.chess.validators.PiecePathValidator;
 public class VerticalMovement implements PieceMovement {
   @Override
   public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
+    boolean isNotTeammate =
+        context.pieceAt(newPos) == null
+            || context.pieceAt(oldPos).getPieceColour() != context.pieceAt(newPos).getPieceColour();
     return oldPos.getColumn() == newPos.getColumn()
         && oldPos.getRow() != newPos.getRow()
-        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL);
+        && new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, VERTICAL)
+        && isNotTeammate;
   }
 }

@@ -15,11 +15,9 @@ public class KingMovement implements PieceMovement {
     boolean diagonal = deltaX == 1 && deltaY == 1;
     if (horizontal) {
       return new HorizontalMovement().isValidMove(oldPos, newPos, context);
-    }
-    else if (vertical){
+    } else if (vertical) {
       return new VerticalMovement().isValidMove(oldPos, newPos, context);
-    }
-    else if (diagonal) {
+    } else if (diagonal) {
       return new DiagonalMovement().isValidMove(oldPos, newPos, context);
     }
     return false;

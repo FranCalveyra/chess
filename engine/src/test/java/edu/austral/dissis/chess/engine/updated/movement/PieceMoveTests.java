@@ -1,15 +1,19 @@
 package edu.austral.dissis.chess.engine.updated.movement;
 
 import edu.austral.dissis.chess.engine.updated.runners.ChessMoveRunner;
+import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.test.TestPosition;
 import edu.austral.dissis.chess.test.Validity;
 import edu.austral.dissis.chess.test.move.MoveTester;
 import edu.austral.dissis.chess.test.parser.ParseSettings;
+import edu.austral.dissis.chess.utils.GameType;
 import org.junit.jupiter.api.Test;
 
 public class PieceMoveTests {
   // Runners
-  private final ChessMoveRunner moveRunner = new ChessMoveRunner();
+  private final GameProvider gameProvider = new GameProvider();
+  private final ChessMoveRunner moveRunner =
+      new ChessMoveRunner(gameProvider.provide(GameType.DEFAULT));
   private final MoveTester moveTester = new MoveTester(moveRunner);
 
   @Test

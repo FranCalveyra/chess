@@ -16,7 +16,11 @@ public class DiagonalMovement implements PieceMovement {
     if (!moveCondition) {
       return false;
     }
-    return new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, DIAGONAL);
+    boolean isNotTeammate =
+        context.pieceAt(newPos) == null
+            || context.pieceAt(oldPos).getPieceColour() != context.pieceAt(newPos).getPieceColour();
+    return new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, DIAGONAL)
+        && isNotTeammate;
     // They have to move the same amount in both coordinates.
   }
 }

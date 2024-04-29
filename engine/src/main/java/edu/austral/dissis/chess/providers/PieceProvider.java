@@ -2,8 +2,16 @@ package edu.austral.dissis.chess.providers;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.piece.movement.*;
-
+import edu.austral.dissis.chess.piece.movement.Castling;
+import edu.austral.dissis.chess.piece.movement.DiagonalMovement;
+import edu.austral.dissis.chess.piece.movement.HorizontalMovement;
+import edu.austral.dissis.chess.piece.movement.KingMovement;
+import edu.austral.dissis.chess.piece.movement.KnightMovement;
+import edu.austral.dissis.chess.piece.movement.PawnFirstMove;
+import edu.austral.dissis.chess.piece.movement.PawnMovement;
+import edu.austral.dissis.chess.piece.movement.PawnTaking;
+import edu.austral.dissis.chess.piece.movement.PieceMovement;
+import edu.austral.dissis.chess.piece.movement.VerticalMovement;
 import java.awt.Color;
 import java.util.List;
 import java.util.Random;

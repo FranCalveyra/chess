@@ -4,5 +4,5 @@ import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.utils.ChessMove;
 
 public interface PreMovementRule {
-    boolean isValidRule(ChessMove move, ChessGame game);
+  boolean isValidRule(ChessMove move, ChessGame game);
 }

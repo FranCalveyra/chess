@@ -14,6 +14,10 @@ public class HorizontalMovement implements PieceMovement {
     if (!validMove) {
       return false;
     }
-    return new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, HORIZONTAL);
+    boolean isNotTeammate =
+        context.pieceAt(newPos) == null
+            || context.pieceAt(oldPos).getPieceColour() != context.pieceAt(newPos).getPieceColour();
+    return new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, HORIZONTAL)
+        && isNotTeammate;
   }
 }

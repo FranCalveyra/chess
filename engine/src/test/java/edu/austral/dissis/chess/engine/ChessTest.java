@@ -3,6 +3,8 @@ package edu.austral.dissis.chess.engine;
 import static edu.austral.dissis.chess.engine.updated.utils.TestFunctions.makeMove;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.BLACK_WIN;
 import static edu.austral.dissis.chess.utils.ChessPosition.fromAlgebraic;
+import static java.awt.Color.BLACK;
+import static java.awt.Color.WHITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
+import edu.austral.dissis.chess.providers.PieceProvider;
 import edu.austral.dissis.chess.rules.CheckMate;
 import edu.austral.dissis.chess.rules.DefaultCheck;
 import edu.austral.dissis.chess.utils.ChessPosition;
@@ -31,8 +34,8 @@ public class ChessTest {
     final Piece whitePawn2 = game.getBoard().pieceAt(fromAlgebraic("g2"));
     final Piece blackQueen = game.getBoard().pieceAt(fromAlgebraic("d8"));
     assertEquals(blackPawn.getPieceColour(), Color.BLACK);
-    assertEquals(whitePawn.getPieceColour(), Color.WHITE);
-    assertEquals(whitePawn2.getPieceColour(), Color.WHITE);
+    assertEquals(whitePawn.getPieceColour(), WHITE);
+    assertEquals(whitePawn2.getPieceColour(), WHITE);
     assertEquals(blackQueen.getPieceColour(), Color.BLACK);
     assertEquals(PieceType.PAWN, blackPawn.getType());
     assertEquals(PieceType.PAWN, whitePawn.getType());
@@ -48,14 +51,14 @@ public class ChessTest {
     game = finishingMove.game();
     assertEquals(BLACK_WIN, finishingMove.moveResult());
     assertEquals(PieceType.QUEEN, game.getBoard().pieceAt(fromAlgebraic("h4")).getType());
-    assertTrue(new DefaultCheck(Color.WHITE).isValidRule(game.getBoard()));
+    assertTrue(new DefaultCheck(WHITE).isValidRule(game.getBoard()));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
-    assertTrue(new CheckMate(Color.WHITE).isValidRule(game.getBoard()));
+    assertTrue(new CheckMate(WHITE).isValidRule(game.getBoard()));
   }
 
   @Test
   public void validatePromotion() {
-    assertEquals(Color.WHITE, game.getCurrentTurn());
+    assertEquals(WHITE, game.getCurrentTurn());
     game = makeMove(game, "a2 -> a4").game();
     game = makeMove(game, "a7 -> a5").game();
     assertPositionType(game, PieceType.PAWN, 3, 0);
@@ -93,7 +96,37 @@ public class ChessTest {
 
     // Once promoted:
     assertPositionType(game, PieceType.QUEEN, 7, 0);
-    assertEquals(Color.WHITE, game.getBoard().pieceAt(fromAlgebraic("a8")).getPieceColour());
+    assertEquals(WHITE, game.getBoard().pieceAt(fromAlgebraic("a8")).getPieceColour());
+  }
+
+  @Test
+  public void possibleCheckmateSaving() {
+    PieceProvider provider = new PieceProvider();
+    Map<ChessPosition, Piece> situation =
+        Map.of(
+            fromAlgebraic("d1"),
+            provider.provide(BLACK, PieceType.QUEEN),
+            fromAlgebraic("e1"),
+            provider.provide(BLACK, PieceType.KING),
+            fromAlgebraic("f1"),
+            provider.provide(BLACK, PieceType.BISHOP),
+            fromAlgebraic("d2"),
+            provider.provide(BLACK, PieceType.QUEEN),
+            fromAlgebraic("a5"),
+            provider.provide(WHITE, PieceType.QUEEN));
+    Board currentBoard = new Board(situation);
+    game =
+        new ChessGame(
+            currentBoard,
+            game.getWinConditions(),
+            game.getCheckConditions(),
+            game.getPromoter(),
+            game.getSelector(),
+            WHITE,
+            game.getPreMovementValidator());
+    assertFalse(new CheckMate(BLACK).isValidRule(game.getBoard()));
+    game = makeMove(game, "a5 -> d2").game();
+    assertFalse(new CheckMate(BLACK).isValidRule(game.getBoard()));
   }
 
   // Private stuff

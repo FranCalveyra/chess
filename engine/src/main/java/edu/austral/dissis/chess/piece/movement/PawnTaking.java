@@ -1,7 +1,6 @@
 package edu.austral.dissis.chess.piece.movement;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 
@@ -17,8 +16,7 @@ public class PawnTaking implements PieceMovement {
     if (!diagonalMovement) {
       return false;
     }
-    Piece targetPiece = context.pieceAt(newPos);
-    return targetPiece != null
-        && targetPiece.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
+    return context.pieceAt(newPos) != null
+        && context.pieceAt(oldPos).getPieceColour() != context.pieceAt(newPos).getPieceColour();
   }
 }

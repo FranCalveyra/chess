@@ -16,8 +16,7 @@ public interface PieceMovement {
       for (int j = 0; j < context.getColumns(); j++) {
         ChessPosition positionToMove = new ChessPosition(i, j);
         if (isValidMove(currentPos, positionToMove, context)
-            && !possibleChessPositions.contains(positionToMove)
-            && context.pieceAt(positionToMove) == null) {
+            && !possibleChessPositions.contains(positionToMove)) {
           possibleChessPositions.add(positionToMove);
         }
       }

@@ -94,6 +94,8 @@ public class PieceMovementTest {
         getPiecePosition(newWhitePawn, game.getBoard().getPiecesAndPositions()),
         fromAlgebraic("e2"));
     List<ChessPosition> pawnMoveSet = newWhitePawn.getMoveSet(fromAlgebraic("e2"), game.getBoard());
+    System.out.println(game.getBoard());
+    System.out.println(pawnMoveSet);
     assertEquals(pawnMoveSet.size(), 2);
   }
 
@@ -118,7 +120,8 @@ public class PieceMovementTest {
         game.getBoard()
             .pieceAt(fromAlgebraic("a1"))
             .getMoveSet(fromAlgebraic("a1"), game.getBoard());
-    assertEquals(5, rookMoveSet.size());
+    System.out.println(game.getBoard());
+    assertEquals(6, rookMoveSet.size());
     game = makeMove(game, "a1 -> a5").game();
     assertEquals(PieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("a5")).getType());
   }
@@ -141,7 +144,8 @@ public class PieceMovementTest {
         game.getBoard()
             .pieceAt(fromAlgebraic("d1"))
             .getMoveSet(fromAlgebraic("d1"), game.getBoard());
-    assertEquals(4, whiteQueenMoveSet.size());
+    System.out.println(game.getBoard());
+    assertEquals(5, whiteQueenMoveSet.size());
   }
 
   @Test
