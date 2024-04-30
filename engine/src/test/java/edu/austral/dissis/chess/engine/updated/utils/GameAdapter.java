@@ -41,23 +41,33 @@ public class GameAdapter {
   }
 
   private static Color mapColour(char c) {
-    return switch (c) {
-      case 'B' -> BLACK;
-      case 'W' -> WHITE;
-      default -> throw new IllegalStateException("Unexpected value: " + c);
-    };
+    switch (c) {
+      case 'B':
+        return BLACK;
+      case 'W':
+        return WHITE;
+      default:
+        throw new IllegalStateException("Unexpected value: " + c);
+    }
   }
 
   private static PieceType mapPieceType(TestPiece piece) {
-    return switch (piece.component1()) {
-      case 'K' -> KING;
-      case 'P' -> PAWN;
-      case 'B' -> BISHOP;
-      case 'R' -> ROOK;
-      case 'N' -> KNIGHT;
-      case 'Q' -> QUEEN;
-      default -> throw new IllegalStateException("Unexpected value: " + piece.component1());
-    };
+    switch (piece.component1()) {
+      case 'K':
+        return KING;
+      case 'P':
+        return PAWN;
+      case 'B':
+        return BISHOP;
+      case 'R':
+        return ROOK;
+      case 'N':
+        return KNIGHT;
+      case 'Q':
+        return QUEEN;
+      default:
+        throw new IllegalStateException("Unexpected value: " + piece.component1());
+    }
   }
 
   private static Map<ChessPosition, Piece> mapPieces(Map<TestPosition, TestPiece> map) {

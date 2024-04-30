@@ -22,43 +22,45 @@ public class PieceProvider {
     PieceMovement castling = new Castling();
     String colorName = pieceColour == Color.WHITE ? "white" : "black";
     int randInt = new Random().nextInt();
-    return switch (type) {
-      case KING ->
-          new Piece(
-              List.of(new KingMovement(), castling),
-              pieceColour,
-              type,
-              randInt + colorName + " " + type.name().toLowerCase());
-      case ROOK ->
-          new Piece(
-              List.of(new HorizontalMovement(), new VerticalMovement()),
-              pieceColour,
-              type,
-              randInt + colorName + " " + type.name().toLowerCase());
-      case QUEEN ->
-          new Piece(
-              List.of(new HorizontalMovement(), new VerticalMovement(), new DiagonalMovement()),
-              pieceColour,
-              type,
-              randInt + colorName + " " + type.name().toLowerCase());
-      case PAWN ->
-          new Piece(
-              List.of(new PawnMovement(), new PawnTaking(), new PawnFirstMove()),
-              pieceColour,
-              type,
-              randInt + colorName + " " + type.name().toLowerCase());
-      case BISHOP ->
-          new Piece(
-              List.of(new DiagonalMovement()),
-              pieceColour,
-              type,
-              randInt + colorName + " " + type.name().toLowerCase());
-      case KNIGHT ->
-          new Piece(
-              List.of(new KnightMovement()),
-              pieceColour,
-              type,
-              randInt + colorName + " " + type.name().toLowerCase());
-    };
+    switch (type) {
+      case KING:
+        return new Piece(
+            List.of(new KingMovement(), castling),
+            pieceColour,
+            type,
+            randInt + colorName + " " + type.name().toLowerCase());
+      case ROOK:
+        return new Piece(
+            List.of(new HorizontalMovement(), new VerticalMovement()),
+            pieceColour,
+            type,
+            randInt + colorName + " " + type.name().toLowerCase());
+      case QUEEN:
+        return new Piece(
+            List.of(new HorizontalMovement(), new VerticalMovement(), new DiagonalMovement()),
+            pieceColour,
+            type,
+            randInt + colorName + " " + type.name().toLowerCase());
+      case PAWN:
+        return new Piece(
+            List.of(new PawnMovement(), new PawnTaking(), new PawnFirstMove()),
+            pieceColour,
+            type,
+            randInt + colorName + " " + type.name().toLowerCase());
+      case BISHOP:
+        return new Piece(
+            List.of(new DiagonalMovement()),
+            pieceColour,
+            type,
+            randInt + colorName + " " + type.name().toLowerCase());
+      case KNIGHT:
+        return new Piece(
+            List.of(new KnightMovement()),
+            pieceColour,
+            type,
+            randInt + colorName + " " + type.name().toLowerCase());
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 }

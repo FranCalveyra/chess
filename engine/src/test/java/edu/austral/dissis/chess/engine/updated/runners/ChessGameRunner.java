@@ -39,12 +39,19 @@ public class ChessGameRunner implements TestGameRunner {
   public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
     GameResult gameResult = game.makeMove(new ChessMove(mapPosition(from), mapPosition(to)));
     game = gameResult.game();
-    return switch (gameResult.moveResult()) {
-      case INVALID_MOVE -> new TestMoveFailure(getBoard());
-      case WHITE_WIN -> new WhiteCheckMate(getBoard());
-      case BLACK_WIN -> new BlackCheckMate(getBoard());
-      case VALID_MOVE, PIECE_TAKEN -> new TestMoveSuccess(this);
-    };
+    switch (gameResult.moveResult()) {
+      case INVALID_MOVE:
+        return new TestMoveFailure(getBoard());
+      case WHITE_WIN:
+        return new WhiteCheckMate(getBoard());
+      case BLACK_WIN:
+        return new BlackCheckMate(getBoard());
+      case VALID_MOVE:
+      case PIECE_TAKEN:
+        return new TestMoveSuccess(this);
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 
   @NotNull
@@ -92,13 +99,21 @@ public class ChessGameRunner implements TestGameRunner {
   }
 
   private char mapPieceType(PieceType pieceType) {
-    return switch (pieceType) {
-      case KNIGHT -> TestPieceSymbols.KNIGHT;
-      case BISHOP -> TestPieceSymbols.BISHOP;
-      case ROOK -> TestPieceSymbols.ROOK;
-      case QUEEN -> TestPieceSymbols.QUEEN;
-      case KING -> TestPieceSymbols.KING;
-      case PAWN -> TestPieceSymbols.PAWN;
-    };
+    switch (pieceType) {
+      case KNIGHT:
+        return TestPieceSymbols.KNIGHT;
+      case BISHOP:
+        return TestPieceSymbols.BISHOP;
+      case ROOK:
+        return TestPieceSymbols.ROOK;
+      case QUEEN:
+        return TestPieceSymbols.QUEEN;
+      case KING:
+        return TestPieceSymbols.KING;
+      case PAWN:
+        return TestPieceSymbols.PAWN;
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 }
