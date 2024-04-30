@@ -68,11 +68,11 @@ public class Piece {
 
   public boolean hasMoved() {
     return hasMoved;
-  }
+  } //TODO: Change to move counter
 
   // Own methods
   public Piece changeMoveState() {
-    return new Piece(movements, pieceColour, type, !hasMoved, id); // Immutable approach
+    return new Piece(movements, pieceColour, type, !hasMoved, id);
   }
 
   public List<ChessPosition> getMoveSet(ChessPosition currentPos, Board context) {

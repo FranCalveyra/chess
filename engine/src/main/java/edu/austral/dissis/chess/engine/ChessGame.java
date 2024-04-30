@@ -27,18 +27,18 @@ public class ChessGame {
 
   private final WinConditionValidator winConditionValidator;
   private final List<WinCondition> winConditions;
-  private final List<Check> checkConditions;
+  private final List<Check> checkConditions; //TODO: Remove
   private final Promoter promoter;
-  private final TurnSelector selector;
-  private final Color currentTurn;
-  private final int turnNumber;
+  private final TurnSelector selector; //TODO: Manage turns from here
+  private final Color currentTurn; //TODO: hide
+  private final int turnNumber; //TODO:hide
   private final MoveExecutor executor;
   private final PreMovementValidator preMovementValidator;
 
   public ChessGame(
       @NotNull Board board,
       @NotNull List<WinCondition> winConditions,
-      List<Check> checkConditions,
+      List<Check> checkConditions, // TODO: TO DELETE
       Promoter promoter,
       TurnSelector selector,
       Color currentTurn,
@@ -104,7 +104,7 @@ public class ChessGame {
     // PreMovementRules should be valid
     ChessPosition oldPos = move.from();
     ChessPosition newPos = move.to();
-    if (preMovementValidator.getMoveValidity(new ChessMove(oldPos, newPos), this) == INVALID_MOVE) {
+    if (preMovementValidator.getMoveValidity(move, this) == INVALID_MOVE) { //TODO: Not use enums
       return new GameResult(this, INVALID_MOVE);
     }
     // Once valid, execute move
@@ -116,7 +116,7 @@ public class ChessGame {
     }
     // Declare final variables
     Board finalBoard = result.first();
-    Color nextTurn = selector.selectTurn(turnNumber + 1);
+    Color nextTurn = selector.selectTurn(turnNumber + 1); //TODO: Change to getNextTurn()
     ChessGame finalGame =
         createChessGame(
             finalBoard,
@@ -131,6 +131,7 @@ public class ChessGame {
     if (winConditionValidator.isGameWon(finalBoard)) {
       ChessMoveResult winner =
           currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; // Hardcoded, may need to change
+      //TODO: Apply state pattern
       return new GameResult(finalGame, winner);
     }
     // Get the resulting game at last

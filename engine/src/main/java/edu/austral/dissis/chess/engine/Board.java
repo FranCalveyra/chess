@@ -15,12 +15,15 @@ import java.util.stream.IntStream;
 import org.jetbrains.annotations.NotNull;
 
 public class Board {
+  //TODO: Do an interface.
+
   // Simplest possible board implementation
   private final Map<ChessPosition, Piece> pieces;
   private final int rows;
   private final int columns;
   private final ChessPosition whiteKingPosition;
   private final ChessPosition blackKingPosition;
+  //TODO: Remove fetchKingPosition and move it to DefaultCheckValidator
 
   public Board(Map<ChessPosition, Piece> pieces, int rows, int columns) {
     this.pieces = pieces;

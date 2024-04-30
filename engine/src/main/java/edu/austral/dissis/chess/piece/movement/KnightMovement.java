@@ -7,7 +7,8 @@ public class KnightMovement implements PieceMovement {
 
   @Override
   public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
-    int oldX = oldPos.getColumn();
+    //TODO: Use delta limits in constructor
+    int oldX = oldPos.getColumn(); //TODO: Modularize validator FOR ALL
     int oldY = oldPos.getRow();
     int newX = newPos.getColumn();
     int newY = newPos.getRow();
