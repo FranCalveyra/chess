@@ -107,7 +107,7 @@ public class ChessGame {
     if (preMovementValidator.getMoveValidity(new ChessMove(oldPos, newPos), this) == INVALID_MOVE) {
       return new GameResult(this, INVALID_MOVE);
     }
-    //Once valid, execute move
+    // Once valid, execute move
     final Piece pieceToMove = board.pieceAt(oldPos);
     Pair<Board, ChessMoveResult> result = new Pair<>(board, INVALID_MOVE);
     final List<ChessMove> playToExecute = pieceToMove.getPlay(oldPos, newPos, board);
