@@ -14,11 +14,17 @@ public class PiecePathValidator {
     if (outOfBoardBounds(from, context) || outOfBoardBounds(to, context)) {
       return false;
     }
-    return !switch (moveType) {
-      case DIAGONAL -> !checkDiagonal(from, to, context); // Border cases
-      case VERTICAL -> checkVertical(from, to, context);
-      case HORIZONTAL -> checkHorizontal(from, to, context);
-    };
+    switch (moveType) {
+      case DIAGONAL:
+        return checkDiagonal(from, to, context);
+        // Border cases
+      case VERTICAL:
+        return !checkVertical(from, to, context);
+      case HORIZONTAL:
+        return !checkHorizontal(from, to, context);
+      default:
+        throw new IllegalArgumentException();
+    }
   }
 
   private boolean checkHorizontal(ChessPosition from, ChessPosition to, Board context) {
