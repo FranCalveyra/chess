@@ -5,3 +5,4 @@
 build
 /engine/src/main/java/edu/austral/dissis/chess/utils/table.png
 /engine/src/main/java/edu/austral/dissis/chess/diagrams/ExtraExercise.puml
+gradle.properties
