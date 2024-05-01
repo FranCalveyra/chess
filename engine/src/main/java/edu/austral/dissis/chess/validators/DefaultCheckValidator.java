@@ -4,6 +4,7 @@ import static edu.austral.dissis.chess.piece.PieceType.KING;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import java.awt.Color;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class DefaultCheckValidator {
       // your own team or an empty space
     }
     ChessPosition kingPosition = fetchKingPosition(context.getPiecesAndPositions(), team);
-    return kingPosition != null && piece.isValidMove(toPos, kingPosition, context);
+    return kingPosition != null && piece.isValidMove(new ChessMove(toPos,kingPosition), context);
   }
 
   private boolean notAnEnemy(Piece piece, Color team) {

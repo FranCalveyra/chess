@@ -16,7 +16,7 @@ public class MoveNotIntoCheck implements PreMovementRule {
     List<Check> checks = game.getCheckConditions();
     Piece piece = game.getBoard().pieceAt(move.from());
     Pair<Board, ChessMoveResult> resultPair = new Pair<>(game.getBoard(), VALID_MOVE);
-    final List<ChessMove> playToExecute = piece.getPlay(move.from(), move.to(), game.getBoard());
+    final List<ChessMove> playToExecute = piece.getPlay(move, game.getBoard());
     for (ChessMove moveToDo : playToExecute) {
       resultPair =
           game.getMoveExecutor()

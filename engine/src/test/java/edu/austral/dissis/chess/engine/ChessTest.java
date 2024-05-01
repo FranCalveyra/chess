@@ -2,6 +2,7 @@ package edu.austral.dissis.chess.engine;
 
 import static edu.austral.dissis.chess.engine.updated.utils.TestFunctions.makeMove;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.BLACK_WIN;
+import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
 import static edu.austral.dissis.chess.utils.ChessPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
@@ -59,7 +60,9 @@ public class ChessTest {
   @Test
   public void validatePromotion() {
     assertEquals(WHITE, game.getCurrentTurn());
-    game = makeMove(game, "a2 -> a4").game();
+    GameResult firstResult = makeMove(game, "a2 -> a4");
+    game = firstResult.game();
+    assertEquals(VALID_MOVE,firstResult.moveResult());
     game = makeMove(game, "a7 -> a5").game();
     assertPositionType(game, PieceType.PAWN, 3, 0);
     assertPositionType(game, PieceType.PAWN, 4, 0);
@@ -121,7 +124,7 @@ public class ChessTest {
             game.getWinConditions(),
             game.getCheckConditions(),
             game.getPromoter(),
-            game.getSelector(),
+            game.getTurnSelector(),
             game.getPreMovementValidator());
     assertFalse(new CheckMate(BLACK).isValidRule(game.getBoard()));
     game = makeMove(game, "a5 -> d2").game();

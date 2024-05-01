@@ -10,7 +10,7 @@ import edu.austral.dissis.chess.rules.TurnRule;
 import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.utils.GameType;
 import edu.austral.dissis.chess.validators.PreMovementValidator;
-import edu.austral.dissis.chess.validators.TreePreMovementValidator;
+import edu.austral.dissis.chess.validators.AndTreePreMovementValidator;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,24 +27,24 @@ public class RuleProvider {
     if (type != GameType.DEFAULT) {
       return null;
     }
-    TreePreMovementValidator moveInside =
-        new TreePreMovementValidator(new InsideBoardBounds(), null, null);
-    TreePreMovementValidator pieceAtPos =
-        new TreePreMovementValidator(new PieceAtPosition(), null, null);
-    TreePreMovementValidator turn = new TreePreMovementValidator(new TurnRule(), pieceAtPos, null);
+    AndTreePreMovementValidator moveInside =
+        new AndTreePreMovementValidator(new InsideBoardBounds(), null, null);
+    AndTreePreMovementValidator pieceAtPos =
+        new AndTreePreMovementValidator(new PieceAtPosition(), null, null);
+    AndTreePreMovementValidator turn = new AndTreePreMovementValidator(new TurnRule(), pieceAtPos, null);
 
-    TreePreMovementValidator moveAllowed =
-        new TreePreMovementValidator(new PieceValidMove(), null, null);
-    TreePreMovementValidator noFriendlyFire =
-        new TreePreMovementValidator(new AvoidFriendlyFire(), null, null);
-    TreePreMovementValidator notIntoCheck =
-        new TreePreMovementValidator(new MoveNotIntoCheck(), null, null);
+    AndTreePreMovementValidator moveAllowed =
+        new AndTreePreMovementValidator(new PieceValidMove(), null, null);
+    AndTreePreMovementValidator noFriendlyFire =
+        new AndTreePreMovementValidator(new AvoidFriendlyFire(), null, null);
+    AndTreePreMovementValidator notIntoCheck =
+        new AndTreePreMovementValidator(new MoveNotIntoCheck(), null, null);
 
-    TreePreMovementValidator bottomLeft = new TreePreMovementValidator(null, moveInside, turn);
-    TreePreMovementValidator bottomRight =
-        new TreePreMovementValidator(null, moveAllowed, noFriendlyFire);
-    TreePreMovementValidator topLeft = new TreePreMovementValidator(null, bottomLeft, bottomRight);
+    AndTreePreMovementValidator bottomLeft = new AndTreePreMovementValidator(null, moveInside, turn);
+    AndTreePreMovementValidator bottomRight =
+        new AndTreePreMovementValidator(null, moveAllowed, noFriendlyFire);
+    AndTreePreMovementValidator topLeft = new AndTreePreMovementValidator(null, bottomLeft, bottomRight);
 
-    return new TreePreMovementValidator(null, topLeft, notIntoCheck);
+    return new AndTreePreMovementValidator(null, topLeft, notIntoCheck);
   }
 }

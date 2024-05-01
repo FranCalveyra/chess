@@ -18,9 +18,6 @@ public class MoveExecutor {
     Board newBoard;
     Piece pieceToTake = board.pieceAt(newPos);
     if (pieceToTake != null) {
-      if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
-        return new Pair<>(board, INVALID_MOVE); // TODO: REMOVE
-      } else {
         newBoard =
             board
                 .removePieceAt(newPos)
@@ -28,7 +25,6 @@ public class MoveExecutor {
                 .addPieceAt(newPos, !piece.hasMoved() ? piece.changeMoveState() : piece);
         newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
         return new Pair<>(newBoard, PIECE_TAKEN);
-      }
     } else {
       newBoard =
           board

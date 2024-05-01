@@ -10,7 +10,7 @@ public class PieceValidMove implements PreMovementRule {
   public boolean isValidRule(ChessMove move, ChessGame game) {
     Piece pieceToMove = game.getBoard().pieceAt(move.from());
     final List<ChessMove> playToExecute =
-        pieceToMove.getPlay(move.from(), move.to(), game.getBoard());
+        pieceToMove.getPlay(move, game.getBoard());
     // No moves available
     return !playToExecute.isEmpty();
   }

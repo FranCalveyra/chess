@@ -37,8 +37,8 @@ public class Piece {
     this.id = id;
   }
 
-  public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
-    return movements.stream().anyMatch(movement -> movement.isValidMove(oldPos, newPos, context));
+  public boolean isValidMove(ChessMove move, Board context) {
+    return movements.stream().anyMatch(movement -> movement.isValidMove(move,context));
   }
 
   @Override
@@ -84,11 +84,11 @@ public class Piece {
     return positionList;
   }
 
-  public List<ChessMove> getPlay(ChessPosition oldPos, ChessPosition newPos, Board board) {
+  public List<ChessMove> getPlay(ChessMove move, Board board) {
     List<ChessMove> play = new ArrayList<>();
     for (PieceMovement movement : movements) {
-      if (movement.isValidMove(oldPos, newPos, board)) {
-        play.addAll(movement.getMovesToExecute(oldPos, newPos, board));
+      if (movement.isValidMove(move, board)) {
+        play.addAll(movement.getMovesToExecute(move, board));
       }
     }
     return play;

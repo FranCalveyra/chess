@@ -2,9 +2,9 @@ package edu.austral.dissis.chess.utils;
 
 import edu.austral.dissis.chess.engine.ChessGame;
 
-public final class GameResult { // TODO: Program to interface
+public final class GameResult {
   private final ChessGame game;
-  private final ChessMoveResult moveResult;
+  private final ChessMoveResult moveResult; // TODO: Program to interface
 
   public GameResult(ChessGame game, ChessMoveResult moveResult) {
     this.game = game;

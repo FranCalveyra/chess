@@ -8,25 +8,18 @@ import edu.austral.dissis.chess.rules.PreMovementRule;
 import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessMoveResult;
 
-public class TreePreMovementValidator implements PreMovementValidator {
-  private final TreePreMovementValidator left;
-  private final TreePreMovementValidator right;
+public class AndTreePreMovementValidator implements PreMovementValidator {
+  private final AndTreePreMovementValidator left;
+  private final AndTreePreMovementValidator right;
   private final PreMovementRule rule;
 
-  public TreePreMovementValidator(
+  public AndTreePreMovementValidator(
       PreMovementRule rule,
-      TreePreMovementValidator leftValidator,
-      TreePreMovementValidator rightValidator) {
+      AndTreePreMovementValidator leftValidator,
+      AndTreePreMovementValidator rightValidator) {
     this.rule = rule;
     this.left = leftValidator;
     this.right = rightValidator;
-  }
-
-  public boolean isValidMove(ChessMove move, ChessGame game) {
-    if (isLeaf()) {
-      return rule.isValidRule(move, game);
-    }
-    return getValidity(move, game);
   }
 
   @Override
@@ -56,6 +49,14 @@ public class TreePreMovementValidator implements PreMovementValidator {
     }
     return validityWithRule(move, game);
   }
+
+  private boolean isValidMove(ChessMove move, ChessGame game) {
+    if (isLeaf()) {
+      return rule.isValidRule(move, game);
+    }
+    return getValidity(move, game);
+  }
+
 
   private boolean validityWithRule(ChessMove move, ChessGame game) {
     if (noLeftChild() && !noRightChild()) {

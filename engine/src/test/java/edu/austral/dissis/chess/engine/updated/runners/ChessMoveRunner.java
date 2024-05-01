@@ -33,7 +33,7 @@ public class ChessMoveRunner implements TestMoveRunner {
             game.getWinConditions(),
             game.getCheckConditions(),
             game.getPromoter(),
-            game.getSelector(),
+            game.getTurnSelector(),
             game.getPreMovementValidator());
     GameResult result =
         game.makeMove(new ChessMove(mapPosition(fromPosition), mapPosition(toPosition)));

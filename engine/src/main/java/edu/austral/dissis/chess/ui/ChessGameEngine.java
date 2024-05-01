@@ -100,7 +100,7 @@ public class ChessGameEngine implements GameEngine {
         new InvalidMove("Invalid move"),
         PIECE_TAKEN,
         updateGameState(game),
-        WHITE_WIN, // TODO: Abstract more
+        WHITE_WIN, // TODO: Abstract more, apply State pattern
         new GameOver(getPlayerColor(WHITE)),
         BLACK_WIN,
         new GameOver(getPlayerColor(BLACK)));

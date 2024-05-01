@@ -1,10 +1,11 @@
-package edu.austral.dissis.chess.piece.movement;
+package edu.austral.dissis.chess.piece.movement.type;
 
 import static edu.austral.dissis.chess.utils.MoveType.HORIZONTAL;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
+import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.rules.DefaultCheck;
 import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessPosition;
@@ -16,20 +17,22 @@ public class Castling implements PieceMovement {
   // and move that is wanted to be done doesn't leave the king in check/checkmate.
 
   @Override
-  public boolean isValidMove(ChessPosition oldPos, ChessPosition newPos, Board context) {
-    return isCastlingPossible(oldPos, newPos, context);
+  public boolean isValidMove(ChessMove move, Board context) {
+    return isCastlingPossible(move.from(), move.to(), context);
   }
 
   @Override
   public List<ChessMove> getMovesToExecute(
-      ChessPosition oldPos, ChessPosition newPos, Board context) {
+      ChessMove move,Board context) {
+    ChessPosition oldPos = move.from();
+    ChessPosition newPos = move.to();
     int rookColumn = newPos.getColumn() == 2 ? 0 : context.getColumns() - 1;
     int resultCol = rookColumn == 0 ? oldPos.getColumn() - 1 : oldPos.getColumn() + 1;
     ChessMove rookMove =
         new ChessMove(
             new ChessPosition(oldPos.getRow(), rookColumn),
             new ChessPosition(oldPos.getRow(), resultCol));
-    return List.of(new ChessMove(oldPos, newPos), rookMove);
+    return List.of(move, rookMove);
   }
 
   private boolean isCastlingPossible(ChessPosition oldPos, ChessPosition newPos, Board context) {
