@@ -27,11 +27,11 @@ public class ChessGame {
 
   private final WinConditionValidator winConditionValidator;
   private final List<WinCondition> winConditions;
-  private final List<Check> checkConditions; //TODO: Remove
+  private final List<Check> checkConditions; // TODO: Remove
   private final Promoter promoter;
-  private final TurnSelector selector; //TODO: Manage turns from here
-  private final Color currentTurn; //TODO: hide
-  private final int turnNumber; //TODO:hide
+  private final TurnSelector selector; // TODO: Manage turns from here
+  private final Color currentTurn; // TODO: hide
+  private final int turnNumber; // TODO:hide
   private final MoveExecutor executor;
   private final PreMovementValidator preMovementValidator;
 
@@ -56,7 +56,7 @@ public class ChessGame {
     executor = new MoveExecutor();
   }
 
-  private ChessGame(
+  public ChessGame(
       Board board,
       List<WinCondition> winConditions,
       List<Check> checkConditions,
@@ -78,33 +78,13 @@ public class ChessGame {
     executor = new MoveExecutor();
   }
 
-  public static ChessGame createChessGame(
-      Board board,
-      List<WinCondition> rules,
-      List<Check> checkConditions,
-      Promoter promoter,
-      TurnSelector selector,
-      Color currentTurn,
-      int turnNumber,
-      PreMovementValidator preMovementValidator) {
-    return new ChessGame(
-        board,
-        rules,
-        checkConditions,
-        promoter,
-        selector,
-        currentTurn,
-        turnNumber,
-        preMovementValidator);
-  }
-
   public GameResult makeMove(ChessMove move) {
     // Check winning at the end
     // Do all necessary checks
     // PreMovementRules should be valid
     ChessPosition oldPos = move.from();
     ChessPosition newPos = move.to();
-    if (preMovementValidator.getMoveValidity(move, this) == INVALID_MOVE) { //TODO: Not use enums
+    if (preMovementValidator.getMoveValidity(move, this) == INVALID_MOVE) { // TODO: Not use enums
       return new GameResult(this, INVALID_MOVE);
     }
     // Once valid, execute move
@@ -116,9 +96,9 @@ public class ChessGame {
     }
     // Declare final variables
     Board finalBoard = result.first();
-    Color nextTurn = selector.selectTurn(turnNumber + 1); //TODO: Change to getNextTurn()
+    Color nextTurn = selector.selectTurn(turnNumber + 1); // TODO: Change to getNextTurn()
     ChessGame finalGame =
-        createChessGame(
+        new ChessGame(
             finalBoard,
             winConditions,
             checkConditions,
@@ -131,7 +111,7 @@ public class ChessGame {
     if (winConditionValidator.isGameWon(finalBoard)) {
       ChessMoveResult winner =
           currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; // Hardcoded, may need to change
-      //TODO: Apply state pattern
+      // TODO: Apply state pattern
       return new GameResult(finalGame, winner);
     }
     // Get the resulting game at last

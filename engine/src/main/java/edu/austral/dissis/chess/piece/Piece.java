@@ -68,7 +68,7 @@ public class Piece {
 
   public boolean hasMoved() {
     return hasMoved;
-  } //TODO: Change to move counter
+  } // TODO: Change to move counter
 
   // Own methods
   public Piece changeMoveState() {

@@ -38,19 +38,21 @@ public class TreePreMovementValidator implements PreMovementValidator {
     return left == null && right == null;
   }
 
-  private boolean noRule(){
+  private boolean noRule() {
     return rule == null;
   }
-  private boolean noLeftChild(){
+
+  private boolean noLeftChild() {
     return left == null;
   }
-  private boolean noRightChild(){
+
+  private boolean noRightChild() {
     return right == null;
   }
 
   private boolean getValidity(ChessMove move, ChessGame game) {
     if (noRule()) {
-      if (left == null && right != null) { //TODO: Hide conditions with methods
+      if (left == null && right != null) { // TODO: Hide conditions with methods
         return right.getMoveValidity(move, game) == VALID_MOVE;
       }
       if (right == null && left != null) {

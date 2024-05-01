@@ -10,6 +10,7 @@ import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 
 import edu.austral.dissis.chess.engine.Board;
+import edu.austral.dissis.chess.engine.MapBoard;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.providers.PieceProvider;
@@ -28,7 +29,7 @@ public class GameAdapter {
     int rows = board.getSize().getRows();
     int cols = board.getSize().getCols();
     Map<ChessPosition, Piece> map = mapPieces(board.getPieces());
-    return new Board(map, rows, cols);
+    return new MapBoard(map, rows, cols);
   }
 
   public static ChessPosition mapPosition(TestPosition position) {

@@ -1,6 +1,5 @@
 package edu.austral.dissis.chess.engine.updated.runners;
 
-import static edu.austral.dissis.chess.engine.ChessGame.createChessGame;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
@@ -29,7 +28,7 @@ public class ChessMoveRunner implements TestMoveRunner {
       @NotNull TestPosition fromPosition,
       @NotNull TestPosition toPosition) {
     game =
-        createChessGame(
+        new ChessGame(
             mapBoard(testBoard),
             game.getWinConditions(),
             game.getCheckConditions(),

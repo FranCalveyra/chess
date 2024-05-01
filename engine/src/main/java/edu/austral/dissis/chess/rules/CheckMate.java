@@ -19,7 +19,7 @@ public class CheckMate implements WinCondition {
 
   @Override
   public boolean isValidRule(Board context) {
-    return checkmate(context.createCopy(), team);
+    return checkmate(context, team);
   }
 
   private boolean checkmate(Board context, Color team) {
@@ -62,7 +62,8 @@ public class CheckMate implements WinCondition {
 
       // Iterate over all of its possible moves
       for (ChessPosition possibleMove : moveSet) {
-        Board possibleBoardState = context.updatePiecePosition(pos, possibleMove);
+        Piece piece = context.pieceAt(pos);
+        Board possibleBoardState = context.removePieceAt(pos).addPieceAt(possibleMove, piece);
         DefaultCheck check = new DefaultCheck(context.pieceAt(pos).getPieceColour());
 
         // If after executing the move is not in check anymore, return false. Return true otherwise

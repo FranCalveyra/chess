@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.providers;
 
-import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.MapBoard;
 import edu.austral.dissis.chess.promoters.StandardPromoter;
 import edu.austral.dissis.chess.rules.DefaultCheck;
 import edu.austral.dissis.chess.selectors.StandardTurnSelector;
@@ -16,7 +16,7 @@ public class GameProvider {
     }
     RuleProvider ruleProvider = new RuleProvider();
     return new ChessGame(
-        new Board(new ChessPieceMapProvider().provide(gameType)),
+        new MapBoard(new ChessPieceMapProvider().provide(gameType)),
         ruleProvider.provideWinConditions(gameType),
         List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
         new StandardPromoter(),

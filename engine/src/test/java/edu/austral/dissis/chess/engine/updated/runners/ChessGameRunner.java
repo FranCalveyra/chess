@@ -1,6 +1,5 @@
 package edu.austral.dissis.chess.engine.updated.runners;
 
-import static edu.austral.dissis.chess.engine.ChessGame.createChessGame;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 
@@ -64,7 +63,7 @@ public class ChessGameRunner implements TestGameRunner {
   @Override
   public TestGameRunner withBoard(@NotNull TestBoard testBoard) {
     return new ChessGameRunner(
-        createChessGame(
+        new ChessGame(
             mapBoard(testBoard),
             game.getWinConditions(),
             game.getCheckConditions(),

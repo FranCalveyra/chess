@@ -19,7 +19,7 @@ public class MoveExecutor {
     Piece pieceToTake = board.pieceAt(newPos);
     if (pieceToTake != null) {
       if (pieceToTake.getPieceColour() == piece.getPieceColour()) {
-        return new Pair<>(board, INVALID_MOVE); //TODO: REMOVE
+        return new Pair<>(board, INVALID_MOVE); // TODO: REMOVE
       } else {
         newBoard =
             board

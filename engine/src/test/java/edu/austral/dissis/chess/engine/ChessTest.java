@@ -114,7 +114,7 @@ public class ChessTest {
             provider.provide(BLACK, PieceType.QUEEN),
             fromAlgebraic("a5"),
             provider.provide(WHITE, PieceType.QUEEN));
-    Board currentBoard = new Board(situation);
+    MapBoard currentBoard = new MapBoard(situation);
     game =
         new ChessGame(
             currentBoard,
