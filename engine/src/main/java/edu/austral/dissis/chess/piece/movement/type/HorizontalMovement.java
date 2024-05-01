@@ -4,25 +4,26 @@ import static edu.austral.dissis.chess.utils.MoveType.HORIZONTAL;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.movement.PieceMovement;
+import edu.austral.dissis.chess.piece.movement.restrictions.*;
 import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.validators.PiecePathValidator;
+import edu.austral.dissis.chess.validators.AndRestrictionValidator;
+import edu.austral.dissis.chess.validators.MovementRestrictionValidator;
 
 public class HorizontalMovement implements PieceMovement {
   @Override
   public boolean isValidMove(ChessMove move, Board context) {
-    //TODO: change to validator
     ChessPosition oldPos = move.from();
     ChessPosition newPos = move.to();
-    boolean validMove =
-        (oldPos.getColumn() != newPos.getColumn()) && (oldPos.getRow() == newPos.getRow());
-    if (!validMove) {
-      return false;
-    }
-    boolean isNotTeammate =
-        context.pieceAt(newPos) == null
-            || context.pieceAt(oldPos).getPieceColour() != context.pieceAt(newPos).getPieceColour();
-    return new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, HORIZONTAL)
-        && isNotTeammate;
+    int deltaX = Math.abs(newPos.getColumn() - oldPos.getColumn());
+    MovementRestrictionValidator validator = getHorizontalRestrictionValidator(deltaX);
+    return validator.isValidMove(move,context);
+  }
+
+  private MovementRestrictionValidator getHorizontalRestrictionValidator(int distance) {
+    MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(distance));
+    MovementRestrictionValidator dy = new AndRestrictionValidator(new AbsRowDistance(0));
+    MovementRestrictionValidator noPieceBetween = new AndRestrictionValidator(new NoPieceInPath(HORIZONTAL), dx,dy);
+    return new AndRestrictionValidator(new NoTeammateAtDestination(), noPieceBetween,null);
   }
 }
