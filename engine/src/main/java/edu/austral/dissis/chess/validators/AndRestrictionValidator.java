@@ -23,6 +23,11 @@ public class AndRestrictionValidator implements MovementRestrictionValidator{
         this.left = leftValidator;
         this.right = rightValidator;
     }
+
+    public AndRestrictionValidator(MovementRestriction rule) {
+        this(rule, null, null);
+    }
+
     @Override
     public boolean isValidMove(ChessMove move, Board context) {
         if (isLeaf()){
@@ -59,9 +64,13 @@ public class AndRestrictionValidator implements MovementRestrictionValidator{
     private boolean validityWithRule(ChessMove move, Board board) {
         if (noLeftChild() && !noRightChild()) {
             return rule.isValidRule(move, board) && right.isValidMove(move, board);
-        } else if (!noLeftChild() && noRightChild()) {
+
+        }
+        if (!noLeftChild() && noRightChild()) {
             return left.isValidMove(move, board) && rule.isValidRule(move, board);
-        } else if (isLeaf()) {
+
+        }
+        if (isLeaf()) {
             return rule.isValidRule(move, board);
         }
         return left.isValidMove(move, board)

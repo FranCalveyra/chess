@@ -11,9 +11,6 @@ public class PiecePathValidator {
   // Checks if there's no piece between two given positions
   public boolean isNoPieceBetween(
       ChessPosition from, ChessPosition to, Board context, MoveType moveType) {
-    if (outOfBoardBounds(from, context) || outOfBoardBounds(to, context)) {
-      return false;
-    }
     switch (moveType) {
       case DIAGONAL:
         return checkDiagonal(from, to, context);

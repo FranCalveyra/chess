@@ -7,12 +7,14 @@ import edu.austral.dissis.chess.validators.PiecePathValidator;
 
 public class NoPieceInPath implements MovementRestriction{
     private final MoveType moveType;
+    private final PiecePathValidator pathValidator;
     public NoPieceInPath(MoveType moveType) {
         this.moveType = moveType;
+        this.pathValidator = new PiecePathValidator();
     }
 
     @Override
     public boolean isValidRule(ChessMove move, Board context) {
-        return new PiecePathValidator().isNoPieceBetween(move.from(), move.to(), context, moveType);
+        return pathValidator.isNoPieceBetween(move.from(), move.to(), context, moveType);
     }
 }

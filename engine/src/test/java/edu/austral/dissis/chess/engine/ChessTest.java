@@ -50,6 +50,7 @@ public class ChessTest {
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("g4")).getType());
     GameResult finishingMove = makeMove(game, "d8 -> h4");
     game = finishingMove.game();
+    System.out.println(game.getBoard());
     assertEquals(BLACK_WIN, finishingMove.moveResult());
     assertEquals(PieceType.QUEEN, game.getBoard().pieceAt(fromAlgebraic("h4")).getType());
     assertTrue(new DefaultCheck(WHITE).isValidRule(game.getBoard()));

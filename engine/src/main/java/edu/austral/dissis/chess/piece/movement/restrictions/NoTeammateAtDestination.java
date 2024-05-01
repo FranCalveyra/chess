@@ -8,6 +8,6 @@ public class NoTeammateAtDestination implements MovementRestriction {
     @Override
     public boolean isValidRule(ChessMove move, Board context) {
         Piece lastPiece = context.pieceAt(move.to());
-        return lastPiece == null || lastPiece.getPieceColour() != context.pieceAt(move.from()).getPieceColour();
+        return new ClearTile().isValidRule(move,context) || lastPiece.getPieceColour() != context.pieceAt(move.from()).getPieceColour();
     }
 }
