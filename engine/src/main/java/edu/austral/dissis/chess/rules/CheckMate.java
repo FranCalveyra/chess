@@ -68,7 +68,6 @@ public class CheckMate implements WinCondition {
 
         // If after executing the move is not in check anymore, return false. Return true otherwise
         if (!check.isValidRule(possibleBoardState)) {
-          System.out.println(piece.getMoveSet(pos, context));
           return false;
         }
       }
