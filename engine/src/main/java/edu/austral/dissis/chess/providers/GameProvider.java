@@ -21,7 +21,6 @@ public class GameProvider {
         List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
         new StandardPromoter(),
         new StandardTurnSelector(),
-        Color.WHITE,
         ruleProvider.providePreMovementValidator(gameType));
   }
 }

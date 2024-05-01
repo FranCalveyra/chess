@@ -69,8 +69,6 @@ public class ChessGameRunner implements TestGameRunner {
             game.getCheckConditions(),
             game.getPromoter(),
             game.getSelector(),
-            game.getCurrentTurn(),
-            game.getTurnNumber(),
             game.getPreMovementValidator()));
   }
 

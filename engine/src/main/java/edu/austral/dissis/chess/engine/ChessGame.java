@@ -27,11 +27,9 @@ public class ChessGame {
 
   private final WinConditionValidator winConditionValidator;
   private final List<WinCondition> winConditions;
-  private final List<Check> checkConditions; // TODO: Remove
+  private final List<Check> checkConditions; // FOUND A USE OUTSIDE GAME
   private final Promoter promoter;
   private final TurnSelector selector; // TODO: Manage turns from here
-  private final Color currentTurn; // TODO: hide
-  private final int turnNumber; // TODO:hide
   private final MoveExecutor executor;
   private final PreMovementValidator preMovementValidator;
 
@@ -41,7 +39,6 @@ public class ChessGame {
       List<Check> checkConditions, // TODO: TO DELETE
       Promoter promoter,
       TurnSelector selector,
-      Color currentTurn,
       PreMovementValidator preMovementValidator) {
     // Should be first instance
     this.board = board;
@@ -50,30 +47,6 @@ public class ChessGame {
     this.winConditionValidator = new WinConditionValidator(winConditions);
     this.promoter = promoter;
     this.selector = selector;
-    this.currentTurn = currentTurn;
-    this.preMovementValidator = preMovementValidator;
-    this.turnNumber = 0;
-    executor = new MoveExecutor();
-  }
-
-  public ChessGame(
-      Board board,
-      List<WinCondition> winConditions,
-      List<Check> checkConditions,
-      Promoter promoter,
-      TurnSelector selector,
-      Color currentTurn,
-      int turnNumber,
-      PreMovementValidator preMovementValidator) {
-    // Represents state passage
-    this.board = board;
-    this.winConditions = winConditions;
-    this.checkConditions = checkConditions;
-    this.winConditionValidator = new WinConditionValidator(winConditions);
-    this.promoter = promoter;
-    this.selector = selector;
-    this.turnNumber = turnNumber;
-    this.currentTurn = currentTurn;
     this.preMovementValidator = preMovementValidator;
     executor = new MoveExecutor();
   }
@@ -96,21 +69,19 @@ public class ChessGame {
     }
     // Declare final variables
     Board finalBoard = result.first();
-    Color nextTurn = selector.selectTurn(turnNumber + 1); // TODO: Change to getNextTurn()
+    TurnSelector nextSelector = selector.changeTurn(); // TODO: Change to getNextTurn()
     ChessGame finalGame =
         new ChessGame(
             finalBoard,
             winConditions,
             checkConditions,
             promoter,
-            selector,
-            nextTurn,
-            turnNumber + 1,
+            nextSelector,
             preMovementValidator);
 
     if (winConditionValidator.isGameWon(finalBoard)) {
       ChessMoveResult winner =
-          currentTurn == Color.BLACK ? BLACK_WIN : WHITE_WIN; // Hardcoded, may need to change
+          selector.getCurrentTurn() == Color.BLACK ? BLACK_WIN : WHITE_WIN; // Hardcoded, may need to change
       // TODO: Apply state pattern
       return new GameResult(finalGame, winner);
     }
@@ -128,7 +99,7 @@ public class ChessGame {
   }
 
   public Color getCurrentTurn() {
-    return currentTurn;
+    return selector.getCurrentTurn();
   }
 
   public Promoter getPromoter() {
@@ -141,10 +112,6 @@ public class ChessGame {
 
   public List<Check> getCheckConditions() {
     return checkConditions;
-  }
-
-  public int getTurnNumber() {
-    return turnNumber;
   }
 
   public PreMovementValidator getPreMovementValidator() {

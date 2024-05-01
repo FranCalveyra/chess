@@ -122,7 +122,6 @@ public class ChessTest {
             game.getCheckConditions(),
             game.getPromoter(),
             game.getSelector(),
-            WHITE,
             game.getPreMovementValidator());
     assertFalse(new CheckMate(BLACK).isValidRule(game.getBoard()));
     game = makeMove(game, "a5 -> d2").game();
