@@ -78,10 +78,6 @@ public class MapBoard implements Board {
         .collect(Collectors.joining());
   }
 
-  public MapBoard createCopy() {
-    return new MapBoard(pieces, rows, columns);
-  }
-
   // Private stuff
   private @NotNull HashMap<ChessPosition, Piece> copyMap(Map<ChessPosition, Piece> pieces) {
     return new HashMap<>(pieces);
