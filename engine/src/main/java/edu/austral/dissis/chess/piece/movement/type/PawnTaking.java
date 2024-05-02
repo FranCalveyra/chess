@@ -14,7 +14,6 @@ public class PawnTaking implements PieceMovement {
 
   @Override
   public boolean isValidMove(ChessMove move, Board context) {
-    //TODO: change to validator
     Color team = context.pieceAt(move.from()).getPieceColour();
     MovementRestrictionValidator validator = getValidator(team);
     return validator.isValidMove(move,context);

@@ -5,7 +5,6 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.piece.movement.type.Castling;
 import edu.austral.dissis.chess.piece.movement.type.DiagonalMovement;
 import edu.austral.dissis.chess.piece.movement.type.HorizontalMovement;
-import edu.austral.dissis.chess.piece.movement.type.KingMovement;
 import edu.austral.dissis.chess.piece.movement.type.KnightMovement;
 import edu.austral.dissis.chess.piece.movement.type.PawnFirstMove;
 import edu.austral.dissis.chess.piece.movement.type.PawnMovement;
@@ -20,13 +19,12 @@ import java.util.Random;
 public class PieceProvider {
 
   public Piece provide(Color pieceColour, PieceType type) {
-    PieceMovement castling = new Castling();
     String colorName = pieceColour == Color.WHITE ? "white" : "black";
     int randInt = new Random().nextInt();
     switch (type) {
       case KING:
         return new Piece(
-            List.of(new KingMovement(), castling),
+            List.of(new HorizontalMovement(1), new VerticalMovement(1), new DiagonalMovement(1), new Castling()),
             pieceColour,
             type,
             randInt + colorName + " " + type.name().toLowerCase());
