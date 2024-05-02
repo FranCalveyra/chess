@@ -9,6 +9,7 @@ public class KingMovement implements PieceMovement {
 
   @Override
   public boolean isValidMove(ChessMove move, Board context) {
+    //TODO: delete and replace it with horizontal, diagonal, vertical
     // King should move only in one direction, one tile at a time
     ChessPosition oldPos = move.from();
     ChessPosition newPos = move.to();

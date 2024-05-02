@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PawnFirstMove implements PieceMovement {
 
-  private MovementRestrictionValidator validator;
+  private final MovementRestrictionValidator validator;
   public PawnFirstMove(){
     this.validator = getPawnFirstMoveRestrictions();
   }
@@ -30,8 +30,7 @@ public class PawnFirstMove implements PieceMovement {
     MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(0));
     MovementRestrictionValidator dy = new AndRestrictionValidator(new AbsRowDistance(2));
     MovementRestrictionValidator left = craftLeftValidator(dx, dy);
-    MovementRestrictionValidator right = new AndRestrictionValidator(new ClearTile());
-    return new AndRestrictionValidator(null, left, right);
+    return new AndRestrictionValidator(new ClearTile(), left, null);
   }
 
   private @NotNull MovementRestrictionValidator craftLeftValidator(MovementRestrictionValidator dx, MovementRestrictionValidator dy) {

@@ -2,9 +2,6 @@ package edu.austral.dissis.chess.providers;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.piece.movement.restrictions.AbsColumnDistance;
-import edu.austral.dissis.chess.piece.movement.restrictions.AbsRowDistance;
-import edu.austral.dissis.chess.piece.movement.restrictions.NoTeammateAtDestination;
 import edu.austral.dissis.chess.piece.movement.type.Castling;
 import edu.austral.dissis.chess.piece.movement.type.DiagonalMovement;
 import edu.austral.dissis.chess.piece.movement.type.HorizontalMovement;
@@ -15,9 +12,6 @@ import edu.austral.dissis.chess.piece.movement.type.PawnMovement;
 import edu.austral.dissis.chess.piece.movement.type.PawnTaking;
 import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.piece.movement.type.VerticalMovement;
-import edu.austral.dissis.chess.validators.AndRestrictionValidator;
-import edu.austral.dissis.chess.validators.MovementRestrictionValidator;
-import edu.austral.dissis.chess.validators.OrRestrictionValidator;
 
 import java.awt.Color;
 import java.util.List;
