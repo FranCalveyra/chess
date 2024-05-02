@@ -9,7 +9,6 @@ import edu.austral.dissis.chess.piece.movement.type.KnightMovement;
 import edu.austral.dissis.chess.piece.movement.type.PawnFirstMove;
 import edu.austral.dissis.chess.piece.movement.type.PawnMovement;
 import edu.austral.dissis.chess.piece.movement.type.PawnTaking;
-import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.piece.movement.type.VerticalMovement;
 
 import java.awt.Color;

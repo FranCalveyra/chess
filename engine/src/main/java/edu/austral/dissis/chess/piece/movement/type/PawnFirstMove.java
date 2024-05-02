@@ -3,14 +3,11 @@ package edu.austral.dissis.chess.piece.movement.type;
 import static edu.austral.dissis.chess.utils.MoveType.VERTICAL;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.piece.movement.restrictions.*;
 import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessPosition;
 import edu.austral.dissis.chess.validators.AndRestrictionValidator;
 import edu.austral.dissis.chess.validators.MovementRestrictionValidator;
-import edu.austral.dissis.chess.validators.PiecePathValidator;
 import org.jetbrains.annotations.NotNull;
 
 public class PawnFirstMove implements PieceMovement {

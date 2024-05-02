@@ -10,8 +10,6 @@ import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessPosition;
 import edu.austral.dissis.chess.validators.AndRestrictionValidator;
 import edu.austral.dissis.chess.validators.MovementRestrictionValidator;
-import edu.austral.dissis.chess.validators.OrRestrictionValidator;
-import edu.austral.dissis.chess.validators.PiecePathValidator;
 
 public class DiagonalMovement implements PieceMovement {
   private final int maxDistance;

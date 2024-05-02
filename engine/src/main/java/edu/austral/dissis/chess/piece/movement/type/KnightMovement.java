@@ -1,14 +1,12 @@
 package edu.austral.dissis.chess.piece.movement.type;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.piece.movement.restrictions.*;
 import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.validators.AndRestrictionValidator;
 import edu.austral.dissis.chess.validators.MovementRestrictionValidator;
 import edu.austral.dissis.chess.validators.OrRestrictionValidator;
-import edu.austral.dissis.chess.validators.PreMovementValidator;
 import org.jetbrains.annotations.NotNull;
 
 public class KnightMovement implements PieceMovement {
