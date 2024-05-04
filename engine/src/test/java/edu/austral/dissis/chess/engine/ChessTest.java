@@ -63,7 +63,7 @@ public class ChessTest {
     assertEquals(WHITE, game.getCurrentTurn());
     GameResult firstResult = makeMove(game, "a2 -> a4");
     game = firstResult.game();
-    assertEquals(VALID_MOVE,firstResult.moveResult());
+    assertEquals(VALID_MOVE, firstResult.moveResult());
     game = makeMove(game, "a7 -> a5").game();
     assertPositionType(game, PieceType.PAWN, 3, 0);
     assertPositionType(game, PieceType.PAWN, 4, 0);

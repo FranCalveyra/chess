@@ -10,7 +10,6 @@ import edu.austral.dissis.chess.piece.movement.type.PawnFirstMove;
 import edu.austral.dissis.chess.piece.movement.type.PawnMovement;
 import edu.austral.dissis.chess.piece.movement.type.PawnTaking;
 import edu.austral.dissis.chess.piece.movement.type.VerticalMovement;
-
 import java.awt.Color;
 import java.util.List;
 import java.util.Random;
@@ -23,7 +22,11 @@ public class PieceProvider {
     switch (type) {
       case KING:
         return new Piece(
-            List.of(new HorizontalMovement(1), new VerticalMovement(1), new DiagonalMovement(1), new Castling()),
+            List.of(
+                new HorizontalMovement(1),
+                new VerticalMovement(1),
+                new DiagonalMovement(1),
+                new Castling()),
             pieceColour,
             type,
             randInt + colorName + " " + type.name().toLowerCase());
@@ -61,11 +64,4 @@ public class PieceProvider {
         throw new IllegalArgumentException();
     }
   }
-
-
-
-
-
-
-
 }

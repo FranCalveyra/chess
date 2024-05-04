@@ -38,7 +38,7 @@ public class Piece {
   }
 
   public boolean isValidMove(ChessMove move, Board context) {
-    return movements.stream().anyMatch(movement -> movement.isValidMove(move,context));
+    return movements.stream().anyMatch(movement -> movement.isValidMove(move, context));
   }
 
   @Override

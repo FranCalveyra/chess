@@ -5,15 +5,16 @@ import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessPosition;
 
 public class ColumnDistance implements MovementRestriction {
-    private final int columnDistance;
-    public ColumnDistance(int columnDistance) {
-        this.columnDistance = columnDistance;
-    }
+  private final int columnDistance;
 
-    @Override
-    public boolean isValidRestriction(ChessMove move, Board context) {
-        ChessPosition oldPos = move.from();
-        ChessPosition newPos = move.to();
-        return newPos.getColumn()-oldPos.getColumn() == columnDistance;
-    }
+  public ColumnDistance(int columnDistance) {
+    this.columnDistance = columnDistance;
+  }
+
+  @Override
+  public boolean isValidRestriction(ChessMove move, Board context) {
+    ChessPosition oldPos = move.from();
+    ChessPosition newPos = move.to();
+    return newPos.getColumn() - oldPos.getColumn() == columnDistance;
+  }
 }

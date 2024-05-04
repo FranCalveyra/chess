@@ -11,7 +11,6 @@ import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.selectors.TurnSelector;
 import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessMoveResult;
-import edu.austral.dissis.chess.utils.ChessPosition;
 import edu.austral.dissis.chess.utils.GameResult;
 import edu.austral.dissis.chess.utils.MoveExecutor;
 import edu.austral.dissis.chess.utils.Pair;
@@ -79,7 +78,9 @@ public class ChessGame {
 
     if (winConditionValidator.isGameWon(finalBoard)) {
       ChessMoveResult winner =
-          turnSelector.getCurrentTurn() == Color.BLACK ? BLACK_WIN : WHITE_WIN; // Hardcoded, may need to change
+          turnSelector.getCurrentTurn() == Color.BLACK
+              ? BLACK_WIN
+              : WHITE_WIN; // Hardcoded, may need to change
       // TODO: Apply state pattern
       return new GameResult(finalGame, winner);
     }

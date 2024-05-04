@@ -1,6 +1,5 @@
 package edu.austral.dissis.chess.utils;
 
-import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.PIECE_TAKEN;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
 
@@ -18,13 +17,13 @@ public class MoveExecutor {
     Board newBoard;
     Piece pieceToTake = board.pieceAt(newPos);
     if (pieceToTake != null) {
-        newBoard =
-            board
-                .removePieceAt(newPos)
-                .removePieceAt(oldPos)
-                .addPieceAt(newPos, !piece.hasMoved() ? piece.changeMoveState() : piece);
-        newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
-        return new Pair<>(newBoard, PIECE_TAKEN);
+      newBoard =
+          board
+              .removePieceAt(newPos)
+              .removePieceAt(oldPos)
+              .addPieceAt(newPos, !piece.hasMoved() ? piece.changeMoveState() : piece);
+      newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
+      return new Pair<>(newBoard, PIECE_TAKEN);
     } else {
       newBoard =
           board

@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface PieceMovement {
-  //TODO IDEA: MAKE THIS A CLASS THAT RECEIVES A VALIDATOR BY CONSTRUCTOR, THIS SHOULD MODULARIZE EVERYTHING :)
+  // TODO IDEA: MAKE THIS A CLASS THAT RECEIVES A VALIDATOR BY CONSTRUCTOR, THIS SHOULD MODULARIZE
+  // EVERYTHING :)
 
   boolean isValidMove(ChessMove move, Board context);
 
@@ -17,8 +18,7 @@ public interface PieceMovement {
       for (int j = 0; j < context.getColumns(); j++) {
         ChessPosition positionToMove = new ChessPosition(i, j);
         ChessMove moveToDo = new ChessMove(currentPos, positionToMove);
-        if (isValidMove(moveToDo, context)
-            && !possibleChessPositions.contains(positionToMove)) {
+        if (isValidMove(moveToDo, context) && !possibleChessPositions.contains(positionToMove)) {
           possibleChessPositions.add(positionToMove);
         }
       }
@@ -26,8 +26,7 @@ public interface PieceMovement {
     return possibleChessPositions;
   }
 
-  default List<ChessMove> getMovesToExecute(
-      ChessMove move, Board context) {
+  default List<ChessMove> getMovesToExecute(ChessMove move, Board context) {
     return List.of(move);
   }
 }

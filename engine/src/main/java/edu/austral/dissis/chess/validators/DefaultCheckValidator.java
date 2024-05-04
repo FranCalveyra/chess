@@ -18,7 +18,7 @@ public class DefaultCheckValidator {
       // your own team or an empty space
     }
     ChessPosition kingPosition = fetchKingPosition(context.getPiecesAndPositions(), team);
-    return kingPosition != null && piece.isValidMove(new ChessMove(toPos,kingPosition), context);
+    return kingPosition != null && piece.isValidMove(new ChessMove(toPos, kingPosition), context);
   }
 
   private boolean notAnEnemy(Piece piece, Color team) {

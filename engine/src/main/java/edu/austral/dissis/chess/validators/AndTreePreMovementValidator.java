@@ -57,7 +57,6 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
     return getValidity(move, game);
   }
 
-
   private boolean validityWithRule(ChessMove move, ChessGame game) {
     if (noLeftChild() && !noRightChild()) {
       return rule.isValidRule(move, game) && right.getMoveValidity(move, game) == VALID_MOVE;
@@ -67,8 +66,8 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
       return rule.isValidRule(move, game);
     }
     return left.getMoveValidity(move, game) == VALID_MOVE
-            && right.getMoveValidity(move, game) == VALID_MOVE
-            && rule.isValidRule(move, game);
+        && right.getMoveValidity(move, game) == VALID_MOVE
+        && rule.isValidRule(move, game);
   }
 
   private boolean validityWithoutRule(ChessMove move, ChessGame game) {
@@ -82,6 +81,6 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
       return false;
     }
     return left.getMoveValidity(move, game) == VALID_MOVE
-            && right.getMoveValidity(move, game) == VALID_MOVE;
+        && right.getMoveValidity(move, game) == VALID_MOVE;
   }
 }

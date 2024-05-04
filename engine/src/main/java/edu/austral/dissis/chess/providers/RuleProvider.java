@@ -9,8 +9,8 @@ import edu.austral.dissis.chess.rules.PieceValidMove;
 import edu.austral.dissis.chess.rules.TurnRule;
 import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.utils.GameType;
-import edu.austral.dissis.chess.validators.PreMovementValidator;
 import edu.austral.dissis.chess.validators.AndTreePreMovementValidator;
+import edu.austral.dissis.chess.validators.PreMovementValidator;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,8 @@ public class RuleProvider {
         new AndTreePreMovementValidator(new InsideBoardBounds(), null, null);
     AndTreePreMovementValidator pieceAtPos =
         new AndTreePreMovementValidator(new PieceAtPosition(), null, null);
-    AndTreePreMovementValidator turn = new AndTreePreMovementValidator(new TurnRule(), pieceAtPos, null);
+    AndTreePreMovementValidator turn =
+        new AndTreePreMovementValidator(new TurnRule(), pieceAtPos, null);
 
     AndTreePreMovementValidator moveAllowed =
         new AndTreePreMovementValidator(new PieceValidMove(), null, null);
@@ -40,10 +41,12 @@ public class RuleProvider {
     AndTreePreMovementValidator notIntoCheck =
         new AndTreePreMovementValidator(new MoveNotIntoCheck(), null, null);
 
-    AndTreePreMovementValidator bottomLeft = new AndTreePreMovementValidator(null, moveInside, turn);
+    AndTreePreMovementValidator bottomLeft =
+        new AndTreePreMovementValidator(null, moveInside, turn);
     AndTreePreMovementValidator bottomRight =
         new AndTreePreMovementValidator(null, moveAllowed, noFriendlyFire);
-    AndTreePreMovementValidator topLeft = new AndTreePreMovementValidator(null, bottomLeft, bottomRight);
+    AndTreePreMovementValidator topLeft =
+        new AndTreePreMovementValidator(null, bottomLeft, bottomRight);
 
     return new AndTreePreMovementValidator(null, topLeft, notIntoCheck);
   }
