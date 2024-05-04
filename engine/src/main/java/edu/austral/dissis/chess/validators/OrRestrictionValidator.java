@@ -20,7 +20,7 @@ public class OrRestrictionValidator implements MovementRestrictionValidator {
     @Override
     public boolean isValidMove(ChessMove move, Board context) {
         if (isLeaf()){
-            return rule.isValidRule(move, context);
+            return rule.isValidRestriction(move, context);
         }
         return getValidity(move, context);
     }
@@ -52,15 +52,15 @@ public class OrRestrictionValidator implements MovementRestrictionValidator {
 
     private boolean validityWithRule(ChessMove move, Board board) {
         if (noLeftChild() && !noRightChild()) {
-            return rule.isValidRule(move, board) || right.isValidMove(move, board);
+            return rule.isValidRestriction(move, board) || right.isValidMove(move, board);
         } else if (!noLeftChild() && noRightChild()) {
-            return left.isValidMove(move, board) || rule.isValidRule(move, board);
+            return left.isValidMove(move, board) || rule.isValidRestriction(move, board);
         } else if (isLeaf()) {
-            return rule.isValidRule(move, board);
+            return rule.isValidRestriction(move, board);
         }
         return left.isValidMove(move, board)
                 || right.isValidMove(move, board)
-                || rule.isValidRule(move, board);
+                || rule.isValidRestriction(move, board);
     }
 
     private boolean validityWithoutRule(ChessMove move, Board board) {

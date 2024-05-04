@@ -6,7 +6,7 @@ import edu.austral.dissis.chess.utils.ChessMove;
 
 public class IsAnEnemy implements MovementRestriction {
     @Override
-    public boolean isValidRule(ChessMove move, Board context) {
+    public boolean isValidRestriction(ChessMove move, Board context) {
         Piece lastPiece = context.pieceAt(move.to());
         return lastPiece != null && lastPiece.getPieceColour() != context.pieceAt(move.from()).getPieceColour();
     }

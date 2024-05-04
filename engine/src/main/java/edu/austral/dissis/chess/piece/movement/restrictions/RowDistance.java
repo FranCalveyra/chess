@@ -11,7 +11,7 @@ public class RowDistance implements MovementRestriction {
     }
 
     @Override
-    public boolean isValidRule(ChessMove move, Board context) {
+    public boolean isValidRestriction(ChessMove move, Board context) {
         ChessPosition oldPos = move.from();
         ChessPosition newPos = move.to();
         return newPos.getRow()-oldPos.getRow() == rowDistance;

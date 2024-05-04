@@ -14,7 +14,7 @@ public class NoPieceInPath implements MovementRestriction{
     }
 
     @Override
-    public boolean isValidRule(ChessMove move, Board context) {
+    public boolean isValidRestriction(ChessMove move, Board context) {
         return pathValidator.isNoPieceBetween(move.from(), move.to(), context, moveType);
     }
 }

@@ -38,19 +38,7 @@ public class ChessGameRunner implements TestGameRunner {
   public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
     GameResult gameResult = game.makeMove(new ChessMove(mapPosition(from), mapPosition(to)));
     game = gameResult.game();
-    switch (gameResult.moveResult()) {
-      case INVALID_MOVE:
-        return new TestMoveFailure(getBoard());
-      case WHITE_WIN:
-        return new WhiteCheckMate(getBoard());
-      case BLACK_WIN:
-        return new BlackCheckMate(getBoard());
-      case VALID_MOVE:
-      case PIECE_TAKEN:
-        return new TestMoveSuccess(this);
-      default:
-        throw new IllegalArgumentException();
-    }
+    return getTestMoveResult(gameResult);
   }
 
   @NotNull
@@ -109,6 +97,22 @@ public class ChessGameRunner implements TestGameRunner {
         return TestPieceSymbols.KING;
       case PAWN:
         return TestPieceSymbols.PAWN;
+      default:
+        throw new IllegalArgumentException();
+    }
+  }
+
+  private @NotNull TestMoveResult getTestMoveResult(GameResult gameResult) {
+    switch (gameResult.moveResult()) {
+      case INVALID_MOVE:
+        return new TestMoveFailure(getBoard());
+      case WHITE_WIN:
+        return new WhiteCheckMate(getBoard());
+      case BLACK_WIN:
+        return new BlackCheckMate(getBoard());
+      case VALID_MOVE:
+      case PIECE_TAKEN:
+        return new TestMoveSuccess(this);
       default:
         throw new IllegalArgumentException();
     }

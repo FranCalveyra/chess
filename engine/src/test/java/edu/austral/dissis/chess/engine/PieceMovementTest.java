@@ -3,7 +3,9 @@ package edu.austral.dissis.chess.engine;
 import static edu.austral.dissis.chess.engine.ChessTest.getPiecePosition;
 import static edu.austral.dissis.chess.engine.updated.utils.TestFunctions.makeMove;
 import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
+import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
 import static edu.austral.dissis.chess.utils.ChessPosition.fromAlgebraic;
+import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,11 +14,15 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.piece.movement.type.Castling;
 import edu.austral.dissis.chess.providers.GameProvider;
+import edu.austral.dissis.chess.providers.PieceProvider;
 import edu.austral.dissis.chess.utils.ChessMove;
 import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.GameResult;
 import edu.austral.dissis.chess.utils.GameType;
 import java.awt.Color;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 public class PieceMovementTest {
@@ -99,6 +105,21 @@ public class PieceMovementTest {
     game = makeMove(game, "a7 -> a5").game();
     game = makeMove(game, "b4 -> b5").game();
     assertEquals(INVALID_MOVE, makeMove(game, "b7 -> b5").moveResult());
+  }
+
+  @Test
+  public void validatePawnFirstMove(){
+    PieceProvider provider = new PieceProvider();
+    Map<ChessPosition, Piece> situation =
+            Map.of(
+                    fromAlgebraic("d4"),
+                    provider.provide(BLACK, PieceType.PAWN));
+    MapBoard currentBoard = new MapBoard(situation);
+    ChessGame newGame = new ChessGame(currentBoard, game.getWinConditions(),game.getCheckConditions(),game.getPromoter(),game.getTurnSelector().changeTurn(),game.getPreMovementValidator());
+    GameResult game1 = makeMove(newGame, "d4 -> d2");
+    GameResult game2 = makeMove(newGame, "d4 -> d6");
+    assertEquals(VALID_MOVE,game1.moveResult());
+    assertEquals(INVALID_MOVE,game2.moveResult());
   }
 
   @Test

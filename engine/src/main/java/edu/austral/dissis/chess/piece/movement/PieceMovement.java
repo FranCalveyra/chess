@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface PieceMovement {
+  //TODO IDEA: MAKE THIS A CLASS THAT RECEIVES A VALIDATOR BY CONSTRUCTOR, THIS SHOULD MODULARIZE EVERYTHING :)
 
   boolean isValidMove(ChessMove move, Board context);
 

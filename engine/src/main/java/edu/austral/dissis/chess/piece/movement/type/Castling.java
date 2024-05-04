@@ -13,6 +13,8 @@ import edu.austral.dissis.chess.validators.PiecePathValidator;
 import java.util.List;
 
 public class Castling implements PieceMovement {
+  //TODO: MODULARIZE
+
   // Only valid whenever king and rooks haven't been moved yet,
   // and move that is wanted to be done doesn't leave the king in check/checkmate.
 
@@ -36,7 +38,6 @@ public class Castling implements PieceMovement {
   }
 
   private boolean isCastlingPossible(ChessPosition oldPos, ChessPosition newPos, Board context) {
-    // This is a king-only rule
     Piece king = context.pieceAt(oldPos);
     int rookColumn = newPos.getColumn() == 2 ? 0 : context.getColumns() - 1;
     Piece rook = context.pieceAt(new ChessPosition(newPos.getRow(), rookColumn));
@@ -44,11 +45,10 @@ public class Castling implements PieceMovement {
       return false;
     }
     boolean colorCheck = king.getPieceColour() == rook.getPieceColour();
-    boolean typeCheck = validateCastlingPieceTypes(king, rook);
     int columnDelta = Math.abs(newPos.getColumn() - oldPos.getColumn());
     boolean displacementCheck = oldPos.getRow() == newPos.getRow() && columnDelta == 2;
     boolean haveNotMoved = !king.hasMoved() && !rook.hasMoved();
-    boolean generalChecks = colorCheck && typeCheck && haveNotMoved && displacementCheck;
+    boolean generalChecks = colorCheck && haveNotMoved && displacementCheck;
 
     if (!generalChecks) {
       return false;
@@ -60,10 +60,6 @@ public class Castling implements PieceMovement {
       return false;
     }
     return validateCheckBetween(oldPos, newPos, context);
-  }
-
-  private boolean validateCastlingPieceTypes(Piece king, Piece rook) {
-    return king.getType() == PieceType.KING && rook.getType() == PieceType.ROOK;
   }
 
   private boolean validateCheckBetween(ChessPosition oldPos, ChessPosition newPos, Board context) {

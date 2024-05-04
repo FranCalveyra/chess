@@ -4,5 +4,5 @@ import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.utils.ChessMove;
 
 public interface MovementRestriction {
-    boolean isValidRule(ChessMove move, Board context);
+    boolean isValidRestriction(ChessMove move, Board context);
 }

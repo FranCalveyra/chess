@@ -1,14 +1,8 @@
 package edu.austral.dissis.chess.validators;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.movement.restrictions.MovementRestriction;
-import edu.austral.dissis.chess.rules.PreMovementRule;
 import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessMoveResult;
-
-import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
 
 public class AndRestrictionValidator implements MovementRestrictionValidator{
     private final MovementRestrictionValidator left;
@@ -31,7 +25,7 @@ public class AndRestrictionValidator implements MovementRestrictionValidator{
     @Override
     public boolean isValidMove(ChessMove move, Board context) {
         if (isLeaf()){
-            return rule.isValidRule(move, context);
+            return rule.isValidRestriction(move, context);
         }
         return getValidity(move, context);
     }
@@ -63,19 +57,19 @@ public class AndRestrictionValidator implements MovementRestrictionValidator{
 
     private boolean validityWithRule(ChessMove move, Board board) {
         if (noLeftChild() && !noRightChild()) {
-            return rule.isValidRule(move, board) && right.isValidMove(move, board);
+            return rule.isValidRestriction(move, board) && right.isValidMove(move, board);
 
         }
         if (!noLeftChild() && noRightChild()) {
-            return left.isValidMove(move, board) && rule.isValidRule(move, board);
+            return left.isValidMove(move, board) && rule.isValidRestriction(move, board);
 
         }
         if (isLeaf()) {
-            return rule.isValidRule(move, board);
+            return rule.isValidRestriction(move, board);
         }
         return left.isValidMove(move, board)
                 && right.isValidMove(move, board)
-                && rule.isValidRule(move, board);
+                && rule.isValidRestriction(move, board);
     }
 
     private boolean validityWithoutRule(ChessMove move, Board board) {

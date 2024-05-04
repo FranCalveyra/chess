@@ -12,7 +12,7 @@ public class AbsColumnDistance implements MovementRestriction {
 
 
     @Override
-    public boolean isValidRule(ChessMove move, Board context) {
+    public boolean isValidRestriction(ChessMove move, Board context) {
         ChessPosition oldPos = move.from();
         ChessPosition newPos = move.to();
         return Math.abs(newPos.getColumn()-oldPos.getColumn()) == columnDistance;

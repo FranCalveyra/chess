@@ -10,22 +10,21 @@ import edu.austral.dissis.chess.validators.AndRestrictionValidator;
 import edu.austral.dissis.chess.validators.MovementRestrictionValidator;
 import org.jetbrains.annotations.NotNull;
 
-public class PawnFirstMove implements PieceMovement {
+import java.awt.Color;
 
-  private final MovementRestrictionValidator validator;
-  public PawnFirstMove(){
-    this.validator = getPawnFirstMoveRestrictions();
-  }
+public class PawnFirstMove implements PieceMovement {
 
   @Override
   public boolean isValidMove(ChessMove move, Board context) {
+    MovementRestrictionValidator validator = getPawnFirstMoveRestrictions(context.pieceAt(move.from()).getPieceColour());
     return validator.isValidMove(move,context);
   }
 
 
-  private MovementRestrictionValidator getPawnFirstMoveRestrictions() {
+  private MovementRestrictionValidator getPawnFirstMoveRestrictions(Color pieceColour) {
     MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(0));
-    MovementRestrictionValidator dy = new AndRestrictionValidator(new AbsRowDistance(2));
+    int colorBasedRowDistance = pieceColour == Color.BLACK ? -2: 2;
+    MovementRestrictionValidator dy = new AndRestrictionValidator(new RowDistance(colorBasedRowDistance));
     MovementRestrictionValidator left = craftLeftValidator(dx, dy);
     return new AndRestrictionValidator(new ClearTile(), left, null);
   }
