@@ -1,6 +1,6 @@
-package edu.austral.dissis.chess.utils;
+package edu.austral.dissis.chess.utils.move;
 
-import static edu.austral.dissis.chess.utils.ChessPosition.toAlgebraic;
+import static edu.austral.dissis.chess.utils.move.ChessPosition.toAlgebraic;
 
 public final class ChessMove {
   private final ChessPosition from;

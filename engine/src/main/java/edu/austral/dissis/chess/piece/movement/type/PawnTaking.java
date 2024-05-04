@@ -5,7 +5,7 @@ import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.piece.movement.restrictions.AbsColumnDistance;
 import edu.austral.dissis.chess.piece.movement.restrictions.IsAnEnemy;
 import edu.austral.dissis.chess.piece.movement.restrictions.RowDistance;
-import edu.austral.dissis.chess.utils.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessMove;
 import edu.austral.dissis.chess.validators.AndRestrictionValidator;
 import edu.austral.dissis.chess.validators.MovementRestrictionValidator;
 import java.awt.Color;

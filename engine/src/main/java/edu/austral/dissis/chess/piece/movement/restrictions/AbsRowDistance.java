@@ -1,8 +1,8 @@
 package edu.austral.dissis.chess.piece.movement.restrictions;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
 
 public class AbsRowDistance implements MovementRestriction {
   private final int rowDistance;

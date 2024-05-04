@@ -1,9 +1,7 @@
 package edu.austral.dissis.chess.engine;
 
 import static edu.austral.dissis.chess.engine.updated.utils.TestFunctions.makeMove;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.BLACK_WIN;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
-import static edu.austral.dissis.chess.utils.ChessPosition.fromAlgebraic;
+import static edu.austral.dissis.chess.utils.move.ChessPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,9 +14,11 @@ import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.providers.PieceProvider;
 import edu.austral.dissis.chess.rules.CheckMate;
 import edu.austral.dissis.chess.rules.DefaultCheck;
-import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.utils.GameResult;
-import edu.austral.dissis.chess.utils.GameType;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
+import edu.austral.dissis.chess.utils.result.GameResult;
+import edu.austral.dissis.chess.utils.result.GameWon;
+import edu.austral.dissis.chess.utils.result.ValidMove;
+import edu.austral.dissis.chess.utils.type.GameType;
 import java.awt.Color;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,7 @@ public class ChessTest {
     GameResult finishingMove = makeMove(game, "d8 -> h4");
     game = finishingMove.game();
     System.out.println(game.getBoard());
-    assertEquals(BLACK_WIN, finishingMove.moveResult());
+    assertEquals(new GameWon(BLACK), finishingMove.moveResult());
     assertEquals(PieceType.QUEEN, game.getBoard().pieceAt(fromAlgebraic("h4")).getType());
     assertTrue(new DefaultCheck(WHITE).isValidRule(game.getBoard()));
     assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
@@ -63,7 +63,7 @@ public class ChessTest {
     assertEquals(WHITE, game.getCurrentTurn());
     GameResult firstResult = makeMove(game, "a2 -> a4");
     game = firstResult.game();
-    assertEquals(VALID_MOVE, firstResult.moveResult());
+    assertEquals(new ValidMove(), firstResult.moveResult());
     game = makeMove(game, "a7 -> a5").game();
     assertPositionType(game, PieceType.PAWN, 3, 0);
     assertPositionType(game, PieceType.PAWN, 4, 0);

@@ -2,7 +2,7 @@ package edu.austral.dissis.chess.rules;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;

@@ -5,7 +5,7 @@ import edu.austral.dissis.chess.engine.MapBoard;
 import edu.austral.dissis.chess.promoters.StandardPromoter;
 import edu.austral.dissis.chess.rules.DefaultCheck;
 import edu.austral.dissis.chess.selectors.StandardTurnSelector;
-import edu.austral.dissis.chess.utils.GameType;
+import edu.austral.dissis.chess.utils.type.GameType;
 import java.awt.Color;
 import java.util.List;
 

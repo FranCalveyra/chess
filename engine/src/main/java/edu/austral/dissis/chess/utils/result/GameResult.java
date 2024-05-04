@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.utils;
+package edu.austral.dissis.chess.utils.result;
 
 import edu.austral.dissis.chess.engine.ChessGame;
 
@@ -18,10 +18,5 @@ public final class GameResult {
 
   public ChessMoveResult moveResult() {
     return moveResult;
-  }
-
-  @Override
-  public String toString() {
-    return "GameResult[" + "game=" + game + ", " + "moveResult=" + moveResult + ']';
   }
 }

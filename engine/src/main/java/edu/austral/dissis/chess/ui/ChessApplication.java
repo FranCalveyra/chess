@@ -6,7 +6,7 @@ import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.GameView;
 import edu.austral.dissis.chess.gui.ImageResolver;
 import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.utils.GameType;
+import edu.austral.dissis.chess.utils.type.GameType;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

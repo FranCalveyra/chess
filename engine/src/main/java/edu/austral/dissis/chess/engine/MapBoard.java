@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

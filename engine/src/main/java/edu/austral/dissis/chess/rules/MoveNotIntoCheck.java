@@ -1,13 +1,12 @@
 package edu.austral.dissis.chess.rules;
 
-import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
-
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessMoveResult;
 import edu.austral.dissis.chess.utils.Pair;
+import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.chess.utils.result.ChessMoveResult;
+import edu.austral.dissis.chess.utils.result.ValidMove;
 import java.util.List;
 
 public class MoveNotIntoCheck implements PreMovementRule {
@@ -15,7 +14,7 @@ public class MoveNotIntoCheck implements PreMovementRule {
   public boolean isValidRule(ChessMove move, ChessGame game) {
     List<Check> checks = game.getCheckConditions();
     Piece piece = game.getBoard().pieceAt(move.from());
-    Pair<Board, ChessMoveResult> resultPair = new Pair<>(game.getBoard(), VALID_MOVE);
+    Pair<Board, ChessMoveResult> resultPair = new Pair<>(game.getBoard(), new ValidMove());
     final List<ChessMove> playToExecute = piece.getPlay(move, game.getBoard());
     for (ChessMove moveToDo : playToExecute) {
       resultPair =

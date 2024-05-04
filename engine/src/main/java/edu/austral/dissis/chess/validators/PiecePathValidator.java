@@ -2,9 +2,9 @@ package edu.austral.dissis.chess.validators;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.utils.MoveType;
 import edu.austral.dissis.chess.utils.Pair;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
+import edu.austral.dissis.chess.utils.type.MoveType;
 
 public class PiecePathValidator {
 
@@ -104,11 +104,5 @@ public class PiecePathValidator {
     Piece lastPiece = context.pieceAt(newPos);
     return lastPiece == null
         || lastPiece.getPieceColour() != context.pieceAt(oldPos).getPieceColour();
-  }
-
-  private boolean outOfBoardBounds(ChessPosition pos, Board context) {
-    int i = pos.getRow();
-    int j = pos.getColumn();
-    return i >= context.getRows() || i < 0 || j >= context.getColumns() || j < 0;
   }
 }

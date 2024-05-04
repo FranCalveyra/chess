@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.rules;
 
 import edu.austral.dissis.chess.engine.ChessGame;
-import edu.austral.dissis.chess.utils.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessMove;
 
 public class PieceAtPosition implements PreMovementRule {
   @Override

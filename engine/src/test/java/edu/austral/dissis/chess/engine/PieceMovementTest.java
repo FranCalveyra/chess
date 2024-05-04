@@ -2,9 +2,7 @@ package edu.austral.dissis.chess.engine;
 
 import static edu.austral.dissis.chess.engine.ChessTest.getPiecePosition;
 import static edu.austral.dissis.chess.engine.updated.utils.TestFunctions.makeMove;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
-import static edu.austral.dissis.chess.utils.ChessPosition.fromAlgebraic;
+import static edu.austral.dissis.chess.utils.move.ChessPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,10 +13,12 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.piece.movement.type.Castling;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.providers.PieceProvider;
-import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.utils.GameResult;
-import edu.austral.dissis.chess.utils.GameType;
+import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
+import edu.austral.dissis.chess.utils.result.GameResult;
+import edu.austral.dissis.chess.utils.result.InvalidMove;
+import edu.austral.dissis.chess.utils.result.ValidMove;
+import edu.austral.dissis.chess.utils.type.GameType;
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;
@@ -103,7 +103,7 @@ public class PieceMovementTest {
     game = makeMove(game, "b2 -> b4").game();
     game = makeMove(game, "a7 -> a5").game();
     game = makeMove(game, "b4 -> b5").game();
-    assertEquals(INVALID_MOVE, makeMove(game, "b7 -> b5").moveResult());
+    assertEquals(new InvalidMove(""), makeMove(game, "b7 -> b5").moveResult());
   }
 
   @Test
@@ -122,8 +122,8 @@ public class PieceMovementTest {
             game.getPreMovementValidator());
     GameResult game1 = makeMove(newGame, "d4 -> d2");
     GameResult game2 = makeMove(newGame, "d4 -> d6");
-    assertEquals(VALID_MOVE, game1.moveResult());
-    assertEquals(INVALID_MOVE, game2.moveResult());
+    assertEquals(new ValidMove(), game1.moveResult());
+    assertEquals(new InvalidMove(""), game2.moveResult());
   }
 
   @Test
@@ -132,7 +132,7 @@ public class PieceMovementTest {
     game = makeMove(game, "b7 -> b5").game();
     game = makeMove(game, "a4 -> b5").game();
     assertEquals(Color.BLACK, game.getCurrentTurn());
-    assertEquals(INVALID_MOVE, makeMove(game, "a8 -> b4").moveResult());
+    assertEquals(new InvalidMove(""), makeMove(game, "a8 -> b4").moveResult());
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
     game = makeMove(game, "g7 -> g6").game();
     List<ChessPosition> rookMoveSet =

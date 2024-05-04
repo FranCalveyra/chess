@@ -6,7 +6,7 @@ import edu.austral.dissis.chess.piece.movement.restrictions.AbsColumnDistance;
 import edu.austral.dissis.chess.piece.movement.restrictions.AbsRowDistance;
 import edu.austral.dissis.chess.piece.movement.restrictions.ClearTile;
 import edu.austral.dissis.chess.piece.movement.restrictions.IsAnEnemy;
-import edu.austral.dissis.chess.utils.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessMove;
 import edu.austral.dissis.chess.validators.AndRestrictionValidator;
 import edu.austral.dissis.chess.validators.MovementRestrictionValidator;
 import edu.austral.dissis.chess.validators.OrRestrictionValidator;

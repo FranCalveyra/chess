@@ -17,9 +17,15 @@ import edu.austral.dissis.chess.test.game.TestMoveFailure;
 import edu.austral.dissis.chess.test.game.TestMoveResult;
 import edu.austral.dissis.chess.test.game.TestMoveSuccess;
 import edu.austral.dissis.chess.test.game.WhiteCheckMate;
-import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.utils.GameResult;
+import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
+import edu.austral.dissis.chess.utils.result.CheckState;
+import edu.austral.dissis.chess.utils.result.ChessMoveResult;
+import edu.austral.dissis.chess.utils.result.GameResult;
+import edu.austral.dissis.chess.utils.result.GameWon;
+import edu.austral.dissis.chess.utils.result.InvalidMove;
+import edu.austral.dissis.chess.utils.result.PieceTaken;
+import edu.austral.dissis.chess.utils.result.ValidMove;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,18 +109,22 @@ public class ChessGameRunner implements TestGameRunner {
   }
 
   private @NotNull TestMoveResult getTestMoveResult(GameResult gameResult) {
-    switch (gameResult.moveResult()) {
-      case INVALID_MOVE:
+    ChessMoveResult moveResult = gameResult.moveResult();
+    switch (moveResult) {
+      case GameWon g:
+        return g.getWinner() == Color.BLACK
+            ? new BlackCheckMate(getBoard())
+            : new WhiteCheckMate(getBoard());
+      case InvalidMove invalidMove:
         return new TestMoveFailure(getBoard());
-      case WHITE_WIN:
-        return new WhiteCheckMate(getBoard());
-      case BLACK_WIN:
-        return new BlackCheckMate(getBoard());
-      case VALID_MOVE:
-      case PIECE_TAKEN:
+      case ValidMove validMove:
+        return new TestMoveSuccess(this);
+      case CheckState checkState:
+        return new TestMoveSuccess(this);
+      case PieceTaken pieceTaken:
         return new TestMoveSuccess(this);
       default:
-        throw new IllegalArgumentException();
+        throw new IllegalStateException();
     }
   }
 }

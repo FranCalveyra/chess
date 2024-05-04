@@ -1,19 +1,17 @@
 package edu.austral.dissis.chess.engine;
 
-import static edu.austral.dissis.chess.utils.ChessMoveResult.BLACK_WIN;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.WHITE_WIN;
-
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.WinCondition;
 import edu.austral.dissis.chess.selectors.TurnSelector;
-import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessMoveResult;
-import edu.austral.dissis.chess.utils.GameResult;
 import edu.austral.dissis.chess.utils.MoveExecutor;
 import edu.austral.dissis.chess.utils.Pair;
+import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.chess.utils.result.ChessMoveResult;
+import edu.austral.dissis.chess.utils.result.GameResult;
+import edu.austral.dissis.chess.utils.result.GameWon;
+import edu.austral.dissis.chess.utils.result.InvalidMove;
 import edu.austral.dissis.chess.validators.PreMovementValidator;
 import edu.austral.dissis.chess.validators.WinConditionValidator;
 import java.awt.Color;
@@ -54,12 +52,13 @@ public class ChessGame {
     // Check winning at the end
     // Do all necessary checks
     // PreMovementRules should be valid
-    if (preMovementValidator.getMoveValidity(move, this) == INVALID_MOVE) { // TODO: Not use enums
-      return new GameResult(this, INVALID_MOVE);
+    ChessMoveResult preMovementValidity = preMovementValidator.getMoveValidity(move, this);
+    if (preMovementValidity.getClass() == InvalidMove.class) {
+      return new GameResult(this, preMovementValidity);
     }
     // Once valid, execute move
     final Piece pieceToMove = board.pieceAt(move.from());
-    Pair<Board, ChessMoveResult> result = new Pair<>(board, INVALID_MOVE);
+    Pair<Board, ChessMoveResult> result = new Pair<>(board, new InvalidMove("any"));
     final List<ChessMove> playToExecute = pieceToMove.getPlay(move, board);
     for (ChessMove moveToDo : playToExecute) {
       result = executor.executeMove(moveToDo.from(), moveToDo.to(), result.first(), promoter);
@@ -77,12 +76,9 @@ public class ChessGame {
             preMovementValidator);
 
     if (winConditionValidator.isGameWon(finalBoard)) {
-      ChessMoveResult winner =
-          turnSelector.getCurrentTurn() == Color.BLACK
-              ? BLACK_WIN
-              : WHITE_WIN; // Hardcoded, may need to change
+      Color winner = turnSelector.getCurrentTurn(); // Hardcoded, may need to change
       // TODO: Apply state pattern
-      return new GameResult(finalGame, winner);
+      return new GameResult(finalGame, new GameWon(winner));
     }
     // Get the resulting game at last
     return new GameResult(finalGame, result.second()); // Second represents the moveResult

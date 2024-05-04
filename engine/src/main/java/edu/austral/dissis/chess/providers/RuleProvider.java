@@ -8,7 +8,7 @@ import edu.austral.dissis.chess.rules.PieceAtPosition;
 import edu.austral.dissis.chess.rules.PieceValidMove;
 import edu.austral.dissis.chess.rules.TurnRule;
 import edu.austral.dissis.chess.rules.WinCondition;
-import edu.austral.dissis.chess.utils.GameType;
+import edu.austral.dissis.chess.utils.type.GameType;
 import edu.austral.dissis.chess.validators.AndTreePreMovementValidator;
 import edu.austral.dissis.chess.validators.PreMovementValidator;
 import java.awt.Color;

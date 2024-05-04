@@ -17,7 +17,7 @@ import edu.austral.dissis.chess.providers.PieceProvider;
 import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPiece;
 import edu.austral.dissis.chess.test.TestPosition;
-import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;

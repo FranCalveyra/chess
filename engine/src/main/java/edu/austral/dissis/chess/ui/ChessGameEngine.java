@@ -1,12 +1,6 @@
 package edu.austral.dissis.chess.ui;
 
-import static edu.austral.dissis.chess.utils.ChessMoveResult.BLACK_WIN;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.INVALID_MOVE;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.PIECE_TAKEN;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.WHITE_WIN;
 import static java.awt.Color.BLACK;
-import static java.awt.Color.WHITE;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
@@ -22,10 +16,14 @@ import edu.austral.dissis.chess.gui.NewGameState;
 import edu.austral.dissis.chess.gui.PlayerColor;
 import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessMoveResult;
-import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.utils.GameResult;
+import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
+import edu.austral.dissis.chess.utils.result.CheckState;
+import edu.austral.dissis.chess.utils.result.ChessMoveResult;
+import edu.austral.dissis.chess.utils.result.GameResult;
+import edu.austral.dissis.chess.utils.result.GameWon;
+import edu.austral.dissis.chess.utils.result.PieceTaken;
+import edu.austral.dissis.chess.utils.result.ValidMove;
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +44,7 @@ public class ChessGameEngine implements GameEngine {
     GameResult gameResult =
         game.makeMove(new ChessMove(mapPos(move.getFrom()), mapPos(move.getTo())));
     game = gameResult.game();
-    return getMoveResults(game).get(gameResult.moveResult());
+    return getMoveResults(gameResult);
   }
 
   @NotNull
@@ -92,17 +90,21 @@ public class ChessGameEngine implements GameEngine {
     return new ChessPosition(position.getRow() - 1, position.getColumn() - 1);
   }
 
-  private @NotNull Map<ChessMoveResult, MoveResult> getMoveResults(ChessGame game) {
-    return Map.of(
-        VALID_MOVE,
-        updateGameState(game),
-        INVALID_MOVE,
-        new InvalidMove("Invalid move"),
-        PIECE_TAKEN,
-        updateGameState(game),
-        WHITE_WIN, // TODO: Abstract more, apply State pattern
-        new GameOver(getPlayerColor(WHITE)),
-        BLACK_WIN,
-        new GameOver(getPlayerColor(BLACK)));
+  private @NotNull MoveResult getMoveResults(GameResult gameResult) {
+    ChessMoveResult moveResult = gameResult.moveResult();
+    switch (moveResult) {
+      case GameWon g:
+        return new GameOver(getPlayerColor(g.getWinner()));
+      case edu.austral.dissis.chess.utils.result.InvalidMove invalidMove:
+        return new InvalidMove(moveResult.getMessage());
+      case ValidMove validMove:
+        return updateGameState(gameResult.game());
+      case PieceTaken pieceTaken:
+        return updateGameState(gameResult.game());
+      case CheckState checkState:
+        return updateGameState(gameResult.game());
+      default:
+        throw new IllegalStateException();
+    }
   }
 }

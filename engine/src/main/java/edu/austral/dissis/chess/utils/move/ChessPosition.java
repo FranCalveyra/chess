@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.utils;
+package edu.austral.dissis.chess.utils.move;
 
 import java.util.Objects;
 

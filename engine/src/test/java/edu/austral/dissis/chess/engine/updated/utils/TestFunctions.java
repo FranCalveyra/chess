@@ -1,10 +1,10 @@
 package edu.austral.dissis.chess.engine.updated.utils;
 
-import static edu.austral.dissis.chess.utils.ChessPosition.fromAlgebraic;
+import static edu.austral.dissis.chess.utils.move.ChessPosition.fromAlgebraic;
 
 import edu.austral.dissis.chess.engine.ChessGame;
-import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.GameResult;
+import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.chess.utils.result.GameResult;
 
 public class TestFunctions {
   public static ChessMove moveFromAlgebraic(String fullMove) {

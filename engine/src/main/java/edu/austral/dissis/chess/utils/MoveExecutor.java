@@ -1,12 +1,13 @@
 package edu.austral.dissis.chess.utils;
 
-import static edu.austral.dissis.chess.utils.ChessMoveResult.PIECE_TAKEN;
-import static edu.austral.dissis.chess.utils.ChessMoveResult.VALID_MOVE;
-
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.promoters.Promoter;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
+import edu.austral.dissis.chess.utils.result.ChessMoveResult;
+import edu.austral.dissis.chess.utils.result.PieceTaken;
+import edu.austral.dissis.chess.utils.result.ValidMove;
 import java.awt.Color;
 
 public class MoveExecutor {
@@ -23,14 +24,14 @@ public class MoveExecutor {
               .removePieceAt(oldPos)
               .addPieceAt(newPos, !piece.hasMoved() ? piece.changeMoveState() : piece);
       newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
-      return new Pair<>(newBoard, PIECE_TAKEN);
+      return new Pair<>(newBoard, new PieceTaken(pieceToTake));
     } else {
       newBoard =
           board
               .removePieceAt(oldPos)
               .addPieceAt(newPos, !piece.hasMoved() ? piece.changeMoveState() : piece);
       newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
-      return new Pair<>(newBoard, VALID_MOVE);
+      return new Pair<>(newBoard, new ValidMove());
     }
   }
 

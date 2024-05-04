@@ -2,7 +2,7 @@ package edu.austral.dissis.chess.validators;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.movement.restrictions.MovementRestriction;
-import edu.austral.dissis.chess.utils.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessMove;
 
 public class AndRestrictionValidator implements MovementRestrictionValidator {
   private final MovementRestrictionValidator left;

@@ -2,8 +2,8 @@ package edu.austral.dissis.chess.piece;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.movement.PieceMovement;
-import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;

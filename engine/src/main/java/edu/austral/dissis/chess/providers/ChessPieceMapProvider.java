@@ -2,8 +2,8 @@ package edu.austral.dissis.chess.providers;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.utils.ChessPosition;
-import edu.austral.dissis.chess.utils.GameType;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
+import edu.austral.dissis.chess.utils.type.GameType;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;

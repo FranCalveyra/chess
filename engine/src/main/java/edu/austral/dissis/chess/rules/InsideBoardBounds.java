@@ -2,8 +2,8 @@ package edu.austral.dissis.chess.rules;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
-import edu.austral.dissis.chess.utils.ChessMove;
-import edu.austral.dissis.chess.utils.ChessPosition;
+import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.chess.utils.move.ChessPosition;
 
 public class InsideBoardBounds implements PreMovementRule {
   @Override
