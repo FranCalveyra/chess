@@ -10,4 +10,9 @@ public class TurnRule implements PreMovementRule {
     Piece toMove = game.getBoard().pieceAt(move.from());
     return toMove.getPieceColour() == game.getCurrentTurn();
   }
+
+  @Override
+  public String getStringErrorRepresentation() {
+    return "Not your turn";
+  }
 }

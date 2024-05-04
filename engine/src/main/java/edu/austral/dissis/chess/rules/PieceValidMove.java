@@ -13,4 +13,9 @@ public class PieceValidMove implements PreMovementRule {
     // No moves available
     return !playToExecute.isEmpty();
   }
+
+  @Override
+  public String getStringErrorRepresentation() {
+    return "Not a valid move for this piece";
+  }
 }

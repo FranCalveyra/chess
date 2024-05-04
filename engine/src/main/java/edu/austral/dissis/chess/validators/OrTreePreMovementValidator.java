@@ -34,30 +34,30 @@ public class OrTreePreMovementValidator implements PreMovementValidator {
   private boolean validityWithRule(ChessMove move, ChessGame game) {
     if (noLeftChild() && !noRightChild()) {
       return rule.isValidRule(move, game)
-          || right.getMoveValidity(move, game).getClass() == ValidMove.class;
+          || right.getMoveValidity(move, game).getClass() != InvalidMove.class;
     } else if (!noLeftChild() && noRightChild()) {
-      return left.getMoveValidity(move, game).getClass() == ValidMove.class
+      return left.getMoveValidity(move, game).getClass() != InvalidMove.class
           || rule.isValidRule(move, game);
     } else if (isLeaf()) {
       return rule.isValidRule(move, game);
     }
-    return left.getMoveValidity(move, game).getClass() == ValidMove.class
-        || right.getMoveValidity(move, game).getClass() == ValidMove.class
+    return left.getMoveValidity(move, game).getClass() != InvalidMove.class
+        || right.getMoveValidity(move, game).getClass() != InvalidMove.class
         || rule.isValidRule(move, game);
   }
 
   private boolean validityWithoutRule(ChessMove move, ChessGame game) {
     if (noLeftChild() && !noRightChild()) {
-      return right.getMoveValidity(move, game).getClass() == ValidMove.class;
+      return right.getMoveValidity(move, game).getClass() != InvalidMove.class;
     }
     if (noRightChild() && !noLeftChild()) {
-      return left.getMoveValidity(move, game).getClass() == ValidMove.class;
+      return left.getMoveValidity(move, game).getClass() != InvalidMove.class;
     }
     if (isLeaf()) {
       return false;
     }
-    return left.getMoveValidity(move, game).getClass() == ValidMove.class
-        || right.getMoveValidity(move, game).getClass() == ValidMove.class;
+    return left.getMoveValidity(move, game).getClass() != InvalidMove.class
+        || right.getMoveValidity(move, game).getClass() != InvalidMove.class;
   }
 
   private boolean isLeaf() {

@@ -27,27 +27,11 @@ public class RuleProvider {
     if (type != GameType.DEFAULT) {
       return null;
     }
-    AndTreePreMovementValidator moveInside =
-        new AndTreePreMovementValidator(new InsideBoardBounds(), null, null);
-    AndTreePreMovementValidator pieceAtPos =
-        new AndTreePreMovementValidator(new PieceAtPosition(), null, null);
-    AndTreePreMovementValidator turn =
-        new AndTreePreMovementValidator(new TurnRule(), pieceAtPos, null);
+    AndTreePreMovementValidator moveInside = new AndTreePreMovementValidator(new InsideBoardBounds());
+    AndTreePreMovementValidator pieceAt = new AndTreePreMovementValidator(new PieceAtPosition(), moveInside,null);
+    AndTreePreMovementValidator moveAllowed = new AndTreePreMovementValidator(new PieceValidMove());
+    AndTreePreMovementValidator noFriendlyFire = new AndTreePreMovementValidator(new AvoidFriendlyFire(), moveAllowed,new AndTreePreMovementValidator(new TurnRule()));
+    return new AndTreePreMovementValidator(new MoveNotIntoCheck(), pieceAt, noFriendlyFire);
 
-    AndTreePreMovementValidator moveAllowed =
-        new AndTreePreMovementValidator(new PieceValidMove(), null, null);
-    AndTreePreMovementValidator noFriendlyFire =
-        new AndTreePreMovementValidator(new AvoidFriendlyFire(), null, null);
-    AndTreePreMovementValidator notIntoCheck =
-        new AndTreePreMovementValidator(new MoveNotIntoCheck(), null, null);
-
-    AndTreePreMovementValidator bottomLeft =
-        new AndTreePreMovementValidator(null, moveInside, turn);
-    AndTreePreMovementValidator bottomRight =
-        new AndTreePreMovementValidator(null, moveAllowed, noFriendlyFire);
-    AndTreePreMovementValidator topLeft =
-        new AndTreePreMovementValidator(null, bottomLeft, bottomRight);
-
-    return new AndTreePreMovementValidator(null, topLeft, notIntoCheck);
   }
 }

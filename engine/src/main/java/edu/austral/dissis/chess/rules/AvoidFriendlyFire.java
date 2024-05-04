@@ -12,4 +12,9 @@ public class AvoidFriendlyFire implements PreMovementRule {
     return pieceAtDestination == null
         || pieceToMove.getPieceColour() != pieceAtDestination.getPieceColour();
   }
+
+  @Override
+  public String getStringErrorRepresentation() {
+    return "Friendly fire";
+  }
 }

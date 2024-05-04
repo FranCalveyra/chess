@@ -28,4 +28,9 @@ public class MoveNotIntoCheck implements PreMovementRule {
                 check.team() == game.getBoard().pieceAt(move.from()).getPieceColour()
                     && !check.isValidRule(finalResultPair.first()));
   }
+
+  @Override
+  public String getStringErrorRepresentation() {
+    return "Move leaves king in check";
+  }
 }

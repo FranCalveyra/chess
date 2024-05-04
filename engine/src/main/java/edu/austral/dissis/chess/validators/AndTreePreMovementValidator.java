@@ -8,6 +8,7 @@ import edu.austral.dissis.chess.utils.result.InvalidMove;
 import edu.austral.dissis.chess.utils.result.ValidMove;
 
 public class AndTreePreMovementValidator implements PreMovementValidator {
+  //TODO: change messages in depending on which branch fails
   private final AndTreePreMovementValidator left;
   private final AndTreePreMovementValidator right;
   private final PreMovementRule rule;
@@ -21,9 +22,17 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
     this.right = rightValidator;
   }
 
+  public AndTreePreMovementValidator(PreMovementRule rule) {
+    this.rule = rule;
+    this.left = null;
+    this.right = null;
+  }
+
   @Override
   public ChessMoveResult getMoveValidity(ChessMove move, ChessGame game) {
-    return !isValidMove(move, game) ? new InvalidMove("anything") : new ValidMove();
+    StringBuilder failureMessage = new StringBuilder();
+    boolean validMove = isValidMove(move, game,failureMessage);
+    return !validMove ? new InvalidMove(failureMessage.toString()) : new ValidMove();
   }
 
   private boolean isLeaf() {
@@ -42,46 +51,51 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
     return right == null;
   }
 
-  private boolean getValidity(ChessMove move, ChessGame game) {
+  private boolean getValidity(ChessMove move, ChessGame game, StringBuilder failureMessage) {
     if (noRule()) {
-      return validityWithoutRule(move, game);
+      return validityWithoutRule(move, game, failureMessage);
     }
-    return validityWithRule(move, game);
+    return validityWithRule(move, game, failureMessage);
   }
 
-  private boolean isValidMove(ChessMove move, ChessGame game) {
+  private boolean isValidMove(ChessMove move, ChessGame game, StringBuilder failureMessage) {
     if (isLeaf()) {
-      return rule.isValidRule(move, game);
+      boolean isValidRule = rule.isValidRule(move, game);
+      failureMessage.append(!isValidRule ? rule.getStringErrorRepresentation() : failureMessage);
+      return isValidRule;
     }
-    return getValidity(move, game);
+    return getValidity(move, game, failureMessage);
   }
 
-  private boolean validityWithRule(ChessMove move, ChessGame game) {
+  private boolean validityWithRule(ChessMove move, ChessGame game, StringBuilder failureMessage) {
     if (noLeftChild() && !noRightChild()) {
       return rule.isValidRule(move, game)
-          && right.getMoveValidity(move, game).getClass() == ValidMove.class;
+          && right.getMoveValidity(move, game).getClass() != InvalidMove.class;
     } else if (!noLeftChild() && noRightChild()) {
-      return left.getMoveValidity(move, game).getClass() == ValidMove.class
+      return left.getMoveValidity(move, game).getClass() != InvalidMove.class
           && rule.isValidRule(move, game);
     } else if (isLeaf()) {
       return rule.isValidRule(move, game);
     }
-    return left.getMoveValidity(move, game).getClass() == ValidMove.class
-        && right.getMoveValidity(move, game).getClass() == ValidMove.class
+    return left.getMoveValidity(move, game).getClass() != InvalidMove.class
+        && right.getMoveValidity(move, game).getClass() != InvalidMove.class
         && rule.isValidRule(move, game);
   }
 
-  private boolean validityWithoutRule(ChessMove move, ChessGame game) {
+  private boolean validityWithoutRule(ChessMove move, ChessGame game, StringBuilder failureMessage) {
     if (noLeftChild() && !noRightChild()) {
-      return right.getMoveValidity(move, game).getClass() == ValidMove.class;
+      return right.getMoveValidity(move, game).getClass() != InvalidMove.class;
     }
     if (noRightChild() && !noLeftChild()) {
-      return left.getMoveValidity(move, game).getClass() == ValidMove.class;
+      return left.getMoveValidity(move, game).getClass() != InvalidMove.class;
     }
     if (isLeaf()) {
       return false;
     }
-    return left.getMoveValidity(move, game).getClass() == ValidMove.class
-        && right.getMoveValidity(move, game).getClass() == ValidMove.class;
+    return left.getMoveValidity(move, game).getClass() != InvalidMove.class
+        && right.getMoveValidity(move, game).getClass() != InvalidMove.class;
   }
+
+
+
 }

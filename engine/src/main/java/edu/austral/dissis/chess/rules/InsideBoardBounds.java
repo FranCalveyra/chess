@@ -12,6 +12,11 @@ public class InsideBoardBounds implements PreMovementRule {
     return insideBoardBounds(board, move.from()) && insideBoardBounds(board, move.to());
   }
 
+  @Override
+  public String getStringErrorRepresentation() {
+    return "Should be inside board bounds";
+  }
+
   private boolean insideBoardBounds(Board board, ChessPosition pos) {
     int i = pos.getRow();
     int j = pos.getColumn();

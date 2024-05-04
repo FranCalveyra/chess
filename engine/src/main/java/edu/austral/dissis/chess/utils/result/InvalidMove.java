@@ -8,7 +8,7 @@ public final class InvalidMove implements ChessMoveResult {
   }
 
   public String getMessage() {
-    return "Invalid move due to: " + reason;
+    return reason;
   }
 
   @Override

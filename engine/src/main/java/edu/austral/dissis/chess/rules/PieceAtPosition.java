@@ -8,4 +8,9 @@ public class PieceAtPosition implements PreMovementRule {
   public boolean isValidRule(ChessMove move, ChessGame game) {
     return game.getBoard().pieceAt(move.from()) != null;
   }
+
+  @Override
+  public String getStringErrorRepresentation() {
+    return "No piece at that position";
+  }
 }
