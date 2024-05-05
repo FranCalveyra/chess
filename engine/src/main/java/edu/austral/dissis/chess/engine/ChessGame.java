@@ -4,7 +4,7 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.rules.Check;
 import edu.austral.dissis.chess.rules.WinCondition;
-import edu.austral.dissis.chess.selectors.TurnSelector;
+import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.MoveExecutor;
 import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.utils.move.ChessMove;
@@ -45,7 +45,7 @@ public class ChessGame {
     this.promoter = promoter;
     this.turnSelector = turnSelector;
     this.preMovementValidator = preMovementValidator;
-    executor = new MoveExecutor();
+    this.executor = new MoveExecutor();
   }
 
   public GameResult makeMove(ChessMove move) {
@@ -76,7 +76,7 @@ public class ChessGame {
             preMovementValidator);
 
     if (winConditionValidator.isGameWon(finalBoard)) {
-      Color winner = turnSelector.getCurrentTurn(); // Hardcoded, may need to change
+      Color winner = turnSelector.getCurrentTurn();
       return new GameResult(finalGame, new GameWon(winner));
     }
     // Get the resulting game at last

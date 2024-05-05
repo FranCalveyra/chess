@@ -60,6 +60,24 @@ public class PieceProvider {
             pieceColour,
             type,
             randInt + colorName + " " + type.name().toLowerCase());
+      case ANY:
+        return new Piece(
+            List.of(), // To modify, may add rules as default
+            pieceColour,
+            type,
+            randInt + colorName + " " + type.name().toLowerCase());
+      case ARCHBISHOP:
+        return new Piece(
+            List.of(new DiagonalMovement(), new KnightMovement()),
+            pieceColour,
+            type,
+            randInt + colorName + " " + type.name().toLowerCase());
+      case CHANCELLOR:
+        return new Piece(
+            List.of(new KnightMovement(), new VerticalMovement(), new HorizontalMovement()),
+            pieceColour,
+            type,
+            randInt + colorName + " " + type.name().toLowerCase());
       default:
         throw new IllegalArgumentException();
     }

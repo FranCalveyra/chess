@@ -59,7 +59,7 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
 
   private boolean isValidMove(ChessMove move, ChessGame game) {
     if (isLeaf()) {
-        return rule.isValidRule(move, game);
+      return rule.isValidRule(move, game);
     }
     return getValidity(move, game);
   }
@@ -79,8 +79,7 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
         && rule.isValidRule(move, game);
   }
 
-  private boolean validityWithoutRule(
-      ChessMove move, ChessGame game) {
+  private boolean validityWithoutRule(ChessMove move, ChessGame game) {
     if (noLeftChild() && !noRightChild()) {
       return right.getMoveValidity(move, game).getClass() != InvalidMove.class;
     }

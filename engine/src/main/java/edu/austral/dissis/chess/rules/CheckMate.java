@@ -22,6 +22,11 @@ public class CheckMate implements WinCondition {
     return checkmate(context, team);
   }
 
+  @Override
+  public Color getTeam() {
+    return team;
+  }
+
   private boolean checkmate(Board context, Color team) {
     if (!new DefaultCheck(team).isValidRule(context)) {
       return false;

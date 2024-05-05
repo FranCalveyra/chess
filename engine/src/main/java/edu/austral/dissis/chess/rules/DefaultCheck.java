@@ -16,14 +16,14 @@ public final class DefaultCheck implements Check {
     return check(context, team);
   }
 
+  @Override
+  public Color getTeam() {
+    return team;
+  }
+
   private boolean check(Board context, Color team) {
     DefaultCheckValidator validator = new DefaultCheckValidator();
     return context.getPiecesAndPositions().entrySet().stream()
         .anyMatch(entry -> validator.isInCheck(context, team, entry.getKey()));
-  }
-
-  @Override
-  public Color team() {
-    return team;
   }
 }

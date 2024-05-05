@@ -25,7 +25,7 @@ public class MoveNotIntoCheck implements PreMovementRule {
     return checks.stream()
         .anyMatch(
             check ->
-                check.team() == game.getBoard().pieceAt(move.from()).getPieceColour()
+                check.getTeam() == game.getBoard().pieceAt(move.from()).getPieceColour()
                     && !check.isValidRule(finalResultPair.first()));
   }
 

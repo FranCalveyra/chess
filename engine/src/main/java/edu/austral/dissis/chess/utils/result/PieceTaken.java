@@ -18,4 +18,9 @@ public class PieceTaken implements ChessMoveResult {
   public String getType() {
     return "PieceTaken";
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    return obj instanceof PieceTaken;
+  }
 }

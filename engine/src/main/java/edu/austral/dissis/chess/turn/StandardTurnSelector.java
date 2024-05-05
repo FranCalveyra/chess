@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.selectors;
+package edu.austral.dissis.chess.turn;
 
 import java.awt.Color;
 
@@ -24,8 +24,8 @@ public class StandardTurnSelector implements TurnSelector {
 
   @Override
   public TurnSelector changeTurn() {
-    int newTurn = turnNumber + 1;
-    Color nextTurn = newTurn % 2 == 0 ? Color.WHITE : Color.BLACK;
-    return new StandardTurnSelector(nextTurn, newTurn);
+    int nextTurnNumber = turnNumber + 1;
+    Color nextTurn = nextTurnNumber % 2 == 0 ? Color.WHITE : Color.BLACK;
+    return new StandardTurnSelector(nextTurn, nextTurnNumber);
   }
 }
