@@ -4,8 +4,7 @@ import edu.austral.dissis.chess.engine.ChessGame;
 
 public final class GameResult {
   private final ChessGame game;
-  private final ChessMoveResult
-      moveResult; // TODO: Program to interface, use State Pattern with ChessMoveResult
+  private final ChessMoveResult moveResult;
 
   public GameResult(ChessGame game, ChessMoveResult moveResult) {
     this.game = game;

@@ -27,11 +27,14 @@ public class RuleProvider {
     if (type != GameType.DEFAULT) {
       return null;
     }
-    AndTreePreMovementValidator moveInside = new AndTreePreMovementValidator(new InsideBoardBounds());
-    AndTreePreMovementValidator pieceAt = new AndTreePreMovementValidator(new PieceAtPosition(), moveInside,null);
+    AndTreePreMovementValidator moveInside =
+        new AndTreePreMovementValidator(new InsideBoardBounds());
+    AndTreePreMovementValidator pieceAt =
+        new AndTreePreMovementValidator(new PieceAtPosition(), moveInside, null);
     AndTreePreMovementValidator moveAllowed = new AndTreePreMovementValidator(new PieceValidMove());
-    AndTreePreMovementValidator noFriendlyFire = new AndTreePreMovementValidator(new AvoidFriendlyFire(), moveAllowed,new AndTreePreMovementValidator(new TurnRule()));
+    AndTreePreMovementValidator noFriendlyFire =
+        new AndTreePreMovementValidator(
+            new AvoidFriendlyFire(), moveAllowed, new AndTreePreMovementValidator(new TurnRule()));
     return new AndTreePreMovementValidator(new MoveNotIntoCheck(), pieceAt, noFriendlyFire);
-
   }
 }

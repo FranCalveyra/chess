@@ -49,8 +49,7 @@ public class HorizontalMovement implements PieceMovement {
   @NotNull
   protected static MovementRestrictionValidator getBaseValidator(
       MovementRestrictionValidator dx, MovementRestrictionValidator dy, MoveType moveType) {
-    MovementRestrictionValidator noPieceBetween =
-        new AndRestrictionValidator(null, dx, dy);
+    MovementRestrictionValidator noPieceBetween = new AndRestrictionValidator(null, dx, dy);
 
     MovementRestrictionValidator isEnemy = new AndRestrictionValidator(new IsAnEnemy());
 

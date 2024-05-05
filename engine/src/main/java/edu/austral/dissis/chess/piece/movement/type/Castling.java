@@ -71,7 +71,7 @@ public class Castling implements PieceMovement {
   }
 
   private boolean neitherHaveMoved(Piece king, Piece rook) {
-    return !king.hasMoved() && !rook.hasMoved();
+    return king.hasNotMoved() && rook.hasNotMoved();
   }
 
   private boolean sameColor(Piece king, Piece rook) {

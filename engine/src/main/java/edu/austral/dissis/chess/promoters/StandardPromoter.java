@@ -36,7 +36,7 @@ public class StandardPromoter implements Promoter {
             pieceToPromoteTo.getMovements(),
             pieceToPromoteTo.getPieceColour(),
             type,
-            initialPiece.hasMoved(),
+            initialPiece.getMoveCounter(),
             initialPiece.getId());
     // Update the board
     return context.removePieceAt(position).addPieceAt(position, promotedPiece);

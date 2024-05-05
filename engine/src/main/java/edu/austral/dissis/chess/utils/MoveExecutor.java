@@ -22,14 +22,14 @@ public class MoveExecutor {
           board
               .removePieceAt(newPos)
               .removePieceAt(oldPos)
-              .addPieceAt(newPos, !piece.hasMoved() ? piece.changeMoveState() : piece);
+              .addPieceAt(newPos, piece.hasNotMoved() ? piece.changeMoveState() : piece);
       newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
       return new Pair<>(newBoard, new PieceTaken(pieceToTake));
     } else {
       newBoard =
           board
               .removePieceAt(oldPos)
-              .addPieceAt(newPos, !piece.hasMoved() ? piece.changeMoveState() : piece);
+              .addPieceAt(newPos, piece.hasNotMoved() ? piece.changeMoveState() : piece);
       newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
       return new Pair<>(newBoard, new ValidMove());
     }

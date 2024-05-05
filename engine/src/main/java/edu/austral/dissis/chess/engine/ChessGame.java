@@ -77,7 +77,6 @@ public class ChessGame {
 
     if (winConditionValidator.isGameWon(finalBoard)) {
       Color winner = turnSelector.getCurrentTurn(); // Hardcoded, may need to change
-      // TODO: Apply state pattern
       return new GameResult(finalGame, new GameWon(winner));
     }
     // Get the resulting game at last

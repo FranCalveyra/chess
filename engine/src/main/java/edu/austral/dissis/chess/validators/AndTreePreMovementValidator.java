@@ -8,7 +8,7 @@ import edu.austral.dissis.chess.utils.result.InvalidMove;
 import edu.austral.dissis.chess.utils.result.ValidMove;
 
 public class AndTreePreMovementValidator implements PreMovementValidator {
-  //TODO: change messages in depending on which branch fails
+  // TODO: change messages in depending on which branch fails
   private final AndTreePreMovementValidator left;
   private final AndTreePreMovementValidator right;
   private final PreMovementRule rule;
@@ -31,7 +31,7 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
   @Override
   public ChessMoveResult getMoveValidity(ChessMove move, ChessGame game) {
     StringBuilder failureMessage = new StringBuilder();
-    boolean validMove = isValidMove(move, game,failureMessage);
+    boolean validMove = isValidMove(move, game, failureMessage);
     return !validMove ? new InvalidMove(failureMessage.toString()) : new ValidMove();
   }
 
@@ -82,7 +82,8 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
         && rule.isValidRule(move, game);
   }
 
-  private boolean validityWithoutRule(ChessMove move, ChessGame game, StringBuilder failureMessage) {
+  private boolean validityWithoutRule(
+      ChessMove move, ChessGame game, StringBuilder failureMessage) {
     if (noLeftChild() && !noRightChild()) {
       return right.getMoveValidity(move, game).getClass() != InvalidMove.class;
     }
@@ -95,7 +96,4 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
     return left.getMoveValidity(move, game).getClass() != InvalidMove.class
         && right.getMoveValidity(move, game).getClass() != InvalidMove.class;
   }
-
-
-
 }

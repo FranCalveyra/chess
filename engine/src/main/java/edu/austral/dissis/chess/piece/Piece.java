@@ -13,7 +13,7 @@ public class Piece {
   private final List<PieceMovement> movements;
   private final Color pieceColour;
   private final PieceType type;
-  private final boolean hasMoved;
+  private final int moveCounter;
   private final String id;
 
   public Piece(List<PieceMovement> movements, Color pieceColour, PieceType type, String id) {
@@ -21,19 +21,19 @@ public class Piece {
     this.pieceColour = pieceColour;
     this.type = type;
     this.id = id;
-    this.hasMoved = false;
+    this.moveCounter = 0;
   }
 
   public Piece(
       List<PieceMovement> movements,
       Color pieceColour,
       PieceType type,
-      boolean hasMoved,
+      int moveCounter,
       String id) {
     this.movements = movements;
     this.pieceColour = pieceColour;
     this.type = type;
-    this.hasMoved = hasMoved;
+    this.moveCounter = moveCounter;
     this.id = id;
   }
 
@@ -66,13 +66,17 @@ public class Piece {
     return id;
   }
 
-  public boolean hasMoved() {
-    return hasMoved;
-  } // TODO: Change to move counter
+  public boolean hasNotMoved() {
+    return moveCounter <= 0;
+  }
+
+  public int getMoveCounter() {
+    return moveCounter;
+  }
 
   // Own methods
   public Piece changeMoveState() {
-    return new Piece(movements, pieceColour, type, !hasMoved, id);
+    return new Piece(movements, pieceColour, type, moveCounter + 1, id);
   }
 
   public List<ChessPosition> getMoveSet(ChessPosition currentPos, Board context) {

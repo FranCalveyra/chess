@@ -6,6 +6,6 @@ import edu.austral.dissis.chess.utils.move.ChessMove;
 public class PieceHasNotMoved implements MovementRestriction {
   @Override
   public boolean isValidRestriction(ChessMove move, Board context) {
-    return !context.pieceAt(move.from()).hasMoved();
+    return context.pieceAt(move.from()).hasNotMoved();
   }
 }
