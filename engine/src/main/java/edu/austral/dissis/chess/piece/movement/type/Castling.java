@@ -22,12 +22,10 @@ public class Castling implements PieceMovement {
 
   @Override
   public List<ChessMove> getMovesToExecute(ChessMove move, Board context) {
-    ChessPosition oldPos = move.from();
-    ChessPosition newPos = move.to();
-    int rookColumn = getRookColumn(context, newPos);
-    int resultCol = getResultCol(rookColumn, oldPos);
-    ChessPosition rookFrom = new ChessPosition(oldPos.getRow(), rookColumn);
-    ChessPosition rookTo = new ChessPosition(oldPos.getRow(), resultCol);
+    int rookColumn = getRookColumn(move, context);
+    int resultCol = getResultCol(rookColumn, move.from());
+    ChessPosition rookFrom = new ChessPosition(move.from().getRow(), rookColumn);
+    ChessPosition rookTo = new ChessPosition(move.from().getRow(), resultCol);
     ChessMove rookMove = new ChessMove(rookFrom, rookTo);
     return List.of(move, rookMove);
   }
@@ -36,13 +34,13 @@ public class Castling implements PieceMovement {
     return rookColumn == 0 ? oldPos.getColumn() - 1 : oldPos.getColumn() + 1;
   }
 
-  private int getRookColumn(Board context, ChessPosition newPos) {
-    return newPos.getColumn() == 2 ? 0 : context.getColumns() - 1;
+  private int getRookColumn(ChessMove move, Board context) {
+    return move.to().getColumn() == move.from().getColumn()-2 ? 0 : context.getColumns() - 1;
   }
 
   private boolean isCastlingPossible(ChessPosition oldPos, ChessPosition newPos, Board context) {
     Piece king = context.pieceAt(oldPos);
-    int rookColumn = getRookColumn(context, newPos);
+    int rookColumn = getRookColumn(new ChessMove(oldPos,newPos), context);
     Piece rook = context.pieceAt(new ChessPosition(newPos.getRow(), rookColumn));
     return validate(oldPos, newPos, context, king, rook);
   }
