@@ -30,9 +30,8 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
 
   @Override
   public ChessMoveResult getMoveValidity(ChessMove move, ChessGame game) {
-    StringBuilder failureMessage = new StringBuilder();
-    boolean validMove = isValidMove(move, game, failureMessage);
-    return !validMove ? new InvalidMove(failureMessage.toString()) : new ValidMove();
+    boolean validMove = isValidMove(move, game);
+    return !validMove ? new InvalidMove("") : new ValidMove();
   }
 
   private boolean isLeaf() {
@@ -51,23 +50,21 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
     return right == null;
   }
 
-  private boolean getValidity(ChessMove move, ChessGame game, StringBuilder failureMessage) {
+  private boolean getValidity(ChessMove move, ChessGame game) {
     if (noRule()) {
-      return validityWithoutRule(move, game, failureMessage);
+      return validityWithoutRule(move, game);
     }
-    return validityWithRule(move, game, failureMessage);
+    return validityWithRule(move, game);
   }
 
-  private boolean isValidMove(ChessMove move, ChessGame game, StringBuilder failureMessage) {
+  private boolean isValidMove(ChessMove move, ChessGame game) {
     if (isLeaf()) {
-      boolean isValidRule = rule.isValidRule(move, game);
-      failureMessage.append(!isValidRule ? rule.getStringErrorRepresentation() : failureMessage);
-      return isValidRule;
+        return rule.isValidRule(move, game);
     }
-    return getValidity(move, game, failureMessage);
+    return getValidity(move, game);
   }
 
-  private boolean validityWithRule(ChessMove move, ChessGame game, StringBuilder failureMessage) {
+  private boolean validityWithRule(ChessMove move, ChessGame game) {
     if (noLeftChild() && !noRightChild()) {
       return rule.isValidRule(move, game)
           && right.getMoveValidity(move, game).getClass() != InvalidMove.class;
@@ -83,7 +80,7 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
   }
 
   private boolean validityWithoutRule(
-      ChessMove move, ChessGame game, StringBuilder failureMessage) {
+      ChessMove move, ChessGame game) {
     if (noLeftChild() && !noRightChild()) {
       return right.getMoveValidity(move, game).getClass() != InvalidMove.class;
     }
