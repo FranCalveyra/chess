@@ -16,7 +16,7 @@ public class GameProvider {
     RuleProvider ruleProvider = new RuleProvider();
     if (gameType == GameType.DEFAULT) {
       return new ChessGame(
-          new MapBoard(new ChessPieceMapProvider().provide(gameType)),
+          new MapBoard(new ChessPieceMapProvider().provide(gameType, 8, 8)),
           ruleProvider.provideWinConditions(gameType),
           List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
           new StandardPromoter(),
@@ -24,7 +24,7 @@ public class GameProvider {
           ruleProvider.providePreMovementValidator(gameType));
     } else if (gameType == GameType.SPECIAL) {
       return new ChessGame(
-          new MapBoard(new ChessPieceMapProvider().provide(GameType.SPECIAL), 10, 10),
+          new MapBoard(new ChessPieceMapProvider().provide(GameType.SPECIAL, 10, 10), 10, 10),
           List.of(new Extinction(Color.WHITE), new Extinction(Color.BLACK)),
           List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
           new StandardPromoter(),
