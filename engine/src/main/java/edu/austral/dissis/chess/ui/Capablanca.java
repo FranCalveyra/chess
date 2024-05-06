@@ -1,11 +1,8 @@
 package edu.austral.dissis.chess.ui;
 
-import edu.austral.dissis.chess.gui.CachedImageResolver;
-import edu.austral.dissis.chess.gui.DefaultImageResolver;
 import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.GameView;
 import edu.austral.dissis.chess.gui.ImageResolver;
-import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.utils.type.GameType;
 import javafx.application.Application;
