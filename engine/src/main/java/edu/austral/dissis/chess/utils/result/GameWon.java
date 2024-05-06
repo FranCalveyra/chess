@@ -2,7 +2,7 @@ package edu.austral.dissis.chess.utils.result;
 
 import java.awt.Color;
 
-public final class GameWon implements ChessMoveResult {
+public class GameWon implements ChessMoveResult {
   private final Color team;
 
   public GameWon(final Color team) {

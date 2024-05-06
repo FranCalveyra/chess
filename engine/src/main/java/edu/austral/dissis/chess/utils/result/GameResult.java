@@ -2,7 +2,7 @@ package edu.austral.dissis.chess.utils.result;
 
 import edu.austral.dissis.chess.engine.ChessGame;
 
-public final class GameResult {
+public class GameResult {
   private final ChessGame game;
   private final ChessMoveResult moveResult;
 

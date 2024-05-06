@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.engine;
 
-import static edu.austral.dissis.chess.engine.updated.utils.TestFunctions.makeMove;
+import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
 import static edu.austral.dissis.chess.utils.move.ChessPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
@@ -12,8 +12,8 @@ import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.providers.PieceProvider;
-import edu.austral.dissis.chess.rules.CheckMate;
-import edu.austral.dissis.chess.rules.DefaultCheck;
+import edu.austral.dissis.chess.rules.winconds.CheckMate;
+import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
 import edu.austral.dissis.chess.utils.move.ChessPosition;
 import edu.austral.dissis.chess.utils.result.GameResult;
 import edu.austral.dissis.chess.utils.result.GameWon;

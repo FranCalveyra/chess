@@ -2,7 +2,7 @@ package edu.austral.dissis.chess.utils.result;
 
 import java.awt.Color;
 
-public final class CheckState implements ChessMoveResult {
+public class CheckState implements ChessMoveResult {
 
   Color team;
 

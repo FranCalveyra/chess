@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.utils.result;
 
-public final class ValidMove implements ChessMoveResult {
+public class ValidMove implements ChessMoveResult {
   @Override
   public String getMessage() {
     return "Valid Move";

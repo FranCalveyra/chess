@@ -2,8 +2,8 @@ package edu.austral.dissis.chess.engine;
 
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.promoters.Promoter;
-import edu.austral.dissis.chess.rules.Check;
-import edu.austral.dissis.chess.rules.WinCondition;
+import edu.austral.dissis.chess.rules.winconds.Check;
+import edu.austral.dissis.chess.rules.winconds.WinCondition;
 import edu.austral.dissis.chess.turn.TurnSelector;
 import edu.austral.dissis.chess.utils.MoveExecutor;
 import edu.austral.dissis.chess.utils.Pair;

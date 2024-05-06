@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.engine;
 
-import static edu.austral.dissis.chess.engine.updated.utils.TestFunctions.makeMove;
+import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
 import static edu.austral.dissis.chess.utils.move.ChessPosition.fromAlgebraic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.providers.PieceProvider;
-import edu.austral.dissis.chess.rules.Extinction;
-import edu.austral.dissis.chess.rules.WinCondition;
+import edu.austral.dissis.chess.rules.premovement.Extinction;
+import edu.austral.dissis.chess.rules.winconds.WinCondition;
 import edu.austral.dissis.chess.turn.IncrementalTurnSelector;
 import edu.austral.dissis.chess.utils.move.ChessMove;
 import edu.austral.dissis.chess.utils.result.GameResult;

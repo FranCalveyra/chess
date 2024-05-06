@@ -5,9 +5,8 @@ import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.utils.move.ChessMove;
 import edu.austral.dissis.chess.utils.move.ChessPosition;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Piece {
   private final List<PieceMovement> movements;
@@ -80,21 +79,16 @@ public class Piece {
   }
 
   public List<ChessPosition> getMoveSet(ChessPosition currentPos, Board context) {
-    List<ChessPosition> positionList = new ArrayList<>();
-    for (PieceMovement movement : movements) {
-      positionList.addAll(movement.getPossiblePositions(currentPos, context));
-    }
-    positionList = new ArrayList<>(new HashSet<>(positionList)); // Remove repeated
-    return positionList;
+    return movements.stream()
+        .flatMap(movement -> movement.getPossiblePositions(currentPos, context).stream())
+        .distinct()
+        .collect(Collectors.toList());
   }
 
   public List<ChessMove> getPlay(ChessMove move, Board board) {
-    List<ChessMove> play = new ArrayList<>();
-    for (PieceMovement movement : movements) {
-      if (movement.isValidMove(move, board)) {
-        play.addAll(movement.getMovesToExecute(move, board));
-      }
-    }
-    return play;
+    return movements.stream()
+        .filter(movement -> movement.isValidMove(move, board))
+        .flatMap(movement -> movement.getMovesToExecute(move, board).stream())
+        .collect(Collectors.toList());
   }
 }

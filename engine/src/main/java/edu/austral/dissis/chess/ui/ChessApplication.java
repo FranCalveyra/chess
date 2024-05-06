@@ -6,15 +6,18 @@ import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.GameView;
 import edu.austral.dissis.chess.gui.ImageResolver;
 import edu.austral.dissis.chess.providers.GameProvider;
+import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.utils.type.GameType;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import static edu.austral.dissis.chess.utils.AuxStaticMethods.setupGame;
+
 public class ChessApplication extends Application {
-  private final GameEngine gameEngine =
-      new ChessGameEngine(new GameProvider().provide(GameType.DEFAULT));
-  private final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
+  private final Pair<GameEngine, ImageResolver> setup = setupGame(GameType.DEFAULT);
+  private final GameEngine gameEngine = setup.first();
+  private final ImageResolver imageResolver = setup.second();
 
   @Override
   public void start(Stage stage) {

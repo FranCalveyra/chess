@@ -5,7 +5,7 @@ import static edu.austral.dissis.chess.utils.type.MoveType.HORIZONTAL;
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.piece.movement.PieceMovement;
-import edu.austral.dissis.chess.rules.DefaultCheck;
+import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
 import edu.austral.dissis.chess.utils.move.ChessMove;
 import edu.austral.dissis.chess.utils.move.ChessPosition;
 import edu.austral.dissis.chess.validators.PiecePathValidator;
@@ -35,12 +35,12 @@ public class Castling implements PieceMovement {
   }
 
   private int getRookColumn(ChessMove move, Board context) {
-    return move.to().getColumn() == move.from().getColumn()-2 ? 0 : context.getColumns() - 1;
+    return move.to().getColumn() == move.from().getColumn() - 2 ? 0 : context.getColumns() - 1;
   }
 
   private boolean isCastlingPossible(ChessPosition oldPos, ChessPosition newPos, Board context) {
     Piece king = context.pieceAt(oldPos);
-    int rookColumn = getRookColumn(new ChessMove(oldPos,newPos), context);
+    int rookColumn = getRookColumn(new ChessMove(oldPos, newPos), context);
     Piece rook = context.pieceAt(new ChessPosition(newPos.getRow(), rookColumn));
     return validate(oldPos, newPos, context, king, rook);
   }

@@ -1,7 +1,8 @@
-package edu.austral.dissis.chess.rules;
+package edu.austral.dissis.chess.rules.premovement;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.rules.winconds.WinCondition;
 import edu.austral.dissis.chess.utils.move.ChessPosition;
 import java.awt.Color;
 import java.util.Map;

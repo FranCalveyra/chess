@@ -1,13 +1,13 @@
 package edu.austral.dissis.chess.providers;
 
-import edu.austral.dissis.chess.rules.AvoidFriendlyFire;
-import edu.austral.dissis.chess.rules.CheckMate;
-import edu.austral.dissis.chess.rules.InsideBoardBounds;
-import edu.austral.dissis.chess.rules.MoveNotIntoCheck;
-import edu.austral.dissis.chess.rules.PieceAtPosition;
-import edu.austral.dissis.chess.rules.PieceValidMove;
-import edu.austral.dissis.chess.rules.TurnRule;
-import edu.austral.dissis.chess.rules.WinCondition;
+import edu.austral.dissis.chess.rules.premovement.AvoidFriendlyFire;
+import edu.austral.dissis.chess.rules.premovement.InsideBoardBounds;
+import edu.austral.dissis.chess.rules.premovement.MoveNotIntoCheck;
+import edu.austral.dissis.chess.rules.premovement.PieceAtPosition;
+import edu.austral.dissis.chess.rules.premovement.PieceValidMove;
+import edu.austral.dissis.chess.rules.premovement.TurnRule;
+import edu.austral.dissis.chess.rules.winconds.CheckMate;
+import edu.austral.dissis.chess.rules.winconds.WinCondition;
 import edu.austral.dissis.chess.utils.type.GameType;
 import edu.austral.dissis.chess.validators.AndTreePreMovementValidator;
 import edu.austral.dissis.chess.validators.PreMovementValidator;

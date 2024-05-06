@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.rules;
+package edu.austral.dissis.chess.rules.winconds;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.validators.DefaultCheckValidator;

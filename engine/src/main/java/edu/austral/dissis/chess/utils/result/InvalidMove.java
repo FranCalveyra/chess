@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.utils.result;
 
-public final class InvalidMove implements ChessMoveResult {
+public class InvalidMove implements ChessMoveResult {
   private final String reason;
 
   public InvalidMove(final String reason) {

@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.engine;
 
 import static edu.austral.dissis.chess.engine.ChessTest.getPiecePosition;
-import static edu.austral.dissis.chess.engine.updated.utils.TestFunctions.makeMove;
+import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
 import static edu.austral.dissis.chess.utils.move.ChessPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;

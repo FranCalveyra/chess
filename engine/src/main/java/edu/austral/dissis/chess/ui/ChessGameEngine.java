@@ -31,7 +31,6 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 public class ChessGameEngine implements GameEngine {
-
   private ChessGame game;
 
   public ChessGameEngine(ChessGame game) {

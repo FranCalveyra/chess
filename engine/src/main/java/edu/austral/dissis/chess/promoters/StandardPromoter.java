@@ -6,6 +6,7 @@ import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.providers.PieceProvider;
 import edu.austral.dissis.chess.utils.move.ChessPosition;
 import java.awt.Color;
+import java.util.stream.IntStream;
 
 /** Only promotes Pawns. */
 public class StandardPromoter implements Promoter {
@@ -48,17 +49,13 @@ public class StandardPromoter implements Promoter {
     // Changes the row to check depending on the analysed color. If WHITE, checks the last row;
     // else, checks the first
     int rowToCheck = team == Color.WHITE ? context.getRows() - 1 : 0;
-    // Go through all board columns and check if there is any pawn at that position
-    for (int j = 0; j < context.getColumns(); j++) {
-      // Fetches a piece at the desired position
-      Piece pieceAt = context.pieceAt(new ChessPosition(rowToCheck, j));
-      // If the piece does not match the following conditions, skip it
-      if (pieceAt != null
-          && pieceAt.getType() == PieceType.PAWN
-          && pieceAt.getPieceColour() == team) {
-        return true;
-      }
-    }
-    return false;
+    return IntStream.range(0, context.getColumns())
+        .mapToObj(j -> new ChessPosition(rowToCheck, j))
+        .map(context::pieceAt)
+        .anyMatch(
+            piece ->
+                piece != null
+                    && piece.getType() == PieceType.PAWN
+                    && piece.getPieceColour() == team);
   }
 }

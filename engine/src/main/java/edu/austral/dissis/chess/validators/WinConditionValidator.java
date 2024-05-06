@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.validators;
 
 import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.rules.WinCondition;
+import edu.austral.dissis.chess.rules.winconds.WinCondition;
 import java.util.List;
 
 public class WinConditionValidator {
@@ -13,11 +13,6 @@ public class WinConditionValidator {
   }
 
   public boolean isGameWon(Board context) {
-    for (WinCondition condition : winConditions) {
-      if (condition.isValidRule(context)) {
-        return true;
-      }
-    }
-    return false;
+    return winConditions.stream().anyMatch(condition -> condition.isValidRule(context));
   }
 }

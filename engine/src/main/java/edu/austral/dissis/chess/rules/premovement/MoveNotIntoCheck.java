@@ -1,8 +1,9 @@
-package edu.austral.dissis.chess.rules;
+package edu.austral.dissis.chess.rules.premovement;
 
 import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.Piece;
+import edu.austral.dissis.chess.rules.winconds.Check;
 import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.utils.move.ChessMove;
 import edu.austral.dissis.chess.utils.result.ChessMoveResult;
