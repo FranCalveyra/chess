@@ -1,5 +1,6 @@
 package edu.austral.dissis.chess.promoters;
 
+import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
@@ -23,7 +24,7 @@ public class StandardPromoter implements Promoter {
       return false;
     }
     int promoteRow = piece.getPieceColour() == Color.BLACK ? 0 : context.getRows() - 1;
-    return piece.getType() == PieceType.PAWN && position.getRow() == promoteRow;
+    return piece.getType() == ChessPieceType.PAWN && position.getRow() == promoteRow;
   }
 
   @Override
@@ -55,7 +56,7 @@ public class StandardPromoter implements Promoter {
         .anyMatch(
             piece ->
                 piece != null
-                    && piece.getType() == PieceType.PAWN
+                    && piece.getType() == ChessPieceType.PAWN
                     && piece.getPieceColour() == team);
   }
 }

@@ -1,13 +1,13 @@
 package edu.austral.dissis.chess.validators;
 
-import static edu.austral.dissis.common.piece.PieceType.KING;
-
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;
 import java.util.Map;
+
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.KING;
 
 public class DefaultCheckValidator {
 

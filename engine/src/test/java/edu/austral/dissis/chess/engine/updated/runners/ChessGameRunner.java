@@ -4,6 +4,7 @@ import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 
 import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPiece;
 import edu.austral.dissis.chess.test.TestPieceSymbols;
@@ -88,7 +89,7 @@ public class ChessGameRunner implements TestGameRunner {
   }
 
   private char mapPieceType(PieceType pieceType) {
-    switch (pieceType) {
+    switch ((ChessPieceType) pieceType) {
       case KNIGHT:
         return TestPieceSymbols.KNIGHT;
       case BISHOP:
@@ -101,6 +102,10 @@ public class ChessGameRunner implements TestGameRunner {
         return TestPieceSymbols.KING;
       case PAWN:
         return TestPieceSymbols.PAWN;
+      case ARCHBISHOP:
+        return TestPieceSymbols.ARCHBISHOP;
+      case CHANCELLOR:
+        return TestPieceSymbols.CHANCELLOR;
       default:
         throw new IllegalArgumentException();
     }

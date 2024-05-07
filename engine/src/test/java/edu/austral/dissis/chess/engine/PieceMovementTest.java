@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.austral.dissis.chess.piece.movement.type.Castling;
+import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessGameProvider;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.utils.enums.GameType;
@@ -36,10 +37,10 @@ public class PieceMovementTest {
     Piece whiteLeftKnight = game.getBoard().pieceAt(fromAlgebraic("b1"));
     assertEquals(whiteLeftKnight.getPieceColour(), WHITE);
     game = makeMove(game, "b1 -> a3").game();
-    assertEquals(PieceType.KNIGHT, game.getBoard().pieceAt(fromAlgebraic("a3")).getType());
+    assertEquals(ChessPieceType.KNIGHT, game.getBoard().pieceAt(fromAlgebraic("a3")).getType());
     game = makeMove(game, "b7 -> b5").game();
     game = makeMove(game, "a3 -> b5").game();
-    assertEquals(PieceType.KNIGHT, game.getBoard().pieceAt(fromAlgebraic("b5")).getType());
+    assertEquals(ChessPieceType.KNIGHT, game.getBoard().pieceAt(fromAlgebraic("b5")).getType());
   }
 
   @Test
@@ -47,15 +48,15 @@ public class PieceMovementTest {
     // Initial validations and initializations
     Piece whiteBishop = game.getBoard().pieceAt(fromAlgebraic("c1"));
     assertEquals(whiteBishop.getPieceColour(), WHITE);
-    assertEquals(whiteBishop.getType(), PieceType.BISHOP);
+    assertEquals(whiteBishop.getType(), ChessPieceType.BISHOP);
 
     Piece whitePawn = game.getBoard().pieceAt(fromAlgebraic("d2"));
     assertEquals(whitePawn.getPieceColour(), WHITE);
-    assertEquals(whitePawn.getType(), PieceType.PAWN);
+    assertEquals(whitePawn.getType(), ChessPieceType.PAWN);
 
     Piece blackPawn = game.getBoard().pieceAt(fromAlgebraic("c7"));
     assertEquals(blackPawn.getPieceColour(), Color.BLACK);
-    assertEquals(blackPawn.getType(), PieceType.PAWN);
+    assertEquals(blackPawn.getType(), ChessPieceType.PAWN);
     game = makeMove(game, "d2 -> d4").game();
     game = makeMove(game, "c7 -> c5").game();
     game = makeMove(game, "d4 -> c5").game();
@@ -70,29 +71,29 @@ public class PieceMovementTest {
   public void validatePawnMovement() {
     Piece whitePawn = game.getBoard().pieceAt(fromAlgebraic("a2"));
     assertEquals(whitePawn.getPieceColour(), WHITE);
-    assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("a2")).getType());
+    assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("a2")).getType());
     game = makeMove(game, "a2 -> a3").game();
-    assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("a3")).getType());
+    assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("a3")).getType());
 
     Piece blackPawn = game.getBoard().pieceAt(fromAlgebraic("a7"));
     assertEquals(blackPawn.getPieceColour(), Color.BLACK);
-    assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("a7")).getType());
+    assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("a7")).getType());
     game = makeMove(game, "a7 -> a5").game();
-    assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("a5")).getType());
+    assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("a5")).getType());
 
     Piece otherWhitePawn = game.getBoard().pieceAt(fromAlgebraic("b2"));
     assertEquals(otherWhitePawn.getPieceColour(), WHITE);
-    assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("b2")).getType());
+    assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("b2")).getType());
 
     game = makeMove(game, "b2 -> b4").game();
-    assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("b4")).getType());
+    assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("b4")).getType());
     assertEquals(Color.BLACK, game.getCurrentTurn());
     game = makeMove(game, "a5 -> b4").game();
-    assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("b4")).getType());
+    assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("b4")).getType());
 
     Piece newWhitePawn = game.getBoard().pieceAt(fromAlgebraic("e2"));
     assertEquals(newWhitePawn.getPieceColour(), WHITE);
-    assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("e2")).getType());
+    assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("e2")).getType());
     assertEquals(
         getPiecePosition(newWhitePawn, game.getBoard().getPiecesAndPositions()),
         fromAlgebraic("e2"));
@@ -112,7 +113,7 @@ public class PieceMovementTest {
   public void validatePawnFirstMove() {
     ChessPieceProvider provider = new ChessPieceProvider();
     Map<BoardPosition, Piece> situation =
-        Map.of(fromAlgebraic("d4"), provider.provide(BLACK, PieceType.PAWN));
+        Map.of(fromAlgebraic("d4"), provider.provide(BLACK, ChessPieceType.PAWN));
     MapBoard currentBoard = new MapBoard(situation);
     ChessGame newGame =
         new ChessGame(
@@ -143,13 +144,13 @@ public class PieceMovementTest {
             .getMoveSet(fromAlgebraic("a1"), game.getBoard());
     assertEquals(6, rookMoveSet.size());
     game = makeMove(game, "a1 -> a5").game();
-    assertEquals(PieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("a5")).getType());
+    assertEquals(ChessPieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("a5")).getType());
   }
 
   @Test
   public void validateQueenMovement() {
     Piece whiteQueen = game.getBoard().pieceAt(fromAlgebraic("d1"));
-    assertEquals(whiteQueen.getType(), PieceType.QUEEN);
+    assertEquals(whiteQueen.getType(), ChessPieceType.QUEEN);
     game = makeMove(game, "d2 -> d4").game();
     List<BoardPosition> whiteQueenMoveSet =
         game.getBoard()
@@ -193,8 +194,8 @@ public class PieceMovementTest {
         new Castling()
             .isValidMove(new GameMove(fromAlgebraic("e1"), fromAlgebraic("c1")), game.getBoard()));
     game = makeMove(game, "e1 -> c1").game();
-    assertEquals(PieceType.KING, game.getBoard().pieceAt(fromAlgebraic("c1")).getType());
-    assertEquals(PieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("d1")).getType());
+    assertEquals(ChessPieceType.KING, game.getBoard().pieceAt(fromAlgebraic("c1")).getType());
+    assertEquals(ChessPieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("d1")).getType());
   }
 
   @Test
@@ -221,7 +222,7 @@ public class PieceMovementTest {
         new Castling()
             .isValidMove(new GameMove(fromAlgebraic("e1"), fromAlgebraic("g1")), game.getBoard()));
     game = makeMove(game, "e1 -> g1").game();
-    assertEquals(PieceType.KING, game.getBoard().pieceAt(fromAlgebraic("g1")).getType());
-    assertEquals(PieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("f1")).getType());
+    assertEquals(ChessPieceType.KING, game.getBoard().pieceAt(fromAlgebraic("g1")).getType());
+    assertEquals(ChessPieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("f1")).getType());
   }
 }

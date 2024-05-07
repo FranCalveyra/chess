@@ -1,5 +1,6 @@
 package edu.austral.dissis.common.utils.move;
 
+import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.common.board.Board;
@@ -39,7 +40,7 @@ public class MoveExecutor {
   private Board promoteIfAble(
       Board board, BoardPosition boardPosition, Color color, Promoter promoter) {
     if (promoter.canPromote(boardPosition, board) || promoter.hasToPromote(board, color)) {
-      return promoter.promote(boardPosition, PieceType.QUEEN, board);
+      return promoter.promote(boardPosition, ChessPieceType.QUEEN, board);
     }
     return board;
   }

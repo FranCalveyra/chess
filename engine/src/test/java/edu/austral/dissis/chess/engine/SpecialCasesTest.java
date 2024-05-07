@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessGameProvider;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.utils.enums.GameType;
@@ -44,12 +45,12 @@ public class SpecialCasesTest {
     Board board =
         new MapBoard(
             Map.of(
-                fromAlgebraic("e4"), chessPieceProvider.provide(Color.BLACK, PieceType.KING),
-                fromAlgebraic("g4"), chessPieceProvider.provide(Color.WHITE, PieceType.QUEEN),
-                fromAlgebraic("a8"), chessPieceProvider.provide(Color.WHITE, PieceType.QUEEN),
-                fromAlgebraic("b7"), chessPieceProvider.provide(Color.WHITE, PieceType.QUEEN),
-                fromAlgebraic("c1"), chessPieceProvider.provide(Color.WHITE, PieceType.QUEEN),
-                fromAlgebraic("d2"), chessPieceProvider.provide(Color.WHITE, PieceType.QUEEN)));
+                fromAlgebraic("e4"), chessPieceProvider.provide(Color.BLACK, ChessPieceType.KING),
+                fromAlgebraic("g4"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.QUEEN),
+                fromAlgebraic("a8"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.QUEEN),
+                fromAlgebraic("b7"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.QUEEN),
+                fromAlgebraic("c1"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.QUEEN),
+                fromAlgebraic("d2"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.QUEEN)));
     game =
         new ChessGame(
             board,
@@ -62,7 +63,7 @@ public class SpecialCasesTest {
 
     Board newBoard =
         board.addPieceAt(
-            fromAlgebraic("a7"), chessPieceProvider.provide(Color.BLACK, PieceType.QUEEN));
+            fromAlgebraic("a7"), chessPieceProvider.provide(Color.BLACK, ChessPieceType.QUEEN));
     // Add one more piece
     assertFalse(blackExtinction.isValidRule(newBoard));
     game =
@@ -84,13 +85,13 @@ public class SpecialCasesTest {
     Board board =
         new MapBoard(
             Map.of(
-                fromAlgebraic("e1"), chessPieceProvider.provide(Color.WHITE, PieceType.KING),
-                fromAlgebraic("h1"), chessPieceProvider.provide(Color.WHITE, PieceType.CHANCELLOR),
-                fromAlgebraic("a1"), chessPieceProvider.provide(Color.WHITE, PieceType.ROOK),
-                fromAlgebraic("b1"), chessPieceProvider.provide(Color.WHITE, PieceType.ARCHBISHOP),
-                fromAlgebraic("b8"), chessPieceProvider.provide(Color.BLACK, PieceType.KING),
-                fromAlgebraic("b7"), chessPieceProvider.provide(Color.BLACK, PieceType.QUEEN),
-                fromAlgebraic("a8"), chessPieceProvider.provide(Color.BLACK, PieceType.ROOK)));
+                fromAlgebraic("e1"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.KING),
+                fromAlgebraic("h1"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.CHANCELLOR),
+                fromAlgebraic("a1"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.ROOK),
+                fromAlgebraic("b1"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.ARCHBISHOP),
+                fromAlgebraic("b8"), chessPieceProvider.provide(Color.BLACK, ChessPieceType.KING),
+                fromAlgebraic("b7"), chessPieceProvider.provide(Color.BLACK, ChessPieceType.QUEEN),
+                fromAlgebraic("a8"), chessPieceProvider.provide(Color.BLACK, ChessPieceType.ROOK)));
     game =
         new ChessGame(
             board,
@@ -102,9 +103,9 @@ public class SpecialCasesTest {
     ChessGameResult result = game.makeMove(new GameMove(fromAlgebraic("e1"), fromAlgebraic("g1")));
     assertEquals(7, result.game().getBoard().getPiecesAndPositions().size());
     assertEquals(new ValidPlay(), result.moveResult());
-    assertEquals(PieceType.KING, result.game().getBoard().pieceAt(fromAlgebraic("g1")).getType());
+    assertEquals(ChessPieceType.KING, result.game().getBoard().pieceAt(fromAlgebraic("g1")).getType());
     assertEquals(
-        PieceType.CHANCELLOR, result.game().getBoard().pieceAt(fromAlgebraic("f1")).getType());
+        ChessPieceType.CHANCELLOR, result.game().getBoard().pieceAt(fromAlgebraic("f1")).getType());
 
     result = result.game().makeMove(new GameMove(fromAlgebraic("a8"), fromAlgebraic("a7")));
     assertEquals(new ValidPlay(), result.moveResult());
@@ -114,7 +115,7 @@ public class SpecialCasesTest {
 
     assertEquals(new ValidPlay(), result.moveResult());
     assertEquals(
-        PieceType.CHANCELLOR, result.game().getBoard().pieceAt(fromAlgebraic("g3")).getType());
+        ChessPieceType.CHANCELLOR, result.game().getBoard().pieceAt(fromAlgebraic("g3")).getType());
 
     result = result.game().makeMove(new GameMove(fromAlgebraic("a7"), fromAlgebraic("a6")));
     assertEquals(new ValidPlay(), result.moveResult());
@@ -122,12 +123,12 @@ public class SpecialCasesTest {
     result = result.game().makeMove(new GameMove(fromAlgebraic("g3"), fromAlgebraic("e1")));
     assertEquals(new InvalidPlay(""), result.moveResult());
     assertEquals(
-        PieceType.CHANCELLOR, result.game().getBoard().pieceAt(fromAlgebraic("g3")).getType());
+        ChessPieceType.CHANCELLOR, result.game().getBoard().pieceAt(fromAlgebraic("g3")).getType());
 
     result = result.game().makeMove(new GameMove(fromAlgebraic("g3"), fromAlgebraic("g8")));
     assertEquals(new ValidPlay(), result.moveResult());
     assertEquals(
-        PieceType.CHANCELLOR, result.game().getBoard().pieceAt(fromAlgebraic("g8")).getType());
+        ChessPieceType.CHANCELLOR, result.game().getBoard().pieceAt(fromAlgebraic("g8")).getType());
   }
 
   @Test

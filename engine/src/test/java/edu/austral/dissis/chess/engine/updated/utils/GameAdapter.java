@@ -1,11 +1,6 @@
 package edu.austral.dissis.chess.engine.updated.utils;
 
-import static edu.austral.dissis.common.piece.PieceType.BISHOP;
-import static edu.austral.dissis.common.piece.PieceType.KING;
-import static edu.austral.dissis.common.piece.PieceType.KNIGHT;
-import static edu.austral.dissis.common.piece.PieceType.PAWN;
-import static edu.austral.dissis.common.piece.PieceType.QUEEN;
-import static edu.austral.dissis.common.piece.PieceType.ROOK;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.*;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 
@@ -66,6 +61,10 @@ public class GameAdapter {
         return KNIGHT;
       case 'Q':
         return QUEEN;
+      case 'A':
+        return ARCHBISHOP;
+      case 'C':
+        return CHANCELLOR;
       default:
         throw new IllegalStateException("Unexpected value: " + piece.component1());
     }

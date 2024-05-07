@@ -1,5 +1,6 @@
 package edu.austral.dissis.common.piece;
 
+import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.utils.move.BoardPosition;
@@ -44,7 +45,7 @@ public class Piece {
   public String toString() {
     String colour = pieceColour == Color.BLACK ? "BLACK" : "WHITE";
     char typeName =
-        type != PieceType.KNIGHT ? type.toString().charAt(0) : type.toString().charAt(1);
+        type != ChessPieceType.KNIGHT ? type.toString().charAt(0) : type.toString().charAt(1);
     return colour.substring(0, 2) + " " + typeName;
   }
 

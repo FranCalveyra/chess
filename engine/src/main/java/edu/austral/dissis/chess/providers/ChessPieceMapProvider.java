@@ -1,8 +1,8 @@
 package edu.austral.dissis.chess.providers;
 
+import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.common.piece.Piece;
-import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -57,41 +57,41 @@ public class ChessPieceMapProvider {
     addKnights(result, rows, columns, provider);
     addKingAndQueen(result, rows, columns - 1, provider);
     addBishops(result, rows, columns - 1, provider);
-    result.put(new BoardPosition(0, 2), provider.provide(Color.WHITE, PieceType.ARCHBISHOP));
+    result.put(new BoardPosition(0, 2), provider.provide(Color.WHITE, ChessPieceType.ARCHBISHOP));
     result.put(
-        new BoardPosition(0, columns - 3), provider.provide(Color.WHITE, PieceType.CHANCELLOR));
-    result.put(new BoardPosition(rows - 1, 2), provider.provide(Color.BLACK, PieceType.ARCHBISHOP));
+        new BoardPosition(0, columns - 3), provider.provide(Color.WHITE, ChessPieceType.CHANCELLOR));
+    result.put(new BoardPosition(rows - 1, 2), provider.provide(Color.BLACK, ChessPieceType.ARCHBISHOP));
     result.put(
         new BoardPosition(rows - 1, columns - 3),
-        provider.provide(Color.BLACK, PieceType.CHANCELLOR));
-    result.put(new BoardPosition(0, 3), provider.provide(Color.WHITE, PieceType.BISHOP));
-    result.put(new BoardPosition(rows - 1, 3), provider.provide(Color.BLACK, PieceType.BISHOP));
+        provider.provide(Color.BLACK, ChessPieceType.CHANCELLOR));
+    result.put(new BoardPosition(0, 3), provider.provide(Color.WHITE, ChessPieceType.BISHOP));
+    result.put(new BoardPosition(rows - 1, 3), provider.provide(Color.BLACK, ChessPieceType.BISHOP));
   }
 
   private static void fillSecondRowsWithPawns(
       Map<BoardPosition, Piece> result, int rows, int columns, ChessPieceProvider provider) {
     for (int j = 0; j < columns; j++) {
-      result.put(new BoardPosition(1, j), provider.provide(Color.WHITE, PieceType.PAWN));
-      result.put(new BoardPosition(rows - 2, j), provider.provide(Color.BLACK, PieceType.PAWN));
+      result.put(new BoardPosition(1, j), provider.provide(Color.WHITE, ChessPieceType.PAWN));
+      result.put(new BoardPosition(rows - 2, j), provider.provide(Color.BLACK, ChessPieceType.PAWN));
     }
   }
 
   private static void addRooks(
       Map<BoardPosition, Piece> result, int rows, int columns, ChessPieceProvider provider) {
-    result.put(new BoardPosition(0, 0), provider.provide(Color.WHITE, PieceType.ROOK));
-    result.put(new BoardPosition(0, columns - 1), provider.provide(Color.WHITE, PieceType.ROOK));
+    result.put(new BoardPosition(0, 0), provider.provide(Color.WHITE, ChessPieceType.ROOK));
+    result.put(new BoardPosition(0, columns - 1), provider.provide(Color.WHITE, ChessPieceType.ROOK));
     result.put(
-        new BoardPosition(rows - 1, columns - 1), provider.provide(Color.BLACK, PieceType.ROOK));
-    result.put(new BoardPosition(rows - 1, 0), provider.provide(Color.BLACK, PieceType.ROOK));
+        new BoardPosition(rows - 1, columns - 1), provider.provide(Color.BLACK, ChessPieceType.ROOK));
+    result.put(new BoardPosition(rows - 1, 0), provider.provide(Color.BLACK, ChessPieceType.ROOK));
   }
 
   private static void addKnights(
       Map<BoardPosition, Piece> result, int rows, int columns, ChessPieceProvider provider) {
-    result.put(new BoardPosition(0, 1), provider.provide(Color.WHITE, PieceType.KNIGHT));
-    result.put(new BoardPosition(0, columns - 2), provider.provide(Color.WHITE, PieceType.KNIGHT));
-    result.put(new BoardPosition(rows - 1, 1), provider.provide(Color.BLACK, PieceType.KNIGHT));
+    result.put(new BoardPosition(0, 1), provider.provide(Color.WHITE, ChessPieceType.KNIGHT));
+    result.put(new BoardPosition(0, columns - 2), provider.provide(Color.WHITE, ChessPieceType.KNIGHT));
+    result.put(new BoardPosition(rows - 1, 1), provider.provide(Color.BLACK, ChessPieceType.KNIGHT));
     result.put(
-        new BoardPosition(rows - 1, columns - 2), provider.provide(Color.BLACK, PieceType.KNIGHT));
+        new BoardPosition(rows - 1, columns - 2), provider.provide(Color.BLACK, ChessPieceType.KNIGHT));
   }
 
   private static void addKingAndQueen(
@@ -102,24 +102,24 @@ public class ChessPieceMapProvider {
 
   private static void addKings(
       Map<BoardPosition, Piece> result, int rows, int columns, ChessPieceProvider provider) {
-    result.put(new BoardPosition(0, columns - 4), provider.provide(Color.WHITE, PieceType.KING));
+    result.put(new BoardPosition(0, columns - 4), provider.provide(Color.WHITE, ChessPieceType.KING));
     result.put(
-        new BoardPosition(rows - 1, columns - 4), provider.provide(Color.BLACK, PieceType.KING));
+        new BoardPosition(rows - 1, columns - 4), provider.provide(Color.BLACK, ChessPieceType.KING));
   }
 
   private static void addQueens(
       Map<BoardPosition, Piece> result, int rows, int columns, ChessPieceProvider provider) {
-    result.put(new BoardPosition(0, columns - 5), provider.provide(Color.WHITE, PieceType.QUEEN));
+    result.put(new BoardPosition(0, columns - 5), provider.provide(Color.WHITE, ChessPieceType.QUEEN));
     result.put(
-        new BoardPosition(rows - 1, columns - 5), provider.provide(Color.BLACK, PieceType.QUEEN));
+        new BoardPosition(rows - 1, columns - 5), provider.provide(Color.BLACK, ChessPieceType.QUEEN));
   }
 
   private static void addBishops(
       Map<BoardPosition, Piece> result, int rows, int columns, ChessPieceProvider provider) {
-    result.put(new BoardPosition(0, 2), provider.provide(Color.WHITE, PieceType.BISHOP));
-    result.put(new BoardPosition(0, columns - 3), provider.provide(Color.WHITE, PieceType.BISHOP));
-    result.put(new BoardPosition(rows - 1, 2), provider.provide(Color.BLACK, PieceType.BISHOP));
+    result.put(new BoardPosition(0, 2), provider.provide(Color.WHITE, ChessPieceType.BISHOP));
+    result.put(new BoardPosition(0, columns - 3), provider.provide(Color.WHITE, ChessPieceType.BISHOP));
+    result.put(new BoardPosition(rows - 1, 2), provider.provide(Color.BLACK, ChessPieceType.BISHOP));
     result.put(
-        new BoardPosition(rows - 1, columns - 3), provider.provide(Color.BLACK, PieceType.BISHOP));
+        new BoardPosition(rows - 1, columns - 3), provider.provide(Color.BLACK, ChessPieceType.BISHOP));
   }
 }
