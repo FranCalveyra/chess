@@ -8,7 +8,7 @@ import edu.austral.dissis.chess.gui.DefaultImageResolver;
 import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.ImageResolver;
 import edu.austral.dissis.chess.providers.ChessGameProvider;
-import edu.austral.dissis.chess.ui.ChessGameEngine;
+import edu.austral.dissis.chess.ui.gameengine.ChessGameEngine;
 import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;

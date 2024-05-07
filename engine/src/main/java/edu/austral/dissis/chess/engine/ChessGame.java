@@ -118,4 +118,9 @@ public class ChessGame implements BoardGame {
   public MoveExecutor getMoveExecutor() {
     return executor;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    return super.equals(obj);
+  }
 }

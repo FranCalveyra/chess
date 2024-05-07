@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.ui;
+package edu.austral.dissis.chess.ui.gameengine;
 
 import static java.awt.Color.BLACK;
 
@@ -26,11 +26,13 @@ public class ChessGameEngine implements GameEngine {
   private final Stack<ChessGameResult> undo;
   private Stack<ChessGameResult> redo;
   private ChessGameResult currentState;
+  private ChessGameResult initialState;
 
   public ChessGameEngine(ChessGame game) {
     this.game = game;
     undo = new Stack<>();
     redo = new Stack<>();
+    currentState = new ChessGameResult(game, new ValidPlay());
   }
 
   @NotNull
@@ -48,38 +50,49 @@ public class ChessGameEngine implements GameEngine {
   @NotNull
   @Override
   public InitialState init() {
-    currentState = new ChessGameResult(game, new ValidPlay());
     undo.push(currentState);
+    initialState = currentState;
     return new InitialState(
-        new BoardSize(game.getBoard().getColumns(), game.getBoard().getRows()),
-        getPiecesList(game),
-        getPlayerColor(game.getCurrentTurn()));
+        new BoardSize(currentState.game().getBoard().getColumns(), currentState.game().getBoard().getRows()),
+        getPiecesList(currentState.game()),
+        getPlayerColor(currentState.game().getCurrentTurn()));
   }
 
   @NotNull
   @Override
   public NewGameState undo() {
     if(undo.isEmpty()){
-      return new NewGameState(getPiecesList(game), getPlayerColor(game.getCurrentTurn()), new UndoState(false, !redo.isEmpty()));
+      return new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(false, !redo.isEmpty()));
     }
-    ChessGameResult lastPlay = undo.pop();
-    redo.push(lastPlay);
-    currentState = lastPlay;
+    if(redo.isEmpty()){
+      redo.push(currentState);
+    }
+    if(undo.peek() == currentState){
+      undo.pop();
+    }
+    currentState = undo.peek();
+    redo.push(undo.pop());
     NewGameState newGameState = new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(!undo.isEmpty(), !redo.isEmpty()));
-    game = lastPlay.game();
+    game = currentState.game();
     return newGameState;
   }
   @NotNull
   @Override
   public NewGameState redo() {
     if(redo.isEmpty()){
-      return new NewGameState(getPiecesList(game), getPlayerColor(game.getCurrentTurn()), new UndoState(!undo.isEmpty(), false));
+      return new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(!undo.isEmpty(), false));
     }
-    ChessGameResult lastPlay = redo.pop();
-    undo.push(lastPlay);
-    currentState = lastPlay;
+    if(undo.isEmpty()){
+      undo.push(currentState);
+    }
+
+    if(redo.peek() == currentState || redo.peek() == initialState){
+      undo.push(redo.pop());
+    }
+    currentState = redo.peek();
+    undo.push(redo.pop());
     NewGameState newGameState = new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(!undo.isEmpty(), !redo.isEmpty()));
-    game = lastPlay.game();
+    game = currentState.game();
     return newGameState;
   }
 
