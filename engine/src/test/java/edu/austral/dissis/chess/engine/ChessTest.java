@@ -1,31 +1,33 @@
 package edu.austral.dissis.chess.engine;
 
 import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
-import static edu.austral.dissis.chess.utils.move.ChessPosition.fromAlgebraic;
+import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.providers.PieceProvider;
+import edu.austral.dissis.chess.providers.ChessGameProvider;
+import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.rules.winconds.CheckMate;
 import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
-import edu.austral.dissis.chess.utils.move.ChessPosition;
-import edu.austral.dissis.chess.utils.result.GameResult;
-import edu.austral.dissis.chess.utils.result.GameWon;
-import edu.austral.dissis.chess.utils.result.ValidMove;
-import edu.austral.dissis.chess.utils.type.GameType;
+import edu.austral.dissis.chess.utils.enums.GameType;
+import edu.austral.dissis.common.board.MapBoard;
+import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.piece.PieceType;
+import edu.austral.dissis.common.utils.move.BoardPosition;
+import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.common.utils.result.GameWon;
+import edu.austral.dissis.common.utils.result.ValidPlay;
 import java.awt.Color;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 public class ChessTest {
   // Setup
-  private ChessGame game = new GameProvider().provide(GameType.DEFAULT);
+  private ChessGame game = new ChessGameProvider().provide(GameType.DEFAULT);
 
   // Tests
   @Test
@@ -48,9 +50,8 @@ public class ChessTest {
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("e5")).getType());
     game = makeMove(game, "g2 -> g4").game();
     assertEquals(PieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("g4")).getType());
-    GameResult finishingMove = makeMove(game, "d8 -> h4");
+    ChessGameResult finishingMove = makeMove(game, "d8 -> h4");
     game = finishingMove.game();
-    System.out.println(game.getBoard());
     assertEquals(new GameWon(BLACK), finishingMove.moveResult());
     assertEquals(PieceType.QUEEN, game.getBoard().pieceAt(fromAlgebraic("h4")).getType());
     assertTrue(new DefaultCheck(WHITE).isValidRule(game.getBoard()));
@@ -61,9 +62,9 @@ public class ChessTest {
   @Test
   public void validatePromotion() {
     assertEquals(WHITE, game.getCurrentTurn());
-    GameResult firstResult = makeMove(game, "a2 -> a4");
+    ChessGameResult firstResult = makeMove(game, "a2 -> a4");
     game = firstResult.game();
-    assertEquals(new ValidMove(), firstResult.moveResult());
+    assertEquals(new ValidPlay(), firstResult.moveResult());
     game = makeMove(game, "a7 -> a5").game();
     assertPositionType(game, PieceType.PAWN, 3, 0);
     assertPositionType(game, PieceType.PAWN, 4, 0);
@@ -105,8 +106,8 @@ public class ChessTest {
 
   @Test
   public void possibleCheckmateSaving() {
-    PieceProvider provider = new PieceProvider();
-    Map<ChessPosition, Piece> situation =
+    ChessPieceProvider provider = new ChessPieceProvider();
+    Map<BoardPosition, Piece> situation =
         Map.of(
             fromAlgebraic("d1"),
             provider.provide(BLACK, PieceType.QUEEN),
@@ -133,7 +134,7 @@ public class ChessTest {
   }
 
   // Private stuff
-  protected static ChessPosition getPiecePosition(Piece piece, Map<ChessPosition, Piece> pieces) {
+  protected static BoardPosition getPiecePosition(Piece piece, Map<BoardPosition, Piece> pieces) {
     return pieces.entrySet().stream()
         .filter(entry -> entry.getValue() == piece)
         .findFirst()
@@ -142,6 +143,6 @@ public class ChessTest {
   }
 
   private void assertPositionType(ChessGame currentGame, PieceType pieceType, int i, int j) {
-    assertEquals(pieceType, currentGame.getBoard().pieceAt(new ChessPosition(i, j)).getType());
+    assertEquals(pieceType, currentGame.getBoard().pieceAt(new BoardPosition(i, j)).getType());
   }
 }

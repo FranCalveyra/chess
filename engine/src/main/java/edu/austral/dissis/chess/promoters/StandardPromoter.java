@@ -1,10 +1,10 @@
 package edu.austral.dissis.chess.promoters;
 
-import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.PieceType;
-import edu.austral.dissis.chess.providers.PieceProvider;
-import edu.austral.dissis.chess.utils.move.ChessPosition;
+import edu.austral.dissis.chess.providers.ChessPieceProvider;
+import edu.austral.dissis.common.board.Board;
+import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.piece.PieceType;
+import edu.austral.dissis.common.utils.move.BoardPosition;
 import java.awt.Color;
 import java.util.stream.IntStream;
 
@@ -17,7 +17,7 @@ public class StandardPromoter implements Promoter {
   }
 
   @Override
-  public boolean canPromote(ChessPosition position, Board context) {
+  public boolean canPromote(BoardPosition position, Board context) {
     Piece piece = context.pieceAt(position);
     if (piece == null) {
       return false;
@@ -27,11 +27,11 @@ public class StandardPromoter implements Promoter {
   }
 
   @Override
-  public Board promote(ChessPosition position, PieceType type, Board context) {
+  public Board promote(BoardPosition position, PieceType type, Board context) {
     // Fetch initial piece
     Piece initialPiece = context.pieceAt(position);
     // Get the piece to promote
-    Piece pieceToPromoteTo = new PieceProvider().provide(initialPiece.getPieceColour(), type);
+    Piece pieceToPromoteTo = new ChessPieceProvider().provide(initialPiece.getPieceColour(), type);
     Piece promotedPiece =
         new Piece(
             pieceToPromoteTo.getMovements(),
@@ -50,7 +50,7 @@ public class StandardPromoter implements Promoter {
     // else, checks the first
     int rowToCheck = team == Color.WHITE ? context.getRows() - 1 : 0;
     return IntStream.range(0, context.getColumns())
-        .mapToObj(j -> new ChessPosition(rowToCheck, j))
+        .mapToObj(j -> new BoardPosition(rowToCheck, j))
         .map(context::pieceAt)
         .anyMatch(
             piece ->

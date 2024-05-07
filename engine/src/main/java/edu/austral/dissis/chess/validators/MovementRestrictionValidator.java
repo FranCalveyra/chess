@@ -1,8 +1,8 @@
 package edu.austral.dissis.chess.validators;
 
-import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.common.board.Board;
+import edu.austral.dissis.common.utils.move.GameMove;
 
 public interface MovementRestrictionValidator {
-  boolean isValidMove(ChessMove move, Board context);
+  boolean isValidMove(GameMove move, Board context);
 }

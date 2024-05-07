@@ -2,32 +2,34 @@ package edu.austral.dissis.chess.engine;
 
 import static edu.austral.dissis.chess.engine.ChessTest.getPiecePosition;
 import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
-import static edu.austral.dissis.chess.utils.move.ChessPosition.fromAlgebraic;
+import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.piece.movement.type.Castling;
-import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.providers.PieceProvider;
-import edu.austral.dissis.chess.utils.move.ChessMove;
-import edu.austral.dissis.chess.utils.move.ChessPosition;
-import edu.austral.dissis.chess.utils.result.GameResult;
-import edu.austral.dissis.chess.utils.result.InvalidMove;
-import edu.austral.dissis.chess.utils.result.ValidMove;
-import edu.austral.dissis.chess.utils.type.GameType;
+import edu.austral.dissis.chess.providers.ChessGameProvider;
+import edu.austral.dissis.chess.providers.ChessPieceProvider;
+import edu.austral.dissis.chess.utils.enums.GameType;
+import edu.austral.dissis.common.board.MapBoard;
+import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.piece.PieceType;
+import edu.austral.dissis.common.utils.move.BoardPosition;
+import edu.austral.dissis.common.utils.move.GameMove;
+import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.common.utils.result.InvalidPlay;
+import edu.austral.dissis.common.utils.result.ValidPlay;
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 public class PieceMovementTest {
   // Movements based on the board added to utils
 
-  private ChessGame game = new GameProvider().provide(GameType.DEFAULT);
+  private ChessGame game = new ChessGameProvider().provide(GameType.DEFAULT);
 
   @Test
   public void validateKnightMovement() {
@@ -94,7 +96,7 @@ public class PieceMovementTest {
     assertEquals(
         getPiecePosition(newWhitePawn, game.getBoard().getPiecesAndPositions()),
         fromAlgebraic("e2"));
-    List<ChessPosition> pawnMoveSet = newWhitePawn.getMoveSet(fromAlgebraic("e2"), game.getBoard());
+    List<BoardPosition> pawnMoveSet = newWhitePawn.getMoveSet(fromAlgebraic("e2"), game.getBoard());
     assertEquals(pawnMoveSet.size(), 2);
   }
 
@@ -103,13 +105,13 @@ public class PieceMovementTest {
     game = makeMove(game, "b2 -> b4").game();
     game = makeMove(game, "a7 -> a5").game();
     game = makeMove(game, "b4 -> b5").game();
-    assertEquals(new InvalidMove(""), makeMove(game, "b7 -> b5").moveResult());
+    assertEquals(new InvalidPlay(""), makeMove(game, "b7 -> b5").moveResult());
   }
 
   @Test
   public void validatePawnFirstMove() {
-    PieceProvider provider = new PieceProvider();
-    Map<ChessPosition, Piece> situation =
+    ChessPieceProvider provider = new ChessPieceProvider();
+    Map<BoardPosition, Piece> situation =
         Map.of(fromAlgebraic("d4"), provider.provide(BLACK, PieceType.PAWN));
     MapBoard currentBoard = new MapBoard(situation);
     ChessGame newGame =
@@ -120,10 +122,10 @@ public class PieceMovementTest {
             game.getPromoter(),
             game.getTurnSelector().changeTurn(),
             game.getPreMovementValidator());
-    GameResult game1 = makeMove(newGame, "d4 -> d2");
-    GameResult game2 = makeMove(newGame, "d4 -> d6");
-    assertEquals(new ValidMove(), game1.moveResult());
-    assertEquals(new InvalidMove(""), game2.moveResult());
+    ChessGameResult game1 = makeMove(newGame, "d4 -> d2");
+    ChessGameResult game2 = makeMove(newGame, "d4 -> d6");
+    assertEquals(new ValidPlay(), game1.moveResult());
+    assertEquals(new InvalidPlay(""), game2.moveResult());
   }
 
   @Test
@@ -132,10 +134,10 @@ public class PieceMovementTest {
     game = makeMove(game, "b7 -> b5").game();
     game = makeMove(game, "a4 -> b5").game();
     assertEquals(Color.BLACK, game.getCurrentTurn());
-    assertEquals(new InvalidMove(""), makeMove(game, "a8 -> b4").moveResult());
+    assertEquals(new InvalidPlay(""), makeMove(game, "a8 -> b4").moveResult());
     assertEquals(31, game.getBoard().getPiecesAndPositions().size());
     game = makeMove(game, "g7 -> g6").game();
-    List<ChessPosition> rookMoveSet =
+    List<BoardPosition> rookMoveSet =
         game.getBoard()
             .pieceAt(fromAlgebraic("a1"))
             .getMoveSet(fromAlgebraic("a1"), game.getBoard());
@@ -149,7 +151,7 @@ public class PieceMovementTest {
     Piece whiteQueen = game.getBoard().pieceAt(fromAlgebraic("d1"));
     assertEquals(whiteQueen.getType(), PieceType.QUEEN);
     game = makeMove(game, "d2 -> d4").game();
-    List<ChessPosition> whiteQueenMoveSet =
+    List<BoardPosition> whiteQueenMoveSet =
         game.getBoard()
             .pieceAt(fromAlgebraic("d1"))
             .getMoveSet(fromAlgebraic("d1"), game.getBoard());
@@ -189,7 +191,7 @@ public class PieceMovementTest {
     game = makeMove(game, "f7 -> f5").game();
     assertTrue(
         new Castling()
-            .isValidMove(new ChessMove(fromAlgebraic("e1"), fromAlgebraic("c1")), game.getBoard()));
+            .isValidMove(new GameMove(fromAlgebraic("e1"), fromAlgebraic("c1")), game.getBoard()));
     game = makeMove(game, "e1 -> c1").game();
     assertEquals(PieceType.KING, game.getBoard().pieceAt(fromAlgebraic("c1")).getType());
     assertEquals(PieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("d1")).getType());
@@ -217,7 +219,7 @@ public class PieceMovementTest {
     game = makeMove(game, "a7 -> a5").game();
     assertTrue(
         new Castling()
-            .isValidMove(new ChessMove(fromAlgebraic("e1"), fromAlgebraic("g1")), game.getBoard()));
+            .isValidMove(new GameMove(fromAlgebraic("e1"), fromAlgebraic("g1")), game.getBoard()));
     game = makeMove(game, "e1 -> g1").game();
     assertEquals(PieceType.KING, game.getBoard().pieceAt(fromAlgebraic("g1")).getType());
     assertEquals(PieceType.ROOK, game.getBoard().pieceAt(fromAlgebraic("f1")).getType());

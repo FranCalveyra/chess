@@ -1,28 +1,29 @@
 package edu.austral.dissis.chess.rules.premovement;
 
-import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.engine.ChessGame;
-import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.rules.winconds.Check;
 import edu.austral.dissis.chess.utils.Pair;
-import edu.austral.dissis.chess.utils.move.ChessMove;
-import edu.austral.dissis.chess.utils.result.ChessMoveResult;
-import edu.austral.dissis.chess.utils.result.ValidMove;
+import edu.austral.dissis.common.board.Board;
+import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.rules.premovement.PreMovementRule;
+import edu.austral.dissis.common.utils.move.GameMove;
+import edu.austral.dissis.common.utils.result.PlayResult;
+import edu.austral.dissis.common.utils.result.ValidPlay;
 import java.util.List;
 
 public class MoveNotIntoCheck implements PreMovementRule {
   @Override
-  public boolean isValidRule(ChessMove move, ChessGame game) {
+  public boolean isValidRule(GameMove move, ChessGame game) {
     List<Check> checks = game.getCheckConditions();
     Piece piece = game.getBoard().pieceAt(move.from());
-    Pair<Board, ChessMoveResult> resultPair = new Pair<>(game.getBoard(), new ValidMove());
-    final List<ChessMove> playToExecute = piece.getPlay(move, game.getBoard());
-    for (ChessMove moveToDo : playToExecute) {
+    Pair<Board, PlayResult> resultPair = new Pair<>(game.getBoard(), new ValidPlay());
+    final List<GameMove> playToExecute = piece.getPlay(move, game.getBoard());
+    for (GameMove moveToDo : playToExecute) {
       resultPair =
           game.getMoveExecutor()
               .executeMove(moveToDo.from(), moveToDo.to(), resultPair.first(), game.getPromoter());
     }
-    Pair<Board, ChessMoveResult> finalResultPair = resultPair;
+    Pair<Board, PlayResult> finalResultPair = resultPair;
     return checks.stream()
         .anyMatch(
             check ->

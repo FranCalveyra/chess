@@ -1,24 +1,27 @@
 package edu.austral.dissis.chess.engine;
 
-import edu.austral.dissis.chess.piece.Piece;
 import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.rules.winconds.Check;
-import edu.austral.dissis.chess.rules.winconds.WinCondition;
-import edu.austral.dissis.chess.turn.TurnSelector;
-import edu.austral.dissis.chess.utils.MoveExecutor;
 import edu.austral.dissis.chess.utils.Pair;
-import edu.austral.dissis.chess.utils.move.ChessMove;
-import edu.austral.dissis.chess.utils.result.ChessMoveResult;
-import edu.austral.dissis.chess.utils.result.GameResult;
-import edu.austral.dissis.chess.utils.result.GameWon;
-import edu.austral.dissis.chess.utils.result.InvalidMove;
+import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.chess.validators.PreMovementValidator;
 import edu.austral.dissis.chess.validators.WinConditionValidator;
+import edu.austral.dissis.common.board.Board;
+import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.rules.winconds.WinCondition;
+import edu.austral.dissis.common.turn.TurnSelector;
+import edu.austral.dissis.common.utils.move.GameMove;
+import edu.austral.dissis.common.utils.move.MoveExecutor;
+import edu.austral.dissis.common.utils.result.*;
+import edu.austral.dissis.common.utils.result.InvalidPlay;
 import java.awt.Color;
 import java.util.List;
+
+import edu.austral.dissis.common.utils.result.PlayResult;
 import org.jetbrains.annotations.NotNull;
 
-public class ChessGame {
+public class ChessGame implements BoardGame {
   /** Simulates a real Chess Game. */
   private final Board board;
 
@@ -47,20 +50,20 @@ public class ChessGame {
     this.preMovementValidator = preMovementValidator;
     this.executor = new MoveExecutor();
   }
-
-  public GameResult makeMove(ChessMove move) {
+  @Override
+  public ChessGameResult makeMove(GameMove move) {
     // Check winning at the end
     // Do all necessary checks
     // PreMovementRules should be valid
-    ChessMoveResult preMovementValidity = preMovementValidator.getMoveValidity(move, this);
-    if (preMovementValidity.getClass() == InvalidMove.class) {
-      return new GameResult(this, preMovementValidity);
+    PlayResult preMovementValidity = preMovementValidator.getMoveValidity(move, this);
+    if (preMovementValidity.getClass() == InvalidPlay.class) {
+      return new ChessGameResult(this, preMovementValidity);
     }
     // Once valid, execute move
     final Piece pieceToMove = board.pieceAt(move.from());
-    Pair<Board, ChessMoveResult> result = new Pair<>(board, new InvalidMove("any"));
-    final List<ChessMove> playToExecute = pieceToMove.getPlay(move, board);
-    for (ChessMove moveToDo : playToExecute) {
+    Pair<Board, PlayResult> result = new Pair<>(board, new InvalidPlay("any"));
+    final List<GameMove> playToExecute = pieceToMove.getPlay(move, board);
+    for (GameMove moveToDo : playToExecute) {
       result = executor.executeMove(moveToDo.from(), moveToDo.to(), result.first(), promoter);
     }
     // Declare final variables
@@ -77,10 +80,10 @@ public class ChessGame {
 
     if (winConditionValidator.isGameWon(finalBoard)) {
       Color winner = turnSelector.getCurrentTurn();
-      return new GameResult(finalGame, new GameWon(winner));
+      return new ChessGameResult(finalGame, new GameWon(winner));
     }
     // Get the resulting game at last
-    return new GameResult(finalGame, result.second()); // Second represents the moveResult
+    return new ChessGameResult(finalGame, result.second()); // Second represents the moveResult
   }
 
   // Getters

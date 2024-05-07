@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.rules.winconds;
 
-import edu.austral.dissis.chess.engine.Board;
 import edu.austral.dissis.chess.validators.DefaultCheckValidator;
+import edu.austral.dissis.common.board.Board;
 import java.awt.Color;
 
 public final class DefaultCheck implements Check {

@@ -4,8 +4,6 @@ import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 
 import edu.austral.dissis.chess.engine.ChessGame;
-import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.PieceType;
 import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPiece;
 import edu.austral.dissis.chess.test.TestPieceSymbols;
@@ -17,15 +15,15 @@ import edu.austral.dissis.chess.test.game.TestMoveFailure;
 import edu.austral.dissis.chess.test.game.TestMoveResult;
 import edu.austral.dissis.chess.test.game.TestMoveSuccess;
 import edu.austral.dissis.chess.test.game.WhiteCheckMate;
-import edu.austral.dissis.chess.utils.move.ChessMove;
-import edu.austral.dissis.chess.utils.move.ChessPosition;
 import edu.austral.dissis.chess.utils.result.CheckState;
-import edu.austral.dissis.chess.utils.result.ChessMoveResult;
-import edu.austral.dissis.chess.utils.result.GameResult;
-import edu.austral.dissis.chess.utils.result.GameWon;
-import edu.austral.dissis.chess.utils.result.InvalidMove;
-import edu.austral.dissis.chess.utils.result.PieceTaken;
-import edu.austral.dissis.chess.utils.result.ValidMove;
+import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.piece.PieceType;
+import edu.austral.dissis.common.utils.move.BoardPosition;
+import edu.austral.dissis.common.utils.move.GameMove;
+import edu.austral.dissis.common.utils.result.*;
+import edu.austral.dissis.common.utils.result.InvalidPlay;
+
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,9 +40,9 @@ public class ChessGameRunner implements TestGameRunner {
   @NotNull
   @Override
   public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
-    GameResult gameResult = game.makeMove(new ChessMove(mapPosition(from), mapPosition(to)));
-    game = gameResult.game();
-    return getTestMoveResult(gameResult);
+    ChessGameResult chessGameResult = game.makeMove(new GameMove(mapPosition(from), mapPosition(to)));
+    game = chessGameResult.game();
+    return getTestMoveResult(chessGameResult);
   }
 
   @NotNull
@@ -72,7 +70,7 @@ public class ChessGameRunner implements TestGameRunner {
         getTestMap(game.getBoard().getPiecesAndPositions()));
   }
 
-  private Map<TestPosition, TestPiece> getTestMap(Map<ChessPosition, Piece> pieceMap) {
+  private Map<TestPosition, TestPiece> getTestMap(Map<BoardPosition, Piece> pieceMap) {
     Map<TestPosition, TestPiece> testMap = new HashMap<>();
     pieceMap.forEach(
         (currentPosition, value) ->
@@ -108,16 +106,16 @@ public class ChessGameRunner implements TestGameRunner {
     }
   }
 
-  private @NotNull TestMoveResult getTestMoveResult(GameResult gameResult) {
-    ChessMoveResult moveResult = gameResult.moveResult();
-    switch (moveResult) {
+  private @NotNull TestMoveResult getTestMoveResult(ChessGameResult chessGameResult) {
+    PlayResult playResult = chessGameResult.moveResult();
+    switch (playResult) {
       case GameWon g:
         return g.getWinner() == Color.BLACK
             ? new BlackCheckMate(getBoard())
             : new WhiteCheckMate(getBoard());
-      case InvalidMove invalidMove:
+      case InvalidPlay invalidMove:
         return new TestMoveFailure(getBoard());
-      case ValidMove validMove:
+      case ValidPlay validMove:
         return new TestMoveSuccess(this);
       case CheckState checkState:
         return new TestMoveSuccess(this);

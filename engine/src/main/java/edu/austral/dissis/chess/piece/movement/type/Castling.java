@@ -1,14 +1,14 @@
 package edu.austral.dissis.chess.piece.movement.type;
 
-import static edu.austral.dissis.chess.utils.type.MoveType.HORIZONTAL;
+import static edu.austral.dissis.chess.utils.enums.MoveType.HORIZONTAL;
 
-import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.piece.movement.PieceMovement;
 import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
-import edu.austral.dissis.chess.utils.move.ChessMove;
-import edu.austral.dissis.chess.utils.move.ChessPosition;
 import edu.austral.dissis.chess.validators.PiecePathValidator;
+import edu.austral.dissis.common.board.Board;
+import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.piece.movement.type.PieceMovement;
+import edu.austral.dissis.common.utils.move.BoardPosition;
+import edu.austral.dissis.common.utils.move.GameMove;
 import java.util.List;
 
 public class Castling implements PieceMovement {
@@ -16,37 +16,37 @@ public class Castling implements PieceMovement {
   // and move to be done doesn't leave put king in risk.
 
   @Override
-  public boolean isValidMove(ChessMove move, Board context) {
+  public boolean isValidMove(GameMove move, Board context) {
     return isCastlingPossible(move.from(), move.to(), context);
   }
 
   @Override
-  public List<ChessMove> getMovesToExecute(ChessMove move, Board context) {
+  public List<GameMove> getMovesToExecute(GameMove move, Board context) {
     int rookColumn = getRookColumn(move, context);
     int resultCol = getResultCol(rookColumn, move.from());
-    ChessPosition rookFrom = new ChessPosition(move.from().getRow(), rookColumn);
-    ChessPosition rookTo = new ChessPosition(move.from().getRow(), resultCol);
-    ChessMove rookMove = new ChessMove(rookFrom, rookTo);
+    BoardPosition rookFrom = new BoardPosition(move.from().getRow(), rookColumn);
+    BoardPosition rookTo = new BoardPosition(move.from().getRow(), resultCol);
+    GameMove rookMove = new GameMove(rookFrom, rookTo);
     return List.of(move, rookMove);
   }
 
-  private int getResultCol(int rookColumn, ChessPosition oldPos) {
+  private int getResultCol(int rookColumn, BoardPosition oldPos) {
     return rookColumn == 0 ? oldPos.getColumn() - 1 : oldPos.getColumn() + 1;
   }
 
-  private int getRookColumn(ChessMove move, Board context) {
+  private int getRookColumn(GameMove move, Board context) {
     return move.to().getColumn() == move.from().getColumn() - 2 ? 0 : context.getColumns() - 1;
   }
 
-  private boolean isCastlingPossible(ChessPosition oldPos, ChessPosition newPos, Board context) {
+  private boolean isCastlingPossible(BoardPosition oldPos, BoardPosition newPos, Board context) {
     Piece king = context.pieceAt(oldPos);
-    int rookColumn = getRookColumn(new ChessMove(oldPos, newPos), context);
-    Piece rook = context.pieceAt(new ChessPosition(newPos.getRow(), rookColumn));
+    int rookColumn = getRookColumn(new GameMove(oldPos, newPos), context);
+    Piece rook = context.pieceAt(new BoardPosition(newPos.getRow(), rookColumn));
     return validate(oldPos, newPos, context, king, rook);
   }
 
   private boolean validate(
-      ChessPosition oldPos, ChessPosition newPos, Board context, Piece king, Piece rook) {
+      BoardPosition oldPos, BoardPosition newPos, Board context, Piece king, Piece rook) {
     if (king == null
         || rook == null
         || !validGeneralChecks(oldPos, newPos, king, rook)
@@ -57,14 +57,14 @@ public class Castling implements PieceMovement {
   }
 
   private boolean checkOrBlockedPath(
-      ChessPosition oldPos, ChessPosition newPos, Board context, Piece king) {
+      BoardPosition oldPos, BoardPosition newPos, Board context, Piece king) {
     boolean isInCheckFromStart = new DefaultCheck(king.getPieceColour()).isValidRule(context);
     return !(new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, HORIZONTAL))
         || isInCheckFromStart;
   }
 
   private boolean validCastlingDisplacement(
-      ChessPosition oldPos, ChessPosition newPos, int columnDelta) {
+      BoardPosition oldPos, BoardPosition newPos, int columnDelta) {
     return oldPos.getRow() == newPos.getRow() && columnDelta == 2;
   }
 
@@ -76,12 +76,12 @@ public class Castling implements PieceMovement {
     return king.getPieceColour() == rook.getPieceColour();
   }
 
-  private boolean validateCheckBetween(ChessPosition oldPos, ChessPosition newPos, Board context) {
+  private boolean validateCheckBetween(BoardPosition oldPos, BoardPosition newPos, Board context) {
     int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
     int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
     Piece king = context.pieceAt(oldPos);
     for (int j = fromColumn + 1; j <= toColumn; j++) {
-      ChessPosition currentTile = new ChessPosition(oldPos.getRow(), j);
+      BoardPosition currentTile = new BoardPosition(oldPos.getRow(), j);
       Board possibleBoard = context.removePieceAt(oldPos).addPieceAt(currentTile, king);
       if (new DefaultCheck(context.pieceAt(oldPos).getPieceColour()).isValidRule(possibleBoard)) {
         return false;
@@ -91,7 +91,7 @@ public class Castling implements PieceMovement {
   }
 
   private boolean validGeneralChecks(
-      ChessPosition oldPos, ChessPosition newPos, Piece king, Piece rook) {
+      BoardPosition oldPos, BoardPosition newPos, Piece king, Piece rook) {
     boolean colorCheck = sameColor(king, rook);
     int columnDelta = Math.abs(newPos.getColumn() - oldPos.getColumn());
     boolean displacementCheck = validCastlingDisplacement(oldPos, newPos, columnDelta);

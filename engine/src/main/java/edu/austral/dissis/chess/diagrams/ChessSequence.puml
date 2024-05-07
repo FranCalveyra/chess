@@ -7,8 +7,8 @@
 ' Check
 ' PiecePathValidator
 ' Piece
-' ChessPosition
-' Move = (ChessPosition from, ChessPosition to)
+' BoardPosition
+' Move = (BoardPosition from, BoardPosition to)
 Client -> ChessGame: makeMove(move)
 ' Not valid move is caused by piece rules, out of board bounds move, piece to move == null, etc
 ChessGame -> PreMovementValidator: getMoveValidity(move, game)

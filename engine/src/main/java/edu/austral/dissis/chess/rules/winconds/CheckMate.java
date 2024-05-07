@@ -1,8 +1,9 @@
 package edu.austral.dissis.chess.rules.winconds;
 
-import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.piece.Piece;
-import edu.austral.dissis.chess.utils.move.ChessPosition;
+import edu.austral.dissis.common.board.Board;
+import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.rules.winconds.WinCondition;
+import edu.austral.dissis.common.utils.move.BoardPosition;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
@@ -31,18 +32,18 @@ public class CheckMate implements WinCondition {
     if (!new DefaultCheck(team).isValidRule(context)) {
       return false;
     }
-    Map<ChessPosition, Piece> teamPieces = getPiecesByColor(context, team);
-    Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves =
+    Map<BoardPosition, Piece> teamPieces = getPiecesByColor(context, team);
+    Map<BoardPosition, List<BoardPosition>> piecesWithPossibleMoves =
         getPieceMovesMap(teamPieces, context);
     return kingHasNoPossibleSaving(piecesWithPossibleMoves, context);
   }
 
-  private Map<ChessPosition, List<ChessPosition>> getPieceMovesMap(
-      Map<ChessPosition, Piece> teamPieces, Board context) {
-    Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves = new HashMap<>();
+  private Map<BoardPosition, List<BoardPosition>> getPieceMovesMap(
+      Map<BoardPosition, Piece> teamPieces, Board context) {
+    Map<BoardPosition, List<BoardPosition>> piecesWithPossibleMoves = new HashMap<>();
     teamPieces.forEach(
         (pos, piece) -> {
-          List<ChessPosition> moveSet = piece.getMoveSet(pos, context);
+          List<BoardPosition> moveSet = piece.getMoveSet(pos, context);
           if (moveSet.isEmpty()) {
             return;
           }
@@ -51,22 +52,22 @@ public class CheckMate implements WinCondition {
     return piecesWithPossibleMoves;
   }
 
-  private Map<ChessPosition, Piece> getPiecesByColor(Board context, Color team) {
-    Map<ChessPosition, Piece> map = context.getPiecesAndPositions();
+  private Map<BoardPosition, Piece> getPiecesByColor(Board context, Color team) {
+    Map<BoardPosition, Piece> map = context.getPiecesAndPositions();
     return map.entrySet().stream()
         .filter(entry -> entry.getValue() != null && entry.getValue().getPieceColour() == team)
         .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
   }
 
   private boolean kingHasNoPossibleSaving(
-      Map<ChessPosition, List<ChessPosition>> piecesWithPossibleMoves, Board context) {
-    for (Entry<ChessPosition, List<ChessPosition>> entry : piecesWithPossibleMoves.entrySet()) {
+      Map<BoardPosition, List<BoardPosition>> piecesWithPossibleMoves, Board context) {
+    for (Entry<BoardPosition, List<BoardPosition>> entry : piecesWithPossibleMoves.entrySet()) {
       // Fetch current piece to analyse
-      ChessPosition pos = entry.getKey();
-      List<ChessPosition> moveSet = entry.getValue();
+      BoardPosition pos = entry.getKey();
+      List<BoardPosition> moveSet = entry.getValue();
 
       // Iterate over all of its possible moves
-      for (ChessPosition possibleMove : moveSet) {
+      for (BoardPosition possibleMove : moveSet) {
         Piece piece = context.pieceAt(pos);
         Board possibleBoardState = context.removePieceAt(pos).addPieceAt(possibleMove, piece);
         DefaultCheck check = new DefaultCheck(context.pieceAt(pos).getPieceColour());

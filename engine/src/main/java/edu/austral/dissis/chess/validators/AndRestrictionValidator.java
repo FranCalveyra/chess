@@ -1,8 +1,8 @@
 package edu.austral.dissis.chess.validators;
 
-import edu.austral.dissis.chess.engine.Board;
-import edu.austral.dissis.chess.piece.movement.restrictions.MovementRestriction;
-import edu.austral.dissis.chess.utils.move.ChessMove;
+import edu.austral.dissis.common.board.Board;
+import edu.austral.dissis.common.piece.movement.restrictions.MovementRestriction;
+import edu.austral.dissis.common.utils.move.GameMove;
 
 public class AndRestrictionValidator implements MovementRestrictionValidator {
   private final MovementRestrictionValidator left;
@@ -23,7 +23,7 @@ public class AndRestrictionValidator implements MovementRestrictionValidator {
   }
 
   @Override
-  public boolean isValidMove(ChessMove move, Board context) {
+  public boolean isValidMove(GameMove move, Board context) {
     if (isLeaf()) {
       return rule.isValidRestriction(move, context);
     }
@@ -46,14 +46,14 @@ public class AndRestrictionValidator implements MovementRestrictionValidator {
     return right == null;
   }
 
-  private boolean getValidity(ChessMove move, Board board) {
+  private boolean getValidity(GameMove move, Board board) {
     if (noRule()) {
       return validityWithoutRule(move, board);
     }
     return validityWithRule(move, board);
   }
 
-  private boolean validityWithRule(ChessMove move, Board board) {
+  private boolean validityWithRule(GameMove move, Board board) {
     if (noLeftChild() && !noRightChild()) {
       return rule.isValidRestriction(move, board) && right.isValidMove(move, board);
     }
@@ -68,7 +68,7 @@ public class AndRestrictionValidator implements MovementRestrictionValidator {
         && rule.isValidRestriction(move, board);
   }
 
-  private boolean validityWithoutRule(ChessMove move, Board board) {
+  private boolean validityWithoutRule(GameMove move, Board board) {
     if (noLeftChild() && !noRightChild()) {
       return right.isValidMove(move, board);
     }
