@@ -1,7 +1,7 @@
-package edu.austral.dissis.chess.validators;
+package edu.austral.dissis.common.piece.movement.restrictions.validators;
 
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.piece.movement.restrictions.MovementRestriction;
+import edu.austral.dissis.common.piece.movement.restrictions.rules.MovementRestriction;
 import edu.austral.dissis.common.utils.move.GameMove;
 
 public class AndRestrictionValidator implements MovementRestrictionValidator {

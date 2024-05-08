@@ -12,10 +12,12 @@ public class ChessGameResult implements GameResult {
     this.game = game;
     this.playResult = playResult;
   }
+
   @Override
   public ChessGame game() {
     return game;
   }
+
   @Override
   public PlayResult moveResult() {
     return playResult;

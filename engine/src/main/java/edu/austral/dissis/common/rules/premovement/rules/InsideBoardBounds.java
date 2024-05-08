@@ -1,4 +1,4 @@
-package edu.austral.dissis.common.rules.premovement;
+package edu.austral.dissis.common.rules.premovement.rules;
 
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.common.board.Board;

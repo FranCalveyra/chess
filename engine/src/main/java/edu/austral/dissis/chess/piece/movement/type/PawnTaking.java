@@ -1,11 +1,11 @@
 package edu.austral.dissis.chess.piece.movement.type;
 
-import edu.austral.dissis.chess.validators.AndRestrictionValidator;
-import edu.austral.dissis.chess.validators.MovementRestrictionValidator;
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.piece.movement.restrictions.AbsColumnDistance;
-import edu.austral.dissis.common.piece.movement.restrictions.IsAnEnemy;
-import edu.austral.dissis.common.piece.movement.restrictions.RowDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.rules.AbsColumnDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.rules.IsAnEnemy;
+import edu.austral.dissis.common.piece.movement.restrictions.rules.RowDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AndRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.MovementRestrictionValidator;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;

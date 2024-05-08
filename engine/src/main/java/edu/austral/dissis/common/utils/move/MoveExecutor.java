@@ -5,11 +5,9 @@ import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
-import edu.austral.dissis.common.piece.PieceType;
-import edu.austral.dissis.common.utils.result.PlayResult;
 import edu.austral.dissis.common.utils.result.PieceTaken;
+import edu.austral.dissis.common.utils.result.PlayResult;
 import edu.austral.dissis.common.utils.result.ValidPlay;
-
 import java.awt.Color;
 
 public class MoveExecutor {

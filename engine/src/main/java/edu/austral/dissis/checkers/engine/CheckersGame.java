@@ -6,8 +6,8 @@ import edu.austral.dissis.common.utils.result.GameResult;
 
 public class CheckersGame implements BoardGame {
 
-    @Override
-    public GameResult makeMove(GameMove move) {
-        return null;
-    }
+  @Override
+  public GameResult makeMove(GameMove move) {
+    return null;
+  }
 }

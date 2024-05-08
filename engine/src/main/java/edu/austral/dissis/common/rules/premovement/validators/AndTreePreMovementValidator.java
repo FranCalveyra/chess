@@ -1,7 +1,7 @@
-package edu.austral.dissis.chess.validators;
+package edu.austral.dissis.common.rules.premovement.validators;
 
 import edu.austral.dissis.chess.engine.ChessGame;
-import edu.austral.dissis.common.rules.premovement.PreMovementRule;
+import edu.austral.dissis.common.rules.premovement.rules.PreMovementRule;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.InvalidPlay;
 import edu.austral.dissis.common.utils.result.PlayResult;

@@ -22,9 +22,11 @@ import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
-import edu.austral.dissis.common.utils.result.*;
+import edu.austral.dissis.common.utils.result.GameWon;
 import edu.austral.dissis.common.utils.result.InvalidPlay;
-
+import edu.austral.dissis.common.utils.result.PieceTaken;
+import edu.austral.dissis.common.utils.result.PlayResult;
+import edu.austral.dissis.common.utils.result.ValidPlay;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +43,8 @@ public class ChessGameRunner implements TestGameRunner {
   @NotNull
   @Override
   public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
-    ChessGameResult chessGameResult = game.makeMove(new GameMove(mapPosition(from), mapPosition(to)));
+    ChessGameResult chessGameResult =
+        game.makeMove(new GameMove(mapPosition(from), mapPosition(to)));
     game = chessGameResult.game();
     return getTestMoveResult(chessGameResult);
   }

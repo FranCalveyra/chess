@@ -1,6 +1,13 @@
 package edu.austral.dissis.chess.engine.updated.utils;
 
-import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.*;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.ARCHBISHOP;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.BISHOP;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.CHANCELLOR;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.KING;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.KNIGHT;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.PAWN;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.QUEEN;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.ROOK;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
 

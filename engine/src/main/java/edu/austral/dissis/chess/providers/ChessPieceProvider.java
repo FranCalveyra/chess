@@ -1,11 +1,20 @@
 package edu.austral.dissis.chess.providers;
 
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.ARCHBISHOP;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.BISHOP;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.CHANCELLOR;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.KING;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.KNIGHT;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.PAWN;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.QUEEN;
+import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.ROOK;
+
 import edu.austral.dissis.chess.piece.movement.type.Castling;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
-import edu.austral.dissis.chess.piece.movement.type.PawnMovement;
-import edu.austral.dissis.chess.piece.movement.type.PawnFirstMove;
-import edu.austral.dissis.chess.piece.movement.type.PawnTaking;
 import edu.austral.dissis.chess.piece.movement.type.KnightMovement;
+import edu.austral.dissis.chess.piece.movement.type.PawnFirstMove;
+import edu.austral.dissis.chess.piece.movement.type.PawnMovement;
+import edu.austral.dissis.chess.piece.movement.type.PawnTaking;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.piece.movement.type.DiagonalMovement;
@@ -14,8 +23,6 @@ import edu.austral.dissis.common.piece.movement.type.VerticalMovement;
 import java.awt.Color;
 import java.util.List;
 import java.util.Random;
-
-import static edu.austral.dissis.chess.piece.movement.type.ChessPieceType.*;
 
 public class ChessPieceProvider {
 

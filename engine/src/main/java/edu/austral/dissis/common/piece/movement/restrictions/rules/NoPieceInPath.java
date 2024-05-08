@@ -1,4 +1,4 @@
-package edu.austral.dissis.common.piece.movement.restrictions;
+package edu.austral.dissis.common.piece.movement.restrictions.rules;
 
 import edu.austral.dissis.chess.utils.enums.MoveType;
 import edu.austral.dissis.chess.validators.PiecePathValidator;

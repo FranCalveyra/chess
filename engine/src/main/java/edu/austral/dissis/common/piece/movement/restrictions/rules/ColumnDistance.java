@@ -1,13 +1,13 @@
-package edu.austral.dissis.common.piece.movement.restrictions;
+package edu.austral.dissis.common.piece.movement.restrictions.rules;
 
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 
-public class AbsColumnDistance implements MovementRestriction {
+public class ColumnDistance implements MovementRestriction {
   private final int columnDistance;
 
-  public AbsColumnDistance(int columnDistance) {
+  public ColumnDistance(int columnDistance) {
     this.columnDistance = columnDistance;
   }
 
@@ -15,6 +15,6 @@ public class AbsColumnDistance implements MovementRestriction {
   public boolean isValidRestriction(GameMove move, Board context) {
     BoardPosition oldPos = move.from();
     BoardPosition newPos = move.to();
-    return Math.abs(newPos.getColumn() - oldPos.getColumn()) == columnDistance;
+    return newPos.getColumn() - oldPos.getColumn() == columnDistance;
   }
 }
