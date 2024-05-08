@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.ui.mains;
 
-import edu.austral.dissis.chess.ui.Capablanca;
+import edu.austral.dissis.chess.ui.application.Capablanca;
 import javafx.application.Application;
 
 public class CapablancaMain {

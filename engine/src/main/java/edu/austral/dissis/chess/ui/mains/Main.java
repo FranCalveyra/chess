@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.ui.mains;
 
-import edu.austral.dissis.chess.ui.ChessApplication;
+import edu.austral.dissis.chess.ui.application.ChessApplication;
 import javafx.application.Application;
 
 public class Main {

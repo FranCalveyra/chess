@@ -50,7 +50,6 @@ public class ChessGameEngine implements GameEngine {
   @NotNull
   @Override
   public InitialState init() {
-    undo.push(currentState);
     initialState = currentState;
     return new InitialState(
             new BoardSize(currentState.game().getBoard().getColumns(), currentState.game().getBoard().getRows()),
@@ -61,37 +60,37 @@ public class ChessGameEngine implements GameEngine {
   @NotNull
   @Override
   public NewGameState undo() {
+    if(!undo.isEmpty() && undo.peek() == currentState){
+      undo.pop();
+    }
     if(undo.isEmpty()){
       return new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(false, !redo.isEmpty()));
     }
     if(redo.isEmpty()){
       redo.push(currentState);
     }
-    if(undo.peek() == currentState){
-      undo.pop();
-    }
     currentState = undo.peek();
     redo.push(undo.pop());
-    NewGameState newGameState = new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(!undo.isEmpty(), !redo.isEmpty()));
+    NewGameState newGameState = getNewGameState();
     game = currentState.game();
     return newGameState;
   }
+
   @NotNull
   @Override
   public NewGameState redo() {
     if(redo.isEmpty()){
       return new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(!undo.isEmpty(), false));
     }
-    if(undo.isEmpty()){
-      undo.push(currentState);
-    }
-
     if(redo.peek() == currentState || redo.peek() == initialState){
       undo.push(redo.pop());
     }
+    if(undo.isEmpty()){
+      undo.push(currentState);
+    }
     currentState = redo.peek();
     undo.push(redo.pop());
-    NewGameState newGameState = new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(!undo.isEmpty(), !redo.isEmpty()));
+    NewGameState newGameState = getNewGameState();
     game = currentState.game();
     return newGameState;
   }
@@ -149,4 +148,9 @@ public class ChessGameEngine implements GameEngine {
         throw new IllegalStateException();
     }
   }
+
+  private @NotNull NewGameState getNewGameState() {
+    return new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(!undo.isEmpty(), !redo.isEmpty()));
+  }
+
 }

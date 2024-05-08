@@ -24,7 +24,7 @@ public class ChessGameProvider {
           ruleProvider.providePreMovementValidator(gameType));
     } else if (gameType == GameType.SPECIAL) {
       return new ChessGame(
-          new MapBoard(new ChessPieceMapProvider().provide(GameType.CAPABLANCA, 10, 10), 10, 10),
+          new MapBoard(new ChessPieceMapProvider().provide(GameType.CAPABLANCA, 8, 12), 8, 12),
           List.of(new Extinction(Color.WHITE), new Extinction(Color.BLACK)),
           List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
           new StandardPromoter(),

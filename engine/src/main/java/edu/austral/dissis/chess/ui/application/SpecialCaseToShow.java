@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.ui;
+package edu.austral.dissis.chess.ui.application;
 
 import static edu.austral.dissis.chess.utils.AuxStaticMethods.setupGame;
 
