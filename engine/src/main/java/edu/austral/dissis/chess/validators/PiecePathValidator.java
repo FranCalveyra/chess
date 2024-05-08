@@ -14,7 +14,6 @@ public class PiecePathValidator {
     switch (moveType) {
       case DIAGONAL:
         return checkDiagonal(from, to, context);
-        // Border cases
       case VERTICAL:
         return !checkVertical(from, to, context);
       case HORIZONTAL:

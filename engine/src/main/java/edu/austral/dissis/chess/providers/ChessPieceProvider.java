@@ -1,6 +1,11 @@
 package edu.austral.dissis.chess.providers;
 
-import edu.austral.dissis.chess.piece.movement.type.*;
+import edu.austral.dissis.chess.piece.movement.type.Castling;
+import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
+import edu.austral.dissis.chess.piece.movement.type.PawnMovement;
+import edu.austral.dissis.chess.piece.movement.type.PawnFirstMove;
+import edu.austral.dissis.chess.piece.movement.type.PawnTaking;
+import edu.austral.dissis.chess.piece.movement.type.KnightMovement;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.piece.movement.type.DiagonalMovement;

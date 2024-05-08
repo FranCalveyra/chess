@@ -9,8 +9,4 @@ public class PieceAtPosition implements PreMovementRule {
     return game.getBoard().pieceAt(move.from()) != null;
   }
 
-  @Override
-  public String getStringErrorRepresentation() {
-    return "No piece at that position";
-  }
 }

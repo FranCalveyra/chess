@@ -5,6 +5,4 @@ import edu.austral.dissis.common.utils.move.GameMove;
 
 public interface PreMovementRule {
   boolean isValidRule(GameMove move, ChessGame game);
-
-  String getStringErrorRepresentation();
 }
