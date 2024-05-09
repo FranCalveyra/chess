@@ -1,11 +1,11 @@
-package edu.austral.dissis.chess.engine;
+package edu.austral.dissis.chess.engine.cases;
 
 import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
 import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.providers.GameProvider;
@@ -59,7 +59,7 @@ public class SpecialCasesTest {
             game.getPromoter(),
             game.getTurnSelector(),
             game.getPreMovementValidator());
-    assertTrue(blackExtinction.isValidRule(game.getBoard()));
+    assertFalse(blackExtinction.isValidRule(game.getBoard()));
 
     Board newBoard =
         board.addPieceAt(
@@ -77,6 +77,20 @@ public class SpecialCasesTest {
     assertEquals(7, game.getBoard().getPiecesAndPositions().size());
     ChessGameResult result = game.makeMove(new GameMove(fromAlgebraic("a8"), fromAlgebraic("a7")));
     assertEquals(6, result.game().getBoard().getPiecesAndPositions().size());
+    assertEquals(new PieceTaken(null), result.moveResult());
+    Board otherBoard =
+        board.addPieceAt(
+            fromAlgebraic("f4"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.ROOK));
+    game = result.game();
+    game =
+        new ChessGame(
+            otherBoard,
+            game.getWinConditions(),
+            game.getCheckConditions(),
+            game.getPromoter(),
+            game.getTurnSelector().changeTurn(null),
+            game.getPreMovementValidator());
+    result = game.makeMove(new GameMove(fromAlgebraic("f4"), fromAlgebraic("e4")));
     assertEquals(new GameWon(Color.WHITE), result.moveResult());
   }
 

@@ -25,11 +25,7 @@ public class AndRestrictionValidator implements MovementRestrictionValidator {
   @Override
   public boolean isValidMove(GameMove move, Board context) {
     if (isLeaf()) {
-      boolean cond = rule.isValidRestriction(move, context);
-      if (!cond) {
-        System.out.println(rule);
-      }
-      return cond;
+      return rule.isValidRestriction(move, context);
     }
     return getValidity(move, context);
   }

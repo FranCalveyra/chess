@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.engine;
+package edu.austral.dissis.chess.engine.cases;
 
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.utils.enums.GameType;

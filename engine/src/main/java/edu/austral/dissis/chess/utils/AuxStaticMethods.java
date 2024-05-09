@@ -26,12 +26,14 @@ public class AuxStaticMethods {
   }
 
   public static Pair<GameEngine, ImageResolver> setupGame(GameType type) {
+    //TODO: test it
     final GameEngine gameEngine = new ChessGameEngine(new GameProvider().provide(type));
     final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
     return new Pair<>(gameEngine, imageResolver);
   }
 
   public static BoardPosition getPosBetween(GameMove move) {
+    //TODO: test it
     int rowDelta = move.to().getRow() - move.from().getRow();
     int colDelta = move.to().getColumn() - move.from().getColumn();
     return lastPos(move.from(), colDelta, rowDelta);

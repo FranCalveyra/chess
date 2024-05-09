@@ -4,7 +4,7 @@ import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.utils.move.BoardPosition;
-import java.awt.*;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 

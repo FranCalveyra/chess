@@ -4,7 +4,18 @@ import static java.awt.Color.BLACK;
 
 import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.chess.engine.ChessGame;
-import edu.austral.dissis.chess.gui.*;
+import edu.austral.dissis.chess.gui.BoardSize;
+import edu.austral.dissis.chess.gui.ChessPiece;
+import edu.austral.dissis.chess.gui.GameEngine;
+import edu.austral.dissis.chess.gui.GameOver;
+import edu.austral.dissis.chess.gui.InitialState;
+import edu.austral.dissis.chess.gui.InvalidMove;
+import edu.austral.dissis.chess.gui.Move;
+import edu.austral.dissis.chess.gui.MoveResult;
+import edu.austral.dissis.chess.gui.NewGameState;
+import edu.austral.dissis.chess.gui.PlayerColor;
+import edu.austral.dissis.chess.gui.Position;
+import edu.austral.dissis.chess.gui.UndoState;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.utils.result.CheckState;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
@@ -23,6 +34,7 @@ import java.util.Stack;
 import org.jetbrains.annotations.NotNull;
 
 public class ChessGameEngine implements GameEngine {
+  //TODO: TEST FOR COVERAGE TO GO UP
   private ChessGame game;
   private final Stack<ChessGameResult> undo;
   private Stack<ChessGameResult> redo;
