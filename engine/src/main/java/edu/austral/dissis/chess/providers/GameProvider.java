@@ -28,7 +28,7 @@ public class GameProvider {
     } else if (gameType == GameType.SPECIAL_CHESS) {
       return new ChessGame(
           new MapBoard(
-              new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 8, 12), 8, 12),
+              new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 9, 12), 9, 12),
           List.of(new Extinction(Color.WHITE), new Extinction(Color.BLACK)),
           List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
           new StandardPromoter(),
@@ -37,7 +37,7 @@ public class GameProvider {
     } else if (gameType == GameType.CAPABLANCA_CHESS) {
       return new ChessGame(
           new MapBoard(
-              new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 10, 10), 10, 10),
+              new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 8, 10), 8, 10),
           ruleProvider.provideWinConditions(GameType.DEFAULT_CHESS),
           List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
           new StandardPromoter(),

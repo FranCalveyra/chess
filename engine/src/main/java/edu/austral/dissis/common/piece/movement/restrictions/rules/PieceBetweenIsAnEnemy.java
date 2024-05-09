@@ -9,7 +9,7 @@ import edu.austral.dissis.common.utils.move.GameMove;
 public class PieceBetweenIsAnEnemy implements MovementRestriction {
   @Override
   public boolean isValidRestriction(GameMove move, Board context) {
-    //TODO: TEST IT
+    // TODO: TEST IT
     BoardPosition between = getPosBetween(move);
     return context.pieceAt(between).getPieceColour()
         != context.pieceAt(move.from()).getPieceColour();

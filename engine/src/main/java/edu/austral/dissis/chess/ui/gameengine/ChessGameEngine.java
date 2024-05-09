@@ -1,11 +1,10 @@
 package edu.austral.dissis.chess.ui.gameengine;
 
-import static java.awt.Color.BLACK;
+import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPiecesList;
+import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPlayerColor;
 
-import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.gui.BoardSize;
-import edu.austral.dissis.chess.gui.ChessPiece;
 import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.GameOver;
 import edu.austral.dissis.chess.gui.InitialState;
@@ -13,28 +12,21 @@ import edu.austral.dissis.chess.gui.InvalidMove;
 import edu.austral.dissis.chess.gui.Move;
 import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.chess.gui.NewGameState;
-import edu.austral.dissis.chess.gui.PlayerColor;
 import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.gui.UndoState;
-import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.utils.result.CheckState;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
-import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.piece.Piece;
-import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
-import edu.austral.dissis.common.utils.result.*;
+import edu.austral.dissis.common.utils.result.GameWon;
+import edu.austral.dissis.common.utils.result.InvalidPlay;
+import edu.austral.dissis.common.utils.result.PieceTaken;
 import edu.austral.dissis.common.utils.result.PlayResult;
-import java.awt.Color;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import edu.austral.dissis.common.utils.result.ValidPlay;
 import java.util.Stack;
 import org.jetbrains.annotations.NotNull;
 
 public class ChessGameEngine implements GameEngine {
-  //TODO: TEST FOR COVERAGE TO GO UP
   private ChessGame game;
   private final Stack<ChessGameResult> undo;
   private Stack<ChessGameResult> redo;
@@ -116,50 +108,11 @@ public class ChessGameEngine implements GameEngine {
   }
 
   // Private stuff
-  private static PlayerColor getPlayerColor(Color color) {
-    return color == BLACK ? PlayerColor.BLACK : PlayerColor.WHITE;
-  }
-
-  private static Position getPiecePosition(Piece piece, Board board) {
-    for (Map.Entry<BoardPosition, Piece> entry : board.getPiecesAndPositions().entrySet()) {
-      if (entry.getValue().equals(piece)) {
-        return new Position(
-            entry.getKey().getRow() + 1, entry.getKey().getColumn() + 1); // From zero based
-      }
-    }
-    return null;
-  }
-
-  private edu.austral.dissis.chess.gui.MoveResult updateGameState(ChessGame game) {
+  private MoveResult updateGameState(ChessGame game) {
     return new NewGameState(
         getPiecesList(game),
         getPlayerColor(game.getCurrentTurn()),
         new UndoState(!undo.isEmpty(), !redo.isEmpty()));
-  }
-
-  private @NotNull List<ChessPiece> getPiecesList(ChessGame game) {
-    return game.getBoard().getPiecesAndPositions().values().stream()
-        .map(
-            piece ->
-                new ChessPiece(
-                    piece.getId(),
-                    getPlayerColor(piece.getPieceColour()),
-                    Objects.requireNonNull(getPiecePosition(piece, game.getBoard())),
-                    (handleType(piece.getType())).toString().toLowerCase()))
-        .toList();
-  }
-
-  private PieceType handleType(PieceType type) {
-    if (type instanceof ChessPieceType) {
-      return type;
-    } else {
-      if (type == CheckersType.MAN) {
-        return ChessPieceType.PAWN;
-      } else if (type == CheckersType.KING) {
-        return ChessPieceType.QUEEN;
-      }
-    }
-    return null;
   }
 
   private BoardPosition mapPos(Position position) {
