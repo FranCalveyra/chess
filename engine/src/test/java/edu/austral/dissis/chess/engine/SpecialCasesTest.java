@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
-import edu.austral.dissis.chess.providers.ChessGameProvider;
+import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
@@ -28,7 +28,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 public class SpecialCasesTest {
-  private ChessGame game = new ChessGameProvider().provide(GameType.DEFAULT);
+  private ChessGame game = new GameProvider().provide(GameType.DEFAULT_CHESS);
   private final ChessPieceProvider chessPieceProvider = new ChessPieceProvider();
 
   @Test

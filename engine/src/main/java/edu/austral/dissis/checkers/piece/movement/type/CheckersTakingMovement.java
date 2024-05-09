@@ -16,7 +16,7 @@ import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;
 
-public class CheckersNormalMovement implements PieceMovement {
+public class CheckersTakingMovement implements PieceMovement {
   @Override
   public boolean isValidMove(GameMove move, Board context) {
     Piece piece = context.pieceAt(move.from());
@@ -28,9 +28,9 @@ public class CheckersNormalMovement implements PieceMovement {
   protected static MovementRestrictionValidator getCheckersMovementValidator(
       Color team, PieceType type) {
     MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(2));
-    int colorBasedRowDistance = team == Color.RED ? -2 : 2;
+    int colorBasedRowDistance = team == Color.BLACK ? -2 : 2;
     MovementRestriction rowRestriction =
-        type == CheckersType.NORMAL
+        type == CheckersType.MAN
             ? new RowDistance(colorBasedRowDistance)
             : new AbsRowDistance(2);
     MovementRestrictionValidator dy = new AndRestrictionValidator(rowRestriction, dx, null);

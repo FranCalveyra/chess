@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ChessApplication extends Application {
-  private final Pair<GameEngine, ImageResolver> setup = setupGame(GameType.DEFAULT);
+  private final Pair<GameEngine, ImageResolver> setup = setupGame(GameType.DEFAULT_CHESS);
   private final GameEngine gameEngine = setup.first();
   private final ImageResolver imageResolver = setup.second();
 

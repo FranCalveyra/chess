@@ -68,7 +68,7 @@ public class ChessGame implements BoardGame {
     }
     // Declare final variables
     Board finalBoard = result.first();
-    TurnSelector nextSelector = turnSelector.changeTurn();
+    TurnSelector nextSelector = turnSelector.changeTurn(result.second());
     ChessGame finalGame =
         new ChessGame(
             finalBoard,

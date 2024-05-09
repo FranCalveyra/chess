@@ -228,7 +228,7 @@ public abstract class ChessTest {
             game.getWinConditions(),
             game.getCheckConditions(),
             game.getPromoter(),
-            game.getTurnSelector().changeTurn(),
+            game.getTurnSelector().changeTurn(new ValidPlay()),
             game.getPreMovementValidator());
     ChessGameResult game1 = makeMove(newGame, "d4 -> d2");
     ChessGameResult game2 = makeMove(newGame, "d4 -> d6");

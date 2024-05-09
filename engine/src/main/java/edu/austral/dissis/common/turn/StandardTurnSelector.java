@@ -1,5 +1,7 @@
 package edu.austral.dissis.common.turn;
 
+import edu.austral.dissis.common.utils.result.PlayResult;
+
 import java.awt.Color;
 
 public class StandardTurnSelector implements TurnSelector {
@@ -23,7 +25,7 @@ public class StandardTurnSelector implements TurnSelector {
   }
 
   @Override
-  public TurnSelector changeTurn() {
+  public TurnSelector changeTurn(PlayResult result) {
     int nextTurnNumber = turnNumber + 1;
     Color nextTurn = nextTurnNumber % 2 == 0 ? Color.WHITE : Color.BLACK;
     return new StandardTurnSelector(nextTurn, nextTurnNumber);

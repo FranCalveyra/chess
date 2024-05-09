@@ -16,26 +16,26 @@ public class PieceBetweenIsAnEnemy implements MovementRestriction {
   private BoardPosition getPosBetween(GameMove move) {
     int rowDelta = move.to().getRow() - move.from().getRow();
     int colDelta = move.to().getColumn() - move.from().getColumn();
-    return lastPos(move.to(), colDelta, rowDelta);
+    return lastPos(move.from(), colDelta, rowDelta);
   }
 
-  private BoardPosition lastPos(BoardPosition to, int deltaX, int deltaY) {
+  private BoardPosition lastPos(BoardPosition from, int deltaX, int deltaY) {
     if (deltaX > 0) {
       if (deltaY > 0) {
-        return getEnemyPos(to, new Pair<>(1, 1));
+        return getEnemyPos(from, new Pair<>(1, 1));
       } else {
-        return getEnemyPos(to, new Pair<>(-1, 1));
+        return getEnemyPos(from, new Pair<>(-1, 1));
       }
     } else {
       if (deltaY > 0) {
-        return getEnemyPos(to, new Pair<>(1, -1));
+        return getEnemyPos(from, new Pair<>(1, -1));
       } else {
-        return getEnemyPos(to, new Pair<>(-1, -1));
+        return getEnemyPos(from, new Pair<>(-1, -1));
       }
     }
   }
 
-  private BoardPosition getEnemyPos(BoardPosition to, Pair<Integer, Integer> vector) {
-    return new BoardPosition(to.getRow() + vector.first(), to.getColumn() + vector.second());
+  private BoardPosition getEnemyPos(BoardPosition from, Pair<Integer, Integer> vector) {
+    return new BoardPosition(from.getRow() + vector.first(), from.getColumn() + vector.second());
   }
 }

@@ -2,12 +2,15 @@ package edu.austral.dissis.chess.ui.gameengine;
 
 import static java.awt.Color.BLACK;
 
+import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.gui.*;
+import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.utils.result.CheckState;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.*;
@@ -123,8 +126,23 @@ public class ChessGameEngine implements GameEngine {
                                     piece.getId(),
                                     getPlayerColor(piece.getPieceColour()),
                                     Objects.requireNonNull(getPiecePosition(piece, game.getBoard())),
-                                    piece.getType().toString().toLowerCase()))
+                                    (handleType(piece.getType())).toString().toLowerCase()))
             .toList();
+  }
+
+  private PieceType handleType(PieceType type) {
+    if(type instanceof ChessPieceType){
+      return type;
+    }
+    else{
+      if(type == CheckersType.MAN){
+        return ChessPieceType.PAWN;
+      }
+      else if (type == CheckersType.KING){
+        return ChessPieceType.QUEEN;
+      }
+    }
+    return null;
   }
 
   private BoardPosition mapPos(Position position) {

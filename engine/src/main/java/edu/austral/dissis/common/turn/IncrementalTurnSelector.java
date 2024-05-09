@@ -1,5 +1,7 @@
 package edu.austral.dissis.common.turn;
 
+import edu.austral.dissis.common.utils.result.PlayResult;
+
 import java.awt.Color;
 
 public class IncrementalTurnSelector implements TurnSelector {
@@ -24,7 +26,7 @@ public class IncrementalTurnSelector implements TurnSelector {
   }
 
   @Override
-  public TurnSelector changeTurn() {
+  public TurnSelector changeTurn(PlayResult result) {
     int nextTurn = turnNumber + 1;
     if (nextTurn > currentCap) {
       Color nextTurnColor = currentTurn == Color.WHITE ? Color.BLACK : Color.WHITE;

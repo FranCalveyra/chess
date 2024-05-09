@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Capablanca extends Application {
-  private final Pair<GameEngine, ImageResolver> setup = setupGame(GameType.CAPABLANCA);
+  private final Pair<GameEngine, ImageResolver> setup = setupGame(GameType.CAPABLANCA_CHESS);
   private final GameEngine gameEngine = setup.first();
   private final ImageResolver imageResolver = setup.second();
 

@@ -18,7 +18,7 @@ public class Extinction implements WinCondition {
   public boolean isValidRule(Board context) {
     // True whenever only the king is left on one of both sides is left
     Map<BoardPosition, Piece> teamPieces = getTeamPieces(context);
-    return teamPieces.size() == 1;
+    return teamPieces.isEmpty();
   }
 
   @Override

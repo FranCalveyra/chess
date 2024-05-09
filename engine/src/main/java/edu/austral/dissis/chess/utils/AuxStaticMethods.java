@@ -7,7 +7,7 @@ import edu.austral.dissis.chess.gui.CachedImageResolver;
 import edu.austral.dissis.chess.gui.DefaultImageResolver;
 import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.ImageResolver;
-import edu.austral.dissis.chess.providers.ChessGameProvider;
+import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.ui.gameengine.ChessGameEngine;
 import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
@@ -25,7 +25,7 @@ public class AuxStaticMethods {
   }
 
   public static Pair<GameEngine, ImageResolver> setupGame(GameType type) {
-    final GameEngine gameEngine = new ChessGameEngine(new ChessGameProvider().provide(type));
+    final GameEngine gameEngine = new ChessGameEngine(new GameProvider().provide(type));
     final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
     return new Pair<>(gameEngine, imageResolver);
   }

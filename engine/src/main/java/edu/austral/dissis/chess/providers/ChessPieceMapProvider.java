@@ -17,14 +17,14 @@ public class ChessPieceMapProvider {
   public Map<BoardPosition, Piece> provide(GameType type, int rows, int columns) {
     Map<BoardPosition, Piece> result = new HashMap<>();
     ChessPieceProvider provider = new ChessPieceProvider();
-    if (type == GameType.DEFAULT) {
+    if (type == GameType.DEFAULT_CHESS) {
       putDefaultPieces(result, rows, columns, provider);
       return result;
-    } else if (type == GameType.CAPABLANCA) {
+    } else if (type == GameType.CAPABLANCA_CHESS) {
       // Special Pieces
       putCapablancaPieces(result, rows, columns, provider);
       return result;
-    } else if (type == GameType.SPECIAL) {
+    } else if (type == GameType.SPECIAL_CHESS) {
       putCapablancaPieces(result, rows, columns, provider);
       List<BoardPosition> positions = new ArrayList<>(result.keySet().stream().toList());
       List<Piece> pieces = new ArrayList<>(result.values().stream().toList());

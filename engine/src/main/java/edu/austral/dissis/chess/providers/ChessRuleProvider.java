@@ -17,16 +17,13 @@ import java.util.List;
 
 public class ChessRuleProvider {
   public List<WinCondition> provideWinConditions(GameType type) {
-    if (type == GameType.DEFAULT) {
+    if (type == GameType.DEFAULT_CHESS) {
       return (List.of(new CheckMate(Color.WHITE), new CheckMate(Color.BLACK)));
     }
     return new ArrayList<>();
   }
 
   public PreMovementValidator providePreMovementValidator(GameType type) {
-    if (type != GameType.DEFAULT) {
-      return null;
-    }
     AndTreePreMovementValidator moveInside =
         new AndTreePreMovementValidator(new InsideBoardBounds());
     AndTreePreMovementValidator pieceAt =
@@ -35,6 +32,6 @@ public class ChessRuleProvider {
     AndTreePreMovementValidator noFriendlyFire =
         new AndTreePreMovementValidator(
             new AvoidFriendlyFire(), moveAllowed, new AndTreePreMovementValidator(new TurnRule()));
-    return new AndTreePreMovementValidator(new MoveNotIntoCheck(), pieceAt, noFriendlyFire);
+    return new AndTreePreMovementValidator(type == GameType.DEFAULT_CHECKERS ? null : new MoveNotIntoCheck(), pieceAt, noFriendlyFire);
   }
 }

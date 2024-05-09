@@ -1,5 +1,8 @@
 package edu.austral.dissis.chess.providers;
 
+import edu.austral.dissis.checkers.promoter.CheckersPromoter;
+import edu.austral.dissis.checkers.providers.CheckersPieceMapProvider;
+import edu.austral.dissis.checkers.turn.CheckersTurnSelector;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.promoters.StandardPromoter;
 import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
@@ -11,10 +14,10 @@ import edu.austral.dissis.common.turn.StandardTurnSelector;
 import java.awt.Color;
 import java.util.List;
 
-public class ChessGameProvider {
+public class GameProvider {
   public ChessGame provide(GameType gameType) {
     ChessRuleProvider ruleProvider = new ChessRuleProvider();
-    if (gameType == GameType.DEFAULT) {
+    if (gameType == GameType.DEFAULT_CHESS) {
       return new ChessGame(
           new MapBoard(new ChessPieceMapProvider().provide(gameType, 8, 8)),
           ruleProvider.provideWinConditions(gameType),
@@ -22,22 +25,32 @@ public class ChessGameProvider {
           new StandardPromoter(),
           new StandardTurnSelector(),
           ruleProvider.providePreMovementValidator(gameType));
-    } else if (gameType == GameType.SPECIAL) {
+    } else if (gameType == GameType.SPECIAL_CHESS) {
       return new ChessGame(
-          new MapBoard(new ChessPieceMapProvider().provide(GameType.CAPABLANCA, 8, 12), 8, 12),
+          new MapBoard(new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 8, 12), 8, 12),
           List.of(new Extinction(Color.WHITE), new Extinction(Color.BLACK)),
           List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
           new StandardPromoter(),
           new IncrementalTurnSelector(),
-          ruleProvider.providePreMovementValidator(GameType.DEFAULT));
-    } else if (gameType == GameType.CAPABLANCA) {
+          ruleProvider.providePreMovementValidator(GameType.DEFAULT_CHESS));
+    } else if (gameType == GameType.CAPABLANCA_CHESS) {
       return new ChessGame(
-          new MapBoard(new ChessPieceMapProvider().provide(GameType.CAPABLANCA, 10, 10), 10, 10),
-          ruleProvider.provideWinConditions(GameType.DEFAULT),
+          new MapBoard(new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 10, 10), 10, 10),
+          ruleProvider.provideWinConditions(GameType.DEFAULT_CHESS),
           List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
           new StandardPromoter(),
           new StandardTurnSelector(),
-          ruleProvider.providePreMovementValidator(GameType.DEFAULT));
+          ruleProvider.providePreMovementValidator(GameType.DEFAULT_CHESS));
+    }
+    else if(gameType == GameType.DEFAULT_CHECKERS){
+      return new ChessGame(
+              new MapBoard(new CheckersPieceMapProvider().provide(gameType, 8,8)),
+              List.of(new Extinction(Color.RED), new Extinction(Color.BLACK)),
+              null,
+              new CheckersPromoter(),
+              new CheckersTurnSelector(),
+              ruleProvider.providePreMovementValidator(GameType.DEFAULT_CHECKERS)
+      );
     }
     return null;
   }

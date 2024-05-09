@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class SpecialCaseToShow extends Application {
-  private final Pair<GameEngine, ImageResolver> setup = setupGame(GameType.SPECIAL);
+  private final Pair<GameEngine, ImageResolver> setup = setupGame(GameType.SPECIAL_CHESS);
   private final GameEngine gameEngine = setup.first();
   private final ImageResolver imageResolver = setup.second();
 
