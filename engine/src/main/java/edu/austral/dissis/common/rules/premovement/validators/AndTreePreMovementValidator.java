@@ -60,7 +60,7 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
   private boolean isValidMove(GameMove move, ChessGame game) {
     if (isLeaf()) {
       boolean cond = rule.isValidRule(move, game);
-      if(!cond){
+      if (!cond) {
         System.out.println(rule);
       }
       return cond;

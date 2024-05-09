@@ -9,25 +9,22 @@ import edu.austral.dissis.common.piece.movement.restrictions.validators.AndRestr
 import edu.austral.dissis.common.piece.movement.restrictions.validators.MovementRestrictionValidator;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.utils.move.GameMove;
-
 import java.awt.Color;
 
 public class CheckersMovement implements PieceMovement {
-    @Override
-    public boolean isValidMove(GameMove move, Board context) {
-        Piece piece = context.pieceAt(move.from());
-        return getCheckersMovementValidator(piece.getPieceColour(),piece.getType()).isValidMove(move,context);
-    }
+  @Override
+  public boolean isValidMove(GameMove move, Board context) {
+    Piece piece = context.pieceAt(move.from());
+    return getCheckersMovementValidator(piece.getPieceColour(), piece.getType())
+        .isValidMove(move, context);
+  }
 
-    private MovementRestrictionValidator getCheckersMovementValidator(
-            Color team, PieceType type) {
-        MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(1));
-        int colorBasedRowDistance = team == Color.BLACK ? -1 : 1;
-        MovementRestriction rowRestriction =
-                type == CheckersType.MAN
-                        ? new RowDistance(colorBasedRowDistance)
-                        : new AbsRowDistance(1);
-        MovementRestrictionValidator dy = new AndRestrictionValidator(rowRestriction, dx, null);
-        return new AndRestrictionValidator(new ClearTile(), dy, null);
-    }
+  private MovementRestrictionValidator getCheckersMovementValidator(Color team, PieceType type) {
+    MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(1));
+    int colorBasedRowDistance = team == Color.BLACK ? -1 : 1;
+    MovementRestriction rowRestriction =
+        type == CheckersType.MAN ? new RowDistance(colorBasedRowDistance) : new AbsRowDistance(1);
+    MovementRestrictionValidator dy = new AndRestrictionValidator(rowRestriction, dx, null);
+    return new AndRestrictionValidator(new ClearTile(), dy, null);
+  }
 }

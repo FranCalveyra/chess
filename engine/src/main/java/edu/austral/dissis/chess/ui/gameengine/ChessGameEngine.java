@@ -15,13 +15,11 @@ import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.*;
 import edu.austral.dissis.common.utils.result.PlayResult;
-
 import java.awt.Color;
-import java.util.Stack;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
+import java.util.Stack;
 import org.jetbrains.annotations.NotNull;
 
 public class ChessGameEngine implements GameEngine {
@@ -42,7 +40,7 @@ public class ChessGameEngine implements GameEngine {
   @Override
   public MoveResult applyMove(@NotNull Move move) {
     undo.push(currentState);
-    if(!redo.isEmpty()){
+    if (!redo.isEmpty()) {
       redo = new Stack<>();
     }
     currentState = game.makeMove(new GameMove(mapPos(move.getFrom()), mapPos(move.getTo())));
@@ -55,21 +53,25 @@ public class ChessGameEngine implements GameEngine {
   public InitialState init() {
     initialState = currentState;
     return new InitialState(
-            new BoardSize(currentState.game().getBoard().getColumns(), currentState.game().getBoard().getRows()),
-            getPiecesList(currentState.game()),
-            getPlayerColor(currentState.game().getCurrentTurn()));
+        new BoardSize(
+            currentState.game().getBoard().getColumns(), currentState.game().getBoard().getRows()),
+        getPiecesList(currentState.game()),
+        getPlayerColor(currentState.game().getCurrentTurn()));
   }
 
   @NotNull
   @Override
   public NewGameState undo() {
-    if(!undo.isEmpty() && undo.peek() == currentState){
+    if (!undo.isEmpty() && undo.peek() == currentState) {
       undo.pop();
     }
-    if(undo.isEmpty()){
-      return new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(false, !redo.isEmpty()));
+    if (undo.isEmpty()) {
+      return new NewGameState(
+          getPiecesList(currentState.game()),
+          getPlayerColor(currentState.game().getCurrentTurn()),
+          new UndoState(false, !redo.isEmpty()));
     }
-    if(redo.isEmpty()){
+    if (redo.isEmpty()) {
       redo.push(currentState);
     }
     currentState = undo.peek();
@@ -82,13 +84,16 @@ public class ChessGameEngine implements GameEngine {
   @NotNull
   @Override
   public NewGameState redo() {
-    if(redo.isEmpty()){
-      return new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(!undo.isEmpty(), false));
+    if (redo.isEmpty()) {
+      return new NewGameState(
+          getPiecesList(currentState.game()),
+          getPlayerColor(currentState.game().getCurrentTurn()),
+          new UndoState(!undo.isEmpty(), false));
     }
-    if(redo.peek() == currentState || redo.peek() == initialState){
+    if (redo.peek() == currentState || redo.peek() == initialState) {
       undo.push(redo.pop());
     }
-    if(undo.isEmpty()){
+    if (undo.isEmpty()) {
       undo.push(currentState);
     }
     currentState = redo.peek();
@@ -98,8 +103,7 @@ public class ChessGameEngine implements GameEngine {
     return newGameState;
   }
 
-
-  //Private stuff
+  // Private stuff
   private static PlayerColor getPlayerColor(Color color) {
     return color == BLACK ? PlayerColor.BLACK : PlayerColor.WHITE;
   }
@@ -108,37 +112,38 @@ public class ChessGameEngine implements GameEngine {
     for (Map.Entry<BoardPosition, Piece> entry : board.getPiecesAndPositions().entrySet()) {
       if (entry.getValue().equals(piece)) {
         return new Position(
-                entry.getKey().getRow() + 1, entry.getKey().getColumn() + 1); // From zero based
+            entry.getKey().getRow() + 1, entry.getKey().getColumn() + 1); // From zero based
       }
     }
     return null;
   }
 
   private edu.austral.dissis.chess.gui.MoveResult updateGameState(ChessGame game) {
-    return new NewGameState(getPiecesList(game), getPlayerColor(game.getCurrentTurn()), new UndoState(!undo.isEmpty(), !redo.isEmpty()));
+    return new NewGameState(
+        getPiecesList(game),
+        getPlayerColor(game.getCurrentTurn()),
+        new UndoState(!undo.isEmpty(), !redo.isEmpty()));
   }
 
   private @NotNull List<ChessPiece> getPiecesList(ChessGame game) {
     return game.getBoard().getPiecesAndPositions().values().stream()
-            .map(
-                    piece ->
-                            new ChessPiece(
-                                    piece.getId(),
-                                    getPlayerColor(piece.getPieceColour()),
-                                    Objects.requireNonNull(getPiecePosition(piece, game.getBoard())),
-                                    (handleType(piece.getType())).toString().toLowerCase()))
-            .toList();
+        .map(
+            piece ->
+                new ChessPiece(
+                    piece.getId(),
+                    getPlayerColor(piece.getPieceColour()),
+                    Objects.requireNonNull(getPiecePosition(piece, game.getBoard())),
+                    (handleType(piece.getType())).toString().toLowerCase()))
+        .toList();
   }
 
   private PieceType handleType(PieceType type) {
-    if(type instanceof ChessPieceType){
+    if (type instanceof ChessPieceType) {
       return type;
-    }
-    else{
-      if(type == CheckersType.MAN){
+    } else {
+      if (type == CheckersType.MAN) {
         return ChessPieceType.PAWN;
-      }
-      else if (type == CheckersType.KING){
+      } else if (type == CheckersType.KING) {
         return ChessPieceType.QUEEN;
       }
     }
@@ -149,7 +154,8 @@ public class ChessGameEngine implements GameEngine {
     return new BoardPosition(position.getRow() - 1, position.getColumn() - 1);
   }
 
-  private @NotNull edu.austral.dissis.chess.gui.MoveResult getMoveResults(ChessGameResult chessGameResult) {
+  private @NotNull edu.austral.dissis.chess.gui.MoveResult getMoveResults(
+      ChessGameResult chessGameResult) {
     PlayResult playResult = chessGameResult.moveResult();
     switch (playResult) {
       case GameWon g:
@@ -168,7 +174,9 @@ public class ChessGameEngine implements GameEngine {
   }
 
   private @NotNull NewGameState getNewGameState() {
-    return new NewGameState(getPiecesList(currentState.game()), getPlayerColor(currentState.game().getCurrentTurn()), new UndoState(!undo.isEmpty(), !redo.isEmpty()));
+    return new NewGameState(
+        getPiecesList(currentState.game()),
+        getPlayerColor(currentState.game().getCurrentTurn()),
+        new UndoState(!undo.isEmpty(), !redo.isEmpty()));
   }
-
 }

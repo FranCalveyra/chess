@@ -27,7 +27,8 @@ public class GameProvider {
           ruleProvider.providePreMovementValidator(gameType));
     } else if (gameType == GameType.SPECIAL_CHESS) {
       return new ChessGame(
-          new MapBoard(new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 8, 12), 8, 12),
+          new MapBoard(
+              new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 8, 12), 8, 12),
           List.of(new Extinction(Color.WHITE), new Extinction(Color.BLACK)),
           List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
           new StandardPromoter(),
@@ -35,22 +36,21 @@ public class GameProvider {
           ruleProvider.providePreMovementValidator(GameType.DEFAULT_CHESS));
     } else if (gameType == GameType.CAPABLANCA_CHESS) {
       return new ChessGame(
-          new MapBoard(new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 10, 10), 10, 10),
+          new MapBoard(
+              new ChessPieceMapProvider().provide(GameType.CAPABLANCA_CHESS, 10, 10), 10, 10),
           ruleProvider.provideWinConditions(GameType.DEFAULT_CHESS),
           List.of(new DefaultCheck(Color.WHITE), new DefaultCheck(Color.BLACK)),
           new StandardPromoter(),
           new StandardTurnSelector(),
           ruleProvider.providePreMovementValidator(GameType.DEFAULT_CHESS));
-    }
-    else if(gameType == GameType.DEFAULT_CHECKERS){
+    } else if (gameType == GameType.DEFAULT_CHECKERS) {
       return new ChessGame(
-              new MapBoard(new CheckersPieceMapProvider().provide(gameType, 8,8)),
-              List.of(new Extinction(Color.RED), new Extinction(Color.BLACK)),
-              null,
-              new CheckersPromoter(),
-              new CheckersTurnSelector(),
-              ruleProvider.providePreMovementValidator(GameType.DEFAULT_CHECKERS)
-      );
+          new MapBoard(new CheckersPieceMapProvider().provide(gameType, 8, 8)),
+          List.of(new Extinction(Color.RED), new Extinction(Color.BLACK)),
+          null,
+          new CheckersPromoter(),
+          new CheckersTurnSelector(),
+          ruleProvider.providePreMovementValidator(GameType.DEFAULT_CHECKERS));
     }
     return null;
   }

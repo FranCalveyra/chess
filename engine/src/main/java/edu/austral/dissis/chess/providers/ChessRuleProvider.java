@@ -32,6 +32,7 @@ public class ChessRuleProvider {
     AndTreePreMovementValidator noFriendlyFire =
         new AndTreePreMovementValidator(
             new AvoidFriendlyFire(), moveAllowed, new AndTreePreMovementValidator(new TurnRule()));
-    return new AndTreePreMovementValidator(type == GameType.DEFAULT_CHECKERS ? null : new MoveNotIntoCheck(), pieceAt, noFriendlyFire);
+    return new AndTreePreMovementValidator(
+        type == GameType.DEFAULT_CHECKERS ? null : new MoveNotIntoCheck(), pieceAt, noFriendlyFire);
   }
 }

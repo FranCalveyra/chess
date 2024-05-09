@@ -3,15 +3,15 @@ package edu.austral.dissis.checkers.turn;
 import edu.austral.dissis.common.turn.TurnSelector;
 import edu.austral.dissis.common.utils.result.PieceTaken;
 import edu.austral.dissis.common.utils.result.PlayResult;
-import edu.austral.dissis.common.utils.result.ValidPlay;
-
 import java.awt.Color;
 
 public class CheckersTurnSelector implements TurnSelector {
   private final Color currentTurn;
+
   public CheckersTurnSelector() {
     currentTurn = Color.RED;
   }
+
   private CheckersTurnSelector(Color currentTurn) {
     this.currentTurn = currentTurn;
   }
@@ -23,6 +23,8 @@ public class CheckersTurnSelector implements TurnSelector {
 
   @Override
   public TurnSelector changeTurn(PlayResult result) {
-    return result.getClass() == PieceTaken.class ? this : new CheckersTurnSelector(currentTurn == Color.RED ? Color.BLACK : currentTurn);
+    return result.getClass() == PieceTaken.class
+        ? this
+        : new CheckersTurnSelector(currentTurn == Color.RED ? Color.BLACK : Color.RED);
   }
 }

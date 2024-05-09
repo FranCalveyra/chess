@@ -11,6 +11,7 @@ import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.ui.gameengine.ChessGameEngine;
 import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 
 public class AuxStaticMethods {
@@ -28,5 +29,31 @@ public class AuxStaticMethods {
     final GameEngine gameEngine = new ChessGameEngine(new GameProvider().provide(type));
     final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
     return new Pair<>(gameEngine, imageResolver);
+  }
+
+  public static BoardPosition getPosBetween(GameMove move) {
+    int rowDelta = move.to().getRow() - move.from().getRow();
+    int colDelta = move.to().getColumn() - move.from().getColumn();
+    return lastPos(move.from(), colDelta, rowDelta);
+  }
+
+  private static BoardPosition lastPos(BoardPosition from, int deltaX, int deltaY) {
+    if (deltaX > 0) {
+      if (deltaY > 0) {
+        return getEnemyPos(from, new Pair<>(1, 1));
+      } else {
+        return getEnemyPos(from, new Pair<>(-1, 1));
+      }
+    } else {
+      if (deltaY > 0) {
+        return getEnemyPos(from, new Pair<>(1, -1));
+      } else {
+        return getEnemyPos(from, new Pair<>(-1, -1));
+      }
+    }
+  }
+
+  private static BoardPosition getEnemyPos(BoardPosition from, Pair<Integer, Integer> vector) {
+    return new BoardPosition(from.getRow() + vector.first(), from.getColumn() + vector.second());
   }
 }
