@@ -7,7 +7,6 @@ import static edu.austral.dissis.chess.utils.AuxStaticMethods.mapMove;
 import static edu.austral.dissis.chess.utils.AuxStaticMethods.moveFromAlgebraic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.gui.GameEngine;

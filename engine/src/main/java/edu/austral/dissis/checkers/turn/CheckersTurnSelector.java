@@ -23,6 +23,7 @@ public class CheckersTurnSelector implements TurnSelector {
 
   @Override
   public TurnSelector changeTurn(PlayResult result) {
+    // TODO: handle this, doesn't work for now
     return result.getClass() == PieceTaken.class
         ? this
         : new CheckersTurnSelector(currentTurn == Color.RED ? Color.BLACK : Color.RED);
