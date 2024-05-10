@@ -15,8 +15,10 @@ import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.move.MoveExecutor;
 import edu.austral.dissis.common.utils.result.GameWon;
 import edu.austral.dissis.common.utils.result.InvalidPlay;
+import edu.austral.dissis.common.utils.result.PieceTaken;
 import edu.austral.dissis.common.utils.result.PlayResult;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,9 +65,12 @@ public class ChessGame implements BoardGame {
     final Piece pieceToMove = board.pieceAt(move.from());
     Pair<Board, PlayResult> result = new Pair<>(board, new InvalidPlay("any"));
     final List<GameMove> playToExecute = pieceToMove.getPlay(move, board);
+    List<PlayResult> playResults = new ArrayList<>();
     for (GameMove moveToDo : playToExecute) {
       result = executor.executeMove(moveToDo.from(), moveToDo.to(), result.first(), promoter);
+      playResults.add(result.second());
     }
+
     // Declare final variables
     Board finalBoard = result.first();
     TurnSelector nextSelector = turnSelector.changeTurn(result.second());
@@ -82,6 +87,10 @@ public class ChessGame implements BoardGame {
       Color winner = turnSelector.getCurrentTurn();
       return new ChessGameResult(finalGame, new GameWon(winner));
     }
+    if (playResults.contains(new PieceTaken(null))) {
+      return new ChessGameResult(finalGame, new PieceTaken(board.pieceAt(move.to())));
+    }
+
     // Get the resulting game at last
     return new ChessGameResult(finalGame, result.second()); // Second represents the moveResult
   }

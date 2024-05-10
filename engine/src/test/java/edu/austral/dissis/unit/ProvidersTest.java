@@ -1,4 +1,4 @@
-package edu.austral.dissis.checkers.engine.unit;
+package edu.austral.dissis.unit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

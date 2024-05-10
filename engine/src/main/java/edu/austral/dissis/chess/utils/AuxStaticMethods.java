@@ -97,31 +97,29 @@ public class AuxStaticMethods {
   }
 
   // Other stuff
-
   public static BoardPosition getPosBetween(GameMove move) {
-    // TODO: test it
     int rowDelta = move.to().getRow() - move.from().getRow();
     int colDelta = move.to().getColumn() - move.from().getColumn();
     return lastPos(move.from(), colDelta, rowDelta);
   }
 
-  private static BoardPosition lastPos(BoardPosition from, int deltaX, int deltaY) {
+  private static BoardPosition lastPos(BoardPosition pos, int deltaX, int deltaY) {
     if (deltaX > 0) {
       if (deltaY > 0) {
-        return getEnemyPos(from, new Pair<>(1, 1));
+        return getEnemyPos(pos, new Pair<>(1, 1));
       } else {
-        return getEnemyPos(from, new Pair<>(-1, 1));
+        return getEnemyPos(pos, new Pair<>(-1, 1));
       }
     } else {
       if (deltaY > 0) {
-        return getEnemyPos(from, new Pair<>(1, -1));
+        return getEnemyPos(pos, new Pair<>(1, -1));
       } else {
-        return getEnemyPos(from, new Pair<>(-1, -1));
+        return getEnemyPos(pos, new Pair<>(-1, -1));
       }
     }
   }
 
-  private static BoardPosition getEnemyPos(BoardPosition from, Pair<Integer, Integer> vector) {
-    return new BoardPosition(from.getRow() + vector.first(), from.getColumn() + vector.second());
+  private static BoardPosition getEnemyPos(BoardPosition pos, Pair<Integer, Integer> vector) {
+    return new BoardPosition(pos.getRow() + vector.first(), pos.getColumn() + vector.second());
   }
 }

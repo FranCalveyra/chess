@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.util.List;
 
 public class CheckersTakingMovement implements PieceMovement {
+  // TODO: obligue the player to take the piece in front of him
   @Override
   public boolean isValidMove(GameMove move, Board context) {
     Piece piece = context.pieceAt(move.from());

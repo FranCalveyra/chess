@@ -1,4 +1,4 @@
-package edu.austral.dissis.checkers.engine.unit;
+package edu.austral.dissis.unit;
 
 import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPiecesList;
 import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPlayerColor;
