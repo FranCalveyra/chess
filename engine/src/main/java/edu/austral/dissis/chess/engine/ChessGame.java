@@ -73,6 +73,10 @@ public class ChessGame implements BoardGame {
 
     // Declare final variables
     Board finalBoard = result.first();
+    //Checkers hardcode, may need to change
+    if (playResults.contains(new PieceTaken(null))) {
+      result = new Pair<>(finalBoard,new PieceTaken(board.pieceAt(move.to())));
+    }
     TurnSelector nextSelector = turnSelector.changeTurn(result.second());
     ChessGame finalGame =
         new ChessGame(
@@ -87,9 +91,7 @@ public class ChessGame implements BoardGame {
       Color winner = turnSelector.getCurrentTurn();
       return new ChessGameResult(finalGame, new GameWon(winner));
     }
-    if (playResults.contains(new PieceTaken(null))) {
-      return new ChessGameResult(finalGame, new PieceTaken(board.pieceAt(move.to())));
-    }
+
 
     // Get the resulting game at last
     return new ChessGameResult(finalGame, result.second()); // Second represents the moveResult
