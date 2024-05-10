@@ -12,7 +12,6 @@ public class CheckersPieceMapProvider {
   public Map<BoardPosition, Piece> provide(GameType type, int rows, int columns) {
     Map<BoardPosition, Piece> pieces = new HashMap<>();
     CheckersPieceProvider provider = new CheckersPieceProvider();
-    // TODO: change
     if (type != GameType.DEFAULT_CHECKERS) {
       return null;
     }

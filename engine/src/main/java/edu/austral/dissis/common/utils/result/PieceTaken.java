@@ -1,17 +1,9 @@
 package edu.austral.dissis.common.utils.result;
 
-import edu.austral.dissis.common.piece.Piece;
-
 public class PieceTaken implements PlayResult {
-  private final Piece pieceTaken;
-
-  public PieceTaken(Piece pieceTaken) {
-    this.pieceTaken = pieceTaken;
-  }
-
   @Override
   public String getMessage() {
-    return "Piece taken: " + pieceTaken;
+    return "Piece taken";
   }
 
   @Override

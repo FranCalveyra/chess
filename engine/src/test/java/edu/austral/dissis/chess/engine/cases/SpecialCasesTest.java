@@ -77,7 +77,7 @@ public class SpecialCasesTest {
     assertEquals(7, game.getBoard().getPiecesAndPositions().size());
     ChessGameResult result = game.makeMove(new GameMove(fromAlgebraic("a8"), fromAlgebraic("a7")));
     assertEquals(6, result.game().getBoard().getPiecesAndPositions().size());
-    assertEquals(new PieceTaken(null), result.moveResult());
+    assertEquals(new PieceTaken(), result.moveResult());
     Board otherBoard =
         board.addPieceAt(
             fromAlgebraic("f4"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.ROOK));
@@ -169,7 +169,7 @@ public class SpecialCasesTest {
     assertEquals(Color.BLACK, result.game().getCurrentTurn());
 
     result = makeMove(result.game(), "b5 -> a4");
-    assertEquals(new PieceTaken(null), result.moveResult());
+    assertEquals(new PieceTaken(), result.moveResult());
 
     assertEquals(Color.WHITE, result.game().getCurrentTurn());
   }

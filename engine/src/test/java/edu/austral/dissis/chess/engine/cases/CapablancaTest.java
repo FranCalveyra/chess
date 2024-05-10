@@ -1,7 +1,6 @@
 package edu.austral.dissis.chess.engine.cases;
 
 import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
-import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.austral.dissis.chess.engine.ChessGame;
@@ -32,7 +31,7 @@ public class CapablancaTest {
     assertEquals(new ValidPlay(), result.moveResult());
     game = result.game();
     result = makeMove(result.game(), "d6 -> b4");
-    assertEquals(new PieceTaken(game.getBoard().pieceAt(fromAlgebraic("b4"))), result.moveResult());
+    assertEquals(new PieceTaken(), result.moveResult());
   }
 
   @Test
@@ -44,6 +43,6 @@ public class CapablancaTest {
     assertEquals(new ValidPlay(), result.moveResult());
     game = result.game();
     result = makeMove(result.game(), "g3 -> g6");
-    assertEquals(new PieceTaken(game.getBoard().pieceAt(fromAlgebraic("g6"))), result.moveResult());
+    assertEquals(new PieceTaken(), result.moveResult());
   }
 }

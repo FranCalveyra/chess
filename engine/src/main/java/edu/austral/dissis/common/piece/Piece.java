@@ -3,6 +3,7 @@ package edu.austral.dissis.common.piece;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
+import edu.austral.dissis.common.piece.movement.type.TakingMove;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;
@@ -35,10 +36,6 @@ public class Piece {
     this.type = type;
     this.moveCounter = moveCounter;
     this.id = id;
-  }
-
-  public boolean isValidMove(GameMove move, Board context) {
-    return movements.stream().anyMatch(movement -> movement.isValidMove(move, context));
   }
 
   @Override
@@ -75,6 +72,10 @@ public class Piece {
   }
 
   // Own methods
+  public boolean isValidMove(GameMove move, Board context) {
+    return movements.stream().anyMatch(movement -> movement.isValidMove(move, context));
+  }
+
   public Piece changeMoveState() {
     return new Piece(movements, pieceColour, type, moveCounter + 1, id);
   }

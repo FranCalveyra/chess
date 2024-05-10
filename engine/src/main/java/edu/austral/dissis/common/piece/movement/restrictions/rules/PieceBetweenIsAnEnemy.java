@@ -12,7 +12,7 @@ public class PieceBetweenIsAnEnemy implements MovementRestriction {
   public boolean isValidRestriction(GameMove move, Board context) {
     BoardPosition between = getPosBetween(move);
     Piece pieceBetween = context.pieceAt(between);
-    return pieceBetween != null && pieceBetween.getPieceColour()
-        != context.pieceAt(move.from()).getPieceColour();
+    return pieceBetween != null
+        && pieceBetween.getPieceColour() != context.pieceAt(move.from()).getPieceColour();
   }
 }

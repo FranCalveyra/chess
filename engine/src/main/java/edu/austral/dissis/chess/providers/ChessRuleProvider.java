@@ -3,11 +3,7 @@ package edu.austral.dissis.chess.providers;
 import edu.austral.dissis.chess.rules.premovement.MoveNotIntoCheck;
 import edu.austral.dissis.chess.rules.winconds.CheckMate;
 import edu.austral.dissis.chess.utils.enums.GameType;
-import edu.austral.dissis.common.rules.premovement.rules.AvoidFriendlyFire;
-import edu.austral.dissis.common.rules.premovement.rules.InsideBoardBounds;
-import edu.austral.dissis.common.rules.premovement.rules.PieceAtPosition;
-import edu.austral.dissis.common.rules.premovement.rules.PieceValidMove;
-import edu.austral.dissis.common.rules.premovement.rules.TurnRule;
+import edu.austral.dissis.common.rules.premovement.rules.*;
 import edu.austral.dissis.common.rules.premovement.validators.AndTreePreMovementValidator;
 import edu.austral.dissis.common.rules.premovement.validators.PreMovementValidator;
 import edu.austral.dissis.common.rules.winconds.WinCondition;
@@ -33,6 +29,6 @@ public class ChessRuleProvider {
         new AndTreePreMovementValidator(
             new AvoidFriendlyFire(), moveAllowed, new AndTreePreMovementValidator(new TurnRule()));
     return new AndTreePreMovementValidator(
-        type == GameType.DEFAULT_CHECKERS ? null : new MoveNotIntoCheck(), pieceAt, noFriendlyFire);
+        type == GameType.DEFAULT_CHECKERS ? new TakesPieceWhenPossible() : new MoveNotIntoCheck(), pieceAt, noFriendlyFire);
   }
 }

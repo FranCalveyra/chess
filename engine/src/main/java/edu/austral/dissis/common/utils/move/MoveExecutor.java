@@ -24,7 +24,7 @@ public class MoveExecutor {
               .removePieceAt(oldPos)
               .addPieceAt(newPos, piece.changeMoveState());
       newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
-      return new Pair<>(newBoard, new PieceTaken(pieceToTake));
+      return new Pair<>(newBoard, new PieceTaken());
     } else {
       newBoard = board.removePieceAt(oldPos).addPieceAt(newPos, piece.changeMoveState());
       newBoard = promoteIfAble(newBoard, newPos, piece.getPieceColour(), promoter);
