@@ -15,12 +15,13 @@ import edu.austral.dissis.common.piece.movement.restrictions.rules.RowDistance;
 import edu.austral.dissis.common.piece.movement.restrictions.validators.AndRestrictionValidator;
 import edu.austral.dissis.common.piece.movement.restrictions.validators.MovementRestrictionValidator;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
+import edu.austral.dissis.common.piece.movement.type.TakingMove;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;
 import java.util.List;
 
-public class CheckersTakingMovement implements PieceMovement {
+public class CheckersTakingMovement implements PieceMovement, TakingMove {
   // TODO: obligue the player to take the piece in front of him
   @Override
   public boolean isValidMove(GameMove move, Board context) {
