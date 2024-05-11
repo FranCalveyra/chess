@@ -1,14 +1,14 @@
 package edu.austral.dissis.chess.piece.movement.type;
 
-import static edu.austral.dissis.chess.utils.enums.MoveType.HORIZONTAL;
+import static edu.austral.dissis.common.utils.enums.MoveType.HORIZONTAL;
 
 import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
-import edu.austral.dissis.chess.validators.PiecePathValidator;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
+import edu.austral.dissis.common.validators.PiecePathValidator;
 import java.util.List;
 
 public class Castling implements PieceMovement {

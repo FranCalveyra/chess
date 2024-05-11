@@ -1,10 +1,10 @@
 package edu.austral.dissis.unit;
 
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPiecesList;
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPlayerColor;
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.mapMove;
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.moveFromAlgebraic;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesList;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.makeMove;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.mapMove;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.moveFromAlgebraic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -16,7 +16,7 @@ import edu.austral.dissis.chess.gui.NewGameState;
 import edu.austral.dissis.chess.gui.UndoState;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.ui.gameengine.ChessGameEngine;
-import edu.austral.dissis.chess.utils.enums.GameType;
+import edu.austral.dissis.common.utils.enums.GameType;
 import org.junit.jupiter.api.Test;
 
 public class EngineTest {

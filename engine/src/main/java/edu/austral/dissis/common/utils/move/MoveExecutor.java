@@ -1,10 +1,10 @@
 package edu.austral.dissis.common.utils.move;
 
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
-import edu.austral.dissis.chess.promoters.Promoter;
-import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.promoters.Promoter;
+import edu.austral.dissis.common.utils.Pair;
 import edu.austral.dissis.common.utils.result.PieceTaken;
 import edu.austral.dissis.common.utils.result.PlayResult;
 import edu.austral.dissis.common.utils.result.ValidPlay;

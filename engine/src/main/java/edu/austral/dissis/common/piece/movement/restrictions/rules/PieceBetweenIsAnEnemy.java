@@ -1,6 +1,6 @@
 package edu.austral.dissis.common.piece.movement.restrictions.rules;
 
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPosBetween;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPosBetween;
 
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;

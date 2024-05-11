@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.ui.gameengine;
 
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPiecesList;
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPlayerColor;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesList;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.gui.BoardSize;

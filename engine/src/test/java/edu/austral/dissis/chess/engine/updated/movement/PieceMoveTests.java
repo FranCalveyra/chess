@@ -6,7 +6,7 @@ import edu.austral.dissis.chess.test.TestPosition;
 import edu.austral.dissis.chess.test.Validity;
 import edu.austral.dissis.chess.test.move.MoveTester;
 import edu.austral.dissis.chess.test.parser.ParseSettings;
-import edu.austral.dissis.chess.utils.enums.GameType;
+import edu.austral.dissis.common.utils.enums.GameType;
 import org.junit.jupiter.api.Test;
 
 public class PieceMoveTests {

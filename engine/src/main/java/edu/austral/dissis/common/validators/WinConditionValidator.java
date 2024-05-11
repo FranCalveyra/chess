@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.validators;
+package edu.austral.dissis.common.validators;
 
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.rules.winconds.WinCondition;

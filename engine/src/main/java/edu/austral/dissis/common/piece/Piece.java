@@ -3,7 +3,6 @@ package edu.austral.dissis.common.piece;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
-import edu.austral.dissis.common.piece.movement.type.TakingMove;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;

@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.piece.movement.type;
 
-import static edu.austral.dissis.chess.utils.enums.MoveType.VERTICAL;
+import static edu.austral.dissis.common.utils.enums.MoveType.VERTICAL;
 
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.movement.restrictions.rules.AbsColumnDistance;

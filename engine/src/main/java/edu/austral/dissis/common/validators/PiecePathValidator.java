@@ -1,9 +1,9 @@
-package edu.austral.dissis.chess.validators;
+package edu.austral.dissis.common.validators;
 
-import edu.austral.dissis.chess.utils.Pair;
-import edu.austral.dissis.chess.utils.enums.MoveType;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.utils.Pair;
+import edu.austral.dissis.common.utils.enums.MoveType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 
 public class PiecePathValidator {

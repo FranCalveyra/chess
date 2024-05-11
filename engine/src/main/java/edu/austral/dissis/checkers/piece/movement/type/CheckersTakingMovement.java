@@ -1,6 +1,6 @@
 package edu.austral.dissis.checkers.piece.movement.type;
 
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.getPosBetween;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPosBetween;
 
 import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.common.board.Board;
@@ -22,7 +22,6 @@ import java.awt.Color;
 import java.util.List;
 
 public class CheckersTakingMovement implements PieceMovement, TakingMove {
-  // TODO: obligue the player to take the piece in front of him
   @Override
   public boolean isValidMove(GameMove move, Board context) {
     Piece piece = context.pieceAt(move.from());

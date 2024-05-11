@@ -1,22 +1,22 @@
 package edu.austral.dissis.chess.engine;
 
-import edu.austral.dissis.chess.promoters.Promoter;
 import edu.austral.dissis.chess.rules.winconds.Check;
-import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
-import edu.austral.dissis.chess.validators.WinConditionValidator;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.promoters.Promoter;
 import edu.austral.dissis.common.rules.premovement.validators.PreMovementValidator;
 import edu.austral.dissis.common.rules.winconds.WinCondition;
 import edu.austral.dissis.common.turn.TurnSelector;
+import edu.austral.dissis.common.utils.Pair;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.move.MoveExecutor;
 import edu.austral.dissis.common.utils.result.GameWon;
 import edu.austral.dissis.common.utils.result.InvalidPlay;
 import edu.austral.dissis.common.utils.result.PieceTaken;
 import edu.austral.dissis.common.utils.result.PlayResult;
+import edu.austral.dissis.common.validators.WinConditionValidator;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.utils.enums;
+package edu.austral.dissis.common.utils.enums;
 
 public enum MoveType {
   HORIZONTAL,

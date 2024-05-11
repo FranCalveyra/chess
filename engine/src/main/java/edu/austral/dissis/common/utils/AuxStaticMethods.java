@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.utils;
+package edu.austral.dissis.common.utils;
 
 import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
@@ -16,11 +16,11 @@ import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.ui.gameengine.ChessGameEngine;
-import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
+import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;
@@ -76,7 +76,7 @@ public class AuxStaticMethods {
         return ChessPieceType.QUEEN;
       }
     }
-    return null;
+    throw new IllegalArgumentException("No piece with that type");
   }
 
   private static Position getPiecePosition(Piece piece, Board board) {
@@ -90,7 +90,6 @@ public class AuxStaticMethods {
   }
 
   public static Pair<GameEngine, ImageResolver> setupGame(GameType type) {
-    // TODO: test it
     final GameEngine gameEngine = new ChessGameEngine(new GameProvider().provide(type));
     final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
     return new Pair<>(gameEngine, imageResolver);

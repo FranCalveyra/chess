@@ -1,8 +1,8 @@
 package edu.austral.dissis.chess.providers;
 
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
-import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.common.piece.Piece;
+import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import java.awt.Color;
 import java.util.ArrayList;

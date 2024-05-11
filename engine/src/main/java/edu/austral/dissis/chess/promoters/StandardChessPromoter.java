@@ -5,12 +5,13 @@ import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
+import edu.austral.dissis.common.promoters.Promoter;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import java.awt.Color;
 import java.util.stream.IntStream;
 
 /** Only promotes Pawns. */
-public class StandardPromoter implements Promoter {
+public class StandardChessPromoter implements Promoter {
 
   @Override
   public boolean hasToPromote(Board context, Color team) {

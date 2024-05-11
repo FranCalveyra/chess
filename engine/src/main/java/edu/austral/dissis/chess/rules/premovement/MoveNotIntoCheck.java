@@ -2,10 +2,10 @@ package edu.austral.dissis.chess.rules.premovement;
 
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.rules.winconds.Check;
-import edu.austral.dissis.chess.utils.Pair;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.rules.premovement.rules.PreMovementRule;
+import edu.austral.dissis.common.utils.Pair;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.PlayResult;
 import edu.austral.dissis.common.utils.result.ValidPlay;

@@ -1,12 +1,12 @@
 package edu.austral.dissis.checkers.ui.application;
 
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.setupGame;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.setupGame;
 
 import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.GameView;
 import edu.austral.dissis.chess.gui.ImageResolver;
-import edu.austral.dissis.chess.utils.Pair;
-import edu.austral.dissis.chess.utils.enums.GameType;
+import edu.austral.dissis.common.utils.Pair;
+import edu.austral.dissis.common.utils.enums.GameType;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

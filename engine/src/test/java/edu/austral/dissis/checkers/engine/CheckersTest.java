@@ -1,7 +1,7 @@
 package edu.austral.dissis.checkers.engine;
 
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.moveFromAlgebraic;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.makeMove;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.moveFromAlgebraic;
 import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -11,11 +11,11 @@ import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.checkers.providers.CheckersPieceProvider;
 import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.board.MapBoard;
 import edu.austral.dissis.common.piece.movement.restrictions.rules.PieceBetweenIsAnEnemy;
+import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.GameResult;
 import edu.austral.dissis.common.utils.result.GameWon;

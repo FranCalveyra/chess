@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.engine.cases;
 
-import static edu.austral.dissis.chess.utils.AuxStaticMethods.makeMove;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.makeMove;
 import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 import static java.awt.Color.WHITE;
@@ -15,11 +15,11 @@ import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.rules.winconds.CheckMate;
 import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
-import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.common.board.MapBoard;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
+import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.GameWon;
@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 public class ClassicChessTest {
   // Setup
   private ChessGame game = new GameProvider().provide(GameType.DEFAULT_CHESS);
-
 
   // Tests
   @Test

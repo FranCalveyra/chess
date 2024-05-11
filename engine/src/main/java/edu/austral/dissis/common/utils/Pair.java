@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.utils;
+package edu.austral.dissis.common.utils;
 
 public final class Pair<T, W> {
   private final T first;
