@@ -12,8 +12,10 @@ import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.piece.movement.type.Castling;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
+import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.rules.winconds.CheckMate;
 import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
+import edu.austral.dissis.chess.utils.enums.GameType;
 import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.common.board.MapBoard;
 import edu.austral.dissis.common.piece.Piece;
@@ -28,13 +30,10 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-public abstract class ChessTest {
+public class ClassicChessTest {
   // Setup
-  private ChessGame game;
+  private ChessGame game = new GameProvider().provide(GameType.DEFAULT_CHESS);
 
-  public ChessTest(ChessGame chessGame) {
-    game = chessGame;
-  }
 
   // Tests
   @Test

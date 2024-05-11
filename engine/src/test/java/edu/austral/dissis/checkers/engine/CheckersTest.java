@@ -27,7 +27,6 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 public class CheckersTest {
-  // TODO: develop more cases
   private ChessGame game = new GameProvider().provide(GameType.DEFAULT_CHECKERS);
   private final CheckersPieceProvider pieceProvider = new CheckersPieceProvider();
 
@@ -58,6 +57,7 @@ public class CheckersTest {
     result = makeMove(result.game(), "b4 -> d6");
     assertEquals(23, result.game().getBoard().getPiecesAndPositions().size());
     assertEquals(new PieceTaken(), result.moveResult());
+    assertEquals(Color.RED, result.game().getCurrentTurn());
   }
 
   @Test
