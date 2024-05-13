@@ -1,6 +1,6 @@
 package edu.austral.dissis.common.rules.premovement.validators;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.common.rules.premovement.rules.PreMovementRule;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.InvalidPlay;
@@ -29,7 +29,7 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
   }
 
   @Override
-  public PlayResult getMoveValidity(GameMove move, ChessGame game) {
+  public PlayResult getMoveValidity(GameMove move, BoardGame game) {
     boolean validMove = isValidMove(move, game);
     return !validMove ? new InvalidPlay("") : new ValidPlay();
   }
@@ -50,21 +50,21 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
     return right == null;
   }
 
-  private boolean getValidity(GameMove move, ChessGame game) {
+  private boolean getValidity(GameMove move, BoardGame game) {
     if (noRule()) {
       return validityWithoutRule(move, game);
     }
     return validityWithRule(move, game);
   }
 
-  private boolean isValidMove(GameMove move, ChessGame game) {
+  private boolean isValidMove(GameMove move, BoardGame game) {
     if (isLeaf()) {
       return rule.isValidRule(move, game);
     }
     return getValidity(move, game);
   }
 
-  private boolean validityWithRule(GameMove move, ChessGame game) {
+  private boolean validityWithRule(GameMove move, BoardGame game) {
     if (noLeftChild() && !noRightChild()) {
       return rule.isValidRule(move, game)
           && right.getMoveValidity(move, game).getClass() != InvalidPlay.class;
@@ -79,7 +79,7 @@ public class AndTreePreMovementValidator implements PreMovementValidator {
         && rule.isValidRule(move, game);
   }
 
-  private boolean validityWithoutRule(GameMove move, ChessGame game) {
+  private boolean validityWithoutRule(GameMove move, BoardGame game) {
     if (noLeftChild() && !noRightChild()) {
       return right.getMoveValidity(move, game).getClass() != InvalidPlay.class;
     }

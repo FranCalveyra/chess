@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.checkers.providers.CheckersPieceProvider;
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.board.MapBoard;
 import edu.austral.dissis.common.piece.movement.restrictions.rules.PieceBetweenIsAnEnemy;
@@ -29,7 +29,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 public class CheckersTest {
-  private ChessGame game = new GameProvider().provide(GameType.DEFAULT_CHECKERS);
+  private BoardGame game = new GameProvider().provide(GameType.DEFAULT_CHECKERS);
   private final CheckersPieceProvider pieceProvider = new CheckersPieceProvider();
 
   @Test
@@ -40,7 +40,7 @@ public class CheckersTest {
 
   @Test
   public void shouldTakeEnemy() {
-    ChessGameResult result = makeMove(game, "a3 -> b4");
+    BoardGameResult result = makeMove(game, "a3 -> b4");
     assertEquals(new ValidPlay(), result.moveResult());
     assertEquals(Color.BLACK, result.game().getCurrentTurn());
     result = makeMove(result.game(), "a3 -> b4");
@@ -71,10 +71,9 @@ public class CheckersTest {
                 fromAlgebraic("a7"),
                 pieceProvider.provideCheckersPiece(Color.RED, CheckersType.MAN)));
     game =
-        new ChessGame(
+        new BoardGame(
             board,
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector(),
             game.getPreMovementValidator());
@@ -82,7 +81,7 @@ public class CheckersTest {
     assertEquals(new GameWon(Color.RED), result.moveResult());
     assertEquals(
         CheckersType.KING,
-        ((ChessGame) result.game()).getBoard().pieceAt(fromAlgebraic("b8")).getType());
+        ((BoardGame) result.game()).getBoard().pieceAt(fromAlgebraic("b8")).getType());
   }
 
   @Test
@@ -94,16 +93,15 @@ public class CheckersTest {
                 new BoardPosition(7, 7), provider.provideCheckersPiece(Color.RED, CheckersType.MAN),
                 new BoardPosition(1, 2),
                     provider.provideCheckersPiece(Color.BLACK, CheckersType.MAN)));
-    ChessGame current =
-        new ChessGame(
+    BoardGame current =
+        new BoardGame(
             board,
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector().changeTurn(new ValidPlay()),
             game.getPreMovementValidator());
     assertEquals(Color.BLACK, current.getCurrentTurn());
-    ChessGameResult result =
+    BoardGameResult result =
         current.makeMove(new GameMove(new BoardPosition(1, 2), new BoardPosition(0, 1)));
     assertEquals(new GameWon(Color.BLACK), result.moveResult());
     assertTrue(new NoAvailableMoves(Color.RED).isValidRule(result.game().getBoard()));

@@ -3,7 +3,7 @@ package edu.austral.dissis.chess.ui.gameengine;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesList;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.gui.BoardSize;
 import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.GameOver;
@@ -14,8 +14,8 @@ import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.chess.gui.NewGameState;
 import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.gui.UndoState;
+import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.chess.utils.result.CheckState;
-import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.GameWon;
@@ -27,11 +27,11 @@ import java.util.Stack;
 import org.jetbrains.annotations.NotNull;
 
 public class ChessGameEngine implements GameEngine {
-  private ChessGame game;
-  private final Stack<ChessGame> undo;
-  private final Stack<ChessGame> redo;
+  private BoardGame game;
+  private final Stack<BoardGame> undo;
+  private final Stack<BoardGame> redo;
 
-  public ChessGameEngine(ChessGame game) {
+  public ChessGameEngine(BoardGame game) {
     this.game = game;
     undo = new Stack<>();
     redo = new Stack<>();
@@ -40,7 +40,7 @@ public class ChessGameEngine implements GameEngine {
   @NotNull
   @Override
   public MoveResult applyMove(@NotNull Move move) {
-    ChessGameResult gameResult =
+    BoardGameResult gameResult =
         game.makeMove(new GameMove(mapPos(move.getFrom()), mapPos(move.getTo())));
     if (gameResult.moveResult().getClass() != InvalidPlay.class) {
       undo.push(game);
@@ -63,7 +63,7 @@ public class ChessGameEngine implements GameEngine {
   @NotNull
   @Override
   public NewGameState undo() {
-    ChessGame undone = undo.pop();
+    BoardGame undone = undo.pop();
     redo.push(game);
     game = undone;
     return getNewGameState(undone);
@@ -72,14 +72,14 @@ public class ChessGameEngine implements GameEngine {
   @NotNull
   @Override
   public NewGameState redo() {
-    ChessGame redone = redo.pop();
+    BoardGame redone = redo.pop();
     undo.push(game);
     game = redone;
     return getNewGameState(redone);
   }
 
   // Private stuff
-  private MoveResult updateGameState(ChessGame game) {
+  private MoveResult updateGameState(BoardGame game) {
     return new NewGameState(
         getPiecesList(game),
         getPlayerColor(game.getCurrentTurn()),
@@ -90,25 +90,25 @@ public class ChessGameEngine implements GameEngine {
     return new BoardPosition(position.getRow() - 1, position.getColumn() - 1);
   }
 
-  private @NotNull MoveResult getMoveResult(ChessGameResult chessGameResult) {
-    PlayResult playResult = chessGameResult.moveResult();
+  private @NotNull MoveResult getMoveResult(BoardGameResult boardGameResult) {
+    PlayResult playResult = boardGameResult.moveResult();
     switch (playResult) {
       case GameWon g:
         return new GameOver(getPlayerColor(g.getWinner()));
       case InvalidPlay invalidMove:
         return new InvalidMove(playResult.getMessage());
       case ValidPlay validMove:
-        return updateGameState(chessGameResult.game());
+        return updateGameState(boardGameResult.game());
       case PieceTaken pieceTaken:
-        return updateGameState(chessGameResult.game());
+        return updateGameState(boardGameResult.game());
       case CheckState checkState:
-        return updateGameState(chessGameResult.game());
+        return updateGameState(boardGameResult.game());
       default:
         throw new IllegalStateException();
     }
   }
 
-  private @NotNull NewGameState getNewGameState(ChessGame game) {
+  private @NotNull NewGameState getNewGameState(BoardGame game) {
     return new NewGameState(
         getPiecesList(game),
         getPlayerColor(game.getCurrentTurn()),

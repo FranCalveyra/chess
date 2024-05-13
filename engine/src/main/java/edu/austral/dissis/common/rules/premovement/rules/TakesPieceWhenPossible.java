@@ -1,6 +1,6 @@
 package edu.austral.dissis.common.rules.premovement.rules;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.piece.movement.type.TakingMove;
 import edu.austral.dissis.common.utils.move.BoardPosition;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TakesPieceWhenPossible implements PreMovementRule {
   @Override
-  public boolean isValidRule(GameMove move, ChessGame game) {
+  public boolean isValidRule(GameMove move, BoardGame game) {
     // If the piece has a TakingMove type movement, execute it.
     List<PieceMovement> pieceMovements = game.getBoard().pieceAt(move.from()).getMovements();
     if (pieceMovements.stream().noneMatch(movement -> movement instanceof TakingMove)) {

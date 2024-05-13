@@ -3,7 +3,7 @@ package edu.austral.dissis.chess.engine.updated.runners;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPiece;
@@ -16,8 +16,8 @@ import edu.austral.dissis.chess.test.game.TestMoveFailure;
 import edu.austral.dissis.chess.test.game.TestMoveResult;
 import edu.austral.dissis.chess.test.game.TestMoveSuccess;
 import edu.austral.dissis.chess.test.game.WhiteCheckMate;
+import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.chess.utils.result.CheckState;
-import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
@@ -34,19 +34,19 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChessGameRunner implements TestGameRunner {
 
-  private ChessGame game;
+  private BoardGame game;
 
-  public ChessGameRunner(ChessGame game) {
+  public ChessGameRunner(BoardGame game) {
     this.game = game;
   }
 
   @NotNull
   @Override
   public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
-    ChessGameResult chessGameResult =
+    BoardGameResult boardGameResult =
         game.makeMove(new GameMove(mapPosition(from), mapPosition(to)));
-    game = chessGameResult.game();
-    return getTestMoveResult(chessGameResult);
+    game = boardGameResult.game();
+    return getTestMoveResult(boardGameResult);
   }
 
   @NotNull
@@ -59,16 +59,15 @@ public class ChessGameRunner implements TestGameRunner {
   @Override
   public TestGameRunner withBoard(@NotNull TestBoard testBoard) {
     return new ChessGameRunner(
-        new ChessGame(
+        new BoardGame(
             mapBoard(testBoard),
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector(),
             game.getPreMovementValidator()));
   }
 
-  private TestBoard mapTestBoard(ChessGame game) {
+  private TestBoard mapTestBoard(BoardGame game) {
     return new TestBoard(
         new TestSize(game.getBoard().getRows(), game.getBoard().getColumns()),
         getTestMap(game.getBoard().getPiecesAndPositions()));
@@ -114,8 +113,8 @@ public class ChessGameRunner implements TestGameRunner {
     }
   }
 
-  private @NotNull TestMoveResult getTestMoveResult(ChessGameResult chessGameResult) {
-    PlayResult playResult = chessGameResult.moveResult();
+  private @NotNull TestMoveResult getTestMoveResult(BoardGameResult boardGameResult) {
+    PlayResult playResult = boardGameResult.moveResult();
     switch (playResult) {
       case GameWon g:
         return g.getWinner() == Color.BLACK

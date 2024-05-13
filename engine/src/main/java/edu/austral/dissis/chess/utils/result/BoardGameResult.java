@@ -1,20 +1,20 @@
 package edu.austral.dissis.chess.utils.result;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.common.utils.result.GameResult;
 import edu.austral.dissis.common.utils.result.PlayResult;
 
-public class ChessGameResult implements GameResult {
-  private final ChessGame game;
+public class BoardGameResult implements GameResult {
+  private final BoardGame game;
   private final PlayResult playResult;
 
-  public ChessGameResult(ChessGame game, PlayResult playResult) {
+  public BoardGameResult(BoardGame game, PlayResult playResult) {
     this.game = game;
     this.playResult = playResult;
   }
 
   @Override
-  public ChessGame game() {
+  public BoardGame game() {
     return game;
   }
 

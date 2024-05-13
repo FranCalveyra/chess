@@ -4,7 +4,7 @@ import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 
 import edu.austral.dissis.checkers.piece.movement.CheckersType;
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.gui.CachedImageResolver;
 import edu.austral.dissis.chess.gui.ChessPiece;
 import edu.austral.dissis.chess.gui.DefaultImageResolver;
@@ -16,7 +16,7 @@ import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.ui.gameengine.ChessGameEngine;
-import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
@@ -45,12 +45,12 @@ public class AuxStaticMethods {
     return new Position(pos.getRow() + 1, pos.getColumn() + 1);
   }
 
-  public static ChessGameResult makeMove(ChessGame game, String move) {
+  public static BoardGameResult makeMove(BoardGame game, String move) {
     return game.makeMove(moveFromAlgebraic(move));
   }
 
   // Game Engine
-  public static @NotNull List<ChessPiece> getPiecesList(ChessGame game) {
+  public static @NotNull List<ChessPiece> getPiecesList(BoardGame game) {
     return game.getBoard().getPiecesAndPositions().values().stream()
         .map(
             piece ->

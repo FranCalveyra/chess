@@ -3,9 +3,9 @@ package edu.austral.dissis.chess.engine.cases;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.makeMove;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.result.PieceTaken;
 import edu.austral.dissis.common.utils.result.ValidPlay;
@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 public class SpecialTest extends CapablancaTest {
 
-  private final ChessGame game = new GameProvider().provide(GameType.SPECIAL_CHESS);
+  private final BoardGame game = new GameProvider().provide(GameType.SPECIAL_CHESS);
 
   @Test
   public void size() {
@@ -25,7 +25,7 @@ public class SpecialTest extends CapablancaTest {
   @Test
   public void archbishop() {
     assertEquals(Color.WHITE, game.getCurrentTurn());
-    ChessGameResult result = makeMove(game, "c1 -> d3");
+    BoardGameResult result = makeMove(game, "c1 -> d3");
     assertEquals(new ValidPlay(), result.moveResult());
     assertEquals(Color.BLACK, result.game().getCurrentTurn());
 
@@ -49,7 +49,7 @@ public class SpecialTest extends CapablancaTest {
   @Test
   public void chancellor() {
     assertEquals(Color.WHITE, game.getCurrentTurn());
-    ChessGameResult result = makeMove(game, "j1 -> i3");
+    BoardGameResult result = makeMove(game, "j1 -> i3");
     assertEquals(Color.BLACK, result.game().getCurrentTurn());
     assertEquals(new ValidPlay(), result.moveResult());
 

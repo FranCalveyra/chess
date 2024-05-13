@@ -5,11 +5,11 @@ import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.board.MapBoard;
 import edu.austral.dissis.common.rules.winconds.Extinction;
@@ -28,7 +28,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 public class SpecialCasesTest {
-  private ChessGame game = new GameProvider().provide(GameType.DEFAULT_CHESS);
+  private BoardGame game = new GameProvider().provide(GameType.DEFAULT_CHESS);
   private final ChessPieceProvider chessPieceProvider = new ChessPieceProvider();
 
   @Test
@@ -52,10 +52,9 @@ public class SpecialCasesTest {
                 fromAlgebraic("d2"),
                     chessPieceProvider.provide(Color.WHITE, ChessPieceType.QUEEN)));
     game =
-        new ChessGame(
+        new BoardGame(
             board,
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector(),
             game.getPreMovementValidator());
@@ -67,15 +66,14 @@ public class SpecialCasesTest {
     // Add one more piece
     assertFalse(blackExtinction.isValidRule(newBoard));
     game =
-        new ChessGame(
+        new BoardGame(
             newBoard,
             new ArrayList<>(List.of(blackExtinction, whiteExtinction)),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector(),
             game.getPreMovementValidator());
     assertEquals(7, game.getBoard().getPiecesAndPositions().size());
-    ChessGameResult result = game.makeMove(new GameMove(fromAlgebraic("a8"), fromAlgebraic("a7")));
+    BoardGameResult result = game.makeMove(new GameMove(fromAlgebraic("a8"), fromAlgebraic("a7")));
     assertEquals(6, result.game().getBoard().getPiecesAndPositions().size());
     assertEquals(new PieceTaken(), result.moveResult());
     Board otherBoard =
@@ -83,10 +81,9 @@ public class SpecialCasesTest {
             fromAlgebraic("f4"), chessPieceProvider.provide(Color.WHITE, ChessPieceType.ROOK));
     game = result.game();
     game =
-        new ChessGame(
+        new BoardGame(
             otherBoard,
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector().changeTurn(null),
             game.getPreMovementValidator());
@@ -109,14 +106,13 @@ public class SpecialCasesTest {
                 fromAlgebraic("b7"), chessPieceProvider.provide(Color.BLACK, ChessPieceType.QUEEN),
                 fromAlgebraic("a8"), chessPieceProvider.provide(Color.BLACK, ChessPieceType.ROOK)));
     game =
-        new ChessGame(
+        new BoardGame(
             board,
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector(),
             game.getPreMovementValidator());
-    ChessGameResult result = game.makeMove(new GameMove(fromAlgebraic("e1"), fromAlgebraic("g1")));
+    BoardGameResult result = game.makeMove(new GameMove(fromAlgebraic("e1"), fromAlgebraic("g1")));
     assertEquals(7, result.game().getBoard().getPiecesAndPositions().size());
     assertEquals(new ValidPlay(), result.moveResult());
     assertEquals(
@@ -151,14 +147,13 @@ public class SpecialCasesTest {
   @Test
   public void incrementalTurnTest() {
     game =
-        new ChessGame(
+        new BoardGame(
             game.getBoard(),
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             new IncrementalTurnSelector(),
             game.getPreMovementValidator());
-    ChessGameResult result = makeMove(game, "a2 -> a4");
+    BoardGameResult result = makeMove(game, "a2 -> a4");
     assertEquals(new ValidPlay(), result.moveResult());
     assertEquals(Color.BLACK, result.game().getCurrentTurn());
 
@@ -177,16 +172,15 @@ public class SpecialCasesTest {
   @Test
   public void resizeTest() {
     game =
-        new ChessGame(
+        new BoardGame(
             new MapBoard(game.getBoard().getPiecesAndPositions(), 10, 10),
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector(),
             game.getPreMovementValidator());
     assertEquals(10, game.getBoard().getColumns());
     assertEquals(10, game.getBoard().getRows());
-    ChessGameResult result = makeMove(game, "h1 -> i1");
+    BoardGameResult result = makeMove(game, "h1 -> i1");
     assertEquals(new ValidPlay(), result.moveResult());
     assertEquals(Color.BLACK, result.game().getCurrentTurn());
   }

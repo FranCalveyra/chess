@@ -8,14 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.piece.movement.type.Castling;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.rules.winconds.CheckMate;
 import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
-import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.board.MapBoard;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test;
 
 public class ClassicChessTest {
   // Setup
-  private ChessGame game = new GameProvider().provide(GameType.DEFAULT_CHESS);
+  private BoardGame game = new GameProvider().provide(GameType.DEFAULT_CHESS);
 
   // Tests
   @Test
@@ -55,7 +55,7 @@ public class ClassicChessTest {
     assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("e5")).getType());
     game = makeMove(game, "g2 -> g4").game();
     assertEquals(ChessPieceType.PAWN, game.getBoard().pieceAt(fromAlgebraic("g4")).getType());
-    ChessGameResult finishingMove = makeMove(game, "d8 -> h4");
+    BoardGameResult finishingMove = makeMove(game, "d8 -> h4");
     game = finishingMove.game();
     assertEquals(new GameWon(BLACK), finishingMove.moveResult());
     assertEquals(ChessPieceType.QUEEN, game.getBoard().pieceAt(fromAlgebraic("h4")).getType());
@@ -67,7 +67,7 @@ public class ClassicChessTest {
   @Test
   public void validatePromotion() {
     assertEquals(WHITE, game.getCurrentTurn());
-    ChessGameResult firstResult = makeMove(game, "a2 -> a4");
+    BoardGameResult firstResult = makeMove(game, "a2 -> a4");
     game = firstResult.game();
     assertEquals(new ValidPlay(), firstResult.moveResult());
     game = makeMove(game, "a7 -> a5").game();
@@ -126,10 +126,9 @@ public class ClassicChessTest {
             provider.provide(WHITE, ChessPieceType.QUEEN));
     MapBoard currentBoard = new MapBoard(situation);
     game =
-        new ChessGame(
+        new BoardGame(
             currentBoard,
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector(),
             game.getPreMovementValidator());
@@ -221,16 +220,15 @@ public class ClassicChessTest {
     Map<BoardPosition, Piece> situation =
         Map.of(fromAlgebraic("d4"), provider.provide(BLACK, ChessPieceType.PAWN));
     MapBoard currentBoard = new MapBoard(situation);
-    ChessGame newGame =
-        new ChessGame(
+    BoardGame newGame =
+        new BoardGame(
             currentBoard,
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector().changeTurn(new ValidPlay()),
             game.getPreMovementValidator());
-    ChessGameResult game1 = makeMove(newGame, "d4 -> d2");
-    ChessGameResult game2 = makeMove(newGame, "d4 -> d6");
+    BoardGameResult game1 = makeMove(newGame, "d4 -> d2");
+    BoardGameResult game2 = makeMove(newGame, "d4 -> d6");
     assertEquals(new ValidPlay(), game1.moveResult());
     assertEquals(new InvalidPlay(""), game2.moveResult());
   }
@@ -341,7 +339,7 @@ public class ClassicChessTest {
         .orElse(null);
   }
 
-  private void assertPositionType(ChessGame currentGame, PieceType pieceType, int i, int j) {
+  private void assertPositionType(BoardGame currentGame, PieceType pieceType, int i, int j) {
     assertEquals(pieceType, currentGame.getBoard().pieceAt(new BoardPosition(i, j)).getType());
   }
 }

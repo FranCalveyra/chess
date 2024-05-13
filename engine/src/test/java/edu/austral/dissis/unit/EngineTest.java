@@ -8,7 +8,7 @@ import static edu.austral.dissis.common.utils.AuxStaticMethods.moveFromAlgebraic
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.Move;
 import edu.austral.dissis.chess.gui.MoveResult;
@@ -20,12 +20,12 @@ import edu.austral.dissis.common.utils.enums.GameType;
 import org.junit.jupiter.api.Test;
 
 public class EngineTest {
-  ChessGame game = new GameProvider().provide(GameType.DEFAULT_CHESS);
+  BoardGame game = new GameProvider().provide(GameType.DEFAULT_CHESS);
   GameEngine engine = new ChessGameEngine(game);
 
   @Test
   public void firstMoveShouldBeValid() {
-    ChessGame updatedGame = makeMove(game, "a2 -> a4").game();
+    BoardGame updatedGame = makeMove(game, "a2 -> a4").game();
     MoveResult afterMove = engine.applyMove(move("a2 -> a4"));
     MoveResult beforeMove =
         new NewGameState(

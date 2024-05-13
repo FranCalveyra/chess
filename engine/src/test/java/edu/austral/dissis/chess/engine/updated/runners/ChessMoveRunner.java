@@ -3,13 +3,13 @@ package edu.austral.dissis.chess.engine.updated.runners;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 
-import edu.austral.dissis.chess.engine.ChessGame;
+import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPosition;
 import edu.austral.dissis.chess.test.Validity;
 import edu.austral.dissis.chess.test.move.TestMoveRunner;
+import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.chess.utils.result.CheckState;
-import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.GameWon;
 import edu.austral.dissis.common.utils.result.PlayResult;
@@ -20,9 +20,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChessMoveRunner implements TestMoveRunner {
 
-  private ChessGame game;
+  private BoardGame game;
 
-  public ChessMoveRunner(ChessGame game) {
+  public ChessMoveRunner(BoardGame game) {
     this.game = game;
   }
 
@@ -33,14 +33,13 @@ public class ChessMoveRunner implements TestMoveRunner {
       @NotNull TestPosition fromPosition,
       @NotNull TestPosition toPosition) {
     game =
-        new ChessGame(
+        new BoardGame(
             mapBoard(testBoard),
             game.getWinConditions(),
-            game.getCheckConditions(),
             game.getPromoter(),
             game.getTurnSelector(),
             game.getPreMovementValidator());
-    ChessGameResult result =
+    BoardGameResult result =
         game.makeMove(new GameMove(mapPosition(fromPosition), mapPosition(toPosition)));
     return getValidity(result.moveResult());
   }

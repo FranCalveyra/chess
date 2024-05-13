@@ -1,9 +1,8 @@
 package edu.austral.dissis.chess.engine;
 
-import edu.austral.dissis.chess.rules.winconds.Check;
-import edu.austral.dissis.chess.utils.result.ChessGameResult;
+import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.engine.Game;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.promoters.Promoter;
 import edu.austral.dissis.common.rules.premovement.validators.PreMovementValidator;
@@ -22,29 +21,26 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
-public class ChessGame implements BoardGame {
+public class BoardGame implements Game {
   /** Simulates a real Chess Game. */
   private final Board board;
 
   private final WinConditionValidator winConditionValidator;
   private final List<WinCondition> winConditions;
-  private final List<Check> checkConditions; // FOUND A USE OUTSIDE GAME
   private final Promoter promoter;
   private final TurnSelector turnSelector;
   private final MoveExecutor executor;
   private final PreMovementValidator preMovementValidator;
 
-  public ChessGame(
+  public BoardGame(
       @NotNull Board board,
       @NotNull List<WinCondition> winConditions,
-      List<Check> checkConditions,
       Promoter promoter,
       TurnSelector turnSelector,
       PreMovementValidator preMovementValidator) {
     // Should be first instance
     this.board = board;
     this.winConditions = winConditions;
-    this.checkConditions = checkConditions;
     this.winConditionValidator = new WinConditionValidator(winConditions);
     this.promoter = promoter;
     this.turnSelector = turnSelector;
@@ -53,13 +49,13 @@ public class ChessGame implements BoardGame {
   }
 
   @Override
-  public ChessGameResult makeMove(GameMove move) {
+  public BoardGameResult makeMove(GameMove move) {
     // Check winning at the end
     // Do all necessary checks
     // PreMovementRules should be valid
     PlayResult preMovementValidity = preMovementValidator.getMoveValidity(move, this);
     if (preMovementValidity.getClass() == InvalidPlay.class) {
-      return new ChessGameResult(this, preMovementValidity);
+      return new BoardGameResult(this, preMovementValidity);
     }
     // Once valid, execute move
     final Piece pieceToMove = board.pieceAt(move.from());
@@ -78,22 +74,16 @@ public class ChessGame implements BoardGame {
       result = new Pair<>(finalBoard, new PieceTaken());
     }
     TurnSelector nextSelector = turnSelector.changeTurn(result.second());
-    ChessGame finalGame =
-        new ChessGame(
-            finalBoard,
-            winConditions,
-            checkConditions,
-            promoter,
-            nextSelector,
-            preMovementValidator);
+    BoardGame finalGame =
+        new BoardGame(finalBoard, winConditions, promoter, nextSelector, preMovementValidator);
 
     if (winConditionValidator.isGameWon(finalBoard)) {
       Color winner = turnSelector.getCurrentTurn();
-      return new ChessGameResult(finalGame, new GameWon(winner));
+      return new BoardGameResult(finalGame, new GameWon(winner));
     }
 
     // Get the resulting game at last
-    return new ChessGameResult(finalGame, result.second()); // Second represents the moveResult
+    return new BoardGameResult(finalGame, result.second()); // Second represents the moveResult
   }
 
   // Getters
@@ -115,10 +105,6 @@ public class ChessGame implements BoardGame {
 
   public TurnSelector getTurnSelector() {
     return turnSelector;
-  }
-
-  public List<Check> getCheckConditions() {
-    return checkConditions;
   }
 
   public PreMovementValidator getPreMovementValidator() {
