@@ -15,7 +15,9 @@ import edu.austral.dissis.chess.utils.result.ChessGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.board.MapBoard;
 import edu.austral.dissis.common.piece.movement.restrictions.rules.PieceBetweenIsAnEnemy;
+import edu.austral.dissis.common.rules.winconds.NoAvailableMoves;
 import edu.austral.dissis.common.utils.enums.GameType;
+import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.GameResult;
 import edu.austral.dissis.common.utils.result.GameWon;
@@ -81,5 +83,29 @@ public class CheckersTest {
     assertEquals(
         CheckersType.KING,
         ((ChessGame) result.game()).getBoard().pieceAt(fromAlgebraic("b8")).getType());
+  }
+
+  @Test
+  public void noMoveAvailableShouldResultInWinning() {
+    CheckersPieceProvider provider = new CheckersPieceProvider();
+    Board board =
+        new MapBoard(
+            Map.of(
+                new BoardPosition(7, 7), provider.provideCheckersPiece(Color.RED, CheckersType.MAN),
+                new BoardPosition(1, 2),
+                    provider.provideCheckersPiece(Color.BLACK, CheckersType.MAN)));
+    ChessGame current =
+        new ChessGame(
+            board,
+            game.getWinConditions(),
+            game.getCheckConditions(),
+            game.getPromoter(),
+            game.getTurnSelector().changeTurn(new ValidPlay()),
+            game.getPreMovementValidator());
+    assertEquals(Color.BLACK, current.getCurrentTurn());
+    ChessGameResult result =
+        current.makeMove(new GameMove(new BoardPosition(1, 2), new BoardPosition(0, 1)));
+    assertEquals(new GameWon(Color.BLACK), result.moveResult());
+    assertTrue(new NoAvailableMoves(Color.RED).isValidRule(result.game().getBoard()));
   }
 }

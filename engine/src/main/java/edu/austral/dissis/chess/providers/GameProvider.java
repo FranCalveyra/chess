@@ -7,6 +7,7 @@ import edu.austral.dissis.chess.engine.ChessGame;
 import edu.austral.dissis.chess.promoters.StandardChessPromoter;
 import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
 import edu.austral.dissis.common.board.MapBoard;
+import edu.austral.dissis.common.rules.winconds.NoAvailableMoves;
 import edu.austral.dissis.common.rules.winconds.Extinction;
 import edu.austral.dissis.common.turn.IncrementalTurnSelector;
 import edu.austral.dissis.common.turn.StandardTurnSelector;
@@ -46,7 +47,11 @@ public class GameProvider {
     } else if (gameType == GameType.DEFAULT_CHECKERS) {
       return new ChessGame(
           new MapBoard(new CheckersPieceMapProvider().provide(gameType, 8, 8)),
-          List.of(new Extinction(Color.RED), new Extinction(Color.BLACK)),
+          List.of(
+              new Extinction(Color.RED),
+              new Extinction(Color.BLACK),
+              new NoAvailableMoves(Color.RED),
+              new NoAvailableMoves(Color.BLACK)),
           null,
           new CheckersPromoter(),
           new CheckersTurnSelector(),
