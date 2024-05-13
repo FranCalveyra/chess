@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.utils.result;
 
-import edu.austral.dissis.chess.engine.BoardGame;
+import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.utils.result.GameResult;
 import edu.austral.dissis.common.utils.result.PlayResult;
 

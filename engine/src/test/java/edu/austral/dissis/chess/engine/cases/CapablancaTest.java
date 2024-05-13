@@ -3,9 +3,9 @@ package edu.austral.dissis.chess.engine.cases;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.makeMove;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.utils.result.BoardGameResult;
+import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.result.PieceTaken;
 import edu.austral.dissis.common.utils.result.ValidPlay;

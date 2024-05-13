@@ -4,7 +4,7 @@ import edu.austral.dissis.chess.validators.DefaultCheckValidator;
 import edu.austral.dissis.common.board.Board;
 import java.awt.Color;
 
-public final class DefaultCheck implements Check {
+public class DefaultCheck implements Check {
   private final Color team;
 
   public DefaultCheck(Color team) {

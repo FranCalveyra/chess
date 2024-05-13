@@ -3,13 +3,13 @@ package edu.austral.dissis.chess.engine.updated.runners;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapBoard;
 import static edu.austral.dissis.chess.engine.updated.utils.GameAdapter.mapPosition;
 
-import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPosition;
 import edu.austral.dissis.chess.test.Validity;
 import edu.austral.dissis.chess.test.move.TestMoveRunner;
 import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.chess.utils.result.CheckState;
+import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.GameWon;
 import edu.austral.dissis.common.utils.result.PlayResult;

@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.piece.movement.type.Castling;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
@@ -17,6 +16,7 @@ import edu.austral.dissis.chess.rules.winconds.CheckMate;
 import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
 import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.board.MapBoard;
+import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.enums.GameType;

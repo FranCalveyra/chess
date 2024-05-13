@@ -4,7 +4,6 @@ import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 
 import edu.austral.dissis.checkers.piece.movement.CheckersType;
-import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.gui.CachedImageResolver;
 import edu.austral.dissis.chess.gui.ChessPiece;
 import edu.austral.dissis.chess.gui.DefaultImageResolver;
@@ -18,6 +17,7 @@ import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.ui.gameengine.ChessGameEngine;
 import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.board.Board;
+import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.enums.GameType;

@@ -1,8 +1,7 @@
-package edu.austral.dissis.chess.engine;
+package edu.austral.dissis.common.engine;
 
 import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.engine.Game;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.promoters.Promoter;
 import edu.austral.dissis.common.rules.premovement.validators.PreMovementValidator;
@@ -60,8 +59,10 @@ public class BoardGame implements Game {
     // Once valid, execute move
     final Piece pieceToMove = board.pieceAt(move.from());
     Pair<Board, PlayResult> result = new Pair<>(board, new InvalidPlay("any"));
+
     final List<GameMove> playToExecute = pieceToMove.getPlay(move, board);
     List<PlayResult> playResults = new ArrayList<>();
+
     for (GameMove moveToDo : playToExecute) {
       result = executor.executeMove(moveToDo.from(), moveToDo.to(), result.first(), promoter);
       playResults.add(result.second());

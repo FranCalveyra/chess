@@ -3,7 +3,6 @@ package edu.austral.dissis.chess.ui.gameengine;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesList;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 
-import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.gui.BoardSize;
 import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.GameOver;
@@ -16,6 +15,7 @@ import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.gui.UndoState;
 import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.chess.utils.result.CheckState;
+import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.GameWon;

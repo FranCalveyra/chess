@@ -5,13 +5,13 @@ import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import edu.austral.dissis.chess.engine.BoardGame;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.utils.result.BoardGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.board.MapBoard;
+import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.rules.winconds.Extinction;
 import edu.austral.dissis.common.rules.winconds.WinCondition;
 import edu.austral.dissis.common.turn.IncrementalTurnSelector;
