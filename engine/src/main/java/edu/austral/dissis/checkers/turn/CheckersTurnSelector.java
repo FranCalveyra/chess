@@ -9,7 +9,7 @@ public class CheckersTurnSelector implements TurnSelector {
   private final Color currentTurn;
 
   public CheckersTurnSelector() {
-    currentTurn = Color.RED;
+    currentTurn = Color.BLACK;
   }
 
   private CheckersTurnSelector(Color currentTurn) {

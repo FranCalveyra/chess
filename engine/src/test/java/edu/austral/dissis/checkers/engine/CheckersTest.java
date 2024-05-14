@@ -34,12 +34,14 @@ public class CheckersTest {
 
   @Test
   public void initialMovement() {
+    game = new BoardGame(game.getBoard(), game.getWinConditions(), game.getPromoter(), game.getTurnSelector().changeTurn(new ValidPlay()), game.getPreMovementValidator());
     GameResult result = game.makeMove(new GameMove(fromAlgebraic("a3"), fromAlgebraic("b4")));
     assertEquals(new ValidPlay(), result.moveResult());
   }
 
   @Test
   public void shouldTakeEnemy() {
+    game = new BoardGame(game.getBoard(), game.getWinConditions(), game.getPromoter(), game.getTurnSelector().changeTurn(new ValidPlay()), game.getPreMovementValidator());
     BoardGameResult result = makeMove(game, "a3 -> b4");
     assertEquals(new ValidPlay(), result.moveResult());
     assertEquals(Color.BLACK, result.game().getCurrentTurn());
@@ -64,6 +66,7 @@ public class CheckersTest {
 
   @Test
   public void promotionShouldWork() {
+    game = new BoardGame(game.getBoard(), game.getWinConditions(), game.getPromoter(), game.getTurnSelector().changeTurn(new ValidPlay()), game.getPreMovementValidator());
     GameResult result;
     Board board =
         new MapBoard(
@@ -86,6 +89,7 @@ public class CheckersTest {
 
   @Test
   public void noMoveAvailableShouldResultInWinning() {
+    game = new BoardGame(game.getBoard(), game.getWinConditions(), game.getPromoter(), game.getTurnSelector().changeTurn(new ValidPlay()), game.getPreMovementValidator());
     CheckersPieceProvider provider = new CheckersPieceProvider();
     Board board =
         new MapBoard(
