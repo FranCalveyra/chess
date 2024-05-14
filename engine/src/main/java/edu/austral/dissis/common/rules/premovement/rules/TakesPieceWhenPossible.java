@@ -5,8 +5,6 @@ import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.piece.movement.type.TakingMove;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
-import edu.austral.dissis.common.utils.move.MoveExecutor;
-import edu.austral.dissis.common.utils.result.playresult.PieceTaken;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +12,8 @@ import java.util.Objects;
 public class TakesPieceWhenPossible implements PreMovementRule {
   @Override
   public boolean isValidRule(GameMove move, BoardGame game) {
-    // If the piece has a TakingMove type movement, execute it.
+    //TODO: obligue the player to move ONLY that piece
+    //If the piece has a TakingMove type movement, execute it.
     List<PieceMovement> pieceMovements = game.getBoard().pieceAt(move.from()).getMovements();
     if (pieceMovements.stream().noneMatch(movement -> movement instanceof TakingMove)) {
       return true;

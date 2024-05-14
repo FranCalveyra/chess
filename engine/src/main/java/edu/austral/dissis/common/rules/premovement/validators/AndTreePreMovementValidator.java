@@ -9,6 +9,7 @@ import edu.austral.dissis.common.utils.result.playresult.ValidPlay;
 
 public class AndTreePreMovementValidator implements PreMovementValidator {
   // TODO: change messages in depending on which branch fails
+  // TODO: modify it in order to create a validator per rule (or simplify its structure)
   private final AndTreePreMovementValidator left;
   private final AndTreePreMovementValidator right;
   private final PreMovementRule rule;
