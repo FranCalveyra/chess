@@ -1,4 +1,4 @@
-package edu.austral.dissis.common.utils.result;
+package edu.austral.dissis.common.utils.result.playresult;
 
 import java.awt.Color;
 

@@ -1,6 +1,6 @@
 package edu.austral.dissis.common.engine;
 
-import edu.austral.dissis.chess.utils.result.BoardGameResult;
+import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.promoters.Promoter;
@@ -10,10 +10,7 @@ import edu.austral.dissis.common.turn.TurnSelector;
 import edu.austral.dissis.common.utils.Pair;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.move.MoveExecutor;
-import edu.austral.dissis.common.utils.result.GameWon;
-import edu.austral.dissis.common.utils.result.InvalidPlay;
-import edu.austral.dissis.common.utils.result.PieceTaken;
-import edu.austral.dissis.common.utils.result.PlayResult;
+import edu.austral.dissis.common.utils.result.playresult.*;
 import edu.austral.dissis.common.validators.WinConditionValidator;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -30,6 +27,7 @@ public class BoardGame implements Game {
   private final TurnSelector turnSelector;
   private final MoveExecutor executor;
   private final PreMovementValidator preMovementValidator;
+  private Pair<BoardGame,GameMove> previousState;
 
   public BoardGame(
       @NotNull Board board,
@@ -45,6 +43,25 @@ public class BoardGame implements Game {
     this.turnSelector = turnSelector;
     this.preMovementValidator = preMovementValidator;
     this.executor = new MoveExecutor();
+    this.previousState = null;
+  }
+
+  private BoardGame(
+          @NotNull Board board,
+          @NotNull List<WinCondition> winConditions,
+          Promoter promoter,
+          TurnSelector turnSelector,
+          PreMovementValidator preMovementValidator,
+          Pair<BoardGame, GameMove> previousState
+          ){
+    this.board = board;
+    this.winConditions = winConditions;
+    this.winConditionValidator = new WinConditionValidator(winConditions);
+    this.promoter = promoter;
+    this.turnSelector = turnSelector;
+    this.preMovementValidator = preMovementValidator;
+    this.executor = new MoveExecutor();
+    this.previousState = previousState;
   }
 
   @Override
@@ -52,6 +69,7 @@ public class BoardGame implements Game {
     // Check winning at the end
     // Do all necessary checks
     // PreMovementRules should be valid
+    previousState = new Pair<>(this, move);
     PlayResult preMovementValidity = preMovementValidator.getMoveValidity(move, this);
     if (preMovementValidity.getClass() == InvalidPlay.class) {
       return new BoardGameResult(this, preMovementValidity);
@@ -74,9 +92,13 @@ public class BoardGame implements Game {
     if (playResults.contains(new PieceTaken())) {
       result = new Pair<>(finalBoard, new PieceTaken());
     }
+    //Replaces priority
+    if (playResults.contains(new PromotedPiece())){
+      result = new Pair<>(finalBoard, new PromotedPiece());
+    }
     TurnSelector nextSelector = turnSelector.changeTurn(result.second());
     BoardGame finalGame =
-        new BoardGame(finalBoard, winConditions, promoter, nextSelector, preMovementValidator);
+        new BoardGame(finalBoard, winConditions, promoter, nextSelector, preMovementValidator, previousState);
 
     if (winConditionValidator.isGameWon(finalBoard)) {
       Color winner = turnSelector.getCurrentTurn();
@@ -114,5 +136,9 @@ public class BoardGame implements Game {
 
   public MoveExecutor getMoveExecutor() {
     return executor;
+  }
+
+  public Pair<BoardGame, GameMove> getPreviousState(){
+    return previousState;
   }
 }

@@ -1,6 +1,6 @@
 package edu.austral.dissis.common.turn;
 
-import edu.austral.dissis.common.utils.result.PlayResult;
+import edu.austral.dissis.common.utils.result.playresult.PlayResult;
 import java.awt.Color;
 
 public class IncrementalTurnSelector implements TurnSelector {

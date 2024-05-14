@@ -15,18 +15,15 @@ import edu.austral.dissis.chess.test.game.TestMoveFailure;
 import edu.austral.dissis.chess.test.game.TestMoveResult;
 import edu.austral.dissis.chess.test.game.TestMoveSuccess;
 import edu.austral.dissis.chess.test.game.WhiteCheckMate;
-import edu.austral.dissis.chess.utils.result.BoardGameResult;
+import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.chess.utils.result.CheckState;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
-import edu.austral.dissis.common.utils.result.GameWon;
-import edu.austral.dissis.common.utils.result.InvalidPlay;
-import edu.austral.dissis.common.utils.result.PieceTaken;
-import edu.austral.dissis.common.utils.result.PlayResult;
-import edu.austral.dissis.common.utils.result.ValidPlay;
+import edu.austral.dissis.common.utils.result.playresult.*;
+
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -127,6 +124,8 @@ public class ChessGameRunner implements TestGameRunner {
       case CheckState checkState:
         return new TestMoveSuccess(this);
       case PieceTaken pieceTaken:
+        return new TestMoveSuccess(this);
+      case PromotedPiece promotedPiece:
         return new TestMoveSuccess(this);
       default:
         throw new IllegalStateException();

@@ -1,4 +1,4 @@
-package edu.austral.dissis.common.utils.result;
+package edu.austral.dissis.common.utils.result.playresult;
 
 public class InvalidPlay implements PlayResult {
   private final String reason;

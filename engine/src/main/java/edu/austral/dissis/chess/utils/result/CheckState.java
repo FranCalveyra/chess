@@ -1,6 +1,6 @@
 package edu.austral.dissis.chess.utils.result;
 
-import edu.austral.dissis.common.utils.result.PlayResult;
+import edu.austral.dissis.common.utils.result.playresult.PlayResult;
 import java.awt.Color;
 
 public class CheckState implements PlayResult {

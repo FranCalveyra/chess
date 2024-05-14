@@ -3,9 +3,9 @@ package edu.austral.dissis.common.rules.premovement.validators;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.rules.premovement.rules.PreMovementRule;
 import edu.austral.dissis.common.utils.move.GameMove;
-import edu.austral.dissis.common.utils.result.InvalidPlay;
-import edu.austral.dissis.common.utils.result.PlayResult;
-import edu.austral.dissis.common.utils.result.ValidPlay;
+import edu.austral.dissis.common.utils.result.playresult.InvalidPlay;
+import edu.austral.dissis.common.utils.result.playresult.PlayResult;
+import edu.austral.dissis.common.utils.result.playresult.ValidPlay;
 
 public class AndTreePreMovementValidator implements PreMovementValidator {
   // TODO: change messages in depending on which branch fails

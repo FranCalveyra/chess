@@ -8,8 +8,8 @@ import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.rules.premovement.rules.PreMovementRule;
 import edu.austral.dissis.common.utils.Pair;
 import edu.austral.dissis.common.utils.move.GameMove;
-import edu.austral.dissis.common.utils.result.PlayResult;
-import edu.austral.dissis.common.utils.result.ValidPlay;
+import edu.austral.dissis.common.utils.result.playresult.PlayResult;
+import edu.austral.dissis.common.utils.result.playresult.ValidPlay;
 import java.awt.Color;
 import java.util.List;
 

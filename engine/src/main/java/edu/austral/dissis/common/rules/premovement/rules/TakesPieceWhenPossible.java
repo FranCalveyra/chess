@@ -5,7 +5,11 @@ import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.piece.movement.type.TakingMove;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
+import edu.austral.dissis.common.utils.move.MoveExecutor;
+import edu.austral.dissis.common.utils.result.playresult.PieceTaken;
+
 import java.util.List;
+import java.util.Objects;
 
 public class TakesPieceWhenPossible implements PreMovementRule {
   @Override

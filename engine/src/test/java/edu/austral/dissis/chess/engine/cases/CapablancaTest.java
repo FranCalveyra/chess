@@ -4,11 +4,11 @@ import static edu.austral.dissis.common.utils.AuxStaticMethods.makeMove;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.utils.result.BoardGameResult;
+import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.utils.enums.GameType;
-import edu.austral.dissis.common.utils.result.PieceTaken;
-import edu.austral.dissis.common.utils.result.ValidPlay;
+import edu.austral.dissis.common.utils.result.playresult.PieceTaken;
+import edu.austral.dissis.common.utils.result.playresult.ValidPlay;
 import org.junit.jupiter.api.Test;
 
 public class CapablancaTest {

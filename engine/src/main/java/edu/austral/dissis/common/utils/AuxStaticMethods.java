@@ -15,7 +15,7 @@ import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.ui.gameengine.ChessGameEngine;
-import edu.austral.dissis.chess.utils.result.BoardGameResult;
+import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
