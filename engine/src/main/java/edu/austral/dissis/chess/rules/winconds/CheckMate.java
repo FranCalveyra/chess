@@ -1,5 +1,7 @@
 package edu.austral.dissis.chess.rules.winconds;
 
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesByColor;
+
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.rules.winconds.WinCondition;
@@ -9,9 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
-import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesByColor;
 
 public class CheckMate implements WinCondition {
   private final Color team;

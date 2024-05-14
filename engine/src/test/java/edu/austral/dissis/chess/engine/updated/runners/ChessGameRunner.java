@@ -15,15 +15,14 @@ import edu.austral.dissis.chess.test.game.TestMoveFailure;
 import edu.austral.dissis.chess.test.game.TestMoveResult;
 import edu.austral.dissis.chess.test.game.TestMoveSuccess;
 import edu.austral.dissis.chess.test.game.WhiteCheckMate;
-import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.chess.utils.result.CheckState;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
+import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.common.utils.result.playresult.*;
-
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;

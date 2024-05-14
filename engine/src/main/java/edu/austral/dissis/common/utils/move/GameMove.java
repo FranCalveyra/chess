@@ -1,6 +1,6 @@
 package edu.austral.dissis.common.utils.move;
 
-public final class GameMove {
+public class GameMove {
   private final BoardPosition from;
   private final BoardPosition to;
 
@@ -20,5 +20,13 @@ public final class GameMove {
 
   public BoardPosition to() {
     return to;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (!(obj instanceof GameMove other)) {
+      return false;
+    }
+    return other.from() == from && other.to() == to;
   }
 }
