@@ -27,7 +27,7 @@ public class BoardGame implements Game {
   private final TurnSelector turnSelector;
   private final MoveExecutor executor;
   private final PreMovementValidator preMovementValidator;
-  private Pair<BoardGame,GameMove> previousState;
+  private final Pair<BoardGame,GameMove> previousState;
 
   public BoardGame(
       @NotNull Board board,
@@ -69,7 +69,7 @@ public class BoardGame implements Game {
     // Check winning at the end
     // Do all necessary checks
     // PreMovementRules should be valid
-    previousState = new Pair<>(this, move);
+    Pair<BoardGame, GameMove> prev = new Pair<>(this, move);
     PlayResult preMovementValidity = preMovementValidator.getMoveValidity(move, this);
     if (preMovementValidity.getClass() == InvalidPlay.class) {
       return new BoardGameResult(this, preMovementValidity);
@@ -98,7 +98,7 @@ public class BoardGame implements Game {
     }
     TurnSelector nextSelector = turnSelector.changeTurn(result.second());
     BoardGame finalGame =
-        new BoardGame(finalBoard, winConditions, promoter, nextSelector, preMovementValidator, previousState);
+        new BoardGame(finalBoard, winConditions, promoter, nextSelector, preMovementValidator, prev);
 
     if (winConditionValidator.isGameWon(finalBoard)) {
       Color winner = turnSelector.getCurrentTurn();

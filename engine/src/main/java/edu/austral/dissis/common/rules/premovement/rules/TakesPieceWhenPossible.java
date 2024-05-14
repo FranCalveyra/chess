@@ -7,7 +7,6 @@ import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 
 import java.util.List;
-import java.util.Objects;
 
 public class TakesPieceWhenPossible implements PreMovementRule {
   @Override
@@ -20,16 +19,17 @@ public class TakesPieceWhenPossible implements PreMovementRule {
     }
     // Fetch all possible attacking movements
     PieceMovement takingMove =
-        pieceMovements.stream()
-            .filter(movement -> movement instanceof TakingMove)
-            .findFirst()
-            .get();
+            pieceMovements.stream()
+                    .filter(movement -> movement instanceof TakingMove)
+                    .findFirst()
+                    .get();
     List<BoardPosition> possiblePositions =
-        takingMove.getPossiblePositions(move.from(), game.getBoard());
+            takingMove.getPossiblePositions(move.from(), game.getBoard());
     // If there's any, check the intended movement effectively attacks
     if (possiblePositions.isEmpty()) {
       return true;
     }
+    //TODO: obligue last moved piece to take
     return possiblePositions.contains(move.to());
   }
 }

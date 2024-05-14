@@ -1,5 +1,6 @@
 package edu.austral.dissis.chess.ui.application;
 
+import static edu.austral.dissis.chess.gui.AdapterKt.createGameViewFrom;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.setupGame;
 
 import edu.austral.dissis.chess.gui.GameEngine;
@@ -19,7 +20,7 @@ public class ChessApplication extends Application {
   @Override
   public void start(Stage stage) {
     stage.setTitle("Chess");
-    GameView root = new GameView(gameEngine, imageResolver);
+    GameView root = createGameViewFrom(gameEngine, imageResolver);
     stage.setScene(new Scene(root));
     stage.show();
   }
