@@ -27,6 +27,8 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 import org.jetbrains.annotations.NotNull;
 
 public class AuxStaticMethods {
@@ -120,5 +122,12 @@ public class AuxStaticMethods {
 
   private static BoardPosition getEnemyPos(BoardPosition pos, Pair<Integer, Integer> vector) {
     return new BoardPosition(pos.getRow() + vector.first(), pos.getColumn() + vector.second());
+  }
+
+  public static Map<BoardPosition, Piece> getPiecesByColor(Board context, Color team) {
+    Map<BoardPosition, Piece> map = context.getPiecesAndPositions();
+    return map.entrySet().stream()
+            .filter(entry -> entry.getValue() != null && entry.getValue().getPieceColour() == team)
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 }

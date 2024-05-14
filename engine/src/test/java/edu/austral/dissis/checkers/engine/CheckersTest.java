@@ -110,4 +110,18 @@ public class CheckersTest {
     assertEquals(new GameWon(Color.BLACK), result.moveResult());
     assertTrue(new NoAvailableMoves(Color.RED).isValidRule(result.game().getBoard()));
   }
+
+  @Test
+  public void onlyOneMovementShouldBeAbleToBeDone(){
+    BoardGameResult result = game.makeMove(moveFromAlgebraic("b6 -> c5"));
+    assertEquals(new ValidPlay(), result.moveResult());
+    result = result.game().makeMove(moveFromAlgebraic("c3 -> d4"));
+    assertEquals(new ValidPlay(), result.moveResult());
+    result = result.game().makeMove(moveFromAlgebraic("d6 -> e5"));
+    assertEquals(new ValidPlay(), result.moveResult());
+    assertEquals(1, result.game().getBoard().pieceAt(fromAlgebraic("g3")).getPlay(moveFromAlgebraic("g3 -> h4"), result.game().getBoard()).size());
+    result = result.game().makeMove(moveFromAlgebraic("g3 -> h4"));
+    assertEquals(new InvalidPlay(""), result.moveResult());
+  }
+
 }

@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesByColor;
+
 public class CheckMate implements WinCondition {
   private final Color team;
 
@@ -50,13 +52,6 @@ public class CheckMate implements WinCondition {
           piecesWithPossibleMoves.put(pos, moveSet);
         });
     return piecesWithPossibleMoves;
-  }
-
-  private Map<BoardPosition, Piece> getPiecesByColor(Board context, Color team) {
-    Map<BoardPosition, Piece> map = context.getPiecesAndPositions();
-    return map.entrySet().stream()
-        .filter(entry -> entry.getValue() != null && entry.getValue().getPieceColour() == team)
-        .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
   }
 
   private boolean kingHasNoPossibleSaving(
