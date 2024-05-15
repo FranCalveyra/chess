@@ -1,4 +1,4 @@
-package edu.austral.dissis.online.listeners;
+package edu.austral.dissis.online.listeners.client;
 
 import edu.austral.ingsis.clientserver.ClientConnectionListener;
 

@@ -54,19 +54,23 @@ public class AuxStaticMethods {
     return game.makeMove(moveFromAlgebraic(move));
   }
 
-  public static List<GameMove> getAttackingMoves(BoardPosition position, PieceMovement takingMove, Board board) {
+  public static List<GameMove> getAttackingMoves(
+      BoardPosition position, PieceMovement takingMove, Board board) {
     List<GameMove> attackingMoves = new ArrayList<>();
     List<BoardPosition> positions = takingMove.getPossiblePositions(position, board);
-    for(BoardPosition possiblePos : positions) {
-      attackingMoves.addAll(takingMove.getMovesToExecute(new GameMove(position, possiblePos), board));
+    for (BoardPosition possiblePos : positions) {
+      attackingMoves.addAll(
+          takingMove.getMovesToExecute(new GameMove(position, possiblePos), board));
     }
     return attackingMoves.stream().distinct().toList();
   }
 
   public static @Nullable PieceMovement getTakingMove(Piece piece) {
-    return piece.getMovements().stream().filter(movement -> movement instanceof TakingMovement).findFirst().orElse(null);
+    return piece.getMovements().stream()
+        .filter(movement -> movement instanceof TakingMovement)
+        .findFirst()
+        .orElse(null);
   }
-
 
   // Game Engine
   public static @NotNull List<ChessPiece> getPiecesList(BoardGame game) {

@@ -10,7 +10,11 @@ import edu.austral.dissis.common.utils.Pair;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.move.MoveExecutor;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
-import edu.austral.dissis.common.utils.result.playresult.*;
+import edu.austral.dissis.common.utils.result.playresult.GameWon;
+import edu.austral.dissis.common.utils.result.playresult.InvalidPlay;
+import edu.austral.dissis.common.utils.result.playresult.PieceTaken;
+import edu.austral.dissis.common.utils.result.playresult.PlayResult;
+import edu.austral.dissis.common.utils.result.playresult.PromotedPiece;
 import edu.austral.dissis.common.validators.WinConditionValidator;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -68,7 +72,6 @@ public class BoardGame implements Game {
     // Check winning at the end
     // Do all necessary checks
     // PreMovementRules should be valid
-    Pair<BoardGame, GameMove> prev = new Pair<>(this, move);
     PlayResult preMovementValidity = preMovementValidator.getMoveValidity(move, this);
     if (preMovementValidity.getClass() == InvalidPlay.class) {
       return new BoardGameResult(this, preMovementValidity);
@@ -95,7 +98,9 @@ public class BoardGame implements Game {
     if (playResults.contains(new PromotedPiece())) {
       result = new Pair<>(finalBoard, new PromotedPiece());
     }
-    TurnSelector nextSelector = turnSelector.changeTurn(move,finalBoard,result.second());
+    // Stuff to return
+    Pair<BoardGame, GameMove> prev = new Pair<>(this, move);
+    TurnSelector nextSelector = turnSelector.changeTurn(move, finalBoard, result.second());
     BoardGame finalGame =
         new BoardGame(
             finalBoard, winConditions, promoter, nextSelector, preMovementValidator, prev);
@@ -136,9 +141,5 @@ public class BoardGame implements Game {
 
   public MoveExecutor getMoveExecutor() {
     return executor;
-  }
-
-  public Pair<BoardGame, GameMove> getPreviousState() {
-    return previousState;
   }
 }

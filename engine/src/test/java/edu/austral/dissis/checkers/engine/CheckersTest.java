@@ -73,7 +73,11 @@ public class CheckersTest {
     result = makeMove(result.game(), "b4 -> d6");
     assertEquals(23, result.game().getBoard().getPiecesAndPositions().size());
     assertEquals(new PieceTaken(), result.moveResult());
-    assertEquals(Color.BLACK, result.game().getCurrentTurn()); //Should change turn whenever no more attacking moves can be done
+    assertEquals(
+        Color.BLACK,
+        result
+            .game()
+            .getCurrentTurn()); // Should change turn whenever no more attacking moves can be done
   }
 
   @Test
