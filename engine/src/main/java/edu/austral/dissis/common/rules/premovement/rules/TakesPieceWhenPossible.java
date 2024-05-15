@@ -1,19 +1,50 @@
 package edu.austral.dissis.common.rules.premovement.rules;
 
+import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.piece.movement.type.TakingMovement;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
+
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesByColor;
 
 public class TakesPieceWhenPossible implements PreMovementRule {
   @Override
   public boolean isValidRule(GameMove move, BoardGame game) {
     // TODO: obligue the player to move ONLY that piece
     // If the piece has a TakingMove type movement, execute it.
-    return currentPieceIsAttacking(move, game);
+    Map<BoardPosition, Piece> teamPieces = getPiecesByColor(game.getBoard(),game.getBoard().pieceAt(move.from()).getPieceColour());
+    List<GameMove> allAttackingMoves = getTeamAttackingMoves(teamPieces, game.getBoard());
+    if(allAttackingMoves.isEmpty()) {
+      return true;
+    };
+    return currentPieceIsAttacking(move, game) && allAttackingMoves.getFirst().from().equals(move.from());
+  }
+
+  private List<GameMove> getTeamAttackingMoves(Map<BoardPosition, Piece> teamPieces, Board board) {
+    List<GameMove> attackingMoves = new ArrayList<>();
+    for(Map.Entry<BoardPosition, Piece> entry : teamPieces.entrySet()) {
+      Piece piece = entry.getValue();
+      PieceMovement takingMove = piece.getMovements().stream().filter(movement -> movement instanceof TakingMovement).findFirst().orElse(null);
+      if(takingMove == null){
+        continue;
+      }
+      attackingMoves.addAll(getAttackingMoves(entry.getKey(), takingMove, board));
+    }
+    return attackingMoves.stream().distinct().toList();
+  }
+
+  private List<GameMove> getAttackingMoves(BoardPosition position, PieceMovement takingMove, Board board) {
+    List<GameMove> attackingMoves = new ArrayList<>();
+    List<BoardPosition> positions = takingMove.getPossiblePositions(position, board);
+    for(BoardPosition possiblePos : positions) {
+      attackingMoves.addAll(takingMove.getMovesToExecute(new GameMove(position, possiblePos), board));
+    }
+    return attackingMoves.stream().distinct().toList();
   }
 
   private boolean currentPieceIsAttacking(GameMove move, BoardGame game) {
