@@ -225,7 +225,7 @@ public class ClassicChessTest {
             currentBoard,
             game.getWinConditions(),
             game.getPromoter(),
-            game.getTurnSelector().changeTurn(new ValidPlay()),
+            game.getTurnSelector().changeTurn(null,currentBoard,new ValidPlay()),
             game.getPreMovementValidator());
     BoardGameResult game1 = makeMove(newGame, "d4 -> d2");
     BoardGameResult game2 = makeMove(newGame, "d4 -> d6");

@@ -19,16 +19,20 @@ import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
+import edu.austral.dissis.common.piece.movement.type.PieceMovement;
+import edu.austral.dissis.common.piece.movement.type.TakingMovement;
 import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class AuxStaticMethods {
   // Move
@@ -49,6 +53,20 @@ public class AuxStaticMethods {
   public static BoardGameResult makeMove(BoardGame game, String move) {
     return game.makeMove(moveFromAlgebraic(move));
   }
+
+  public static List<GameMove> getAttackingMoves(BoardPosition position, PieceMovement takingMove, Board board) {
+    List<GameMove> attackingMoves = new ArrayList<>();
+    List<BoardPosition> positions = takingMove.getPossiblePositions(position, board);
+    for(BoardPosition possiblePos : positions) {
+      attackingMoves.addAll(takingMove.getMovesToExecute(new GameMove(position, possiblePos), board));
+    }
+    return attackingMoves.stream().distinct().toList();
+  }
+
+  public static @Nullable PieceMovement getTakingMove(Piece piece) {
+    return piece.getMovements().stream().filter(movement -> movement instanceof TakingMovement).findFirst().orElse(null);
+  }
+
 
   // Game Engine
   public static @NotNull List<ChessPiece> getPiecesList(BoardGame game) {

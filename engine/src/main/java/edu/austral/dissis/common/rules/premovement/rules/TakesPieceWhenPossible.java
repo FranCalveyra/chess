@@ -7,10 +7,11 @@ import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.piece.movement.type.TakingMovement;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesByColor;
+import static edu.austral.dissis.common.utils.AuxStaticMethods.*;
 
 public class TakesPieceWhenPossible implements PreMovementRule {
   @Override
@@ -29,7 +30,7 @@ public class TakesPieceWhenPossible implements PreMovementRule {
     List<GameMove> attackingMoves = new ArrayList<>();
     for(Map.Entry<BoardPosition, Piece> entry : teamPieces.entrySet()) {
       Piece piece = entry.getValue();
-      PieceMovement takingMove = piece.getMovements().stream().filter(movement -> movement instanceof TakingMovement).findFirst().orElse(null);
+      PieceMovement takingMove = getTakingMove(piece);
       if(takingMove == null){
         continue;
       }
@@ -38,14 +39,6 @@ public class TakesPieceWhenPossible implements PreMovementRule {
     return attackingMoves.stream().distinct().toList();
   }
 
-  private List<GameMove> getAttackingMoves(BoardPosition position, PieceMovement takingMove, Board board) {
-    List<GameMove> attackingMoves = new ArrayList<>();
-    List<BoardPosition> positions = takingMove.getPossiblePositions(position, board);
-    for(BoardPosition possiblePos : positions) {
-      attackingMoves.addAll(takingMove.getMovesToExecute(new GameMove(position, possiblePos), board));
-    }
-    return attackingMoves.stream().distinct().toList();
-  }
 
   private boolean currentPieceIsAttacking(GameMove move, BoardGame game) {
     List<PieceMovement> pieceMovements = game.getBoard().pieceAt(move.from()).getMovements();

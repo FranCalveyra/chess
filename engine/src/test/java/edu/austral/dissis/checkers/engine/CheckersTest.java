@@ -39,7 +39,7 @@ public class CheckersTest {
             game.getBoard(),
             game.getWinConditions(),
             game.getPromoter(),
-            game.getTurnSelector().changeTurn(new ValidPlay()),
+            game.getTurnSelector().changeTurn(null, game.getBoard(), new ValidPlay()),
             game.getPreMovementValidator());
     GameResult result = game.makeMove(new GameMove(fromAlgebraic("a3"), fromAlgebraic("b4")));
     assertEquals(new ValidPlay(), result.moveResult());
@@ -52,7 +52,7 @@ public class CheckersTest {
             game.getBoard(),
             game.getWinConditions(),
             game.getPromoter(),
-            game.getTurnSelector().changeTurn(new ValidPlay()),
+            game.getTurnSelector().changeTurn(null, game.getBoard(), new ValidPlay()),
             game.getPreMovementValidator());
     BoardGameResult result = makeMove(game, "a3 -> b4");
     assertEquals(new ValidPlay(), result.moveResult());
@@ -73,7 +73,7 @@ public class CheckersTest {
     result = makeMove(result.game(), "b4 -> d6");
     assertEquals(23, result.game().getBoard().getPiecesAndPositions().size());
     assertEquals(new PieceTaken(), result.moveResult());
-    assertEquals(Color.RED, result.game().getCurrentTurn());
+    assertEquals(Color.BLACK, result.game().getCurrentTurn()); //Should change turn whenever no more attacking moves can be done
   }
 
   @Test
@@ -83,7 +83,7 @@ public class CheckersTest {
             game.getBoard(),
             game.getWinConditions(),
             game.getPromoter(),
-            game.getTurnSelector().changeTurn(new ValidPlay()),
+            game.getTurnSelector().changeTurn(null, game.getBoard(), new ValidPlay()),
             game.getPreMovementValidator());
     GameResult result;
     Board board =
@@ -112,7 +112,7 @@ public class CheckersTest {
             game.getBoard(),
             game.getWinConditions(),
             game.getPromoter(),
-            game.getTurnSelector().changeTurn(new ValidPlay()),
+            game.getTurnSelector().changeTurn(null, game.getBoard(), new ValidPlay()),
             game.getPreMovementValidator());
     CheckersPieceProvider provider = new CheckersPieceProvider();
     Board board =
@@ -126,7 +126,7 @@ public class CheckersTest {
             board,
             game.getWinConditions(),
             game.getPromoter(),
-            game.getTurnSelector().changeTurn(new ValidPlay()),
+            game.getTurnSelector().changeTurn(null, game.getBoard(), new ValidPlay()),
             game.getPreMovementValidator());
     assertEquals(Color.BLACK, current.getCurrentTurn());
     BoardGameResult result =

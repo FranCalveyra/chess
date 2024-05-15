@@ -85,7 +85,7 @@ public class SpecialCasesTest {
             otherBoard,
             game.getWinConditions(),
             game.getPromoter(),
-            game.getTurnSelector().changeTurn(null),
+            game.getTurnSelector().changeTurn(null,otherBoard,null),
             game.getPreMovementValidator());
     result = game.makeMove(new GameMove(fromAlgebraic("f4"), fromAlgebraic("e4")));
     assertEquals(new GameWon(Color.WHITE), result.moveResult());

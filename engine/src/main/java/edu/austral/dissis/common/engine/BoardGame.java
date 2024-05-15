@@ -95,7 +95,7 @@ public class BoardGame implements Game {
     if (playResults.contains(new PromotedPiece())) {
       result = new Pair<>(finalBoard, new PromotedPiece());
     }
-    TurnSelector nextSelector = turnSelector.changeTurn(result.second());
+    TurnSelector nextSelector = turnSelector.changeTurn(move,finalBoard,result.second());
     BoardGame finalGame =
         new BoardGame(
             finalBoard, winConditions, promoter, nextSelector, preMovementValidator, prev);
