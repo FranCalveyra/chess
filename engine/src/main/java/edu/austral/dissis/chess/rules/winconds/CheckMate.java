@@ -30,7 +30,7 @@ public class CheckMate implements WinCondition {
   }
 
   private boolean checkmate(Board context, Color team) {
-    if (!new DefaultCheck(team).isValidRule(context)) {
+    if (!new StandardCheck(team).isValidRule(context)) {
       return false;
     }
     Map<BoardPosition, Piece> teamPieces = getPiecesByColor(context, team);
@@ -64,7 +64,7 @@ public class CheckMate implements WinCondition {
       for (BoardPosition possibleMove : moveSet) {
         Piece piece = context.pieceAt(pos);
         Board possibleBoardState = context.removePieceAt(pos).addPieceAt(possibleMove, piece);
-        DefaultCheck check = new DefaultCheck(context.pieceAt(pos).getPieceColour());
+        StandardCheck check = new StandardCheck(context.pieceAt(pos).getPieceColour());
 
         // If after executing the move is not in check anymore, return false. Return true otherwise
         if (!check.isValidRule(possibleBoardState)) {

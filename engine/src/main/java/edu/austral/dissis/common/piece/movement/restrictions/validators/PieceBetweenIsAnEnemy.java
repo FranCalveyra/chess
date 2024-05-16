@@ -1,4 +1,4 @@
-package edu.austral.dissis.common.piece.movement.restrictions.rules;
+package edu.austral.dissis.common.piece.movement.restrictions.validators;
 
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPosBetween;
 
@@ -7,9 +7,9 @@ import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 
-public class PieceBetweenIsAnEnemy implements MovementRestriction {
+public class PieceBetweenIsAnEnemy implements MovementRestrictionValidator {
   @Override
-  public boolean isValidRestriction(GameMove move, Board context) {
+  public boolean isValidMove(GameMove move, Board context) {
     BoardPosition between = getPosBetween(move);
     Piece pieceBetween = context.pieceAt(between);
     return pieceBetween != null

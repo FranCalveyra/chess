@@ -9,7 +9,7 @@ import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;
 import java.util.Map;
 
-public class DefaultCheckValidator {
+public class StandardCheckValidator {
 
   public boolean isInCheck(Board context, Color team, BoardPosition toPos) {
     Piece piece = context.pieceAt(toPos);

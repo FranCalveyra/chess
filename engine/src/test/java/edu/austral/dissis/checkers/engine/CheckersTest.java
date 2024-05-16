@@ -13,7 +13,7 @@ import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.board.MapBoard;
 import edu.austral.dissis.common.engine.BoardGame;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.PieceBetweenIsAnEnemy;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.PieceBetweenIsAnEnemy;
 import edu.austral.dissis.common.rules.winconds.NoAvailableMoves;
 import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
@@ -69,7 +69,7 @@ public class CheckersTest {
         result.game().getBoard().pieceAt(fromAlgebraic("b4")).getPieceColour());
     assertTrue(
         new PieceBetweenIsAnEnemy()
-            .isValidRestriction(moveFromAlgebraic("b4 -> d6"), result.game().getBoard()));
+            .isValidMove(moveFromAlgebraic("b4 -> d6"), result.game().getBoard()));
     result = makeMove(result.game(), "b4 -> d6");
     assertEquals(23, result.game().getBoard().getPiecesAndPositions().size());
     assertEquals(new PieceTaken(), result.moveResult());

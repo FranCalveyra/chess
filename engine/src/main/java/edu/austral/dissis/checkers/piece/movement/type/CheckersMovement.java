@@ -4,13 +4,12 @@ import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.AbsColumnDistance;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.AbsRowDistance;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.ClearTile;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.MovementRestriction;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.RowDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsColumnDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsRowDistance;
 import edu.austral.dissis.common.piece.movement.restrictions.validators.AndRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.ClearTile;
 import edu.austral.dissis.common.piece.movement.restrictions.validators.MovementRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.RowDistance;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;
@@ -24,11 +23,11 @@ public class CheckersMovement implements PieceMovement {
   }
 
   private MovementRestrictionValidator getCheckersMovementValidator(Color team, PieceType type) {
-    MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(1));
+    MovementRestrictionValidator dx = new AbsColumnDistance(1);
     int colorBasedRowDistance = team == Color.BLACK ? -1 : 1;
-    MovementRestriction rowRestriction =
+    MovementRestrictionValidator dy =
         type == CheckersType.MAN ? new RowDistance(colorBasedRowDistance) : new AbsRowDistance(1);
-    MovementRestrictionValidator dy = new AndRestrictionValidator(rowRestriction, dx, null);
-    return new AndRestrictionValidator(new ClearTile(), dy, null);
+    MovementRestrictionValidator left = new AndRestrictionValidator(dx, dy);
+    return new AndRestrictionValidator(left, new ClearTile());
   }
 }

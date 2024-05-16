@@ -4,9 +4,8 @@ import static edu.austral.dissis.common.piece.movement.type.HorizontalMovement.g
 import static edu.austral.dissis.common.utils.enums.MoveType.DIAGONAL;
 
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.AbsColumnDistance;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.AbsRowDistance;
-import edu.austral.dissis.common.piece.movement.restrictions.validators.AndRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsColumnDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsRowDistance;
 import edu.austral.dissis.common.piece.movement.restrictions.validators.MovementRestrictionValidator;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
@@ -36,8 +35,8 @@ public class DiagonalMovement implements PieceMovement {
   }
 
   private MovementRestrictionValidator getDiagonalMovementRestrictions(int distance) {
-    MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(distance));
-    MovementRestrictionValidator dy = new AndRestrictionValidator(new AbsRowDistance(distance));
+    MovementRestrictionValidator dx = new AbsColumnDistance(distance);
+    MovementRestrictionValidator dy = new AbsRowDistance(distance);
     return getBaseValidator(dx, dy, DIAGONAL);
   }
 }

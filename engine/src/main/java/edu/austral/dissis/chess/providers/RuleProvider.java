@@ -30,7 +30,9 @@ public class RuleProvider {
     PreMovementValidator bottomRight = new AndValidator(new PieceValidMove(), new TurnRule());
     PreMovementValidator right =
         new AndValidator(
-            type == GameType.DEFAULT_CHESS ? new MoveNotIntoCheck() : new TakesPieceWhenPossible(),
+            type == GameType.DEFAULT_CHECKERS
+                ? new TakesPieceWhenPossible()
+                : new MoveNotIntoCheck(),
             new AvoidFriendlyFire());
     PreMovementValidator left = new AndValidator(bottomLeft, bottomRight);
     return new AndValidator(left, right);

@@ -4,6 +4,7 @@ import edu.austral.dissis.common.utils.result.playresult.PlayResult;
 import java.awt.Color;
 
 public class CheckState implements PlayResult {
+  // Not really used, may as well delete it
 
   Color team;
 

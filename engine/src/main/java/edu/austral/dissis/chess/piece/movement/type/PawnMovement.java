@@ -3,13 +3,7 @@ package edu.austral.dissis.chess.piece.movement.type;
 import static edu.austral.dissis.common.utils.enums.MoveType.VERTICAL;
 
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.AbsColumnDistance;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.ClearTile;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.MovementRestriction;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.NoPieceInPath;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.RowDistance;
-import edu.austral.dissis.common.piece.movement.restrictions.validators.AndRestrictionValidator;
-import edu.austral.dissis.common.piece.movement.restrictions.validators.MovementRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.*;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.utils.move.GameMove;
 import java.awt.Color;
@@ -23,12 +17,12 @@ public class PawnMovement implements PieceMovement {
   }
 
   private MovementRestrictionValidator getPawnRestrictions(Color team) {
-    MovementRestriction colorBasedMovement =
+    MovementRestrictionValidator dy =
         team == Color.BLACK ? new RowDistance(-1) : new RowDistance(1);
-    MovementRestrictionValidator dy = new AndRestrictionValidator(colorBasedMovement);
-    MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(0));
+    MovementRestrictionValidator dx = new AbsColumnDistance(0);
     MovementRestrictionValidator movement =
-        new AndRestrictionValidator(new NoPieceInPath(VERTICAL), dy, dx);
-    return new AndRestrictionValidator(new ClearTile(), movement, null);
+        new AndRestrictionValidator(dy, dx);
+    MovementRestrictionValidator moveAndPath = new AndRestrictionValidator(movement, new NoPieceInPath(VERTICAL));
+    return new AndRestrictionValidator(moveAndPath, new ClearTile());
   }
 }

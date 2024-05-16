@@ -6,14 +6,13 @@ import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.AbsColumnDistance;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.AbsRowDistance;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.ClearTile;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.MovementRestriction;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.PieceBetweenIsAnEnemy;
-import edu.austral.dissis.common.piece.movement.restrictions.rules.RowDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsColumnDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsRowDistance;
 import edu.austral.dissis.common.piece.movement.restrictions.validators.AndRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.ClearTile;
 import edu.austral.dissis.common.piece.movement.restrictions.validators.MovementRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.PieceBetweenIsAnEnemy;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.RowDistance;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.piece.movement.type.TakingMovement;
 import edu.austral.dissis.common.utils.move.BoardPosition;
@@ -31,14 +30,14 @@ public class CheckersTakingMovement implements PieceMovement, TakingMovement {
   }
 
   private MovementRestrictionValidator getCheckersMovementValidator(Color team, PieceType type) {
-    MovementRestrictionValidator dx = new AndRestrictionValidator(new AbsColumnDistance(2));
+    MovementRestrictionValidator dx = new AbsColumnDistance(2);
     int colorBasedRowDistance = team == Color.BLACK ? -2 : 2;
-    MovementRestriction rowRestriction =
+    MovementRestrictionValidator dy =
         type == CheckersType.MAN ? new RowDistance(colorBasedRowDistance) : new AbsRowDistance(2);
-    MovementRestrictionValidator dy = new AndRestrictionValidator(rowRestriction, dx, null);
+    MovementRestrictionValidator bottomLeft = new AndRestrictionValidator(dx, dy);
     MovementRestrictionValidator enemyBetween =
-        new AndRestrictionValidator(new PieceBetweenIsAnEnemy(), dy, null);
-    return new AndRestrictionValidator(new ClearTile(), enemyBetween, null);
+        new AndRestrictionValidator(bottomLeft, new PieceBetweenIsAnEnemy());
+    return new AndRestrictionValidator(enemyBetween, new ClearTile());
   }
 
   @Override

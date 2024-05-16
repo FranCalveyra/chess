@@ -25,12 +25,9 @@ public class NoAvailableMoves implements WinCondition {
       return true;
     }
 
-    for (Map.Entry<BoardPosition, Piece> pieceEntry : teamPieces.entrySet()) {
-      if (!pieceEntry.getValue().getMoveSet(pieceEntry.getKey(), context).isEmpty()) {
-        return false;
-      }
-    }
-    return true;
+    return teamPieces.entrySet().stream()
+        .allMatch(
+            pieceEntry -> pieceEntry.getValue().getMoveSet(pieceEntry.getKey(), context).isEmpty());
   }
 
   private Map<BoardPosition, Piece> getPiecesByTeam(Board context, Color team) {

@@ -13,7 +13,7 @@ import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.rules.winconds.CheckMate;
-import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
+import edu.austral.dissis.chess.rules.winconds.StandardCheck;
 import edu.austral.dissis.common.board.MapBoard;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
@@ -59,8 +59,8 @@ public class ClassicChessTest {
     game = finishingMove.game();
     assertEquals(new GameWon(BLACK), finishingMove.moveResult());
     assertEquals(ChessPieceType.QUEEN, game.getBoard().pieceAt(fromAlgebraic("h4")).getType());
-    assertTrue(new DefaultCheck(WHITE).isValidRule(game.getBoard()));
-    assertFalse(new DefaultCheck(Color.BLACK).isValidRule(game.getBoard()));
+    assertTrue(new StandardCheck(WHITE).isValidRule(game.getBoard()));
+    assertFalse(new StandardCheck(Color.BLACK).isValidRule(game.getBoard()));
     assertTrue(new CheckMate(WHITE).isValidRule(game.getBoard()));
   }
 

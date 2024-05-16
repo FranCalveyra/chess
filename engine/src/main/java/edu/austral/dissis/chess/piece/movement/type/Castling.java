@@ -2,7 +2,7 @@ package edu.austral.dissis.chess.piece.movement.type;
 
 import static edu.austral.dissis.common.utils.enums.MoveType.HORIZONTAL;
 
-import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
+import edu.austral.dissis.chess.rules.winconds.StandardCheck;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
@@ -10,6 +10,7 @@ import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.validators.PiecePathValidator;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Castling implements PieceMovement {
   // Only valid whenever king and rooks haven't been moved yet,
@@ -58,7 +59,7 @@ public class Castling implements PieceMovement {
 
   private boolean checkOrBlockedPath(
       BoardPosition oldPos, BoardPosition newPos, Board context, Piece king) {
-    boolean isInCheckFromStart = new DefaultCheck(king.getPieceColour()).isValidRule(context);
+    boolean isInCheckFromStart = new StandardCheck(king.getPieceColour()).isValidRule(context);
     return !(new PiecePathValidator().isNoPieceBetween(oldPos, newPos, context, HORIZONTAL))
         || isInCheckFromStart;
   }
@@ -80,14 +81,13 @@ public class Castling implements PieceMovement {
     int fromColumn = Math.min(oldPos.getColumn(), newPos.getColumn());
     int toColumn = Math.max(oldPos.getColumn(), newPos.getColumn());
     Piece king = context.pieceAt(oldPos);
-    for (int j = fromColumn + 1; j <= toColumn; j++) {
-      BoardPosition currentTile = new BoardPosition(oldPos.getRow(), j);
-      Board possibleBoard = context.removePieceAt(oldPos).addPieceAt(currentTile, king);
-      if (new DefaultCheck(context.pieceAt(oldPos).getPieceColour()).isValidRule(possibleBoard)) {
-        return false;
-      }
-    }
-    return true;
+    return IntStream.rangeClosed(fromColumn + 1, toColumn)
+        .mapToObj(j -> new BoardPosition(oldPos.getRow(), j))
+        .map(currentTile -> context.removePieceAt(oldPos).addPieceAt(currentTile, king))
+        .noneMatch(
+            possibleBoard ->
+                new StandardCheck(context.pieceAt(oldPos).getPieceColour())
+                    .isValidRule(possibleBoard));
   }
 
   private boolean validGeneralChecks(

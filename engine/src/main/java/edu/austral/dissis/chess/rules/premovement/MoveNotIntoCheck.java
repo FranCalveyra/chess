@@ -1,7 +1,7 @@
 package edu.austral.dissis.chess.rules.premovement;
 
 import edu.austral.dissis.chess.rules.winconds.Check;
-import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
+import edu.austral.dissis.chess.rules.winconds.StandardCheck;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
@@ -16,7 +16,7 @@ import java.util.List;
 public class MoveNotIntoCheck implements PreMovementValidator {
   @Override
   public boolean isValidRule(GameMove move, BoardGame game) {
-    List<Check> checks = List.of(new DefaultCheck(Color.BLACK), new DefaultCheck(Color.WHITE));
+    List<Check> checks = List.of(new StandardCheck(Color.BLACK), new StandardCheck(Color.WHITE));
     Piece piece = game.getBoard().pieceAt(move.from());
     Pair<Board, PlayResult> resultPair = new Pair<>(game.getBoard(), new ValidPlay());
     final List<GameMove> playToExecute = piece.getPlay(move, game.getBoard());

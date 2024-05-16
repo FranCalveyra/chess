@@ -1,13 +1,13 @@
 package edu.austral.dissis.chess.rules.winconds;
 
-import edu.austral.dissis.chess.validators.DefaultCheckValidator;
+import edu.austral.dissis.chess.validators.StandardCheckValidator;
 import edu.austral.dissis.common.board.Board;
 import java.awt.Color;
 
-public class DefaultCheck implements Check {
+public class StandardCheck implements Check {
   private final Color team;
 
-  public DefaultCheck(Color team) {
+  public StandardCheck(Color team) {
     this.team = team;
   }
 
@@ -22,7 +22,7 @@ public class DefaultCheck implements Check {
   }
 
   private boolean check(Board context, Color team) {
-    DefaultCheckValidator validator = new DefaultCheckValidator();
+    StandardCheckValidator validator = new StandardCheckValidator();
     return context.getPiecesAndPositions().entrySet().stream()
         .anyMatch(entry -> validator.isInCheck(context, team, entry.getKey()));
   }
