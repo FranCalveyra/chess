@@ -31,7 +31,6 @@ public class BoardGame implements Game {
   private final TurnSelector turnSelector;
   private final MoveExecutor executor;
   private final PreMovementValidator preMovementValidator;
-  private final Pair<BoardGame, GameMove> previousState;
 
   public BoardGame(
       @NotNull Board board,
@@ -47,24 +46,6 @@ public class BoardGame implements Game {
     this.turnSelector = turnSelector;
     this.preMovementValidator = preMovementValidator;
     this.executor = new MoveExecutor();
-    this.previousState = null;
-  }
-
-  private BoardGame(
-      @NotNull Board board,
-      @NotNull List<WinCondition> winConditions,
-      Promoter promoter,
-      TurnSelector turnSelector,
-      PreMovementValidator preMovementValidator,
-      Pair<BoardGame, GameMove> previousState) {
-    this.board = board;
-    this.winConditions = winConditions;
-    this.winConditionValidator = new WinConditionValidator(winConditions);
-    this.promoter = promoter;
-    this.turnSelector = turnSelector;
-    this.preMovementValidator = preMovementValidator;
-    this.executor = new MoveExecutor();
-    this.previousState = previousState;
   }
 
   @Override
@@ -98,11 +79,9 @@ public class BoardGame implements Game {
       result = new Pair<>(finalBoard, new PromotedPiece());
     }
     // Stuff to return
-    Pair<BoardGame, GameMove> prev = new Pair<>(this, move);
     TurnSelector nextSelector = turnSelector.changeTurn(move, finalBoard, result.second());
     BoardGame finalGame =
-        new BoardGame(
-            finalBoard, winConditions, promoter, nextSelector, preMovementValidator, prev);
+        new BoardGame(finalBoard, winConditions, promoter, nextSelector, preMovementValidator);
 
     if (winConditionValidator.isGameWon(finalBoard)) {
       Color winner = turnSelector.getCurrentTurn();

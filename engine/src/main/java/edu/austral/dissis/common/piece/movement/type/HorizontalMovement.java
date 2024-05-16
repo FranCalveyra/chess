@@ -3,7 +3,14 @@ package edu.austral.dissis.common.piece.movement.type;
 import static edu.austral.dissis.common.utils.enums.MoveType.HORIZONTAL;
 
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.piece.movement.restrictions.validators.*;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsColumnDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsRowDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AndRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.ClearTile;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.IsAnEnemy;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.MovementRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.NoPieceInPath;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.OrRestrictionValidator;
 import edu.austral.dissis.common.utils.enums.MoveType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
@@ -41,10 +48,11 @@ public class HorizontalMovement implements PieceMovement {
   @NotNull
   protected static MovementRestrictionValidator getBaseValidator(
       MovementRestrictionValidator dx, MovementRestrictionValidator dy, MoveType moveType) {
-    MovementRestrictionValidator moveCorrectly = new AndRestrictionValidator( dx, dy);
+    MovementRestrictionValidator moveCorrectly = new AndRestrictionValidator(dx, dy);
     MovementRestrictionValidator isEnemy = new IsAnEnemy();
     MovementRestrictionValidator right = new OrRestrictionValidator(new ClearTile(), isEnemy);
-    MovementRestrictionValidator left = new AndRestrictionValidator(moveCorrectly, new NoPieceInPath(moveType));
+    MovementRestrictionValidator left =
+        new AndRestrictionValidator(moveCorrectly, new NoPieceInPath(moveType));
     return new AndRestrictionValidator(left, right);
   }
 }

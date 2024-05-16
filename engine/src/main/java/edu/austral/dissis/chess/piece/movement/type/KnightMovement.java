@@ -1,7 +1,13 @@
 package edu.austral.dissis.chess.piece.movement.type;
 
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.piece.movement.restrictions.validators.*;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsColumnDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AbsRowDistance;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.AndRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.ClearTile;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.IsAnEnemy;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.MovementRestrictionValidator;
+import edu.austral.dissis.common.piece.movement.restrictions.validators.OrRestrictionValidator;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.utils.move.GameMove;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +25,7 @@ public class KnightMovement implements PieceMovement {
   }
 
   private MovementRestrictionValidator getKnightRestrictions() {
-    return new AndRestrictionValidator(getLeftValidator(),getRightValidator());
+    return new AndRestrictionValidator(getLeftValidator(), getRightValidator());
   }
 
   private @NotNull MovementRestrictionValidator getRightValidator() {

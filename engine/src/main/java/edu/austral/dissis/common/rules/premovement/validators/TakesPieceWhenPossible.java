@@ -26,7 +26,6 @@ public class TakesPieceWhenPossible implements PreMovementValidator {
     if (allAttackingMoves.isEmpty()) {
       return true;
     }
-    ;
     return currentPieceIsAttacking(move, game)
         && allAttackingMoves.getFirst().from().equals(move.from());
   }
