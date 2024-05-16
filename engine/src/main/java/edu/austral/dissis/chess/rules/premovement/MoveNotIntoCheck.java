@@ -5,7 +5,7 @@ import edu.austral.dissis.chess.rules.winconds.DefaultCheck;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
-import edu.austral.dissis.common.rules.premovement.rules.PreMovementRule;
+import edu.austral.dissis.common.rules.premovement.validators.PreMovementValidator;
 import edu.austral.dissis.common.utils.Pair;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.playresult.PlayResult;
@@ -13,7 +13,7 @@ import edu.austral.dissis.common.utils.result.playresult.ValidPlay;
 import java.awt.Color;
 import java.util.List;
 
-public class MoveNotIntoCheck implements PreMovementRule {
+public class MoveNotIntoCheck implements PreMovementValidator {
   @Override
   public boolean isValidRule(GameMove move, BoardGame game) {
     List<Check> checks = List.of(new DefaultCheck(Color.BLACK), new DefaultCheck(Color.WHITE));
@@ -31,5 +31,10 @@ public class MoveNotIntoCheck implements PreMovementRule {
             check ->
                 check.getTeam() == game.getBoard().pieceAt(move.from()).getPieceColour()
                     && !check.isValidRule(finalResultPair.first()));
+  }
+
+  @Override
+  public String getFailureMessage() {
+    return "Cannot move into a check";
   }
 }

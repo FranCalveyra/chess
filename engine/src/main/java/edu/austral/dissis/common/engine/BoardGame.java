@@ -72,13 +72,12 @@ public class BoardGame implements Game {
     // Check winning at the end
     // Do all necessary checks
     // PreMovementRules should be valid
-    PlayResult preMovementValidity = preMovementValidator.getMoveValidity(move, this);
-    if (preMovementValidity.getClass() == InvalidPlay.class) {
-      return new BoardGameResult(this, preMovementValidity);
+    if (!preMovementValidator.isValidRule(move, this)) {
+      return new BoardGameResult(this, new InvalidPlay(preMovementValidator.getFailureMessage()));
     }
     // Once valid, execute move
     final Piece pieceToMove = board.pieceAt(move.from());
-    Pair<Board, PlayResult> result = new Pair<>(board, new InvalidPlay("any"));
+    Pair<Board, PlayResult> result = new Pair<>(board, new InvalidPlay(""));
 
     final List<GameMove> playToExecute = pieceToMove.getPlay(move, board);
     List<PlayResult> playResults = new ArrayList<>();

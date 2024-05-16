@@ -1,4 +1,4 @@
-package edu.austral.dissis.common.rules.premovement.rules;
+package edu.austral.dissis.common.rules.premovement.validators;
 
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getAttackingMoves;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesByColor;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class TakesPieceWhenPossible implements PreMovementRule {
+public class TakesPieceWhenPossible implements PreMovementValidator {
   @Override
   public boolean isValidRule(GameMove move, BoardGame game) {
     // If the piece has a TakingMove type movement, execute it.
@@ -29,6 +29,11 @@ public class TakesPieceWhenPossible implements PreMovementRule {
     ;
     return currentPieceIsAttacking(move, game)
         && allAttackingMoves.getFirst().from().equals(move.from());
+  }
+
+  @Override
+  public String getFailureMessage() {
+    return "Obligated to take a piece";
   }
 
   private List<GameMove> getTeamAttackingMoves(Map<BoardPosition, Piece> teamPieces, Board board) {

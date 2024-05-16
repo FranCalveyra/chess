@@ -1,15 +1,20 @@
-package edu.austral.dissis.common.rules.premovement.rules;
+package edu.austral.dissis.common.rules.premovement.validators;
 
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 
-public class InsideBoardBounds implements PreMovementRule {
+public class InsideBoardBounds implements PreMovementValidator {
   @Override
   public boolean isValidRule(GameMove move, BoardGame game) {
     Board board = game.getBoard();
     return insideBoardBounds(board, move.from()) && insideBoardBounds(board, move.to());
+  }
+
+  @Override
+  public String getFailureMessage() {
+    return "Out of board bounds";
   }
 
   private boolean insideBoardBounds(Board board, BoardPosition pos) {
