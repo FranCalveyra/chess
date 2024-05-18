@@ -31,14 +31,20 @@ import edu.austral.dissis.common.utils.result.playresult.ValidPlay;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import org.jetbrains.annotations.NotNull;
 
 public class ChessGameRunner implements TestGameRunner {
+  private final Stack<BoardGame> undo;
+  private final Stack<BoardGame> redo;
+  private BoardGameResult lastResult;
 
   private BoardGame game;
 
   public ChessGameRunner(BoardGame game) {
     this.game = game;
+    undo = new Stack<>();
+    redo = new Stack<>();
   }
 
   @NotNull
@@ -46,8 +52,14 @@ public class ChessGameRunner implements TestGameRunner {
   public TestMoveResult executeMove(@NotNull TestPosition from, @NotNull TestPosition to) {
     BoardGameResult boardGameResult =
         game.makeMove(new GameMove(mapPosition(from), mapPosition(to)));
-    game = boardGameResult.game();
-    return getTestMoveResult(boardGameResult);
+    if (boardGameResult.moveResult().getClass() != InvalidPlay.class) {
+      undo.push(game);
+      lastResult = boardGameResult;
+      game = boardGameResult.game();
+      redo.removeAllElements();
+      return getTestMoveResult(lastResult);
+    }
+    return new TestMoveFailure(getBoard());
   }
 
   @NotNull
@@ -115,6 +127,9 @@ public class ChessGameRunner implements TestGameRunner {
   }
 
   private @NotNull TestMoveResult getTestMoveResult(BoardGameResult boardGameResult) {
+    if (boardGameResult == null) {
+      return new TestMoveFailure(getBoard());
+    }
     PlayResult playResult = boardGameResult.moveResult();
     switch (playResult) {
       case GameWon g:
@@ -134,5 +149,23 @@ public class ChessGameRunner implements TestGameRunner {
       default:
         throw new IllegalStateException();
     }
+  }
+
+  @NotNull
+  @Override
+  public TestMoveResult redo() {
+    BoardGame redone = redo.pop();
+    undo.push(game);
+    game = redone;
+    return getTestMoveResult(lastResult);
+  }
+
+  @NotNull
+  @Override
+  public TestMoveResult undo() {
+    BoardGame undone = undo.pop();
+    redo.push(game);
+    game = undone;
+    return getTestMoveResult(lastResult);
   }
 }
