@@ -17,6 +17,7 @@ public class CheckersMain {
   public static void main(String[] args) {
     launch(CheckersApplication.class);
   }
+
   public static class CheckersApplication extends Application {
     private final Pair<GameEngine, ImageResolver> setup = setupGame(GameType.DEFAULT_CHECKERS);
     private final GameEngine gameEngine = setup.first();

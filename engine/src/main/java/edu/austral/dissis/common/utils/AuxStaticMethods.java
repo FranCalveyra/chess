@@ -3,6 +3,7 @@ package edu.austral.dissis.common.utils;
 import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.chess.gui.CachedImageResolver;
 import edu.austral.dissis.chess.gui.ChessPiece;
@@ -14,7 +15,7 @@ import edu.austral.dissis.chess.gui.PlayerColor;
 import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.ui.gameengine.ChessGameEngine;
+import edu.austral.dissis.chess.ui.gameengine.BoardGameEngine;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
@@ -25,7 +26,21 @@ import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
+import edu.austral.dissis.online.listeners.client.ClientConnectionListenerImpl;
+import edu.austral.dissis.online.listeners.client.ClientListener;
+import edu.austral.dissis.online.listeners.messages.MoveListener;
+import edu.austral.dissis.online.listeners.messages.TurnListener;
+import edu.austral.dissis.online.listeners.messages.UndoRedoListener;
+import edu.austral.dissis.online.listeners.server.ServerConnectionListenerImpl;
+import edu.austral.dissis.online.listeners.server.ServerListener;
+import edu.austral.ingsis.clientserver.Client;
+import edu.austral.ingsis.clientserver.Server;
+import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
+import edu.austral.ingsis.clientserver.netty.server.NettyServerBuilder;
+import edu.austral.ingsis.clientserver.serialization.json.JsonDeserializer;
+import edu.austral.ingsis.clientserver.serialization.json.JsonSerializer;
 import java.awt.Color;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -113,7 +128,7 @@ public class AuxStaticMethods {
   }
 
   public static Pair<GameEngine, ImageResolver> setupGame(GameType type) {
-    final GameEngine gameEngine = new ChessGameEngine(new GameProvider().provide(type));
+    final GameEngine gameEngine = new BoardGameEngine(new GameProvider().provide(type));
     final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
     return new Pair<>(gameEngine, imageResolver);
   }
@@ -150,5 +165,28 @@ public class AuxStaticMethods {
     return map.entrySet().stream()
         .filter(entry -> entry.getValue() != null && entry.getValue().getPieceColour() == team)
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  }
+
+  public static Client buildClient(ClientListener clientListener) {
+    final MoveListener moveListener = clientListener.getMoveListener();
+    final UndoRedoListener undoRedoListener = clientListener.getUndoRedoListener();
+    final Client client =
+        new NettyClientBuilder(new JsonDeserializer(), new JsonSerializer())
+            .withAddress(new InetSocketAddress("localhost",8020))
+            .withConnectionListener(new ClientConnectionListenerImpl())
+            .addMessageListener("Move", new TypeReference<>() {}, moveListener)
+            .addMessageListener("UndoRedo", new TypeReference<>() {}, undoRedoListener)
+            .build();
+    return client;
+  }
+
+  public static Server buildServer(ServerListener serverListener) {
+    final TurnListener turnListener = serverListener.getTurnListener();
+    final Server server =
+            new NettyServerBuilder(new JsonDeserializer(), new JsonSerializer())
+                    .withPort(8020).withConnectionListener(new ServerConnectionListenerImpl())
+                    .addMessageListener("Turn", new TypeReference<>(){}, turnListener)
+                    .build();
+    return server;
   }
 }

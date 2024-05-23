@@ -19,16 +19,15 @@ import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.common.utils.result.playresult.*;
-
 import java.util.Stack;
 import org.jetbrains.annotations.NotNull;
 
-public class ChessGameEngine implements GameEngine {
+public class BoardGameEngine implements GameEngine {
   private BoardGame game;
   private final Stack<BoardGame> undo;
   private final Stack<BoardGame> redo;
 
-  public ChessGameEngine(BoardGame game) {
+  public BoardGameEngine(BoardGame game) {
     this.game = game;
     undo = new Stack<>();
     redo = new Stack<>();

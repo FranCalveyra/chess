@@ -37,7 +37,8 @@ public class MoveExecutor {
       Pair<Board, PlayResult> pair, BoardPosition boardPosition, Color color, Promoter promoter) {
     Board board = pair.first();
     if (promoter.canPromote(boardPosition, board) || promoter.hasToPromote(board, color)) {
-      return new Pair<>(promoter.promote(boardPosition, ChessPieceType.QUEEN, board), new PromotedPiece());
+      return new Pair<>(
+          promoter.promote(boardPosition, ChessPieceType.QUEEN, board), new PromotedPiece());
     }
     return pair;
   }
