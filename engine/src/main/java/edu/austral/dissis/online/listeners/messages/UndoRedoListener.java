@@ -6,10 +6,10 @@ import edu.austral.ingsis.clientserver.MessageListener;
 import org.jetbrains.annotations.NotNull;
 
 public class UndoRedoListener implements MessageListener<UndoState> {
-    private UndoState currentState;
+  private UndoState currentState;
 
   @Override
   public void handleMessage(@NotNull Message<UndoState> message) {
-      currentState = message.getPayload();
+    currentState = message.getPayload();
   }
 }

@@ -7,11 +7,11 @@ import edu.austral.ingsis.clientserver.MessageListener;
 import org.jetbrains.annotations.NotNull;
 
 public class TurnListener implements MessageListener<NewGameState> {
-    private PlayerColor currentTurn;
+  private PlayerColor currentTurn;
 
   @Override
   public void handleMessage(@NotNull Message<NewGameState> message) {
-      NewGameState gameState = message.getPayload();
-      currentTurn = gameState.getCurrentPlayer();
+    NewGameState gameState = message.getPayload();
+    currentTurn = gameState.getCurrentPlayer();
   }
 }

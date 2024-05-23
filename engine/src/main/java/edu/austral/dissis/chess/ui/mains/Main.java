@@ -30,7 +30,7 @@ public class Main {
 
     private static final ClientListener CLIENT_LISTENER = new ClientListener();
     private static final SimpleEventListener eventListener =
-            new SimpleEventListener(gameEngine, root, CLIENT_LISTENER);
+        new SimpleEventListener(gameEngine, root, CLIENT_LISTENER);
     private static final Client client = buildClient(CLIENT_LISTENER);
 
     @Override

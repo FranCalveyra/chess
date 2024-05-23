@@ -172,7 +172,7 @@ public class AuxStaticMethods {
     final UndoRedoListener undoRedoListener = clientListener.getUndoRedoListener();
     final Client client =
         new NettyClientBuilder(new JsonDeserializer(), new JsonSerializer())
-            .withAddress(new InetSocketAddress("localhost",8020))
+            .withAddress(new InetSocketAddress("localhost", 8020))
             .withConnectionListener(new ClientConnectionListenerImpl())
             .addMessageListener("Move", new TypeReference<>() {}, moveListener)
             .addMessageListener("UndoRedo", new TypeReference<>() {}, undoRedoListener)
@@ -183,10 +183,11 @@ public class AuxStaticMethods {
   public static Server buildServer(ServerListener serverListener) {
     final TurnListener turnListener = serverListener.getTurnListener();
     final Server server =
-            new NettyServerBuilder(new JsonDeserializer(), new JsonSerializer())
-                    .withPort(8020).withConnectionListener(new ServerConnectionListenerImpl())
-                    .addMessageListener("Turn", new TypeReference<>(){}, turnListener)
-                    .build();
+        new NettyServerBuilder(new JsonDeserializer(), new JsonSerializer())
+            .withPort(8020)
+            .withConnectionListener(new ServerConnectionListenerImpl())
+            .addMessageListener("Turn", new TypeReference<>() {}, turnListener)
+            .build();
     return server;
   }
 }
