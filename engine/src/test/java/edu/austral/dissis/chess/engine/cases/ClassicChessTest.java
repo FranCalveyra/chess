@@ -24,6 +24,7 @@ import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.common.utils.result.playresult.GameWon;
 import edu.austral.dissis.common.utils.result.playresult.InvalidPlay;
+import edu.austral.dissis.common.utils.result.playresult.PromotedPiece;
 import edu.austral.dissis.common.utils.result.playresult.ValidPlay;
 import java.awt.Color;
 import java.util.List;
@@ -102,8 +103,9 @@ public class ClassicChessTest {
     assertPositionType(game, ChessPieceType.PAWN, 6, 0);
     game = makeMove(game, "c5 -> c3").game();
     assertPositionType(game, ChessPieceType.ROOK, 2, 2);
-    game = makeMove(game, "a7 -> a8").game();
-
+    BoardGameResult lastResult = makeMove(game, "a7 -> a8");
+    game = lastResult.game();
+    assertEquals(new PromotedPiece(), lastResult.moveResult());
     // Once promoted:
     assertPositionType(game, ChessPieceType.QUEEN, 7, 0);
     assertEquals(WHITE, game.getBoard().pieceAt(fromAlgebraic("a8")).getPieceColour());

@@ -10,4 +10,9 @@ public class PromotedPiece implements PlayResult {
   public String getType() {
     return "PromotedPiece";
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    return obj instanceof PromotedPiece;
+  }
 }

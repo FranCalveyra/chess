@@ -70,7 +70,7 @@ public class BoardGame implements Game {
 
     // Declare final variables
     Board finalBoard = result.first();
-    // Compound movements hardcode, may need to change
+    // Compound movements hardcode, may need to change for a priority handling
     if (playResults.contains(new PieceTaken())) {
       result = new Pair<>(finalBoard, new PieceTaken());
     }
