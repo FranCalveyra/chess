@@ -1,34 +1,30 @@
 package edu.austral.dissis.online.listeners.server;
 
 import edu.austral.dissis.chess.gui.*;
+import edu.austral.ingsis.clientserver.Client;
+import edu.austral.ingsis.clientserver.Message;
 import javafx.application.Platform;
 import org.jetbrains.annotations.NotNull;
 
 public class SimpleEventListener implements GameEventListener {
-    private final GameEngine gameEngine;
-    private final GameView gameView;
+  private final Client client;
 
-    public SimpleEventListener(GameEngine gameEngine, GameView root) {
-        this.gameEngine = gameEngine;
-        this.gameView = root;
-    }
+  public SimpleEventListener(Client client) {
+    this.client = client;
+  }
 
-    @Override
-    public void handleMove(@NotNull Move move) {
-        MoveResult result = gameEngine.applyMove(move);
-        Platform.runLater(()->gameView.handleMoveResult(result));
+  @Override
+  public void handleMove(@NotNull Move move) {
+    Platform.runLater(() -> client.send(new Message<>("Move", move)));
+  }
 
-    }
+  @Override
+  public void handleUndo() {
+    Platform.runLater(() -> client.send(new Message<>("UndoRedo", "Do undo")));
+  }
 
-    @Override
-    public void handleUndo() {
-        NewGameState undoResult = gameEngine.undo();
-        Platform.runLater(()->gameView.handleMoveResult(undoResult));
-    }
-
-    @Override
-    public void handleRedo() {
-        NewGameState redoResult = gameEngine.redo();
-        Platform.runLater(()->gameView.handleMoveResult(redoResult));
-    }
+  @Override
+  public void handleRedo() {
+    Platform.runLater(() -> client.send(new Message<>("UndoRedo", "Do redo")));
+  }
 }

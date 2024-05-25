@@ -3,7 +3,6 @@ package edu.austral.dissis.common.utils;
 import static edu.austral.dissis.common.utils.move.BoardPosition.fromAlgebraic;
 import static java.awt.Color.BLACK;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.chess.gui.*;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
@@ -19,20 +18,8 @@ import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
-import edu.austral.dissis.online.listeners.client.ClientConnectionListenerImpl;
-import edu.austral.dissis.online.listeners.main.ServerMain;
-import edu.austral.dissis.online.listeners.messages.InitialStateListener;
-import edu.austral.dissis.online.listeners.messages.MoveResultListener;
-import edu.austral.dissis.online.listeners.server.MoveListener;
-import edu.austral.dissis.online.listeners.server.ServerConnectionListenerImpl;
-import edu.austral.ingsis.clientserver.Client;
-import edu.austral.ingsis.clientserver.Server;
-import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
-import edu.austral.ingsis.clientserver.netty.server.NettyServerBuilder;
-import edu.austral.ingsis.clientserver.serialization.json.JsonDeserializer;
-import edu.austral.ingsis.clientserver.serialization.json.JsonSerializer;
+import edu.austral.dissis.online.listeners.messages.*;
 import java.awt.Color;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -157,26 +144,5 @@ public class AuxStaticMethods {
     return map.entrySet().stream()
         .filter(entry -> entry.getValue() != null && entry.getValue().getPieceColour() == team)
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-  }
-
-  public static Client buildClient(GameView gameView) {
-    final Client client =
-        new NettyClientBuilder(new JsonDeserializer(), new JsonSerializer())
-            .withAddress(new InetSocketAddress("localhost", 8020))
-            .withConnectionListener(new ClientConnectionListenerImpl())
-                .addMessageListener("InitialState", new TypeReference<>(){}, new InitialStateListener(gameView))
-                .addMessageListener("MoveResult", new TypeReference<>(){}, new MoveResultListener(gameView) )
-            .build();
-    return client;
-  }
-
-  public static Server buildServer( Map<String, Color> teamColor, GameEngine engine) {
-    final Server server =
-        new NettyServerBuilder(new JsonDeserializer(), new JsonSerializer())
-            .withPort(8020)
-            .withConnectionListener(new ServerConnectionListenerImpl(teamColor))
-                .addMessageListener("Move", new TypeReference<>(){}, new MoveListener(engine))
-                .build();
-    return server;
   }
 }
