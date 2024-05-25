@@ -4,7 +4,6 @@ import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 
 import edu.austral.dissis.chess.gui.GameOver;
 import edu.austral.dissis.chess.gui.MoveResult;
-import edu.austral.dissis.chess.ui.mains.Main;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.Server;
 import edu.austral.ingsis.clientserver.ServerConnectionListener;
@@ -23,13 +22,13 @@ public class ServerConnectionListenerImpl implements ServerConnectionListener {
 
   @Override
   public void handleClientConnection(@NotNull String clientId) {
+    server.sendMessage(clientId, new Message<>("ID", clientId));
     System.out.println(("User connected with id: " + clientId));
     userCount++;
     if (userCount > 2) {
       return;
     }
     teamColors.put(clientId, userCount == 1 ? Color.WHITE : Color.BLACK);
-    System.out.println(teamColors);
   }
 
   @Override

@@ -13,7 +13,7 @@ import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.chess.gui.NewGameState;
 import edu.austral.dissis.chess.gui.UndoState;
 import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.ui.gameengine.BoardGameEngine;
+import edu.austral.dissis.common.ui.gameengine.BoardGameEngine;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.utils.enums.GameType;
 import org.junit.jupiter.api.Test;

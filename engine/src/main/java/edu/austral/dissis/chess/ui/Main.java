@@ -1,16 +1,17 @@
-package edu.austral.dissis.chess.ui.mains;
+package edu.austral.dissis.chess.ui;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.chess.gui.*;
 import edu.austral.dissis.online.listeners.client.ClientConnectionListenerImpl;
-import edu.austral.dissis.online.listeners.messages.*;
+import edu.austral.dissis.online.listeners.client.ClientIdListener;
 import edu.austral.dissis.online.listeners.client.SimpleEventListener;
+import edu.austral.dissis.online.listeners.messages.*;
+import edu.austral.dissis.online.utils.Initial;
 import edu.austral.ingsis.clientserver.Client;
 import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
 import edu.austral.ingsis.clientserver.serialization.json.JsonDeserializer;
 import edu.austral.ingsis.clientserver.serialization.json.JsonSerializer;
 
-import java.awt.*;
 import java.net.InetSocketAddress;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 
 public class Main {
 
+
   public static void main(String[] args) {
     Application.launch(ChessApplication.class);
   }
@@ -26,14 +28,16 @@ public class Main {
   public static class ChessApplication extends Application {
     final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
     private final GameView root = new GameView(imageResolver);
-    private final Client client = buildClient(root);
-    private final GameEventListener eventListener = new SimpleEventListener(client);
-    public static Color team;
-    public static String id;
+
+
 
     @Override
     public void start(Stage stage) {
+      Initial initial = new Initial("");
+      ClientIdListener idListener = new ClientIdListener(initial);
+      final Client client = buildClient(root,idListener);
       client.connect();
+      GameEventListener eventListener = new SimpleEventListener(client, initial);
       root.addListener(eventListener);
       stage.setTitle("Chess");
       stage.setScene(new Scene(root));
@@ -47,7 +51,7 @@ public class Main {
     }
   }
 
-  private static Client buildClient(GameView gameView) {
+  private static Client buildClient(GameView gameView, ClientIdListener idListener) {
     final Client client =
         new NettyClientBuilder(new JsonDeserializer(), new JsonSerializer())
             .withAddress(new InetSocketAddress("localhost", 8020))
@@ -61,6 +65,7 @@ public class Main {
             .addMessageListener(
                 "GameOver", new TypeReference<>() {}, new GameOverListener(gameView))
             .addMessageListener("Color", new TypeReference<>() {}, new TurnListener())
+                .addMessageListener("ID", new TypeReference<>(){}, idListener)
             .build();
     return client;
   }

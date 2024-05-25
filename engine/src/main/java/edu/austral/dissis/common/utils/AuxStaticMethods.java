@@ -7,7 +7,7 @@ import edu.austral.dissis.checkers.piece.movement.CheckersType;
 import edu.austral.dissis.chess.gui.*;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
-import edu.austral.dissis.chess.ui.gameengine.BoardGameEngine;
+import edu.austral.dissis.common.ui.gameengine.BoardGameEngine;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
@@ -146,17 +146,15 @@ public class AuxStaticMethods {
   }
 
   public static String getClassName(MoveResult currentState) {
-    if(currentState instanceof NewGameState){
+    if (currentState instanceof NewGameState) {
       return "NewGameState";
     }
-    if (currentState instanceof InvalidMove){
+    if (currentState instanceof InvalidMove) {
       return "InvalidMove";
     }
-    if (currentState instanceof GameOver){
+    if (currentState instanceof GameOver) {
       return "GameOver";
     }
     return "";
   }
-
-
 }

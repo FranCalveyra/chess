@@ -1,4 +1,4 @@
-package edu.austral.dissis.chess.ui.gameengine;
+package edu.austral.dissis.common.ui.gameengine;
 
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesList;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
@@ -41,9 +41,8 @@ public class BoardGameEngine implements GameEngine {
       undo.push(game);
       game = gameResult.game();
       redo.removeAllElements();
-      return getMoveResult(gameResult);
     }
-    return new InvalidMove(gameResult.moveResult().getMessage());
+    return getMoveResult(gameResult);
   }
 
   @NotNull
