@@ -22,9 +22,9 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 public class BoardGame implements Game {
-  /** Simulates a real Chess Game. */
+  /** Simulates a real Board Game. */
   private final Board board;
-
+  //TODO: refactor whenever necessary
   private final WinConditionValidator winConditionValidator;
   private final List<WinCondition> winConditions;
   private final Promoter promoter;

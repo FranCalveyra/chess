@@ -4,6 +4,7 @@ import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 
 import edu.austral.dissis.chess.gui.GameOver;
 import edu.austral.dissis.chess.gui.MoveResult;
+import edu.austral.dissis.chess.ui.mains.Main;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.Server;
 import edu.austral.ingsis.clientserver.ServerConnectionListener;
@@ -37,7 +38,7 @@ public class ServerConnectionListenerImpl implements ServerConnectionListener {
     teamColors.remove(clientId);
     MoveResult gameOver =
         new GameOver(getPlayerColor(teamColors.entrySet().stream().toList().getFirst().getValue()));
-    server.broadcast(new Message<>("MoveResult", gameOver));
+    server.broadcast(new Message<>("GameOver", gameOver));
     userCount--;
   }
 

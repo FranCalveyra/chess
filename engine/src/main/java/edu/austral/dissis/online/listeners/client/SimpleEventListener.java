@@ -15,7 +15,7 @@ public class SimpleEventListener implements GameEventListener {
 
   @Override
   public void handleMove(@NotNull Move move) {
-    Platform.runLater(() -> client.send(new Message<>("Move", move)));
+    Platform.runLater(() -> client.send(new Message<>("Move",  move)));
   }
 
   @Override

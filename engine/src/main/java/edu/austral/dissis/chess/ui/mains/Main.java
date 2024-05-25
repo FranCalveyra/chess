@@ -9,6 +9,8 @@ import edu.austral.ingsis.clientserver.Client;
 import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
 import edu.austral.ingsis.clientserver.serialization.json.JsonDeserializer;
 import edu.austral.ingsis.clientserver.serialization.json.JsonSerializer;
+
+import java.awt.*;
 import java.net.InetSocketAddress;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -26,6 +28,8 @@ public class Main {
     private final GameView root = new GameView(imageResolver);
     private final Client client = buildClient(root);
     private final GameEventListener eventListener = new SimpleEventListener(client);
+    public static Color team;
+    public static String id;
 
     @Override
     public void start(Stage stage) {
