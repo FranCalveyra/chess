@@ -2,15 +2,17 @@ package edu.austral.dissis.online.listeners.server;
 
 import edu.austral.ingsis.clientserver.ServerConnectionListener;
 import java.awt.Color;
-import java.util.HashMap;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 
 public class ServerConnectionListenerImpl implements ServerConnectionListener {
   // TODO: implement all needed listeners
   // TODO: move map to ServerMain
-  private final Map<String, Color> teamColors = new HashMap<>();
+  private final Map<String, Color> teamColors;
   private int userCount = 0;
+  public ServerConnectionListenerImpl(Map<String, Color> teamColors) {
+    this.teamColors = teamColors;
+  }
 
   @Override
   public void handleClientConnection(@NotNull String clientId) {
@@ -26,5 +28,6 @@ public class ServerConnectionListenerImpl implements ServerConnectionListener {
   public void handleClientConnectionClosed(@NotNull String clientId) {
     System.out.println(("User disconnected with id: " + clientId));
     teamColors.remove(clientId);
+    userCount--;
   }
 }

@@ -20,7 +20,10 @@ import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.online.listeners.client.ClientConnectionListenerImpl;
+import edu.austral.dissis.online.listeners.main.ServerMain;
 import edu.austral.dissis.online.listeners.messages.InitialStateListener;
+import edu.austral.dissis.online.listeners.messages.MoveResultListener;
+import edu.austral.dissis.online.listeners.server.MoveListener;
 import edu.austral.dissis.online.listeners.server.ServerConnectionListenerImpl;
 import edu.austral.ingsis.clientserver.Client;
 import edu.austral.ingsis.clientserver.Server;
@@ -157,12 +160,12 @@ public class AuxStaticMethods {
   }
 
   public static Client buildClient(GameView gameView) {
-
     final Client client =
         new NettyClientBuilder(new JsonDeserializer(), new JsonSerializer())
             .withAddress(new InetSocketAddress("localhost", 8020))
             .withConnectionListener(new ClientConnectionListenerImpl())
                 .addMessageListener("InitialState", new TypeReference<>(){}, new InitialStateListener(gameView))
+                .addMessageListener("MoveResult", new TypeReference<>(){}, new MoveResultListener(gameView) )
             .build();
     return client;
   }
@@ -172,6 +175,7 @@ public class AuxStaticMethods {
         new NettyServerBuilder(new JsonDeserializer(), new JsonSerializer())
             .withPort(8020)
             .withConnectionListener(new ServerConnectionListenerImpl(teamColor))
+                .addMessageListener("Move", new TypeReference<>(){}, new MoveListener(ServerMain.engine))
                 .build();
     return server;
   }
