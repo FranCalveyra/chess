@@ -7,6 +7,8 @@ import edu.austral.ingsis.clientserver.MessageListener;
 import edu.austral.ingsis.clientserver.Server;
 import org.jetbrains.annotations.NotNull;
 
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getClassName;
+
 
 public class MoveListener implements MessageListener<Move> {
   private final GameEngine engine;
@@ -21,22 +23,9 @@ public class MoveListener implements MessageListener<Move> {
     if (server == null) {
       return;
     }
-    ServerMain.currentState = engine.applyMove(message.getPayload());
+      ServerMain.currentState = engine.applyMove(message.getPayload());
       String className = getClassName(ServerMain.currentState);
       server.broadcast(new Message<>(className, ServerMain.currentState));
-  }
-
-  private String getClassName(MoveResult currentState) {
-    if(currentState instanceof NewGameState){
-      return "NewGameState";
-    }
-    if (currentState instanceof InvalidMove){
-      return "InvalidMove";
-    }
-    if (currentState instanceof GameOver){
-      return "GameOver";
-    }
-    return "";
   }
 
   public void setServer(Server server) {

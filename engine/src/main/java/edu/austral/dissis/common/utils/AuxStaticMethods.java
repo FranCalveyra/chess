@@ -18,7 +18,6 @@ import edu.austral.dissis.common.utils.enums.GameType;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
-import edu.austral.dissis.online.listeners.messages.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,4 +144,19 @@ public class AuxStaticMethods {
         .filter(entry -> entry.getValue() != null && entry.getValue().getPieceColour() == team)
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
+
+  public static String getClassName(MoveResult currentState) {
+    if(currentState instanceof NewGameState){
+      return "NewGameState";
+    }
+    if (currentState instanceof InvalidMove){
+      return "InvalidMove";
+    }
+    if (currentState instanceof GameOver){
+      return "GameOver";
+    }
+    return "";
+  }
+
+
 }

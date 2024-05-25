@@ -7,6 +7,8 @@ import edu.austral.ingsis.clientserver.MessageListener;
 import edu.austral.ingsis.clientserver.Server;
 import org.jetbrains.annotations.NotNull;
 
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getClassName;
+
 public class UndoRedoListener implements MessageListener<String> {
   private Server server;
   private final GameEngine engine;
@@ -30,11 +32,11 @@ public class UndoRedoListener implements MessageListener<String> {
 
   private void undo() {
     ServerMain.currentState = engine.undo();
-    server.broadcast(new Message<>("MoveResult", ServerMain.currentState));
+    server.broadcast(new Message<>(getClassName(ServerMain.currentState), ServerMain.currentState));
   }
 
   private void redo() {
     ServerMain.currentState = engine.redo();
-    server.broadcast(new Message<>("MoveResult", ServerMain.currentState));
+    server.broadcast(new Message<>(getClassName(ServerMain.currentState), ServerMain.currentState));
   }
 }
