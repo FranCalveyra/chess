@@ -1,10 +1,15 @@
 package edu.austral.dissis.chess.ui.mains;
 
-import static edu.austral.dissis.online.listeners.client.ClientMain.buildClient;
-
+import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.chess.gui.*;
+import edu.austral.dissis.online.listeners.client.ClientConnectionListenerImpl;
+import edu.austral.dissis.online.listeners.messages.*;
 import edu.austral.dissis.online.listeners.server.SimpleEventListener;
 import edu.austral.ingsis.clientserver.Client;
+import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
+import edu.austral.ingsis.clientserver.serialization.json.JsonDeserializer;
+import edu.austral.ingsis.clientserver.serialization.json.JsonSerializer;
+import java.net.InetSocketAddress;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -36,5 +41,23 @@ public class Main {
             Platform.exit();
           });
     }
+  }
+
+  private static Client buildClient(GameView gameView) {
+    final Client client =
+        new NettyClientBuilder(new JsonDeserializer(), new JsonSerializer())
+            .withAddress(new InetSocketAddress("localhost", 8020))
+            .withConnectionListener(new ClientConnectionListenerImpl())
+            .addMessageListener(
+                "InitialState", new TypeReference<>() {}, new InitialStateListener(gameView))
+            .addMessageListener(
+                "MoveResult", new TypeReference<>() {}, new NewGameStateListener(gameView))
+            .addMessageListener(
+                "MoveResult", new TypeReference<>() {}, new InvalidMoveListener(gameView))
+            .addMessageListener(
+                "MoveResult", new TypeReference<>() {}, new GameOverListener(gameView))
+            .addMessageListener("Color", new TypeReference<>() {}, new TurnListener())
+            .build();
+    return client;
   }
 }
