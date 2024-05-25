@@ -7,7 +7,6 @@ import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPosition;
 import edu.austral.dissis.chess.test.Validity;
 import edu.austral.dissis.chess.test.move.TestMoveRunner;
-import edu.austral.dissis.chess.utils.result.CheckState;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
@@ -53,8 +52,6 @@ public class ChessMoveRunner implements TestMoveRunner {
             new GameWon(Color.BLACK), Validity.VALID,
             new GameWon(Color.WHITE), Validity.VALID,
             new ValidPlay(), Validity.VALID,
-            new CheckState(Color.WHITE), Validity.VALID,
-            new CheckState(Color.BLACK), Validity.VALID,
             new PromotedPiece(), Validity.VALID,
             new PieceTaken(), Validity.VALID,
             new InvalidPlay(""), Validity.INVALID);

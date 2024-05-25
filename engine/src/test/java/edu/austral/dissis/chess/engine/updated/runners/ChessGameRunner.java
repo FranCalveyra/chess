@@ -15,7 +15,6 @@ import edu.austral.dissis.chess.test.game.TestMoveFailure;
 import edu.austral.dissis.chess.test.game.TestMoveResult;
 import edu.austral.dissis.chess.test.game.TestMoveSuccess;
 import edu.austral.dissis.chess.test.game.WhiteCheckMate;
-import edu.austral.dissis.chess.utils.result.CheckState;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
@@ -139,8 +138,6 @@ public class ChessGameRunner implements TestGameRunner {
       case InvalidPlay invalidMove:
         return new TestMoveFailure(getBoard());
       case ValidPlay validMove:
-        return new TestMoveSuccess(this);
-      case CheckState checkState:
         return new TestMoveSuccess(this);
       case PieceTaken pieceTaken:
         return new TestMoveSuccess(this);

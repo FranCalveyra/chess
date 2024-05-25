@@ -13,7 +13,6 @@ import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.chess.gui.NewGameState;
 import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.gui.UndoState;
-import edu.austral.dissis.chess.utils.result.CheckState;
 import edu.austral.dissis.common.engine.BoardGame;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
@@ -96,8 +95,6 @@ public class BoardGameEngine implements GameEngine {
       case ValidPlay validMove:
         return updateGameState(boardGameResult.game());
       case PieceTaken pieceTaken:
-        return updateGameState(boardGameResult.game());
-      case CheckState checkState:
         return updateGameState(boardGameResult.game());
       case PromotedPiece promotedPiece:
         return updateGameState(boardGameResult.game());

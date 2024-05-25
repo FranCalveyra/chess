@@ -5,14 +5,7 @@ import static java.awt.Color.BLACK;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.checkers.piece.movement.CheckersType;
-import edu.austral.dissis.chess.gui.CachedImageResolver;
-import edu.austral.dissis.chess.gui.ChessPiece;
-import edu.austral.dissis.chess.gui.DefaultImageResolver;
-import edu.austral.dissis.chess.gui.GameEngine;
-import edu.austral.dissis.chess.gui.ImageResolver;
-import edu.austral.dissis.chess.gui.Move;
-import edu.austral.dissis.chess.gui.PlayerColor;
-import edu.austral.dissis.chess.gui.Position;
+import edu.austral.dissis.chess.gui.*;
 import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.ui.gameengine.BoardGameEngine;
@@ -27,12 +20,8 @@ import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.online.listeners.client.ClientConnectionListenerImpl;
-import edu.austral.dissis.online.listeners.client.ClientListener;
-import edu.austral.dissis.online.listeners.messages.MoveListener;
-import edu.austral.dissis.online.listeners.messages.TurnListener;
-import edu.austral.dissis.online.listeners.messages.UndoRedoListener;
+import edu.austral.dissis.online.listeners.messages.InitialStateListener;
 import edu.austral.dissis.online.listeners.server.ServerConnectionListenerImpl;
-import edu.austral.dissis.online.listeners.server.ServerListener;
 import edu.austral.ingsis.clientserver.Client;
 import edu.austral.ingsis.clientserver.Server;
 import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
@@ -167,27 +156,23 @@ public class AuxStaticMethods {
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
-  public static Client buildClient(ClientListener clientListener) {
-    final MoveListener moveListener = clientListener.getMoveListener();
-    final UndoRedoListener undoRedoListener = clientListener.getUndoRedoListener();
+  public static Client buildClient(GameView gameView) {
+
     final Client client =
         new NettyClientBuilder(new JsonDeserializer(), new JsonSerializer())
             .withAddress(new InetSocketAddress("localhost", 8020))
             .withConnectionListener(new ClientConnectionListenerImpl())
-            .addMessageListener("Move", new TypeReference<>() {}, moveListener)
-            .addMessageListener("UndoRedo", new TypeReference<>() {}, undoRedoListener)
+                .addMessageListener("InitialState", new TypeReference<>(){}, new InitialStateListener(gameView))
             .build();
     return client;
   }
 
-  public static Server buildServer(ServerListener serverListener) {
-    final TurnListener turnListener = serverListener.getTurnListener();
+  public static Server buildServer( Map<String, Color> teamColor) {
     final Server server =
         new NettyServerBuilder(new JsonDeserializer(), new JsonSerializer())
             .withPort(8020)
-            .withConnectionListener(new ServerConnectionListenerImpl())
-            .addMessageListener("Turn", new TypeReference<>() {}, turnListener)
-            .build();
+            .withConnectionListener(new ServerConnectionListenerImpl(teamColor))
+                .build();
     return server;
   }
 }
