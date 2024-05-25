@@ -17,11 +17,12 @@ public class ServerConnectionListenerImpl implements ServerConnectionListener {
   @Override
   public void handleClientConnection(@NotNull String clientId) {
     System.out.println(("User connected with id: " + clientId));
+    userCount++;
     if (userCount > 2) {
       return;
     }
-    userCount++;
     teamColors.put(clientId, userCount == 1 ? Color.WHITE : Color.BLACK);
+    System.out.println(teamColors);
   }
 
   @Override

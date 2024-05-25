@@ -170,12 +170,12 @@ public class AuxStaticMethods {
     return client;
   }
 
-  public static Server buildServer( Map<String, Color> teamColor) {
+  public static Server buildServer( Map<String, Color> teamColor, GameEngine engine) {
     final Server server =
         new NettyServerBuilder(new JsonDeserializer(), new JsonSerializer())
             .withPort(8020)
             .withConnectionListener(new ServerConnectionListenerImpl(teamColor))
-                .addMessageListener("Move", new TypeReference<>(){}, new MoveListener(ServerMain.engine))
+                .addMessageListener("Move", new TypeReference<>(){}, new MoveListener(engine))
                 .build();
     return server;
   }

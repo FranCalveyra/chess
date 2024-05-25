@@ -16,12 +16,22 @@ public class ServerMain {
   public static GameEngine engine = setupGame(GameType.DEFAULT_CHESS).first();
   public static void main(String[] args) {
     Map<String, Color> colors = new HashMap<>();
-    Server server = buildServer(colors);
+    Server server = buildServer(colors, engine);
     server.start();
-    while (true){
-      server.broadcast(new Message<>("InitialState", engine.init()));
+    while(true) {
+      try{
+        Thread.sleep(1000);
+        if (colors.size() == 1) {
+          server.broadcast(new Message<>("InitialState", engine.init()));
+          for (Map.Entry<String, Color> entry : colors.entrySet()) {
+            server.sendMessage(entry.getKey(), new Message<>("Color", entry.getValue()));
+          }
+          break;
+        }
+      }catch(InterruptedException e){
+        throw new RuntimeException(e);
+      }
     }
-
 
   }
 }
