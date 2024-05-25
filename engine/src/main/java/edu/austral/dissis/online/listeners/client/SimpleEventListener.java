@@ -1,4 +1,4 @@
-package edu.austral.dissis.online.listeners.server;
+package edu.austral.dissis.online.listeners.client;
 
 import edu.austral.dissis.chess.gui.*;
 import edu.austral.ingsis.clientserver.Client;

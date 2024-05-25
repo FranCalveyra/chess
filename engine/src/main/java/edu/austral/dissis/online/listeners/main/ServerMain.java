@@ -37,7 +37,7 @@ public class ServerMain {
         if (colors.size() == 2) {
           server.broadcast(new Message<>("InitialState", initialState));
           colors.forEach(
-              (key, value) -> server.sendMessage(key, new Message<>("Color", value.toString())));
+              (key, value) -> server.sendMessage(key, new Message<>("Color", value)));
           break;
         }
       } catch (InterruptedException e) {

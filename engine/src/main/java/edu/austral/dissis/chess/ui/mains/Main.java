@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.chess.gui.*;
 import edu.austral.dissis.online.listeners.client.ClientConnectionListenerImpl;
 import edu.austral.dissis.online.listeners.messages.*;
-import edu.austral.dissis.online.listeners.server.SimpleEventListener;
+import edu.austral.dissis.online.listeners.client.SimpleEventListener;
 import edu.austral.ingsis.clientserver.Client;
 import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
 import edu.austral.ingsis.clientserver.serialization.json.JsonDeserializer;
@@ -51,11 +51,11 @@ public class Main {
             .addMessageListener(
                 "InitialState", new TypeReference<>() {}, new InitialStateListener(gameView))
             .addMessageListener(
-                "MoveResult", new TypeReference<>() {}, new NewGameStateListener(gameView))
+                "NewGameState", new TypeReference<>() {}, new NewGameStateListener(gameView))
             .addMessageListener(
-                "MoveResult", new TypeReference<>() {}, new InvalidMoveListener(gameView))
+                "InvalidMove", new TypeReference<>() {}, new InvalidMoveListener(gameView))
             .addMessageListener(
-                "MoveResult", new TypeReference<>() {}, new GameOverListener(gameView))
+                "GameOver", new TypeReference<>() {}, new GameOverListener(gameView))
             .addMessageListener("Color", new TypeReference<>() {}, new TurnListener())
             .build();
     return client;
