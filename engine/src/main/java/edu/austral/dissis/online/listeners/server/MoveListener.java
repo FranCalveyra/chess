@@ -25,16 +25,22 @@ public class MoveListener implements MessageListener<MovePayload> {
     if (server == null) {
       return;
     }
-    boolean notTurn = (currentState instanceof NewGameState)&& !isPlayersTurn(message.getPayload().id());
-    boolean invalid = currentState instanceof InvalidMove;
-    if (notTurn||invalid) {
-      server.broadcast(new Message<>(getClassName(currentState), currentState));
+    MoveResult result = engine.applyMove(message.getPayload().move());
+    boolean notTurn = (result instanceof NewGameState) && !isPlayersTurn(message.getPayload().id());
+    boolean invalid = result instanceof InvalidMove;
+    if (notTurn) {
+      server.broadcast(new Message<>("InvalidMove", new InvalidMove("Not your turn")));
+      return;
     }
-    else {
-      currentState = engine.applyMove(message.getPayload().move());
-      String className = getClassName(currentState);
-      server.broadcast(new Message<>(className, currentState));
+    if(invalid){
+      server.broadcast(new Message<>("InvalidMove", result));
+      return;
     }
+    currentState = result;
+    String className = getClassName(currentState);
+    System.out.println(className);
+    server.broadcast(new Message<>(className, currentState));
+
   }
 
   private boolean isPlayersTurn(String id) {
