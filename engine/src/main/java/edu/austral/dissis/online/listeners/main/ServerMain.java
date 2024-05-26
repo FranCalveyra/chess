@@ -27,7 +27,9 @@ public class ServerMain {
     Server server = buildServer(colors, engine);
     server.start();
     InitialState initialState = engine.init();
-    currentState = new NewGameState(initialState.getPieces(), initialState.getCurrentPlayer(), new UndoState());
+    currentState =
+        new NewGameState(
+            initialState.getPieces(), initialState.getCurrentPlayer(), new UndoState());
     fetchPlayers(colors, server, initialState);
   }
 

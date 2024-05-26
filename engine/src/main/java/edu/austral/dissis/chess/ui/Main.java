@@ -11,7 +11,6 @@ import edu.austral.ingsis.clientserver.Client;
 import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
 import edu.austral.ingsis.clientserver.serialization.json.JsonDeserializer;
 import edu.austral.ingsis.clientserver.serialization.json.JsonSerializer;
-
 import java.net.InetSocketAddress;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -19,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main {
-
 
   public static void main(String[] args) {
     Application.launch(ChessApplication.class);
@@ -29,13 +27,11 @@ public class Main {
     final ImageResolver imageResolver = new CachedImageResolver(new DefaultImageResolver());
     private final GameView root = new GameView(imageResolver);
 
-
-
     @Override
     public void start(Stage stage) {
       Initial initial = new Initial("");
       ClientIdListener idListener = new ClientIdListener(initial);
-      final Client client = buildClient(root,idListener);
+      final Client client = buildClient(root, idListener);
       client.connect();
       GameEventListener eventListener = new SimpleEventListener(client, initial);
       root.addListener(eventListener);
@@ -65,7 +61,7 @@ public class Main {
             .addMessageListener(
                 "GameOver", new TypeReference<>() {}, new GameOverListener(gameView))
             .addMessageListener("Color", new TypeReference<>() {}, new TurnListener())
-                .addMessageListener("ID", new TypeReference<>(){}, idListener)
+            .addMessageListener("ID", new TypeReference<>() {}, idListener)
             .build();
     return client;
   }

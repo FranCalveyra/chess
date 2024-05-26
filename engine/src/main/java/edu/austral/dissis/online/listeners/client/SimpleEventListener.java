@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class SimpleEventListener implements GameEventListener {
   private final Client client;
   private final Initial initial;
+
   public SimpleEventListener(Client client, Initial init) {
     this.client = client;
     this.initial = init;

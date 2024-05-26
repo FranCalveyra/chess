@@ -25,14 +25,15 @@ public class MoveListener implements MessageListener<MovePayload> {
     if (server == null) {
       return;
     }
-    boolean notTurn = (currentState instanceof NewGameState) && !isPlayersTurn(message.getPayload().id());
+    boolean notTurn =
+        (currentState instanceof NewGameState) && !isPlayersTurn(message.getPayload().id());
     if (notTurn) {
       server.broadcast(new Message<>("InvalidMove", new InvalidMove("Not your turn")));
       return;
     }
     MoveResult result = engine.applyMove(message.getPayload().move());
     boolean invalid = result instanceof InvalidMove;
-    if(invalid){
+    if (invalid) {
       server.broadcast(new Message<>("InvalidMove", result));
       return;
     }
@@ -40,13 +41,11 @@ public class MoveListener implements MessageListener<MovePayload> {
     String className = getClassName(currentState);
     System.out.println(className);
     server.broadcast(new Message<>(className, currentState));
-
   }
 
   private boolean isPlayersTurn(String id) {
-    return ((NewGameState) currentState)
-        .getCurrentPlayer()
-         == getPlayerColor(ServerMain.colors.get(id));
+    return ((NewGameState) currentState).getCurrentPlayer()
+        == getPlayerColor(ServerMain.colors.get(id));
   }
 
   public void setServer(Server server) {
