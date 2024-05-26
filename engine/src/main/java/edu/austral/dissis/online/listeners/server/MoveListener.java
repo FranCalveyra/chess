@@ -4,7 +4,10 @@ import static edu.austral.dissis.common.utils.AuxStaticMethods.getClassName;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 import static edu.austral.dissis.online.listeners.main.ServerMain.currentState;
 
-import edu.austral.dissis.chess.gui.*;
+import edu.austral.dissis.chess.gui.GameEngine;
+import edu.austral.dissis.chess.gui.InvalidMove;
+import edu.austral.dissis.chess.gui.MoveResult;
+import edu.austral.dissis.chess.gui.NewGameState;
 import edu.austral.dissis.online.listeners.main.ServerMain;
 import edu.austral.dissis.online.utils.MovePayload;
 import edu.austral.ingsis.clientserver.Message;

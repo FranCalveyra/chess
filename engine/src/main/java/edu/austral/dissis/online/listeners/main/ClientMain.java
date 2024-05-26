@@ -1,11 +1,19 @@
-package edu.austral.dissis.chess.ui;
+package edu.austral.dissis.online.listeners.main;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import edu.austral.dissis.chess.gui.*;
+import edu.austral.dissis.chess.gui.CachedImageResolver;
+import edu.austral.dissis.chess.gui.DefaultImageResolver;
+import edu.austral.dissis.chess.gui.GameEventListener;
+import edu.austral.dissis.chess.gui.GameView;
+import edu.austral.dissis.chess.gui.ImageResolver;
 import edu.austral.dissis.online.listeners.client.ClientConnectionListenerImpl;
 import edu.austral.dissis.online.listeners.client.ClientIdListener;
 import edu.austral.dissis.online.listeners.client.SimpleEventListener;
-import edu.austral.dissis.online.listeners.messages.*;
+import edu.austral.dissis.online.listeners.messages.GameOverListener;
+import edu.austral.dissis.online.listeners.messages.InitialStateListener;
+import edu.austral.dissis.online.listeners.messages.InvalidMoveListener;
+import edu.austral.dissis.online.listeners.messages.NewGameStateListener;
+import edu.austral.dissis.online.listeners.messages.TurnListener;
 import edu.austral.dissis.online.utils.Initial;
 import edu.austral.ingsis.clientserver.Client;
 import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder;
@@ -17,7 +25,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main {
+public class ClientMain {
 
   public static void main(String[] args) {
     Application.launch(ChessApplication.class);

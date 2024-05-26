@@ -17,7 +17,12 @@ import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
-import edu.austral.dissis.common.utils.result.playresult.*;
+import edu.austral.dissis.common.utils.result.playresult.GameWon;
+import edu.austral.dissis.common.utils.result.playresult.InvalidPlay;
+import edu.austral.dissis.common.utils.result.playresult.PieceTaken;
+import edu.austral.dissis.common.utils.result.playresult.PlayResult;
+import edu.austral.dissis.common.utils.result.playresult.PromotedPiece;
+import edu.austral.dissis.common.utils.result.playresult.ValidPlay;
 import java.util.Stack;
 import org.jetbrains.annotations.NotNull;
 
