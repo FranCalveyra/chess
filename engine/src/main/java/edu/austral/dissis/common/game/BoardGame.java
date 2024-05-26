@@ -1,4 +1,4 @@
-package edu.austral.dissis.common.engine;
+package edu.austral.dissis.common.game;
 
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;

@@ -13,7 +13,7 @@ import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.chess.gui.NewGameState;
 import edu.austral.dissis.chess.gui.Position;
 import edu.austral.dissis.chess.gui.UndoState;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;

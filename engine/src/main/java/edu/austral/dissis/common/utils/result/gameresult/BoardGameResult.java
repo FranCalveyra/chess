@@ -1,6 +1,6 @@
 package edu.austral.dissis.common.utils.result.gameresult;
 
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.utils.result.playresult.PlayResult;
 
 public class BoardGameResult implements GameResult {

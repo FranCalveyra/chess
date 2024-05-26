@@ -15,7 +15,7 @@ import edu.austral.dissis.chess.test.game.TestMoveFailure;
 import edu.austral.dissis.chess.test.game.TestMoveResult;
 import edu.austral.dissis.chess.test.game.TestMoveSuccess;
 import edu.austral.dissis.chess.test.game.WhiteCheckMate;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.move.BoardPosition;

@@ -10,7 +10,7 @@ import edu.austral.dissis.chess.providers.ChessPieceProvider;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.board.MapBoard;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.rules.winconds.Extinction;
 import edu.austral.dissis.common.rules.winconds.WinCondition;
 import edu.austral.dissis.common.turn.IncrementalTurnSelector;

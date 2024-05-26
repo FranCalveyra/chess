@@ -5,7 +5,7 @@ import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesByColor;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getTakingMove;
 
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;
 import edu.austral.dissis.common.piece.movement.type.TakingMovement;

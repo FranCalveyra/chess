@@ -1,7 +1,7 @@
 package edu.austral.dissis.common.rules.premovement.validators;
 
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
 

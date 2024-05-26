@@ -3,7 +3,7 @@ package edu.austral.dissis.chess.rules.premovement;
 import edu.austral.dissis.chess.rules.winconds.Check;
 import edu.austral.dissis.chess.rules.winconds.StandardCheck;
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.rules.premovement.validators.PreMovementValidator;
 import edu.austral.dissis.common.utils.Pair;

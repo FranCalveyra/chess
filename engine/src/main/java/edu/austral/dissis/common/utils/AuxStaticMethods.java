@@ -9,7 +9,7 @@ import edu.austral.dissis.chess.piece.movement.type.ChessPieceType;
 import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.common.ui.gameengine.BoardGameEngine;
 import edu.austral.dissis.common.board.Board;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.piece.movement.type.PieceMovement;

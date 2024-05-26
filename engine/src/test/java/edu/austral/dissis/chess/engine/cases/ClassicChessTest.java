@@ -15,7 +15,7 @@ import edu.austral.dissis.chess.providers.GameProvider;
 import edu.austral.dissis.chess.rules.winconds.CheckMate;
 import edu.austral.dissis.chess.rules.winconds.StandardCheck;
 import edu.austral.dissis.common.board.MapBoard;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.piece.PieceType;
 import edu.austral.dissis.common.utils.enums.GameType;

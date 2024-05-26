@@ -5,7 +5,7 @@ import edu.austral.dissis.checkers.providers.CheckersPieceMapProvider;
 import edu.austral.dissis.checkers.turn.CheckersTurnSelector;
 import edu.austral.dissis.chess.promoters.StandardChessPromoter;
 import edu.austral.dissis.common.board.MapBoard;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.rules.winconds.Extinction;
 import edu.austral.dissis.common.rules.winconds.NoAvailableMoves;
 import edu.austral.dissis.common.turn.IncrementalTurnSelector;

@@ -7,7 +7,7 @@ import edu.austral.dissis.chess.test.TestBoard;
 import edu.austral.dissis.chess.test.TestPosition;
 import edu.austral.dissis.chess.test.Validity;
 import edu.austral.dissis.chess.test.move.TestMoveRunner;
-import edu.austral.dissis.common.engine.BoardGame;
+import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.utils.move.GameMove;
 import edu.austral.dissis.common.utils.result.gameresult.BoardGameResult;
 import edu.austral.dissis.common.utils.result.playresult.GameWon;
