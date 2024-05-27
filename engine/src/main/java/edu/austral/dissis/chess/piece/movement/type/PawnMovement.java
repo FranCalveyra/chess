@@ -25,9 +25,11 @@ public class PawnMovement implements PieceMovement {
     MovementRestrictionValidator dy =
         team == Color.BLACK ? new RowDistance(-1) : new RowDistance(1);
     MovementRestrictionValidator dx = new AbsColumnDistance(0);
+
     MovementRestrictionValidator movement = new AndRestrictionValidator(dy, dx);
     MovementRestrictionValidator moveAndPath =
         new AndRestrictionValidator(movement, new NoPieceInPath(VERTICAL));
+
     return new AndRestrictionValidator(moveAndPath, new ClearTile());
   }
 }

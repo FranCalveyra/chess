@@ -341,7 +341,7 @@ public class ClassicChessTest {
         .orElse(null);
   }
 
-  private void assertPositionType(BoardGame currentGame, PieceType pieceType, int i, int j) {
+  public static void assertPositionType(BoardGame currentGame, PieceType pieceType, int i, int j) {
     assertEquals(pieceType, currentGame.getBoard().pieceAt(new BoardPosition(i, j)).getType());
   }
 }

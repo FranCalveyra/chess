@@ -39,9 +39,6 @@ public class MapBoard implements Board {
   @Override
   public MapBoard removePieceAt(BoardPosition pos) {
     Map<BoardPosition, Piece> newMap = copyMap(pieces);
-    if (!newMap.containsKey(pos)) {
-      return this;
-    }
     newMap.remove(pos);
     return new MapBoard(newMap, rows, columns);
   }

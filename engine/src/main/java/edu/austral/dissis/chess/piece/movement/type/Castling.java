@@ -43,10 +43,10 @@ public class Castling implements PieceMovement {
     Piece king = context.pieceAt(oldPos);
     int rookColumn = getRookColumn(new GameMove(oldPos, newPos), context);
     Piece rook = context.pieceAt(new BoardPosition(newPos.getRow(), rookColumn));
-    return validate(oldPos, newPos, context, king, rook);
+    return situationMeetsCastlingConditions(oldPos, newPos, context, king, rook);
   }
 
-  private boolean validate(
+  private boolean situationMeetsCastlingConditions(
       BoardPosition oldPos, BoardPosition newPos, Board context, Piece king, Piece rook) {
     if (king == null
         || rook == null
@@ -87,7 +87,7 @@ public class Castling implements PieceMovement {
         .noneMatch(
             possibleBoard ->
                 new StandardCheck(context.pieceAt(oldPos).getPieceColour())
-                    .isValidRule(possibleBoard));
+                    .isValidRule(possibleBoard)); // Functional programming matching
   }
 
   private boolean validGeneralChecks(

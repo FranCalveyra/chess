@@ -21,8 +21,10 @@ public class PawnTaking implements PieceMovement {
 
   private MovementRestrictionValidator getValidator(Color team) {
     MovementRestrictionValidator dx = new AbsColumnDistance(1);
+
     int colorBasedDisplacement = team == Color.BLACK ? -1 : 1;
     MovementRestrictionValidator dy = new RowDistance(colorBasedDisplacement);
+
     MovementRestrictionValidator movement = new AndRestrictionValidator(dx, dy);
     return new AndRestrictionValidator(movement, new IsAnEnemy());
   }

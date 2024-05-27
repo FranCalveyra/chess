@@ -1,11 +1,12 @@
 package edu.austral.dissis.common.rules.winconds;
 
+import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesByColor;
+
 import edu.austral.dissis.common.board.Board;
 import edu.austral.dissis.common.piece.Piece;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import java.awt.Color;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Extinction implements WinCondition {
   private final Color team;
@@ -27,9 +28,6 @@ public class Extinction implements WinCondition {
   }
 
   private Map<BoardPosition, Piece> getTeamPieces(Board context) {
-    Map<BoardPosition, Piece> map = context.getPiecesAndPositions();
-    return map.entrySet().stream()
-        .filter(entry -> entry.getValue() != null && entry.getValue().getPieceColour() == team)
-        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    return getPiecesByColor(context, team);
   }
 }

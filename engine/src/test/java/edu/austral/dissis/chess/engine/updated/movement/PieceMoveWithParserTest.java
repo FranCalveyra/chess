@@ -9,7 +9,7 @@ import edu.austral.dissis.chess.test.parser.ParseSettings;
 import edu.austral.dissis.common.utils.enums.GameType;
 import org.junit.jupiter.api.Test;
 
-public class PieceMoveTests {
+public class PieceMoveWithParserTest {
   // Runners
   private final GameProvider gameProvider = new GameProvider();
   private final ChessMoveRunner moveRunner =

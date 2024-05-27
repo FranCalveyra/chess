@@ -21,9 +21,6 @@ public class StandardChessPromoter implements Promoter {
   @Override
   public boolean canPromote(BoardPosition position, Board context) {
     Piece piece = context.pieceAt(position);
-    if (piece == null) {
-      return false;
-    }
     int promoteRow = piece.getPieceColour() == Color.BLACK ? 0 : context.getRows() - 1;
     return piece.getType() == ChessPieceType.PAWN && position.getRow() == promoteRow;
   }
