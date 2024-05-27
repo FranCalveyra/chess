@@ -73,9 +73,7 @@ public class ProvidersTest {
   public void canNotGetCheckersPiecesFromChessPieceProvider() {
     assertThrows(
         IllegalArgumentException.class,
-        () -> {
-          chessPieceProvider.provide(Color.BLACK, CheckersType.KING);
-        });
+        () -> chessPieceProvider.provide(Color.BLACK, CheckersType.KING));
   }
 
   // Private stuff
