@@ -3,7 +3,7 @@ package edu.austral.dissis.online.listeners.server;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getClassName;
 
 import edu.austral.dissis.chess.gui.GameEngine;
-import edu.austral.dissis.online.listeners.main.ServerMain;
+import edu.austral.dissis.online.main.ServerMain;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.MessageListener;
 import edu.austral.ingsis.clientserver.Server;

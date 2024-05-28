@@ -1,4 +1,4 @@
-package edu.austral.dissis.online.listeners.main;
+package edu.austral.dissis.online.main;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.chess.gui.CachedImageResolver;

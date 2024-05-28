@@ -1,6 +1,4 @@
-package edu.austral.dissis.online.listeners.main;
-
-import static edu.austral.dissis.common.utils.AuxStaticMethods.setupGame;
+package edu.austral.dissis.online.main;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import edu.austral.dissis.chess.gui.GameEngine;
@@ -8,7 +6,7 @@ import edu.austral.dissis.chess.gui.InitialState;
 import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.chess.gui.NewGameState;
 import edu.austral.dissis.chess.gui.UndoState;
-import edu.austral.dissis.common.utils.enums.GameType;
+import edu.austral.dissis.online.Config;
 import edu.austral.dissis.online.listeners.server.MoveListener;
 import edu.austral.dissis.online.listeners.server.ServerConnectionListenerImpl;
 import edu.austral.dissis.online.listeners.server.UndoRedoListener;
@@ -22,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ServerMain {
-  public static GameEngine engine = setupGame(GameType.DEFAULT_CHECKERS).first();
+  public static GameEngine engine = Config.engine;
   public static MoveResult currentState;
   public static Map<String, Color> colors = new HashMap<>();
 

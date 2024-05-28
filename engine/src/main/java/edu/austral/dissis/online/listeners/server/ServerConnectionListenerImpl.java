@@ -4,6 +4,7 @@ import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 
 import edu.austral.dissis.chess.gui.GameOver;
 import edu.austral.dissis.chess.gui.MoveResult;
+import edu.austral.dissis.online.main.ServerMain;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.Server;
 import edu.austral.ingsis.clientserver.ServerConnectionListener;
@@ -25,6 +26,7 @@ public class ServerConnectionListenerImpl implements ServerConnectionListener {
     server.sendMessage(clientId, new Message<>("ID", clientId));
     System.out.println(("User connected with id: " + clientId));
     userCount++;
+    server.broadcast(new Message<>("InitialState", ServerMain.engine.init()));
     if (userCount > 2) {
       return;
     }
@@ -34,10 +36,13 @@ public class ServerConnectionListenerImpl implements ServerConnectionListener {
   @Override
   public void handleClientConnectionClosed(@NotNull String clientId) {
     System.out.println(("User disconnected with id: " + clientId));
+    if (teamColors.containsKey(clientId)) {
+      MoveResult gameOver =
+          new GameOver(
+              getPlayerColor(teamColors.entrySet().stream().toList().getFirst().getValue()));
+      server.broadcast(new Message<>("GameOver", gameOver));
+    }
     teamColors.remove(clientId);
-    MoveResult gameOver =
-        new GameOver(getPlayerColor(teamColors.entrySet().stream().toList().getFirst().getValue()));
-    server.broadcast(new Message<>("GameOver", gameOver));
     userCount--;
   }
 

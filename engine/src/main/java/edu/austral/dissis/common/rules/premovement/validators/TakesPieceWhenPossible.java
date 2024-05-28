@@ -32,7 +32,7 @@ public class TakesPieceWhenPossible implements PreMovementValidator {
 
   @Override
   public String getFailureMessage() {
-    return "Obligated to take a piece";
+    return "Obliged to take a piece";
   }
 
   private List<GameMove> getTeamAttackingMoves(Map<BoardPosition, Piece> teamPieces, Board board) {
