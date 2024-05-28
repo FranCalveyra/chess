@@ -6,6 +6,7 @@ import edu.austral.dissis.chess.gui.InitialState;
 import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.chess.gui.NewGameState;
 import edu.austral.dissis.chess.gui.UndoState;
+import edu.austral.dissis.common.ui.gameengine.BoardGameEngine;
 import edu.austral.dissis.online.Config;
 import edu.austral.dissis.online.listeners.server.MoveListener;
 import edu.austral.dissis.online.listeners.server.ServerConnectionListenerImpl;
@@ -19,27 +20,40 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class ServerMain {
-  public static GameEngine engine = Config.engine;
-  public static MoveResult currentState;
-  public static Map<String, Color> colors = new HashMap<>();
+
 
   public static void main(String[] args) {
-
-    Server server = buildServer(colors, engine);
-    server.start();
-    InitialState initialState = engine.init();
-    currentState =
-        new NewGameState(
-            initialState.getPieces(), initialState.getCurrentPlayer(), new UndoState());
-    fetchPlayers(colors, server, initialState);
+    ServerApplication application = new ServerApplication();
+    application.initApplication();
   }
+
+  private static class ServerApplication{
+    public BoardGameEngine engine = Config.engine;
+    public MoveResult currentState;
+    public Map<String, Color> colors = new HashMap<>();
+
+    ServerApplication(){
+    }
+    public void initApplication(){
+      Server server = buildServer(colors, engine);
+      server.start();
+      InitialState initialState = engine.init();
+      currentState =
+              new NewGameState(
+                      initialState.getPieces(), initialState.getCurrentPlayer(), new UndoState());
+      fetchPlayers(colors, server, initialState);
+    }
+  }
+
 
   private static void fetchPlayers(
       Map<String, Color> colors, Server server, InitialState initialState) {
     while (true) {
       try {
         Thread.sleep(1000);
+        //move to ServerConnectionListener (deprecated)
         if (colors.size() == 2) {
           server.broadcast(new Message<>("InitialState", initialState));
           colors.forEach((key, value) -> server.sendMessage(key, new Message<>("Color", value)));
@@ -52,10 +66,10 @@ public class ServerMain {
   }
 
   // BUILDER
-  public static Server buildServer(Map<String, Color> teamColor, GameEngine engine) {
-    final MoveListener moveListener = new MoveListener(engine);
+  public static Server buildServer(Map<String, Color> teamColor, BoardGameEngine engine) {
+    final MoveListener moveListener = new MoveListener(engine, teamColor);
     final ServerConnectionListenerImpl connectionListener =
-        new ServerConnectionListenerImpl(teamColor);
+        new ServerConnectionListenerImpl(teamColor, engine);
     final UndoRedoListener undoRedoListener = new UndoRedoListener(engine);
     final Server server =
         new NettyServerBuilder(new JsonDeserializer(), new JsonSerializer())

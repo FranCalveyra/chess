@@ -2,12 +2,12 @@ package edu.austral.dissis.online.listeners.server;
 
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getClassName;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
-import static edu.austral.dissis.online.main.ServerMain.currentState;
 
 import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.InvalidMove;
 import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.chess.gui.NewGameState;
+import edu.austral.dissis.common.ui.gameengine.BoardGameEngine;
 import edu.austral.dissis.online.main.ServerMain;
 import edu.austral.dissis.online.utils.MovePayload;
 import edu.austral.ingsis.clientserver.Message;
@@ -15,12 +15,17 @@ import edu.austral.ingsis.clientserver.MessageListener;
 import edu.austral.ingsis.clientserver.Server;
 import org.jetbrains.annotations.NotNull;
 
-public class MoveListener implements MessageListener<MovePayload> {
-  private final GameEngine engine;
-  private Server server;
+import java.awt.*;
+import java.util.Map;
 
-  public MoveListener(GameEngine engine) {
+public class MoveListener implements MessageListener<MovePayload> {
+  private final BoardGameEngine engine;
+  private Server server;
+  private final Map<String, Color> colors;
+
+  public MoveListener(BoardGameEngine engine, Map<String, Color> colors) {
     this.engine = engine;
+    this.colors = colors;
   }
 
   @Override
@@ -29,7 +34,7 @@ public class MoveListener implements MessageListener<MovePayload> {
       return;
     }
     boolean notTurn =
-        (currentState instanceof NewGameState) && !isPlayersTurn(message.getPayload().id());
+        !isPlayersTurn(message.getPayload().id());
     if (notTurn) {
       server.broadcast(new Message<>("InvalidMove", new InvalidMove("Not your turn")));
       return;
@@ -40,15 +45,14 @@ public class MoveListener implements MessageListener<MovePayload> {
       server.broadcast(new Message<>("InvalidMove", result));
       return;
     }
-    currentState = result;
-    String className = getClassName(currentState);
+    String className = getClassName(result);
     System.out.println(className);
-    server.broadcast(new Message<>(className, currentState));
+    server.broadcast(new Message<>(className, result));
   }
 
   private boolean isPlayersTurn(String id) {
-    return ((NewGameState) currentState).getCurrentPlayer()
-        == getPlayerColor(ServerMain.colors.get(id));
+    return engine.getCurrentTurn()
+        == getPlayerColor(colors.get(id));
   }
 
   public void setServer(Server server) {

@@ -45,7 +45,7 @@ public class CheckersPromoter implements Promoter {
     return context.removePieceAt(position).addPieceAt(position, promotedPiece);
   }
 
-  // If there's any pawn promotable in the board (in the last row, promote it)
+  // If there's any man promotable in the board (in the last row, promote it)
   private boolean isAnyManPromotable(Board context, Color team) {
     // Changes the row to check depending on the analysed color. If WHITE, checks the last row;
     // else, checks the first

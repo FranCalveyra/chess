@@ -3,16 +3,7 @@ package edu.austral.dissis.common.ui.gameengine;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPiecesList;
 import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 
-import edu.austral.dissis.chess.gui.BoardSize;
-import edu.austral.dissis.chess.gui.GameEngine;
-import edu.austral.dissis.chess.gui.GameOver;
-import edu.austral.dissis.chess.gui.InitialState;
-import edu.austral.dissis.chess.gui.InvalidMove;
-import edu.austral.dissis.chess.gui.Move;
-import edu.austral.dissis.chess.gui.MoveResult;
-import edu.austral.dissis.chess.gui.NewGameState;
-import edu.austral.dissis.chess.gui.Position;
-import edu.austral.dissis.chess.gui.UndoState;
+import edu.austral.dissis.chess.gui.*;
 import edu.austral.dissis.common.game.BoardGame;
 import edu.austral.dissis.common.utils.move.BoardPosition;
 import edu.austral.dissis.common.utils.move.GameMove;
@@ -75,6 +66,10 @@ public class BoardGameEngine implements GameEngine {
     undo.push(game);
     game = redone;
     return getNewGameState(redone);
+  }
+
+  public PlayerColor getCurrentTurn(){
+    return getPlayerColor(game.getCurrentTurn());
   }
 
   // Private stuff

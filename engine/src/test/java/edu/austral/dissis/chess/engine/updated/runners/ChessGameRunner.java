@@ -39,7 +39,7 @@ public class ChessGameRunner implements TestGameRunner {
   private BoardGameResult lastResult;
 
   private BoardGame game;
-
+  //don't reimplement undo/redo, use the one in gameEngine
   public ChessGameRunner(BoardGame game) {
     this.game = game;
     undo = new Stack<>();

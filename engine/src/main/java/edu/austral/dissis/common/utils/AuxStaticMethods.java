@@ -39,6 +39,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class AuxStaticMethods {
+  //Aux
+  private AuxStaticMethods(){
+  }
+
   // Move
   public static GameMove moveFromAlgebraic(String fullMove) {
     String from = fullMove.substring(0, 2);

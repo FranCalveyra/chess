@@ -82,7 +82,7 @@ public class ChessPieceProvider {
         throw new IllegalArgumentException();
     }
   }
-
+  //Implement in both
   public static @NotNull String getId(PieceType type, int randInt, String colorName) {
     if (type instanceof ChessPieceType chessPieceType) {
       return randInt + colorName + " " + chessPieceType.name().toLowerCase();

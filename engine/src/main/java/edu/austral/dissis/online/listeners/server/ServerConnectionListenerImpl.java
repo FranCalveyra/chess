@@ -4,6 +4,7 @@ import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 
 import edu.austral.dissis.chess.gui.GameOver;
 import edu.austral.dissis.chess.gui.MoveResult;
+import edu.austral.dissis.common.ui.gameengine.BoardGameEngine;
 import edu.austral.dissis.online.main.ServerMain;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.Server;
@@ -16,9 +17,11 @@ public class ServerConnectionListenerImpl implements ServerConnectionListener {
   private final Map<String, Color> teamColors;
   private int userCount = 0;
   private Server server;
+  private final BoardGameEngine engine;
 
-  public ServerConnectionListenerImpl(Map<String, Color> teamColors) {
+  public ServerConnectionListenerImpl(Map<String, Color> teamColors, BoardGameEngine engine) {
     this.teamColors = teamColors;
+    this.engine = engine;
   }
 
   @Override
@@ -26,7 +29,7 @@ public class ServerConnectionListenerImpl implements ServerConnectionListener {
     server.sendMessage(clientId, new Message<>("ID", clientId));
     System.out.println(("User connected with id: " + clientId));
     userCount++;
-    server.broadcast(new Message<>("InitialState", ServerMain.engine.init()));
+    server.broadcast(new Message<>("InitialState", engine.init()));
     if (userCount > 2) {
       return;
     }
