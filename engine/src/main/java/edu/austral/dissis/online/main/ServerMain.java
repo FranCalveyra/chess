@@ -1,7 +1,6 @@
 package edu.austral.dissis.online.main;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import edu.austral.dissis.chess.gui.GameEngine;
 import edu.austral.dissis.chess.gui.InitialState;
 import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.chess.gui.NewGameState;
@@ -20,40 +19,36 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ServerMain {
-
 
   public static void main(String[] args) {
     ServerApplication application = new ServerApplication();
     application.initApplication();
   }
 
-  private static class ServerApplication{
-    public BoardGameEngine engine = Config.engine;
-    public MoveResult currentState;
-    public Map<String, Color> colors = new HashMap<>();
+  private static class ServerApplication {
+    private final BoardGameEngine engine = Config.engine;
+    private final Map<String, Color> colors = new HashMap<>();
 
-    ServerApplication(){
-    }
-    public void initApplication(){
+    ServerApplication() {}
+
+    public void initApplication() {
       Server server = buildServer(colors, engine);
       server.start();
       InitialState initialState = engine.init();
-      currentState =
-              new NewGameState(
-                      initialState.getPieces(), initialState.getCurrentPlayer(), new UndoState());
+      MoveResult currentState =
+          new NewGameState(
+              initialState.getPieces(), initialState.getCurrentPlayer(), new UndoState());
       fetchPlayers(colors, server, initialState);
     }
   }
-
 
   private static void fetchPlayers(
       Map<String, Color> colors, Server server, InitialState initialState) {
     while (true) {
       try {
         Thread.sleep(1000);
-        //move to ServerConnectionListener (deprecated)
+        // move to ServerConnectionListener (deprecated)
         if (colors.size() == 2) {
           server.broadcast(new Message<>("InitialState", initialState));
           colors.forEach((key, value) -> server.sendMessage(key, new Message<>("Color", value)));

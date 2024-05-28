@@ -5,7 +5,6 @@ import static edu.austral.dissis.common.utils.AuxStaticMethods.getPlayerColor;
 import edu.austral.dissis.chess.gui.GameOver;
 import edu.austral.dissis.chess.gui.MoveResult;
 import edu.austral.dissis.common.ui.gameengine.BoardGameEngine;
-import edu.austral.dissis.online.main.ServerMain;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.Server;
 import edu.austral.ingsis.clientserver.ServerConnectionListener;

@@ -28,6 +28,7 @@ public class BoardGameEngine implements GameEngine {
     redo = new Stack<>();
   }
 
+  // Interface methods
   @NotNull
   @Override
   public MoveResult applyMove(@NotNull Move move) {
@@ -68,8 +69,13 @@ public class BoardGameEngine implements GameEngine {
     return getNewGameState(redone);
   }
 
-  public PlayerColor getCurrentTurn(){
+  // Own methods
+  public PlayerColor getCurrentTurn() {
     return getPlayerColor(game.getCurrentTurn());
+  }
+
+  public BoardGame getGame() {
+    return game;
   }
 
   // Private stuff
