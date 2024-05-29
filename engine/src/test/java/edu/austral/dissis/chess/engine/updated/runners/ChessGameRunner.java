@@ -74,7 +74,7 @@ public class ChessGameRunner implements TestGameRunner {
     return mapMoveResult(undone);
   }
 
-  //Private stuff
+  // Private stuff
 
   private TestMoveResult mapMoveResult(@NotNull MoveResult result) {
     switch (result) {

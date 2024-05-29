@@ -30,7 +30,8 @@ public class MoveListener implements MessageListener<MovePayload> {
       return;
     }
     boolean notTurn = !isPlayersTurn(message.getPayload().id());
-    if (notTurn) {
+    boolean notRegisteredPlayer = !colors.containsKey(message.getPayload().id());
+    if (notTurn || notRegisteredPlayer) {
       server.broadcast(new Message<>("InvalidMove", new InvalidMove("Not your turn")));
       return;
     }
@@ -41,7 +42,6 @@ public class MoveListener implements MessageListener<MovePayload> {
       return;
     }
     String className = getClassName(result);
-    System.out.println(className);
     server.broadcast(new Message<>(className, result));
   }
 

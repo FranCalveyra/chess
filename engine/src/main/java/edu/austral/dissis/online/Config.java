@@ -8,6 +8,6 @@ import edu.austral.dissis.common.utils.enums.GameType;
 public class Config {
   // Config
   // Change gameType in order to change game to play
-  private static final GameType gameType = GameType.DEFAULT_CHECKERS;
+  private static final GameType gameType = GameType.DEFAULT_CHESS;
   public static BoardGameEngine engine = (BoardGameEngine) setupGame(gameType).first();
 }

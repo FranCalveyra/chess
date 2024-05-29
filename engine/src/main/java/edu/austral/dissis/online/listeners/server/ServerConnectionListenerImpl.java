@@ -29,10 +29,11 @@ public class ServerConnectionListenerImpl implements ServerConnectionListener {
     System.out.println(("User connected with id: " + clientId));
     userCount++;
     server.broadcast(new Message<>("InitialState", engine.init()));
-    if (userCount > 2) {
+    if (userCount > 2 || teamColors.size() > 2) {
       return;
     }
     teamColors.put(clientId, userCount == 1 ? Color.WHITE : Color.BLACK);
+    server.sendMessage(clientId, new Message<>("Color", teamColors.get(clientId)));
   }
 
   @Override

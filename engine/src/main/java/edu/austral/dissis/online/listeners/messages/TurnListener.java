@@ -11,7 +11,6 @@ public class TurnListener implements MessageListener<Color> {
   @Override
   public void handleMessage(@NotNull Message<Color> message) {
     team = message.getPayload();
-    System.out.println("Team: " + team);
   }
 
   public Color getTeam() {
