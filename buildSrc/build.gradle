@@ -1,6 +1,7 @@
 plugins {
     // Support convention plugins written in Groovy. Convention plugins are build scripts in 'src/main' that automatically become available as plugins in the main build.
     id 'groovy-gradle-plugin'
+    id 'java'
 }
 
 repositories {
@@ -13,4 +14,11 @@ dependencies {
     implementation libs.spotless.gradle.plugin
     implementation libs.kover.gradle.plugin
     implementation libs.detekt.gradle.plugin
+    implementation 'org.openjfx:javafx-controls:18'
+    implementation 'org.openjfx:javafx-fxml:18'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_18
+    targetCompatibility = JavaVersion.VERSION_18
 }

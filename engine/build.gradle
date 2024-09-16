@@ -1,7 +1,7 @@
 plugins {
     id 'application-conventions'
-    id("org.openjfx.javafxplugin").version("0.0.13")
-
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 dependencies {
@@ -12,11 +12,24 @@ javafx {
     // Define the JavaFX version to use.
     version = "21"
     modules = ['javafx.graphics']
-
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'edu.austral.dissis.chess.engine.App'
-//    mainClass = 'edu.austral.dissis.chess.engine.AppKt'
+    mainClass = 'edu.austral.dissis.app.App'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+        attributes 'baseName': 'chess-engine'
+        attributes 'version': '1.0'
+    }
+}
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+    configurations = [project.configurations.runtimeClasspath]
 }

@@ -10,7 +10,7 @@ import edu.austral.dissis.online.utils.MovePayload;
 import edu.austral.ingsis.clientserver.Message;
 import edu.austral.ingsis.clientserver.MessageListener;
 import edu.austral.ingsis.clientserver.Server;
-import java.awt.*;
+import java.awt.Color;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 

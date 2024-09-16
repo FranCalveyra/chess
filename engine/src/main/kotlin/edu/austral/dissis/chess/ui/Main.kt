@@ -14,7 +14,7 @@ fun main() {
 
 class ChessGameApplication : Application() {
 //    private val gameEngine = SimpleGameEngine()
-    private val setup = setupGame(GameType.DEFAULT_CHECKERS)
+    private val setup = setupGame(GameType.DEFAULT_CHESS)
     private val gameEngine = setup.first()
     private val resolver = setup.second()
 
