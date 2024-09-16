@@ -1,5 +1,6 @@
 
-# Chess Framework
+# Chess Engine
+
 
 
 This is the template for your chess project. You will use this template to create your own chess game.
