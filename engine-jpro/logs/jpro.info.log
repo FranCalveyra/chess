@@ -1,0 +1,64 @@
+2024-09-16 21:14:11,883 [INFO] from com.jpro.activity in scala-execution-context-global-35 - Starting the server
+2024-09-16 21:14:11,890 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 -  *** Starting JPro: https://www.jpro.one/ ***
+2024-09-16 21:14:11,890 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - OS: Windows 11
+2024-09-16 21:14:11,913 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - JPro: 2023.3.1
+2024-09-16 21:14:11,913 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - Java version: 22.0.2
+2024-09-16 21:14:11,913 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - JVM: 22.0.2 Oracle Corporation
+2024-09-16 21:14:11,915 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - JavaFX jar: file:/C:/Users/user/projects/sysdesign/chess/engine/build/distributions/engine-jpro/jfx/win/javafx-graphics-21.0.2.3-jpro+0-win.jar
+2024-09-16 21:14:11,919 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - Configuring logging from url: 'jar:file:/C:/Users/user/projects/sysdesign/chess/engine/build/distributions/engine-jpro/jprolibs/jpro-server_2.12-2023.3.1.jar!/logback-jpro-default.xml'
+2024-09-16 21:14:12,450 [INFO] from com.jpro.internal.server.JProInitializer$ in JavaFX Application Thread - JavaFX version: 21.0.2.3-jpro+0-2023-09-27T13-12-33Z
+2024-09-16 21:14:12,522 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - finished init!
+2024-09-16 21:14:12,525 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - [JPro] -> Server started: {start_time: 1726532051881, os_name: Windows 11, jpro_version: 2023.3.1}
+2024-09-16 21:14:12,968 [INFO] from akka.event.slf4j.Slf4jLogger in application-akka.actor.default-dispatcher-5 - Slf4jLogger started
+2024-09-16 21:14:13,557 [INFO] from play.api.Play in Thread-0 - Application started (Prod) (no global state)
+2024-09-16 21:14:14,198 [INFO] from play.core.server.AkkaHttpServer in Thread-0 - Enabling HTTP/2 on Akka HTTP server...
+2024-09-16 21:14:14,199 [INFO] from play.core.server.AkkaHttpServer in Thread-0 - Listening for HTTP on /[0:0:0:0:0:0:0:0]:8080
+2024-09-16 21:14:25,432 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-11 - application requested: default
+2024-09-16 21:14:25,440 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-11 - Creating Application: default
+2024-09-16 21:14:25,442 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-11 - remoteAddress 0:0:0:0:0:0:0:1
+2024-09-16 21:14:25,443 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-11 - host          localhost:8080
+2024-09-16 21:14:25,443 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-11 - uri           /app/ws/default
+2024-09-16 21:14:25,753 [INFO] from com.jpro.internal.stats.ViewInfo$ in JavaFX Application Thread - [JPro] -> View created: {app_name: default, host_name: localhost:8080, instance_id: 2049752828, browser: Opera 112.0.0.0, browser_url: http://localhost:8080/, client_ip: 0:0:0:0:0:0:0:1}
+2024-09-16 21:14:26,155 [INFO] from com.jpro.internal.communicator.InstanceImpl in JavaFX Application Thread - [JPro] -> Instance created: {app_name: default, host_name: localhost:8080, instance_id: 2049752828, browser: Opera 112.0.0.0, browser_url: http://localhost:8080/, client_ip: 0:0:0:0:0:0:0:1}
+2024-09-16 21:14:26,492 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@14f2c64f
+2024-09-16 21:14:26,572 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@cb6fd7c
+2024-09-16 21:14:26,584 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@47e63b7c
+2024-09-16 21:14:26,595 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@63fbaa09
+2024-09-16 21:14:26,610 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@d489609
+2024-09-16 21:14:26,621 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@219766e2
+2024-09-16 21:14:26,631 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@3496e456
+2024-09-16 21:14:26,640 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@3904905e
+2024-09-16 21:14:26,649 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@5dce5ccd
+2024-09-16 21:14:26,657 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@aa2a086
+2024-09-16 21:14:26,666 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@21fbd6b6
+2024-09-16 21:14:26,675 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@485ac3a4
+2024-09-16 21:14:27,042 [WARN] from controllers.jpro in application-akka.actor.default-dispatcher-28 - jpro.plainFile - Couldn't get resource for: 'jpro/html/serviceworker.js'
+2024-09-16 21:14:30,539 [INFO] from play.api.internal.libs.concurrent.CoordinatedShutdownSupport in Thread-19 - Starting synchronous coordinated shutdown with ServerStoppedReason reason and 2147508000 milliseconds timeout
+2024-09-16 21:14:30,540 [INFO] from akka.actor.CoordinatedShutdown in application-akka.actor.default-dispatcher-27 - Running CoordinatedShutdown with reason [ServerStoppedReason]
+2024-09-16 21:14:30,542 [INFO] from play.core.server.AkkaHttpServer in Thread-19 - Stopping Akka HTTP server...
+2024-09-16 21:14:30,547 [INFO] from play.core.server.AkkaHttpServer in application-akka.actor.internal-dispatcher-30 - Terminating server binding for /[0:0:0:0:0:0:0:0]:8080
+2024-09-16 21:14:30,567 [INFO] from play.core.server.AkkaHttpServer in application-akka.actor.internal-dispatcher-30 - Running provided shutdown stop hooks
+2024-09-16 21:14:30,569 [INFO] from com.jpro.internal.server.JProInitializer$ in application-akka.actor.default-dispatcher-27 - [JPro] -> Server stopped: {running_time: 18.656s, instances_count: 1, views_count: 1, os_name: Windows 11, jpro_version: 2023.3.1, reason: jvm-shutdown}
+2024-09-16 21:14:30,569 [INFO] from com.jpro.activity in application-akka.actor.default-dispatcher-27 - Closing the server -> used memory: 41 MB  -  free system memory: 2984 MB
+2024-09-16 21:15:43,534 [INFO] from com.jpro.activity in scala-execution-context-global-35 - Starting the server
+2024-09-16 21:15:43,536 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 -  *** Starting JPro: https://www.jpro.one/ ***
+2024-09-16 21:15:43,536 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - OS: Windows 11
+2024-09-16 21:15:43,562 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - JPro: 2023.3.1
+2024-09-16 21:15:43,562 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - Java version: 22.0.2
+2024-09-16 21:15:43,562 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - JVM: 22.0.2 Oracle Corporation
+2024-09-16 21:15:43,564 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - JavaFX jar: file:/C:/Users/user/projects/sysdesign/chess/engine-jpro/jfx/win/javafx-graphics-21.0.2.3-jpro+0-win.jar
+2024-09-16 21:15:43,565 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - Configuring logging from url: 'jar:file:/C:/Users/user/projects/sysdesign/chess/engine-jpro/jprolibs/jpro-server_2.12-2023.3.1.jar!/logback-jpro-default.xml'
+2024-09-16 21:15:44,036 [INFO] from com.jpro.internal.server.JProInitializer$ in JavaFX Application Thread - JavaFX version: 21.0.2.3-jpro+0-2023-09-27T13-12-33Z
+2024-09-16 21:15:44,108 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - finished init!
+2024-09-16 21:15:44,110 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-35 - [JPro] -> Server started: {start_time: 1726532143533, os_name: Windows 11, jpro_version: 2023.3.1}
+2024-09-16 21:15:44,632 [INFO] from akka.event.slf4j.Slf4jLogger in application-akka.actor.default-dispatcher-4 - Slf4jLogger started
+2024-09-16 21:15:45,238 [INFO] from play.api.Play in Thread-0 - Application started (Prod) (no global state)
+2024-09-16 21:15:45,729 [INFO] from play.core.server.AkkaHttpServer in Thread-0 - Enabling HTTP/2 on Akka HTTP server...
+2024-09-16 21:15:45,730 [INFO] from play.core.server.AkkaHttpServer in Thread-0 - Listening for HTTP on /[0:0:0:0:0:0:0:0]:8080
+2024-09-16 21:15:48,519 [INFO] from play.api.internal.libs.concurrent.CoordinatedShutdownSupport in Thread-19 - Starting synchronous coordinated shutdown with ServerStoppedReason reason and 2147508000 milliseconds timeout
+2024-09-16 21:15:48,521 [INFO] from akka.actor.CoordinatedShutdown in application-akka.actor.default-dispatcher-6 - Running CoordinatedShutdown with reason [ServerStoppedReason]
+2024-09-16 21:15:48,523 [INFO] from play.core.server.AkkaHttpServer in Thread-19 - Stopping Akka HTTP server...
+2024-09-16 21:15:48,530 [INFO] from play.core.server.AkkaHttpServer in application-akka.actor.internal-dispatcher-2 - Terminating server binding for /[0:0:0:0:0:0:0:0]:8080
+2024-09-16 21:15:48,549 [INFO] from play.core.server.AkkaHttpServer in application-akka.actor.internal-dispatcher-5 - Running provided shutdown stop hooks
+2024-09-16 21:15:48,552 [INFO] from com.jpro.internal.server.JProInitializer$ in application-akka.actor.default-dispatcher-4 - [JPro] -> Server stopped: {running_time: 4.975s, instances_count: 0, views_count: 0, os_name: Windows 11, jpro_version: 2023.3.1, reason: jvm-shutdown}
+2024-09-16 21:15:48,552 [INFO] from com.jpro.activity in application-akka.actor.default-dispatcher-4 - Closing the server -> used memory: 74 MB  -  free system memory: 3086 MB

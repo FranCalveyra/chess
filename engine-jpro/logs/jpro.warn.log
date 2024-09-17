@@ -1,0 +1,1 @@
+2024-09-16 21:14:27,042 [WARN] from controllers.jpro in application-akka.actor.default-dispatcher-28 - jpro.plainFile - Couldn't get resource for: 'jpro/html/serviceworker.js'

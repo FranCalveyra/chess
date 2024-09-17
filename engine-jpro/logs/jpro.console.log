@@ -1,0 +1,70 @@
+2024-09-16 21:14:11,907 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.jpro.activity - Starting the server
+2024-09-16 21:14:11,908 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ -  *** Starting JPro: https://www.jpro.one/ ***
+2024-09-16 21:14:11,908 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - OS: Windows 11
+2024-09-16 21:14:11,913 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - JPro: 2023.3.1
+2024-09-16 21:14:11,914 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - Java version: 22.0.2
+2024-09-16 21:14:11,914 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - JVM: 22.0.2 Oracle Corporation
+2024-09-16 21:14:11,916 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - JavaFX jar: file:/C:/Users/user/projects/sysdesign/chess/engine/build/distributions/engine-jpro/jfx/win/javafx-graphics-21.0.2.3-jpro+0-win.jar
+2024-09-16 21:14:11,927 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - Configuring logging from url: 'jar:file:/C:/Users/user/projects/sysdesign/chess/engine/build/distributions/engine-jpro/jprolibs/jpro-server_2.12-2023.3.1.jar!/logback-jpro-default.xml'
+2024-09-16 21:14:12,450 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - JavaFX version: 21.0.2.3-jpro+0-2023-09-27T13-12-33Z
+2024-09-16 21:14:12,499 [INFO] in scala-execution-context-global-39 - G1 Young Generation
+2024-09-16 21:14:12,499 [INFO] in scala-execution-context-global-39 - G1 Concurrent GC
+2024-09-16 21:14:12,499 [INFO] in scala-execution-context-global-59 - G1 Old Generation
+2024-09-16 21:14:12,522 [INFO] in scala-execution-context-global-60 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - finished init!
+2024-09-16 21:14:12,525 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - [JPro] -> Server started: {start_time: 1726532051881, os_name: Windows 11, jpro_version: 2023.3.1}
+2024-09-16 21:14:12,968 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] a.e.s.Slf4jLogger - Slf4jLogger started
+2024-09-16 21:14:13,557 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] play.api.Play - Application started (Prod) (no global state)
+2024-09-16 21:14:14,198 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Enabling HTTP/2 on Akka HTTP server...
+2024-09-16 21:14:14,199 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Listening for HTTP on /[0:0:0:0:0:0:0:0]:8080
+2024-09-16 21:14:25,433 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.jpro - application requested: default
+2024-09-16 21:14:25,440 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.jpro - Creating Application: default
+2024-09-16 21:14:25,442 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.jpro - remoteAddress 0:0:0:0:0:0:0:1
+2024-09-16 21:14:25,443 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.jpro - host          localhost:8080
+2024-09-16 21:14:25,444 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.jpro - uri           /app/ws/default
+2024-09-16 21:14:25,754 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.i.s.ViewInfo$ - [JPro] -> View created: {app_name: default, host_name: localhost:8080, instance_id: 2049752828, browser: Opera 112.0.0.0, browser_url: http://localhost:8080/, client_ip: 0:0:0:0:0:0:0:1}
+2024-09-16 21:14:26,155 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.i.c.InstanceImpl - [JPro] -> Instance created: {app_name: default, host_name: localhost:8080, instance_id: 2049752828, browser: Opera 112.0.0.0, browser_url: http://localhost:8080/, client_ip: 0:0:0:0:0:0:0:1}
+2024-09-16 21:14:26,493 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@14f2c64f
+2024-09-16 21:14:26,572 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@cb6fd7c
+2024-09-16 21:14:26,584 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@47e63b7c
+2024-09-16 21:14:26,595 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@63fbaa09
+2024-09-16 21:14:26,611 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@d489609
+2024-09-16 21:14:26,622 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@219766e2
+2024-09-16 21:14:26,632 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@3496e456
+2024-09-16 21:14:26,641 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@3904905e
+2024-09-16 21:14:26,650 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@5dce5ccd
+2024-09-16 21:14:26,657 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@aa2a086
+2024-09-16 21:14:26,666 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@21fbd6b6
+2024-09-16 21:14:26,675 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.m.s.Util$ - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@485ac3a4
+2024-09-16 21:14:27,042 [INFO] in scala-execution-context-global-35 - [[31mWARN [0;39m] c.jpro - jpro.plainFile - Couldn't get resource for: 'jpro/html/serviceworker.js'
+2024-09-16 21:14:30,539 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.a.i.l.c.CoordinatedShutdownSupport - Starting synchronous coordinated shutdown with ServerStoppedReason reason and 2147508000 milliseconds timeout
+2024-09-16 21:14:30,541 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] a.a.CoordinatedShutdown - Running CoordinatedShutdown with reason [ServerStoppedReason]
+2024-09-16 21:14:30,542 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Stopping Akka HTTP server...
+2024-09-16 21:14:30,547 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Terminating server binding for /[0:0:0:0:0:0:0:0]:8080
+2024-09-16 21:14:30,567 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Running provided shutdown stop hooks
+2024-09-16 21:14:30,570 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - [JPro] -> Server stopped: {running_time: 18.656s, instances_count: 1, views_count: 1, os_name: Windows 11, jpro_version: 2023.3.1, reason: jvm-shutdown}
+2024-09-16 21:14:30,570 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.jpro.activity - Closing the server -> used memory: 41 MB  -  free system memory: 2984 MB
+2024-09-16 21:15:43,551 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.jpro.activity - Starting the server
+2024-09-16 21:15:43,552 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ -  *** Starting JPro: https://www.jpro.one/ ***
+2024-09-16 21:15:43,553 [INFO] in scala-execution-context-global-38 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - OS: Windows 11
+2024-09-16 21:15:43,562 [INFO] in scala-execution-context-global-39 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - JPro: 2023.3.1
+2024-09-16 21:15:43,563 [INFO] in scala-execution-context-global-39 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - Java version: 22.0.2
+2024-09-16 21:15:43,563 [INFO] in scala-execution-context-global-39 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - JVM: 22.0.2 Oracle Corporation
+2024-09-16 21:15:43,564 [INFO] in scala-execution-context-global-39 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - JavaFX jar: file:/C:/Users/user/projects/sysdesign/chess/engine-jpro/jfx/win/javafx-graphics-21.0.2.3-jpro+0-win.jar
+2024-09-16 21:15:43,567 [INFO] in scala-execution-context-global-39 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - Configuring logging from url: 'jar:file:/C:/Users/user/projects/sysdesign/chess/engine-jpro/jprolibs/jpro-server_2.12-2023.3.1.jar!/logback-jpro-default.xml'
+2024-09-16 21:15:44,036 [INFO] in scala-execution-context-global-39 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - JavaFX version: 21.0.2.3-jpro+0-2023-09-27T13-12-33Z
+2024-09-16 21:15:44,084 [INFO] in scala-execution-context-global-38 - G1 Young Generation
+2024-09-16 21:15:44,084 [INFO] in scala-execution-context-global-38 - G1 Concurrent GC
+2024-09-16 21:15:44,084 [INFO] in scala-execution-context-global-38 - G1 Old Generation
+2024-09-16 21:15:44,108 [INFO] in scala-execution-context-global-60 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - finished init!
+2024-09-16 21:15:44,111 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - [JPro] -> Server started: {start_time: 1726532143533, os_name: Windows 11, jpro_version: 2023.3.1}
+2024-09-16 21:15:44,633 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] a.e.s.Slf4jLogger - Slf4jLogger started
+2024-09-16 21:15:45,239 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] play.api.Play - Application started (Prod) (no global state)
+2024-09-16 21:15:45,729 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Enabling HTTP/2 on Akka HTTP server...
+2024-09-16 21:15:45,730 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Listening for HTTP on /[0:0:0:0:0:0:0:0]:8080
+2024-09-16 21:15:48,520 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.a.i.l.c.CoordinatedShutdownSupport - Starting synchronous coordinated shutdown with ServerStoppedReason reason and 2147508000 milliseconds timeout
+2024-09-16 21:15:48,522 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] a.a.CoordinatedShutdown - Running CoordinatedShutdown with reason [ServerStoppedReason]
+2024-09-16 21:15:48,523 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Stopping Akka HTTP server...
+2024-09-16 21:15:48,530 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Terminating server binding for /[0:0:0:0:0:0:0:0]:8080
+2024-09-16 21:15:48,549 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] p.c.s.AkkaHttpServer - Running provided shutdown stop hooks
+2024-09-16 21:15:48,553 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.j.i.s.JProInitializer$ - [JPro] -> Server stopped: {running_time: 4.975s, instances_count: 0, views_count: 0, os_name: Windows 11, jpro_version: 2023.3.1, reason: jvm-shutdown}
+2024-09-16 21:15:48,553 [INFO] in scala-execution-context-global-35 - [[34mINFO [0;39m] c.jpro.activity - Closing the server -> used memory: 74 MB  -  free system memory: 3086 MB
