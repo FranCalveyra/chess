@@ -1,0 +1,35 @@
+2024-09-16 21:06:54,859 [INFO] from com.jpro.activity in scala-execution-context-global-33 - Starting the server
+2024-09-16 21:06:54,863 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-33 -  *** Starting JPro: https://www.jpro.one/ ***
+2024-09-16 21:06:54,863 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-33 - OS: Windows 11
+2024-09-16 21:06:54,903 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-33 - JPro: 2023.3.1
+2024-09-16 21:06:54,904 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-33 - Java version: 21.0.4
+2024-09-16 21:06:54,904 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-33 - JVM: 21.0.4 Amazon.com Inc.
+2024-09-16 21:06:54,908 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-33 - JavaFX jar: file:/C:/Users/user/.gradle/caches/modules-2/files-2.1/org.openjfx/javafx-graphics/21.0.2.3-jpro+0/444914750bb511d32b056ca1d1a30aa277643566/javafx-graphics-21.0.2.3-jpro+0-win.jar
+2024-09-16 21:06:54,914 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-33 - Configuring logging from url: 'jar:file:/C:/Users/user/.gradle/caches/modules-2/files-2.1/com.sandec.jpro/jpro-server_2.12/2023.3.1/e27ecfd7559a0515e6d531c49a92507c340b650c/jpro-server_2.12-2023.3.1.jar!/logback-jpro-default.xml'
+2024-09-16 21:06:55,496 [INFO] from com.jpro.internal.server.JProInitializer$ in JavaFX Application Thread - JavaFX version: 21.0.2.3-jpro+0-2023-09-27T13-12-33Z
+2024-09-16 21:06:55,578 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-33 - finished init!
+2024-09-16 21:06:55,593 [INFO] from com.jpro.internal.server.JProInitializer$ in scala-execution-context-global-33 - [JPro] -> Server started: {start_time: 1726531614857, os_name: Windows 11, jpro_version: 2023.3.1}
+2024-09-16 21:06:56,074 [INFO] from akka.event.slf4j.Slf4jLogger in application-akka.actor.default-dispatcher-5 - Slf4jLogger started
+2024-09-16 21:06:56,958 [INFO] from play.api.Play in Thread-0 - Application started (Prod) (no global state)
+2024-09-16 21:06:57,634 [INFO] from play.core.server.AkkaHttpServer in Thread-0 - Enabling HTTP/2 on Akka HTTP server...
+2024-09-16 21:06:57,635 [INFO] from play.core.server.AkkaHttpServer in Thread-0 - Listening for HTTP on /[0:0:0:0:0:0:0:0]:8080
+2024-09-16 21:06:59,223 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-8 - application requested: default
+2024-09-16 21:06:59,232 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-8 - Creating Application: default
+2024-09-16 21:06:59,234 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-8 - remoteAddress 0:0:0:0:0:0:0:1
+2024-09-16 21:06:59,236 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-8 - host          localhost:8080
+2024-09-16 21:06:59,236 [INFO] from controllers.jpro in application-akka.actor.default-dispatcher-8 - uri           /app/ws/default
+2024-09-16 21:06:59,571 [INFO] from com.jpro.internal.stats.ViewInfo$ in JavaFX Application Thread - [JPro] -> View created: {app_name: default, host_name: localhost:8080, instance_id: 1644264073, browser: Opera 112.0.0.0, browser_url: http://localhost:8080/, client_ip: 0:0:0:0:0:0:0:1}
+2024-09-16 21:07:00,018 [INFO] from com.jpro.internal.communicator.InstanceImpl in JavaFX Application Thread - [JPro] -> Instance created: {app_name: default, host_name: localhost:8080, instance_id: 1644264073, browser: Opera 112.0.0.0, browser_url: http://localhost:8080/, client_ip: 0:0:0:0:0:0:0:1}
+2024-09-16 21:07:00,346 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@2e126315
+2024-09-16 21:07:00,410 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@7974270b
+2024-09-16 21:07:00,426 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@529223ff
+2024-09-16 21:07:00,437 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@3232b69c
+2024-09-16 21:07:00,448 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@bca143
+2024-09-16 21:07:00,459 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@6ce894ca
+2024-09-16 21:07:00,471 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@7eff6788
+2024-09-16 21:07:00,480 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@5ae387c3
+2024-09-16 21:07:00,488 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@1dd09418
+2024-09-16 21:07:00,498 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@15a075a3
+2024-09-16 21:07:00,517 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@291d14da
+2024-09-16 21:07:00,527 [INFO] from com.jpro.meta.stream.Util$ in JavaFX Application Thread - workaround for image, lossless: true filetype: png img: javafx.scene.image.Image@3096e5bd
+2024-09-16 21:07:00,827 [WARN] from controllers.jpro in application-akka.actor.default-dispatcher-15 - jpro.plainFile - Couldn't get resource for: 'jpro/html/serviceworker.js'
