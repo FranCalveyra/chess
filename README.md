@@ -1,36 +1,19 @@
-
 # Chess Engine
 
+![Chess Engine](https://github.com/user-attachments/assets/69970601-915e-4351-a352-25769fa017a4)
 
+Welcome to the Chess Engine project! This application is a fully-fledged chess engine built in `Java 21` with an interactive user interface designed using `JavaFX`.
 
-This is the template for your chess project. You will use this template to create your own chess game.
+## Features
+- **Play Chess**: Experience a classic chess game with a smooth and intuitive UI.
+- **Java 21**: Built using modern Java features for enhanced performance and maintainability.
+- **JavaFX UI**: Enjoy a visually appealing and responsive interface.
 
-This template comes with configurations for:
+## Try It Out
+You can start playing chess right away! Visit [this link](https://chess-engine-lk8z.onrender.com) to play the original version of the game.
 
-- Static code analysis 
-- Coverage
+> **Note**: The current version includes the standard chess game. Future updates will introduce exciting chess variants, so stay tuned!
 
-It supports both Java code and Kotlin code
+---
 
-## Where should you include your code?
-
-Your code should be included in the `engine/src/main/java` or `engine/src/main/kotlin` directory.
-
-## How to build the project?
-
-You can build the project using the following command:
-
-```./gradlew build```
-
-## Testing
-
-### Requirements
-
-This project depends on a package published in the GitHub Packages Registry. In order to download it a GitHub token must be used.
-Instruction on how to create a GitHub personal token are [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token). 
-Once created the following environment variables must be defined:
-* GITHUB_USER
-* GITHUB_TOKEN
-Or in a file `gradle.properties` the following values must be defined: 
-* github.user 
-* github.token
+Feel free to contribute, suggest features, or report issues. Enjoy the game!
