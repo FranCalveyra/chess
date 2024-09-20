@@ -35,7 +35,7 @@ EXPOSE 8080
 COPY ./ /app
 
 # Ensure the restart script is executable and exists
-
+RUN chmod +x bin/restart.sh
 
 # Run the restart script
 CMD ["bin/restart.sh"]
